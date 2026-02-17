@@ -97,7 +97,11 @@ namespace Server.Custom.Ascensions
             AscensionProgress prog = pm.AscensionProfile.Get(type);
 
             if (!CanGainExperience(pm, def, prog))
-                return;
+            {
+                pm.SendMessage("You either have restricted skills that prevent you from gaining experience on this Ascension or you have the incorrect required karma for it");
+                return;                
+            }
+
 
             if (prog.Level >= AscensionConstants.MaxAscensionLevel)
                 return;
