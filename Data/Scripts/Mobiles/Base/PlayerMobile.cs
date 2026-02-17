@@ -20,6 +20,7 @@ using Server.Regions;
 using Server.Accounting;
 using Server.Engines.Craft;
 using Server.Engines.PartySystem;
+using Server.Custom.Ascensions;
 
 namespace Server.Mobiles
 {
@@ -464,6 +465,22 @@ namespace Server.Mobiles
 		        return false;
 
 		    AscensionProgress prog = AscensionProfile.Get(type);
+
+			AscensionDefinition def = AscensionRegistry.Get(type);
+
+			if (def.RequiredSkills != null && def.RequiredSkills.Length > 0)
+			{
+			    for (int i = 0; i < def.RequiredSkills.Length; i++)
+			    {
+			        Skill skill = this.Skills[def.RequiredSkills[i]];
+
+			        if (skill == null || skill.Base < 95)
+			        {
+			            SendMessage("You lack the required skill to activate this ascension.");
+			            return false;
+			        }
+			    }
+			}
 
 		    if (prog == null || prog.Level <= 0)
 		    {

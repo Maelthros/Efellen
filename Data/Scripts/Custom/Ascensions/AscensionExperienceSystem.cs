@@ -1,5 +1,6 @@
 using Server;
 using Server.Mobiles;
+using Server.Custom.Ascensions;
 
 namespace Server.Custom.Ascensions
 {
@@ -40,6 +41,48 @@ namespace Server.Custom.Ascensions
 
             pm.SendMessage(1153, "You gain " + amount + " ascension experience.");
         }
+        private static bool CanGainExperience(PlayerMobile pm, AscensionDefinition def, AscensionProgress prog)
+        {
+            if (pm == null || def == null || prog == null)
+                return false;
+
+            SkillName[] required = def.RequiredSkills;
+
+            if (required != null && required.Length > 0)
+            {
+                int requiredValue = 95 + (prog.Level - 1);
+
+                for (int i = 0; i < required.Length; i++)
+                {
+                    Skill skill = pm.Skills[required[i]];
+
+                    if (skill == null || skill.Base < requiredValue)
+                        return false;
+                }
+            }
+
+            SkillName[] forbidden = def.ForbiddenSkills;
+
+            if (forbidden != null && forbidden.Length > 0)
+            {
+                for (int i = 0; i < forbidden.Length; i++)
+                {
+                    Skill skill = pm.Skills[forbidden[i]];
+
+                    if (skill != null && skill.Base > 0)
+                        return false;
+                }
+            }
+
+            if (def.RequiresGood && pm.Karma < 0)
+                return false;
+
+            if (def.RequiresEvil && pm.Karma > 0)
+                return false;
+
+            return true;
+        }
+
 
         public static void AwardExperienceDirect(PlayerMobile pm, BaseCreature creature, int amount)
         {
@@ -50,7 +93,11 @@ namespace Server.Custom.Ascensions
                 return;
 
             AscensionType type = pm.ActiveAscension;
+            AscensionDefinition def = AscensionRegistry.Get(type);
             AscensionProgress prog = pm.AscensionProfile.Get(type);
+
+            if (!CanGainExperience(pm, def, prog))
+                return;
 
             if (prog.Level >= AscensionConstants.MaxAscensionLevel)
                 return;
