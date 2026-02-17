@@ -427,6 +427,59 @@ namespace Server.Mobiles
 			set { m_ExecutesLightningStrike = value; }
 		}
 
+		private AscensionProfile m_AscensionProfile;
+		private AscensionType m_ActiveAscension;
+		private bool m_HasActiveAscension;
+
+		[CommandProperty(AccessLevel.GameMaster)]
+		public AscensionType ActiveAscension
+		{
+		    get { return m_ActiveAscension; }
+		    set
+		    {
+		        m_ActiveAscension = value;
+		        m_HasActiveAscension = true;
+		    }
+		}
+
+		public bool HasActiveAscension
+		{
+		    get { return m_HasActiveAscension; }
+		}
+
+		public AscensionProfile AscensionProfile
+		{
+		    get
+		    {
+		        if (m_AscensionProfile == null)
+		            m_AscensionProfile = new AscensionProfile();
+
+		        return m_AscensionProfile;
+		    }
+		}
+
+		public bool ActivateAscension(AscensionType type)
+		{
+		    if (AscensionProfile == null)
+		        return false;
+
+		    AscensionProgress prog = AscensionProfile.Get(type);
+
+		    if (prog == null || prog.Level <= 0)
+		    {
+		        SendMessage("You have not unlocked that ascension.");
+		        return false;
+		    }
+
+		    m_ActiveAscension = type;
+		    m_HasActiveAscension = true;
+
+		    SendMessage(1153, "You are now aligned with the " + type.ToString() + " ascension.");
+
+		    return true;
+		}
+
+
 		#endregion
 
 		#region PlayerFlags
@@ -3305,6 +3358,14 @@ namespace Server.Mobiles
 
 			switch ( version )
 			{
+				case 40:
+				{
+				    goto case 39;
+				}
+				case 39:
+				{
+				    goto case 38;
+				}
 				case 38:
 				case 37:
 				{
@@ -3596,6 +3657,37 @@ namespace Server.Mobiles
 					break;
 				}
 			}
+			// ---- ASCENSION SYSTEM ----
+			if (version >= 39)
+			{
+			    if (reader.ReadBool())
+			    {
+			        m_AscensionProfile = new AscensionProfile();
+			        m_AscensionProfile.Deserialize(reader);
+			    }
+			    else
+			    {
+			        m_AscensionProfile = new AscensionProfile();
+			    }
+
+			    if (version >= 40)
+			    {
+			        m_HasActiveAscension = reader.ReadBool();
+			        m_ActiveAscension = (AscensionType)reader.ReadInt();
+			    }
+			    else
+			    {
+			        m_HasActiveAscension = false;
+			        m_ActiveAscension = 0;
+			    }
+			}
+			else
+			{
+			    m_AscensionProfile = new AscensionProfile();
+			    m_HasActiveAscension = false;
+			    m_ActiveAscension = 0;
+			}
+
 
 			if (m_RecentlyReported == null)
 				m_RecentlyReported = new List<Mobile>();
@@ -3637,6 +3729,8 @@ namespace Server.Mobiles
 				CharacterGuilds = 0;
 
 			Timer.DelayCall( TimeSpan.FromSeconds( 5.0 ), new TimerStateCallback( ResetThings ), this );
+			if (m_AscensionProfile == null)
+			    m_AscensionProfile = new AscensionProfile();
 		}
 
 		private void ResetThings( object state )
@@ -3665,7 +3759,7 @@ namespace Server.Mobiles
 
 			base.Serialize( writer );
 
-			writer.Write( (int) 38 ); // version
+			writer.Write( (int) 40 ); // version
 
 			writer.Write( m_DoubleClickID );
 
@@ -3796,6 +3890,19 @@ namespace Server.Mobiles
 			writer.Write( m_LongTermElapse );
 			writer.Write( m_ShortTermElapse );
 			writer.Write( this.GameTime );
+			// ---- ASCENSION SYSTEM ----
+			if (m_AscensionProfile != null)
+			{
+			    writer.Write(true);
+			    m_AscensionProfile.Serialize(writer);
+			}
+			else
+			{
+			    writer.Write(false);
+			}
+			writer.Write(m_HasActiveAscension);
+			writer.Write((int)m_ActiveAscension);
+
 		}
 
 		public void CheckKillDecay()

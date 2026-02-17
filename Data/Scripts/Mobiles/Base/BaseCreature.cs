@@ -17,6 +17,7 @@ using Server.Spells.Elementalism;
 using System.Text;
 using Server;
 using System.IO;
+using Server.Custom.Ascensions;
 
 namespace Server.Mobiles
 {
@@ -8348,187 +8349,214 @@ public virtual int BreathComputeDamage()
 				Paragon.GiveArtifactTo( mob );
 		}
 
-		public override void OnDeath( Container c )
+		public override void OnDeath(Container c)
 		{
-			PremiumSpawner.ActivateSpawner( this );
+		    PremiumSpawner.ActivateSpawner(this);
 
-			Mobile killer = this.LastKiller;
+		    Mobile killer = this.LastKiller;
 
-			QuestTake.DropChest( this );
+		    QuestTake.DropChest(this);
 
-			if (killer is BaseCreature)
-			{
-				BaseCreature bc_killer = (BaseCreature)killer;
-				if(bc_killer.Summoned)
-				{
-					if(bc_killer.SummonMaster != null)
-						killer = bc_killer.SummonMaster;
-				}
-				else if(bc_killer.Controlled)
-				{
-					if(bc_killer.ControlMaster != null)
-						killer=bc_killer.ControlMaster;
-				}
-				else if(bc_killer.BardProvoked)
-				{
-					if(bc_killer.BardMaster != null)
-						killer=bc_killer.BardMaster;
-				}
-			}
+		    if (killer is BaseCreature)
+		    {
+		        BaseCreature bc_killer = (BaseCreature)killer;
 
-			if ( ( killer is PlayerMobile ) && (killer.AccessLevel < AccessLevel.GameMaster) )
-			{
-				LoggingFunctions.LogBattles( killer, this );
-			}
+		        if (bc_killer.Summoned && bc_killer.SummonMaster != null)
+		            killer = bc_killer.SummonMaster;
+		        else if (bc_killer.Controlled && bc_killer.ControlMaster != null)
+		            killer = bc_killer.ControlMaster;
+		        else if (bc_killer.BardProvoked && bc_killer.BardMaster != null)
+		            killer = bc_killer.BardMaster;
+		    }
 
-			if ( killer is PlayerMobile )
-			{
-				AssassinFunctions.CheckTarget( killer, this );
-				StandardQuestFunctions.CheckTarget( killer, this, null );
-				FishingQuestFunctions.CheckTarget( killer, this, null );
-				if ( killer.Backpack.FindItemByType( typeof ( MuseumBook ) ) != null && this.Fame >= 18000 )
-				{
-					MuseumBook.FoundItem( killer, 1 );
-				}
-				if ( killer.Backpack.FindItemByType( typeof ( QuestTome ) ) != null && this.Fame >= 18000 )
-				{
-					QuestTome.FoundItem( killer, 1, null );
-				}
-			}
+		    if ((killer is PlayerMobile) && (killer.AccessLevel < AccessLevel.GameMaster))
+		    {
+		        LoggingFunctions.LogBattles(killer, this);
+		    }
 
-			Server.Misc.DropRelic.DropSpecialItem( this, killer, c ); // SOME DROP RARE ITEMS
-			//powerful creatures can drop marks of the scourge / honor
-			if (killer != null)
-        		Server.Custom.DefenderOfTheRealm.MarkLootHelper.CheckForMarks(this, c, killer);
-			
-			if ( IsBonded )
-			{
-				int sound = this.GetDeathSound();
+		    if (killer is PlayerMobile)
+		    {
+		        AssassinFunctions.CheckTarget(killer, this);
+		        StandardQuestFunctions.CheckTarget(killer, this, null);
+		        FishingQuestFunctions.CheckTarget(killer, this, null);
 
-				if ( sound >= 0 )
-					Effects.PlaySound( this, this.Map, sound );
+		        if (killer.Backpack.FindItemByType(typeof(MuseumBook)) != null && this.Fame >= 18000)
+		            MuseumBook.FoundItem(killer, 1);
 
-				Warmode = false;
+		        if (killer.Backpack.FindItemByType(typeof(QuestTome)) != null && this.Fame >= 18000)
+		            QuestTome.FoundItem(killer, 1, null);
+		    }
 
-				Poison = null;
-				Combatant = null;
+		    Server.Misc.DropRelic.DropSpecialItem(this, killer, c);
 
-				Hits = 0;
-				Stam = 0;
-				Mana = 0;
+		    if (killer != null)
+		        Server.Custom.DefenderOfTheRealm.MarkLootHelper.CheckForMarks(this, c, killer);
 
-				IsDeadPet = true;
-				ControlTarget = ControlMaster;
-				ControlOrder = OrderType.Follow;
+		    if (IsBonded)
+		    {
+		        int sound = this.GetDeathSound();
 
-				ProcessDeltaQueue();
-				SendIncomingPacket();
-				SendIncomingPacket();
+		        if (sound >= 0)
+		            Effects.PlaySound(this, this.Map, sound);
 
-				List<AggressorInfo> aggressors = this.Aggressors;
+		        Warmode = false;
+		        Poison = null;
+		        Combatant = null;
 
-				for ( int i = 0; i < aggressors.Count; ++i )
-				{
-					AggressorInfo info = aggressors[i];
+		        Hits = 0;
+		        Stam = 0;
+		        Mana = 0;
 
-					if ( info.Attacker.Combatant == this )
-						info.Attacker.Combatant = null;
-				}
+		        IsDeadPet = true;
+		        ControlTarget = ControlMaster;
+		        ControlOrder = OrderType.Follow;
 
-				List<AggressorInfo> aggressed = this.Aggressed;
+		        ProcessDeltaQueue();
+		        SendIncomingPacket();
+		        SendIncomingPacket();
 
-				for ( int i = 0; i < aggressed.Count; ++i )
-				{
-					AggressorInfo info = aggressed[i];
+		        foreach (AggressorInfo info in Aggressors)
+		            if (info.Attacker.Combatant == this)
+		                info.Attacker.Combatant = null;
 
-					if ( info.Defender.Combatant == this )
-						info.Defender.Combatant = null;
-				}
+		        foreach (AggressorInfo info in Aggressed)
+		            if (info.Defender.Combatant == this)
+		                info.Defender.Combatant = null;
 
-				Mobile owner = this.ControlMaster;
+		        Mobile owner = this.ControlMaster;
 
-				if ( owner == null || owner.Deleted || owner.Map != this.Map || !owner.InRange( this, 12 ) || !this.CanSee( owner ) || !this.InLOS( owner ) )
-				{
-					if ( this.OwnerAbandonTime == DateTime.MinValue )
-						this.OwnerAbandonTime = DateTime.Now;
-				}
-				else
-				{
-					this.OwnerAbandonTime = DateTime.MinValue;
-				}
+		        if (owner == null || owner.Deleted || owner.Map != this.Map ||
+		            !owner.InRange(this, 12) || !this.CanSee(owner) || !this.InLOS(owner))
+		        {
+		            if (this.OwnerAbandonTime == DateTime.MinValue)
+		                this.OwnerAbandonTime = DateTime.Now;
+		        }
+		        else
+		        {
+		            this.OwnerAbandonTime = DateTime.MinValue;
+		        }
 
-				CheckStatTimers();
-			}
-			else
-			{
-				if ( !Summoned && !m_NoKillAwards )
-				{
-					int totalFame = Fame / 100;
-					int totalKarma = -Karma / 100;
+		        CheckStatTimers();
+		    }
+		    else
+		    {
+		        if (!Summoned && !m_NoKillAwards)
+		        {
+		            int totalFame = Fame / 100;
+		            int totalKarma = -Karma / 100;
 
-					List<DamageStore> list = GetLootingRights( this.DamageEntries, this.HitsMax );
-					List<Mobile> titles = new List<Mobile>();
-					List<int> fame = new List<int>();
-					List<int> karma = new List<int>();
+		            List<DamageStore> list = GetLootingRights(this.DamageEntries, this.HitsMax);
+		            List<Mobile> titles = new List<Mobile>();
+		            List<int> fame = new List<int>();
+		            List<int> karma = new List<int>();
 
-					for ( int i = 0; i < list.Count; ++i )
-					{
-						DamageStore ds = list[i];
+		            int baseAscensionXP = 0;
 
-						if ( !ds.m_HasRight )
-							continue;
+		            if (Fame > 125)
+		            {
+		                int min = Fame / 125;
+		                int max = Fame / 95;
 
-						Party party = Engines.PartySystem.Party.Get( ds.m_Mobile );
+		                if (max > 0)
+		                    baseAscensionXP = Utility.RandomMinMax(min, max);
+		            }
 
-						if ( party != null )
+		            for (int i = 0; i < list.Count; ++i)
+		            {
+		                DamageStore ds = list[i];
+
+		                if (!ds.m_HasRight)
+		                    continue;
+
+		                Mobile mob = ds.m_Mobile;
+
+		                PlayerMobile xpPlayer = null;
+
+						if (mob is PlayerMobile)
 						{
-							int divedFame = totalFame / party.Members.Count;
-							int divedKarma = totalKarma / party.Members.Count;
-
-							for ( int j = 0; j < party.Members.Count; ++j )
-							{
-								PartyMemberInfo info = party.Members[ j ] as PartyMemberInfo;
-
-								if ( info != null && info.Mobile != null )
-								{
-									int index = titles.IndexOf( info.Mobile );
-
-									if ( index == -1 )
-									{
-										titles.Add( info.Mobile );
-										fame.Add( divedFame );
-										karma.Add( divedKarma );
-									}
-									else
-									{
-										fame[ index ] += divedFame;
-										karma[ index ] += divedKarma;
-									}
-								}
-							}
+						    xpPlayer = (PlayerMobile)mob;
 						}
-						else
+						else if (mob is BaseCreature)
 						{
-							titles.Add( ds.m_Mobile );
-							fame.Add( totalFame );
-							karma.Add( totalKarma );
+						    BaseCreature bc = (BaseCreature)mob;
+
+						    if (bc.Summoned && bc.SummonMaster is PlayerMobile)
+						    {
+						        xpPlayer = (PlayerMobile)bc.SummonMaster;
+						    }
+						    else if (bc.Controlled && bc.ControlMaster is PlayerMobile)
+						    {
+						        xpPlayer = (PlayerMobile)bc.ControlMaster;
+						    }
 						}
+		                if (xpPlayer != null && baseAscensionXP > 0)
+		                {
+		                   	double damagePercent = (double)ds.m_Damage / this.HitsMax;
+							if (damagePercent > 1.0)
+							    damagePercent = 1.0;
 
-						OnKilledBy( ds.m_Mobile );
-					}
-					for ( int i = 0; i < titles.Count; ++i )
-					{
-						Titles.AwardFame( titles[ i ], fame[ i ], true );
-						Titles.AwardKarma( titles[ i ], karma[ i ], true );
-					}
-				}
+		                    int scaledXP = (int)(baseAscensionXP * damagePercent);
 
-				base.OnDeath( c );
+		                    if (scaledXP > 0)
+		                        Server.Custom.Ascensions.AscensionExperienceSystem.AwardExperienceDirect(xpPlayer, this, scaledXP);
+		                }
 
-				if ( DeleteCorpseOnDeath || ( ( this.Name == "a follower" || this.Name == "a sailor" || this.Name == "a pirate" ) && this.EmoteHue > 0 ) )
-					c.Delete();
-			}
+		                Party party = Engines.PartySystem.Party.Get(ds.m_Mobile);
+
+		                if (party != null)
+		                {
+		                    int dividedFame = totalFame / party.Members.Count;
+		                    int dividedKarma = totalKarma / party.Members.Count;
+
+		                    for (int j = 0; j < party.Members.Count; ++j)
+		                    {
+		                        PartyMemberInfo info = party.Members[j] as PartyMemberInfo;
+
+		                        if (info != null && info.Mobile != null)
+		                        {
+		                            int index = titles.IndexOf(info.Mobile);
+
+		                            if (index == -1)
+		                            {
+		                                titles.Add(info.Mobile);
+		                                fame.Add(dividedFame);
+		                                karma.Add(dividedKarma);
+		                            }
+		                            else
+		                            {
+		                                fame[index] += dividedFame;
+		                                karma[index] += dividedKarma;
+		                            }
+		                        }
+		                    }
+		                }
+		                else
+		                {
+		                    titles.Add(ds.m_Mobile);
+		                    fame.Add(totalFame);
+		                    karma.Add(totalKarma);
+		                }
+
+		                OnKilledBy(ds.m_Mobile);
+		            }
+
+		            for (int i = 0; i < titles.Count; ++i)
+		            {
+		                Titles.AwardFame(titles[i], fame[i], true);
+		                Titles.AwardKarma(titles[i], karma[i], true);
+		            }
+		        }
+
+		        base.OnDeath(c);
+
+		        if (DeleteCorpseOnDeath ||
+		            ((this.Name == "a follower" || this.Name == "a sailor" || this.Name == "a pirate") && this.EmoteHue > 0))
+		        {
+		            c.Delete();
+		        }
+		    }
 		}
+
 
 		/* To save on cpu usage, RunUO creatures only reacquire creatures under the following circumstances:
 		 *  - 10 seconds have elapsed since the last time it tried
