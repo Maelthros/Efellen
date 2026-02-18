@@ -1,7 +1,7 @@
 using Server;
 using Server.Commands;
 using Server.Mobiles;
-using Server.Custom.Ascensions.Gumps;
+using Server.Custom.Ascensions;
 
 namespace Server.Custom.Ascensions
 {

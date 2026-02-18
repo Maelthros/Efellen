@@ -4,7 +4,7 @@ using Server.Gumps;
 using Server.Mobiles;
 using Server.Custom.Ascensions;
 
-namespace Server.Custom.Ascensions.Gumps
+namespace Server.Custom.Ascensions
 {
     public class AscensionSelectionGump : Gump
     {
