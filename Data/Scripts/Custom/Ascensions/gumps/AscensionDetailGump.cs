@@ -53,11 +53,11 @@ namespace Server.Custom.Ascensions
             AddLabel(30, 135, 88, "Next Level XP:");
             AddLabel(200, 135, 1152, required.ToString());
 
-            AddLabel(30, 220, 1152, "Benefits:");
-            AddHtml(30, 250, 460, 80, AscensionDefinitions.GetDescription(m_Type), true, true);
+            AddLabel(30, 200, 1152, "Description:");
+            AddHtml(30, 230, 460, 80, AscensionDefinitions.GetDescription(m_Type), true, true);
 
-            AddLabel(30, 360, 1152, "Granted Abilities:");
-            AddHtml(30, 380, 460, 140, AscensionDefinitions.GetAbilities(m_Type), true, true);
+            AddLabel(30, 340, 1152, "Granted Abilities:");
+            AddHtml(30, 360, 460, 140, AscensionDefinitions.GetAbilities(m_Type), true, true);
 
             int bottomY = 560;
 
@@ -69,8 +69,7 @@ namespace Server.Custom.Ascensions
             AddButton(40, bottomY, 4014, 4016, Button_Back, GumpButtonType.Reply, 0);
             AddLabel(75, bottomY, 1152, "Back");
 
-            // Upgrade section
-            if (m_Progress.Level == 0 || m_Progress.CanLevelUp())
+            if (m_Progress.CanLevelUp())
             {
                 int next = m_Progress.GetNextLevel();
                 int gold = AscensionCosts.GetGoldCost(next);
@@ -102,7 +101,7 @@ namespace Server.Custom.Ascensions
                     m_From.SendGump(new AscensionSelectionGump(m_From));
                     return;
 
-                case 2: // Activate
+                case 2:
                     m_From.ActivateAscension(m_Type);
                     Refresh();
                     return;

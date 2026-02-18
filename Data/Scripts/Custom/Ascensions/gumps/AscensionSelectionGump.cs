@@ -2,7 +2,7 @@ using System;
 using Server;
 using Server.Gumps;
 using Server.Mobiles;
-using Server.Custom.Ascensions;
+using Server.Network;
 
 namespace Server.Custom.Ascensions
 {
@@ -16,12 +16,14 @@ namespace Server.Custom.Ascensions
 
             Closable = true;
             Dragable = true;
+            Disposable = true;
 
             AddPage(0);
-            AddBackground(0, 0, 500, 400, 9270);
-            AddLabel(180, 15, 1152, "Ascensions");
+            AddBackground(0, 0, 650, 800, 9270);
+            AddAlphaRegion(10, 10, 630, 780);
+            AddLabel(260, 20, 1152, "Ascensions");
 
-            int y = 50;
+            int y = 60;
 
             foreach (AscensionType type in Enum.GetValues(typeof(AscensionType)))
             {
@@ -29,7 +31,7 @@ namespace Server.Custom.Ascensions
                     continue;
 
                 AddEntry(type, y);
-                y += 40;
+                y += 50;
             }
         }
 
@@ -42,6 +44,16 @@ namespace Server.Custom.Ascensions
             if (prog.Unlocked)
             {
                 AddLabel(200, y, 68, "Level: " + prog.Level);
+
+                int required = prog.GetRequiredExperience();
+                string expText = required > 0
+                    ? "Experience: " + prog.Experience + " / " + required
+                    : "Experience: MAX";
+
+                AddLabel(280, y, 1152, expText);
+
+                AddButton(540, y, 4005, 4007, 3000 + (int)type, GumpButtonType.Reply, 0);
+                AddLabel(575, y, 68, "Activate");
             }
             else
             {
@@ -49,34 +61,49 @@ namespace Server.Custom.Ascensions
                 AddLabel(235, y, 33, "Unlock");
             }
 
-            // Help button (question mark)
-            AddButton(350, y, 4011, 4013, 2000 + (int)type, GumpButtonType.Reply, 0);
-            AddLabel(385, y, 1152, "?");
+            AddButton(480, y, 4011, 4013, 2000 + (int)type, GumpButtonType.Reply, 0);
+            AddLabel(515, y, 1152, "?");
         }
 
-        public override void OnResponse(Server.Network.NetState sender, RelayInfo info)
+        public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (info.ButtonID == 0)
                 return;
 
-            // Unlock
+            // Unlock button
             if (info.ButtonID >= 1000 && info.ButtonID < 2000)
             {
                 AscensionType type = (AscensionType)(info.ButtonID - 1000);
 
-                AscensionUnlocking.TryUnlock(m_Player, type);
+                if (AscensionUnlocking.TryUnlock(m_Player, type))
+                {
+                    m_Player.SendMessage(0x55, "You have unlocked the " + type.ToString() + " ascension.");
+                 }
 
                 m_Player.SendGump(new AscensionSelectionGump(m_Player));
                 return;
             }
-
-            // Help
-            if (info.ButtonID >= 2000)
+            // info
+            if (info.ButtonID >= 2000 && info.ButtonID < 3000)
             {
                 AscensionType type = (AscensionType)(info.ButtonID - 2000);
-
                 m_Player.SendGump(new AscensionDetailGump(m_Player, type));
                 return;
+            }
+            // activate
+            if (info.ButtonID >= 3000)
+            {
+                AscensionType type = (AscensionType)(info.ButtonID - 3000);
+
+                if (m_Player.AscensionProfile.IsUnlocked(type))
+                {
+                    m_Player.ActivateAscension(type);
+                }
+                else
+                {
+                    m_Player.SendMessage("You must unlock this ascension first.");
+                }
+                m_Player.SendGump(new AscensionSelectionGump(m_Player));
             }
         }
     }
