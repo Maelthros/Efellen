@@ -9,7 +9,7 @@ public enum AscensionType
     Palemaster,
     Crusader,
     Kensai,
-    Spellsword,
+    Skald,
     Assassin,
     Reaver,
     Defender,

@@ -12,7 +12,7 @@ namespace Server.Custom.Ascensions
             AscensionType.Palemaster,
             AscensionType.Crusader,
             AscensionType.Kensai,
-            AscensionType.Spellsword,
+            AscensionType.Skald,
             AscensionType.Assassin,
             AscensionType.Reaver,
             AscensionType.Defender,

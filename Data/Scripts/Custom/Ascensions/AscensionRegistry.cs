@@ -16,7 +16,7 @@ public static class AscensionRegistry
         Register(new PalemasterAscension());
         Register(new CrusaderAscension());
         Register(new KensaiAscension());
-        Register(new SpellswordAscension());
+        Register(new SkaldAscension());
         Register(new AssassinAscension());
         Register(new ReaverAscension());
         Register(new DefenderAscension());
