@@ -10,17 +10,12 @@ namespace Server.Custom.Ascensions
         {
             _abilities = new List<AscensionAbility>();
 
-            // ----- Berserker Active -----
+            // ----- Berserker
             Register(new BerserkerRageAbility());
-           /*  Register(new BerserkerLeapSlamAbility());
+            Register(new BerserkerLeapSlamAbility());
             Register(new BerserkerWarCryAbility());
             Register(new BerserkerTenacityAbility());
 
-            // ----- Berserker Passive -----
-            Register(new BerserkerCleavePassive());
-            Register(new BerserkerUncannyDodgePassive());
-            Register(new BerserkerPummelingStrikesPassive());
-            Register(new BerserkerUndyingWrathPassive()); */
         }
 
         private static void Register(AscensionAbility ability)

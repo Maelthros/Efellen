@@ -12,13 +12,10 @@ namespace Server.Custom.Ascensions
         {
             _pm = pm;
 
-            AddBackground(0, 0, 250, 60, 9270);
-
             List<AscensionAbility> abilities =
                 AscensionAbilityRegistry.GetAbilities(pm.ActiveAscension);
 
-            int x = 10;
-            int buttonID = 1;
+            List<AscensionAbility> usable = new List<AscensionAbility>();
 
             foreach (AscensionAbility ability in abilities)
             {
@@ -28,10 +25,23 @@ namespace Server.Custom.Ascensions
                 if (!ability.CanUse(pm))
                     continue;
 
-                AddButton(x, 15, 4005, 4007, buttonID, GumpButtonType.Reply, 0);
-                AddLabel(x, 40, 1152, ability.Name);
+                usable.Add(ability);
+            }
 
-                x += 60;
+            int rowHeight = 32;
+            int height = 20 + (usable.Count * rowHeight) + 10;
+
+            AddBackground(0, 0, 250, height, 9270);
+
+            int y = 15;
+            int buttonID = 1;
+
+            foreach (AscensionAbility ability in usable)
+            {
+                AddButton(10, y, 4005, 4007, buttonID, GumpButtonType.Reply, 0);
+                AddLabel(45, y + 3, 1152, ability.Name);
+
+                y += rowHeight;
                 buttonID++;
             }
         }

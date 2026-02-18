@@ -1715,7 +1715,12 @@ namespace Server.Items
 			WeaponAbility weaponA;
 			bool BladeWeaving = Bladeweave.BladeWeaving(attacker, out weaponA);
 
-			bool ignoreArmor = ( a is ArmorIgnore || (move != null && move.IgnoreArmor( attacker )) || (BladeWeaving && weaponA is ArmorIgnore ));
+			bool ignoreArmor = 
+			    (a is ArmorIgnore) ||
+			    (move != null && move.IgnoreArmor(attacker)) ||
+			    (BladeWeaving && weaponA is ArmorIgnore) ||
+			    CheckPummelingStrikes(attacker);
+
 
 			damageGiven = AOS.Damage( defender, attacker, damage, ignoreArmor, phys, fire, cold, pois, nrgy, chaos, direct, false, this is BaseRanged, false );
 
@@ -1967,7 +1972,60 @@ namespace Server.Items
 			        }
 			    }
 			}
+			// berserker cleave
+			if (attacker is PlayerMobile)
+			{
+			    PlayerMobile pm = attacker as PlayerMobile;
+
+			    if (pm != null)
+			        pm.TryBerserkerCleave(defender, this);
+			}
+
 		}
+
+		private bool CheckPummelingStrikes(Mobile attacker)
+		{
+		    if (attacker == null || attacker.Deleted)
+		        return false;
+
+		    PlayerMobile pm = attacker as PlayerMobile;
+		    if (pm == null)
+		        return false;
+
+		    if (this is BaseRanged)
+		        return false;
+
+		    if (Layer != Layer.TwoHanded)
+		        return false;
+
+		    AscensionProfile profile = pm.AscensionProfile;
+		    if (profile == null)
+		        return false;
+
+		    AscensionProgress prog = profile.Get(AscensionType.Berserker);
+		    if (prog == null)
+		        return false;
+
+		    int berserkerLevel = prog.Level;
+
+		    if (berserkerLevel < 14)
+		        return false;
+
+		    int chance = (berserkerLevel >= 19)
+		        ? berserkerLevel/2
+		        : berserkerLevel/4;
+
+		    if (Utility.Random(100) < chance)
+		    {
+		        attacker.SendMessage(0x35, "Your pummeling strike ignores your opponent's armor!");
+		        attacker.PlaySound(0x1F5);
+		        return true;
+		    }
+
+		    return false;
+		}
+
+
 
 		public virtual double GetAosDamage( Mobile attacker, int bonus, int dice, int sides )
 		{

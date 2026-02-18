@@ -432,9 +432,11 @@ namespace Server.Mobiles
 		#endregion
 
 		#region ascension
-private AscensionProfile m_AscensionProfile;
+		private AscensionProfile m_AscensionProfile;
 		private AscensionType m_ActiveAscension;
 		private bool m_HasActiveAscension;
+
+		private DateTime m_UndyingWrathCooldown;
 
 		[CommandProperty(AccessLevel.GameMaster)]
 		public AscensionType ActiveAscension
@@ -591,6 +593,146 @@ private AscensionProfile m_AscensionProfile;
 
 		    return value;
 		}
+
+		public void TryBerserkerCleave(Mobile defender, BaseWeapon weapon)
+		{
+		    if (ActiveAscension != AscensionType.Berserker || weapon == null)
+		        return;
+
+		   if (AscensionProfile == null)
+			    return;			
+
+			AscensionProgress prog = AscensionProfile.Get(AscensionType.Berserker);			
+
+			if (prog == null || prog.Level < 2)
+			    return;
+
+
+		    if (FindItemOnLayer(Layer.TwoHanded) != weapon)
+		        return;
+
+		    int level = prog.Level;
+
+		    List<Mobile> validTargets = new List<Mobile>();
+
+		    foreach (Mobile m in GetMobilesInRange(2))
+		    {
+		        if (m == this || m == defender)
+		            continue;
+
+		        if (!CanBeHarmful(m))
+		            continue;
+
+		        validTargets.Add(m);
+		    }
+
+		    if (validTargets.Count == 0)
+		        return;
+
+		    // ---- FIRST CLEAVE ----
+		    if (Utility.RandomDouble() <= (0.04 + (0.01 * level)))
+		    {
+		        CleaveRandomTarget(validTargets, weapon);
+		    }
+
+		    // ---- SECOND CLEAVE (Level 5+) ----
+		    if (level >= 5 && validTargets.Count > 0)
+		    {
+		        if (Utility.RandomDouble() <= (0.01 + (0.01 * level)))
+		        {
+		            CleaveRandomTarget(validTargets, weapon);
+		        }
+		    }
+
+		    // ---- THIRD CLEAVE (Level 13+) ----
+		    if (level >= 13 && validTargets.Count > 0)
+		    {
+		        if (Utility.RandomDouble() <= (0.01 + (0.01 * level)))
+		        {
+		            CleaveRandomTarget(validTargets, weapon);
+		        }
+		    }
+		}
+		private void CleaveRandomTarget(List<Mobile> targets, BaseWeapon weapon)
+		{
+		    if (targets.Count == 0)
+		        return;
+
+		    int index = Utility.Random(targets.Count);
+		    Mobile target = targets[index];
+
+		    targets.RemoveAt(index);
+
+		    PerformCleaveAttack(target, weapon);
+		}
+
+		private void PerformCleaveAttack(Mobile target, BaseWeapon weapon)
+		{
+		    if (target == null || weapon == null)
+		        return;
+
+		    DoHarmful(target);
+
+		    target.FixedParticles(0x37B9, 1, 4, 0x251D, 0x0F1, 0, EffectLayer.Waist);
+		    PlaySound(0x510);
+
+		    weapon.OnSwing(this, target);
+		}
+
+		private bool TryUndyingWrath(ref int damage)
+		{
+		    if (ActiveAscension != AscensionType.Berserker)
+		        return false;
+
+		    if (AscensionProfile == null)
+		        return false;
+
+		    AscensionProgress prog = AscensionProfile.Get(AscensionType.Berserker);
+
+		    if (prog == null || prog.Level < 20)
+		        return false;
+
+		
+		    if (DateTime.UtcNow < m_UndyingWrathCooldown)
+		        return false;
+
+		    if (Hits - damage > 0)
+		        return false;
+
+		    damage = Hits - 1;
+
+		    if (damage < 0)
+		        damage = 0;
+
+		    m_UndyingWrathCooldown = DateTime.UtcNow + TimeSpan.FromMinutes(1);
+
+		    TriggerUndyingWrathEffect();
+
+		    ClearWarcryCooldown();
+
+		    return true;
+		}
+
+		private void ClearWarcryCooldown()
+		{
+		    SetAbilityCooldown("BerserkerWarCry", TimeSpan.Zero);
+
+		    SendMessage(0x22, "Your can warcry again!");
+		}
+
+
+		private void TriggerUndyingWrathEffect()
+		{
+		    FixedParticles(0x376A, 10, 15, 5032, 1153, 0, EffectLayer.Waist);
+		    PlaySound(0x1F2);
+
+		    SendMessage(0x22, "Your Undying Wrath refuses death!");
+
+		    LocalOverheadMessage(Network.MessageType.Regular, 0x22, false, "*UNYIELDING*");
+		}
+
+
+
 
 		#endregion
 
@@ -3019,6 +3161,8 @@ private AscensionProfile m_AscensionProfile;
 					from.Damage( amount, this );
 				}
 			}
+			// berserker save from death trigger	
+			TryUndyingWrath(ref amount);
 
 			base.Damage( amount, from );
 		}
