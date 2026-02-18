@@ -10,6 +10,7 @@ using Server.Spells.Bushido;
 using Server.Spells.Ninjitsu;
 using Server.Engines.Craft;
 using System.Collections.Generic;
+using Server.Custom.Ascensions;
 
 namespace Server.Items
 {
@@ -1001,6 +1002,31 @@ namespace Server.Items
 
 				if ( Spells.Chivalry.DivineFurySpell.UnderEffect( defender ) )
 					bonus -= 20; // defender loses 20% bonus when they're under divine fury
+				
+				// =============================
+				// Berserker Rage Defense Penalty
+				// =============================
+				if (defender is PlayerMobile)
+				{
+				    PlayerMobile pm = (PlayerMobile)defender;
+
+				    if (pm.HasAscensionEffect("BerserkerRage"))
+				    {
+				        AscensionEffectState state = pm.GetAscensionEffect("BerserkerRage");
+				        int level = state.Level;
+
+				        int penalty = 10;
+
+				        if (level >= 10)
+				            penalty += 5;
+
+				        if (level >= 20)
+				            penalty += 5;
+
+				        bonus -= penalty;
+				    }
+				}
+
 
 				if ( HitLower.IsUnderDefenseEffect( defender ) )
 					bonus -= 25; // Under Hit Lower Defense effect -> 25% malus
@@ -1585,7 +1611,28 @@ namespace Server.Items
 				//factor *= 1.25; // Every necromancer transformation other than horrific beast takes an additional 25% damage
 				percentageBonus += 25;
 			}
+			// =============================
+			// Berserker Rage Damage Bonus
+			// =============================
+			if (attacker is PlayerMobile)
+			{
+			    PlayerMobile pm = (PlayerMobile)attacker;			
 
+			    if (pm.HasAscensionEffect("BerserkerRage"))
+			    {
+			        AscensionEffectState state = pm.GetAscensionEffect("BerserkerRage");
+			        int level = state.Level;			
+
+			        int rageBonus = 10;	
+
+			        if (level >= 10)
+			            rageBonus += 5;			
+
+			        if (level >= 20)
+			            rageBonus += 5;			
+			        percentageBonus += rageBonus;
+			    }
+			}
 			percentageBonus = Math.Min( percentageBonus, 300 );
 
 			damage = damage + (int)( damage * sneakBonus );

@@ -428,7 +428,11 @@ namespace Server.Mobiles
 			set { m_ExecutesLightningStrike = value; }
 		}
 
-		private AscensionProfile m_AscensionProfile;
+
+		#endregion
+
+		#region ascension
+private AscensionProfile m_AscensionProfile;
 		private AscensionType m_ActiveAscension;
 		private bool m_HasActiveAscension;
 
@@ -490,12 +494,103 @@ namespace Server.Mobiles
 
 		    m_ActiveAscension = type;
 		    m_HasActiveAscension = true;
+			CloseGump(typeof(AscensionQuickbarGump));
+			SendGump(new AscensionQuickbarGump(this));
 
 		    SendMessage(1153, "You are now aligned with the " + type.ToString() + " ascension.");
 
 		    return true;
 		}
+		private Dictionary<string, DateTime> m_AbilityCooldowns;
+		public bool IsAbilityOnCooldown(string abilityName)
+		{
+		    if (m_AbilityCooldowns == null)
+		        return false;
 
+		    if (!m_AbilityCooldowns.ContainsKey(abilityName))
+		        return false;
+
+		    return DateTime.UtcNow < m_AbilityCooldowns[abilityName];
+		}
+
+		public void SetAbilityCooldown(string abilityName, TimeSpan cooldown)
+		{
+		    if (m_AbilityCooldowns == null)
+		        m_AbilityCooldowns = new Dictionary<string, DateTime>();
+
+		    m_AbilityCooldowns[abilityName] = DateTime.UtcNow + cooldown;
+		}
+		//passives and ascension effects are stored here
+		private System.Collections.Generic.Dictionary<string, AscensionEffectState> m_AscensionEffects;
+		public void AddAscensionEffect(string name, TimeSpan duration, int level)
+		{
+		    if (m_AscensionEffects == null)
+		        m_AscensionEffects = new System.Collections.Generic.Dictionary<string, AscensionEffectState>();
+
+		    AscensionEffectState state = new AscensionEffectState(name, duration, level);
+
+		    m_AscensionEffects[name] = state;
+
+		    Server.Timer.DelayCall(duration, new Server.TimerCallback(delegate()
+		    {
+		        RemoveAscensionEffect(name);
+		    }));
+		}
+
+		public void RemoveAscensionEffect(string name)
+		{
+		    if (m_AscensionEffects == null)
+		        return;
+
+		    if (m_AscensionEffects.ContainsKey(name))
+		        m_AscensionEffects.Remove(name);
+		}
+
+		public bool HasAscensionEffect(string name)
+		{
+		    if (m_AscensionEffects == null)
+		        return false;
+
+		    AscensionEffectState state;
+
+		    if (!m_AscensionEffects.TryGetValue(name, out state))
+		        return false;
+
+		    if (state.IsExpired)
+		    {
+		        m_AscensionEffects.Remove(name);
+		        return false;
+		    }
+
+		    return true;
+		}
+
+		public AscensionEffectState GetAscensionEffect(string name)
+		{
+		    if (!HasAscensionEffect(name))
+		        return null;
+
+		    return m_AscensionEffects[name];
+		}
+
+		public override int GetResistance( ResistanceType type )
+		{
+		    int value = base.GetResistance( type );
+
+		    if ( HasAscensionEffect("BerserkerRage") )
+		    {
+		        AscensionEffectState state = GetAscensionEffect("BerserkerRage");
+
+		        if ( state != null && state.Level >= 10 )
+		        {
+		            int bonus = state.Level / 2;
+
+		            value += bonus;
+		        }
+		    }
+
+		    return value;
+		}
 
 		#endregion
 
@@ -2335,6 +2430,18 @@ namespace Server.Mobiles
 			if ( willKill && from is PlayerMobile )
 				Timer.DelayCall( TimeSpan.FromSeconds( 10 ), new TimerCallback( ((PlayerMobile) from).RecoverAmmo ) );
 
+			if (HasAscensionEffect("BerserkerRage"))
+			{
+			    AscensionEffectState state = GetAscensionEffect("BerserkerRage");
+			    int level = state.Level;
+			    // level 15 Berserkers can not take more than 40% of their health as a single hit. 
+    			if ( state != null && state.Level >= 15 )
+    			{
+    			    int maxAllowed = (int)( HitsMax * 0.4 );
+    			    if ( amount > maxAllowed )
+    			        amount = maxAllowed;
+    			}
+			}
 			base.OnDamage( amount, from, willKill );
 		}
 
@@ -4075,7 +4182,7 @@ namespace Server.Mobiles
 			{
 				base.Paralyzed = value;
 
-				if( value )
+				if( value && !HasAscensionEffect("BerserkerRage") )
 					AddBuff( new BuffInfo( BuffIcon.Paralyze, 1075827 ) );	//Paralyze/You are frozen and can not move
 				else
 					BuffInfo.CleanupIcons( this, true );
