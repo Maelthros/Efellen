@@ -2005,6 +2005,9 @@ namespace Server.Items
 		    AscensionProgress prog = profile.Get(AscensionType.Berserker);
 		    if (prog == null)
 		        return false;
+			
+			if (profile.ActiveAscension != AscensionType.Berserker)
+			    return false;
 
 		    int berserkerLevel = prog.Level;
 
