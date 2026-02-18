@@ -1,0 +1,143 @@
+Berserker
+    active: Rage, leap slam, warcry, tenacity
+    passive:  cleave, uncanny dodge, pummeling strikes, undying wrath
+Archmage
+    active: Arcane storm, Conflux, Mana singularity , Timestop 
+    passive:  mana vault, weave reflection, arcane tempest, Weave Dominion
+Battlemage
+    active: Disruption, rending magic, Spell Blasting,  annihilation 
+    passive:  arcane siphoning,  arcane overload, piercing strikes, spell fracture
+Palemaster
+    active: grave servants, enervate, ,Circle of Death
+    passive: herald of hereafter,  
+Crusader
+    active: Smite, charge, aura of renewal, heaven's gate
+    passive:  Divine grace, Divine bastion, Inquisitorial Strikes, divine judgement
+Kensai
+    active: culling strike
+    passive:  practiced perfection, 
+Skald
+    active: song of heroism, battle trance, song of valor, symphony of war
+    passive:  brave heart, 
+Assassin
+    active:  Toxic surge, crippling poison, Noxious cloud
+    passive:  virulent strikes, dangerous habits, deadly strikes, terminal
+Reaver
+    active: exsanguinate, Gorge, bloodstorm ,Call the blood
+    passive: Vigor, flaying strikes, deep cuts, Exquisite Leech   
+Defender
+    active: Bulwark, 
+    passive:  
+Shadowthief
+    active: 
+    passive:  
+Archdruid
+    active:
+    passive:
+
+Berserker abilities
+active abilities : Rage, leap slam, warcry, tenacity
+
+rage, level 1
+command: [BerserkerRage
+when active, the character gains +(15+level) strength, gains immunity to paralyze, causes 10% increased damage and has 10% reduced defend chance. 
+Lasts for 10 seconds +1 sec/level. Has a one minute cooldown. When it ends, the character loses half of its stamina.
+At higher levels: 
+- at level 10, while raging, the character gains + (level/2) on all resistances while raging, and gains an additional 5% extra increased damage, and a 5% reduced defend 
+    chance.  
+- at level 15, while raging, if the character would take a hit that takes more than 40% of their total hit points, they lose 40% of their total hitpoints instead
+- at level 20, while raging, the character gains an additional 5% damage, and a 5% reduced defend chance
+
+Leap slam, level 6
+command: [BerserkerLeapSlam
+When used, the character chooses a free tile that is at least 2 tiles away from them and its moved to that tile. The maximum range is equal to  3 + level/4. When landing, 
+the character causes 20-35 + ( (str / 15) + level / 3 ) damage on all targets adjacent to that tile. Has a cooldown of 9 seconds, minus one second per 3 berserker levels. 
+At higher levels:
+- at level 12, when landing, all targets adjacent to the landing square are stunned for 3 seconds
+
+Warcry, level 11
+command: [BerserkerWarCry
+When used, all enemies around the Berserker in a radius of 3 + 1/5 levels receive the following penalty: they lose (25 + 1/level) strength, (10+1/level) Dexterity and (10+1/level) intelligence 
+for (20+1/level) seconds, and the berserker all allies of the Berserker recover 2 stamina every two seconds for 20+1/level seconds. Has a 1 minute cooldown.
+At higher levels:
+at level 16, all enemies affected by the warcry lose 20+2/level stamina immediately and lose an additional 2+1/level stamina every 2 seconds for 10+1/level seconds
+
+Tenacity, level 18
+command:[BerserkerTenacity
+When used, the berserker heals to full health immediately and heals to full health again every 10 seconds for 30 seconds. Has a 2 minutes cooldown. 
+At higher levels:
+at level 20, the berserker also heals to full stamina and heals to full stamina again every 10 seconds for 30 seconds.
+
+passive abilities: cleave, uncanny dodge, pummeling strikes, undying wrath
+
+cleave, level 2
+when making a melee strike with a two handed weapon, the berserker has a 4% + 1% level chance of making another strike against an adjacent enemy
+at higher levels:
+- at level 5, when making a melee strike with a two handed weapon, the berserker has a 1%+1%/level chance of making another strike against another adjacent enemy not affected by the first additional strike
+- level 13, when making a melee strike with a two handed weapon, the berserker a 1%+1%/level chance of making another strike against another adjacent enemy not affected by the first or second additional strikes
+
+uncanny dodge, level 8
+The barbarian has a 25+1%/level chance of ignoring the effects of traps
+At higher levels:
+- at level 17, the chance of ignoring traps increases to 45+1%/level
+
+pummeling strikes, level 14
+when making a strike with a two handed melee weapon, the berserker has a (level/4)% chance of ignoring the target's armor
+at higher levels: 
+- at level 19, the chance increases to (level/2)% chance of ignoring the target's armor.
+
+undying wrath, level 20
+while raging, if the berserker takes a hit that would reduce their hit points to 0 or less, they reduce it to 1 instead and the cooldown on their Warcry is set to zero. This effect can trigger once per minute
+
+
+
+Archmage abilities
+     active: Arcane storm, Conflux, Mana singularity , Timestop 
+    
+Arcane storm, level 1
+command: [ArchmageArcaneStorm
+The archmage unleashes (6 + 1 per 3 archmage levels) energy missiles at the nearest target, each missile causes 20-32 + (int/15 + level/3) damage. Casting this spell costs 45 mana, and once used, it cannot be used again for (45-1/level) seconds. 
+At higher levels: 
+- at level 10, a target hit by an arcane storm has a 3% chance per level of the archmage to receive a -(8 + level/4) energy resistance debuff that lasts for 12 + archmage level /2 seconds
+- at level 15, a target hit by an arcane storm loses 4 + level/2 stamina for each missile that hit it 
+- at level 20, if a target is killed by an arcane storm, the cooldown on Conflux is set to zero. 
+
+Conflux, level 6
+command: [ArchmageConflux
+when activated, the archmage's spell damage is increased by 10% for (10 +1/level) seconds, 2 minutes cooldown.
+At higher levels:
+- at level 12, the spell damage is increased by 15%.
+
+Mana Singularity, level 11
+command: [ArchmageMassSingularity
+The Archmage creates a collapsing arcane vortex at a target location within 2 + (level/3) tiles. After 2.5 seconds, the singularity explodes, causing 25-40 + (int/10 + level/2) energy damage to all hostile targets up to 2 tiles away from the source point. 
+Targets caught in the explosion also lose 20+level mana. The archmage recovers 4 mana per enemy hit. Activating this ability costs 50 mana. This ability has a cooldown of 30 seconds. 
+At higher levels:
+at level 16, all enemies hit by this ability are slowed for 6 seconds, and lose 20+level stamina. 
+
+Timestop, level 18
+command:[ArchmageTimestop
+all hostile creatures up to (3+(level/5)) tiles away from the caster are paralyzed for (6+level/4) seconds. This ability costs 60 mana and has a 3 minutes cooldown.
+At higher levels:
+at level 20, once the paralyze ends, all enemies hit by this ability are slowed for 12 seconds and lose 20+level mana and stamina.
+
+passive:  mana vault, weave reflection, arcane tempest, Weave Dominion
+
+mana vault, level 2
+when an enemy would leech or drain mana from the archmage, there's a 2% chance per level that the mana in immediately refunded to the archmage
+at higher levels:
+- at level 5, when an enemy would leech or drain mana from the archmage, they receive 10-20 + (level/2) energy damage
+- level 13, when an enemy would leech or drain mana from the archmage, they are paralyzed for 2 seconds
+
+weave reflection, level 8
+- the archmage receives a 2.5%/level chance of reflecting spells
+At higher levels:
+- at level 17, when the archmage reflects a spell, they have a 1% chance / level of setting the cooldown on Conflux to zero
+
+arcane tempest, level 14
+when casting a harmful spell at a target, there's a 0.5%/level chance of triggering a Mana singularity at the target that costs no mana and doesn't have a cooldown.
+at higher levels: 
+- at level 19, when arcane tempest triggers, there's a 1% chance/level that the cooldown on arcane storm is set to zero.
+
+weave dominion, level 20
+when casting a harmful magery spell at a target, the spell's mana cost is inflicted as additional damage. 
