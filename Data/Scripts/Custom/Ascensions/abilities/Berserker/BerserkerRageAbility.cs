@@ -35,8 +35,10 @@ namespace Server.Custom.Ascensions
         public override void Execute(PlayerMobile pm)
         {
             if (!CanUse(pm))
-                return;
-
+            {
+                pm.SendMessage("You cannot use your Rage now.");
+                return;                
+            }
             if (pm.IsAbilityOnCooldown(Name))
             {
                 pm.SendMessage("That ability is on cooldown.");

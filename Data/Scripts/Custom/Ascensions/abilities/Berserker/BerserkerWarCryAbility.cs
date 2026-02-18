@@ -28,7 +28,11 @@ namespace Server.Custom.Ascensions
         public override void Execute(PlayerMobile pm)
         {
             if (!CanUse(pm))
-                return;
+            {
+                pm.SendMessage("You cannot use your warcry now");
+                return;                
+            }
+
 
             if (pm.IsAbilityOnCooldown(Name))
             {
