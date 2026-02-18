@@ -731,7 +731,20 @@ namespace Server.Mobiles
 		    LocalOverheadMessage(Network.MessageType.Regular, 0x22, false, "*UNYIELDING*");
 		}
 
-
+		private double m_ArchmageConfluxScalar;
+		private DateTime m_ArchmageConfluxEnd;
+		
+		public double ArchmageConfluxScalar
+		{
+		    get { return m_ArchmageConfluxScalar; }
+		    set { m_ArchmageConfluxScalar = value; }
+		}
+		
+		public DateTime ArchmageConfluxEnd
+		{
+		    get { return m_ArchmageConfluxEnd; }
+		    set { m_ArchmageConfluxEnd = value; }
+		}
 
 
 		#endregion

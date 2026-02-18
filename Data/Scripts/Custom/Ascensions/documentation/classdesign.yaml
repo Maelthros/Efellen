@@ -38,6 +38,11 @@ Archdruid
 Berserker abilities
 active abilities : Rage, leap slam, warcry, tenacity
 
+The Berserker is a savage warrior that wields two-handed weapons to great effect. In combat, they fly into a murderous rage that empowers them.
+In order to activate this Ascension, you need to have 95 base skill in both Tactics and Magic Resist. Every time you level up the class, the requirement also
+increases by 1. So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in both Tactics and Magic Resist.
+
+These are the abilities that the berserker learns as they level up:
 rage, level 1
 command: [BerserkerRage
 when active, the character gains +(15+level) strength, gains immunity to paralyze, causes 10% increased damage and has 10% reduced defend chance. 
@@ -87,7 +92,7 @@ at higher levels:
 - at level 19, the chance increases to (level/2)% chance of ignoring the target's armor.
 
 undying wrath, level 20
-while raging, if the berserker takes a hit that would reduce their hit points to 0 or less, they reduce it to 1 instead and the cooldown on their Warcry is set to zero. This effect can trigger once per minute
+If the berserker takes a hit that would reduce their hit points to 0 or less, they reduce it to 1 instead and the cooldown on their Warcry is set to zero. This effect can trigger once per minute
 
 
 
@@ -96,10 +101,10 @@ Archmage abilities
     
 Arcane storm, level 1
 command: [ArchmageArcaneStorm
-The archmage unleashes (6 + 1 per 3 archmage levels) energy missiles at the nearest target, each missile causes 20-32 + (int/15 + level/3) damage. Casting this spell costs 45 mana, and once used, it cannot be used again for (45-1/level) seconds. 
+The archmage unleashes (6 + 1 per 3 archmage levels) energy missiles at the nearest target, each missile causes 10-18 + (int/25 + level/3) damage. Casting this spell costs 45 mana, and once used, it cannot be used again for (45-1/level) seconds. 
 At higher levels: 
 - at level 10, a target hit by an arcane storm has a 3% chance per level of the archmage to receive a -(8 + level/4) energy resistance debuff that lasts for 12 + archmage level /2 seconds
-- at level 15, a target hit by an arcane storm loses 4 + level/2 stamina for each missile that hit it 
+- at level 15, a target hit by an arcane storm loses 34 + level/2 stamina after being hit by a missile storm
 - at level 20, if a target is killed by an arcane storm, the cooldown on Conflux is set to zero. 
 
 Conflux, level 6
@@ -111,9 +116,9 @@ At higher levels:
 Mana Singularity, level 11
 command: [ArchmageMassSingularity
 The Archmage creates a collapsing arcane vortex at a target location within 2 + (level/3) tiles. After 2.5 seconds, the singularity explodes, causing 25-40 + (int/10 + level/2) energy damage to all hostile targets up to 2 tiles away from the source point. 
-Targets caught in the explosion also lose 20+level mana. The archmage recovers 4 mana per enemy hit. Activating this ability costs 50 mana. This ability has a cooldown of 30 seconds. 
+Targets caught in the explosion also lose 20+level mana. The archmage recovers 4 mana per enemy hit. Activating this ability costs 50 mana. This ability has a cooldown of 60 seconds. 
 At higher levels:
-at level 16, all enemies hit by this ability are slowed for 6 seconds, and lose 20+level stamina. 
+at level 16, all enemies hit by this ability are paralyzed for 4 seconds, and lose 20+level stamina. 
 
 Timestop, level 18
 command:[ArchmageTimestop

@@ -15,7 +15,11 @@ namespace Server.Custom.Ascensions
             Register(new BerserkerLeapSlamAbility());
             Register(new BerserkerWarCryAbility());
             Register(new BerserkerTenacityAbility());
-
+            // ---- Archmage
+            Register(new ArchmageArcaneStormAbility());
+            Register(new ArchmageConfluxAbility());
+            Register(new ArchmageManaSingularityAbility());
+            Register(new ArchmageTimestopAbility());
         }
 
         private static void Register(AscensionAbility ability)
