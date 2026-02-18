@@ -1,0 +1,61 @@
+using System.Collections.Generic;
+
+namespace Server.Custom.Ascensions
+{
+    public static class AscensionAbilityRegistry
+    {
+        private static List<AscensionAbility> _abilities;
+
+        static AscensionAbilityRegistry()
+        {
+            _abilities = new List<AscensionAbility>();
+
+            // ----- Berserker Active -----
+            Register(new BerserkerRageAbility());
+           /*  Register(new BerserkerLeapSlamAbility());
+            Register(new BerserkerWarCryAbility());
+            Register(new BerserkerTenacityAbility());
+
+            // ----- Berserker Passive -----
+            Register(new BerserkerCleavePassive());
+            Register(new BerserkerUncannyDodgePassive());
+            Register(new BerserkerPummelingStrikesPassive());
+            Register(new BerserkerUndyingWrathPassive()); */
+        }
+
+        private static void Register(AscensionAbility ability)
+        {
+            if (ability == null)
+                return;
+
+            _abilities.Add(ability);
+        }
+
+        public static List<AscensionAbility> GetAbilities(AscensionType type)
+        {
+            List<AscensionAbility> list = new List<AscensionAbility>();
+
+            for (int i = 0; i < _abilities.Count; i++)
+            {
+                if (_abilities[i].Ascension == type)
+                    list.Add(_abilities[i]);
+            }
+
+            return list;
+        }
+
+        public static AscensionAbility GetAbilityByName(string name)
+        {
+            if (name == null)
+                return null;
+
+            for (int i = 0; i < _abilities.Count; i++)
+            {
+                if (_abilities[i].Name == name)
+                    return _abilities[i];
+            }
+
+            return null;
+        }
+    }
+}
