@@ -13,7 +13,11 @@ namespace Server.Custom.Ascensions
                     "The Berserker is a savage warrior that wields two-handed weapons to great effect. In combat, they fly into a murderous rage that empowers them.<br><br>" +
                     "In order to activate this Ascension, you need to have 95 base skill in both Tactics and Magic Resist. Every time you level up the class, the requirement also increases by 1.<br><br>" +
                     "So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in both Tactics and Magic Resist.";
-
+                case AscensionType.Archmage:
+                    return
+                    "The Archmage is a master of the Arcane. In combat, they control their opponents and execute powerful spells to bend the Weave itself to their will itself.<br><br>" +
+                    "In order to activate this Ascension, you need to have 95 base skill in both Magery and Psychology. Every time you level up the class, the requirement also increases by 1.<br><br>" +
+                    "So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in both Magery and Psychology";
                 default:
                     return "No description defined.";
             }
@@ -22,55 +26,114 @@ namespace Server.Custom.Ascensions
 
         public static string GetAbilities(AscensionType type)
         {
-            if (type != AscensionType.Berserker)
-                return "No abilities defined.";
+            if(type == AscensionType.Berserker)
+            {
+                return
+                "<BASEFONT COLOR=#FFFFFF>" +
+                "These are the abilities that the berserker learns as they level up:<br><br>" + 
 
-            return
-            "<BASEFONT COLOR=#FFFFFF>" +
-            "These are the abilities that the berserker learns as they level up:<br><br>" +
+                "Rage. Level 1<br>" +
+                "Command: [BerserkerRage<br>" +
+                "Gain +(15+level) STR, immunity to paralyze, +10% damage, -10% defend chance.<br>" +
+                "Lasts 10 + level seconds. 1 min cooldown. Ends with 50% stamina loss.<br>" +
+                "Lvl 10: +level/2 resists, +5% damage, -5% defend chance.<br>" +
+                "Lvl 15: Hits above 40% max HP are reduced to 40%.<br>" +
+                "Lvl 20: Additional +5% damage, -5% defend chance.<br><br>" +   
 
-            "Rage. Level 1<br>" +
-            "Command: [BerserkerRage<br>" +
-            "Gain +(15+level) STR, immunity to paralyze, +10% damage, -10% defend chance.<br>" +
-            "Lasts 10 + level seconds. 1 min cooldown. Ends with 50% stamina loss.<br>" +
-            "Lvl 10: +level/2 resists, +5% damage, -5% defend chance.<br>" +
-            "Lvl 15: Hits above 40% max HP are reduced to 40%.<br>" +
-            "Lvl 20: Additional +5% damage, -5% defend chance.<br><br>" +
+                "Leap Slam, Level 6<br>" +
+                "Command: [BerserkerLeapSlam<br>" +
+                "Leap 3 + level/4 tiles. On landing deal 20–35 + ((STR/15)+(level/3)) damage to adjacent enemies.<br>" +
+                "Cooldown: 9 sec - (1 sec per 3 levels).<br>" +
+                "Lvl 12: Stuns adjacent enemies for 3 sec.<br><br>" +   
 
-            "Leap Slam, Level 6<br>" +
-            "Command: [BerserkerLeapSlam<br>" +
-            "Leap 3 + level/4 tiles. On landing deal 20–35 + ((STR/15)+(level/3)) damage to adjacent enemies.<br>" +
-            "Cooldown: 9 sec - (1 sec per 3 levels).<br>" +
-            "Lvl 12: Stuns adjacent enemies for 3 sec.<br><br>" +
+                "Warcry, Level 11<br>" +
+                "Command: [BerserkerWarCry<br>" +
+                "Enemies lose (25+level) STR, (10+level) DEX, (10+level) INT for (20+level) sec.<br>" +
+                "Allies gain 2 stamina every 2 sec for same duration.<br>" +
+                "Lvl 16: Enemies lose 20+2*level stamina instantly and 2+level every 2 sec.<br><br>" +  
 
-            "Warcry, Level 11<br>" +
-            "Command: [BerserkerWarCry<br>" +
-            "Enemies lose (25+level) STR, (10+level) DEX, (10+level) INT for (20+level) sec.<br>" +
-            "Allies gain 2 stamina every 2 sec for same duration.<br>" +
-            "Lvl 16: Enemies lose 20+2*level stamina instantly and 2+level every 2 sec.<br><br>" +
+                "Tenacity,Level 18<br>" +
+                "Command: [BerserkerTenacity<br>" +
+                "Heal to full HP immediately and again every 10 sec for 30 sec. 2 min cooldown.<br>" +
+                "Lvl 20: Also heals full stamina each pulse.<br><br>" + 
 
-            "Tenacity,Level 18<br>" +
-            "Command: [BerserkerTenacity<br>" +
-            "Heal to full HP immediately and again every 10 sec for 30 sec. 2 min cooldown.<br>" +
-            "Lvl 20: Also heals full stamina each pulse.<br><br>" +
+                "Passives:<br>" +
+                "Cleave, level 2<br>" +
+                "When making a melee strike with a two handed weapon, the berserker has a 4% + 1% level chance of making another strike against an adjacent enemy<br>" +
+                "At level 5, they have a 1%+1%/level chance of a second aditional strike. At level 13, they have a 1%+1%/level chance of a third aditional strike<br><br>" +    
 
-            "Passives:<br>" +
-            "Cleave, level 2<br>" +
-            "When making a melee strike with a two handed weapon, the berserker has a 4% + 1% level chance of making another strike against an adjacent enemy<br>" +
-            "At level 5, they have a 1%+1%/level chance of a second aditional strike. At level 13, they have a 1%+1%/level chance of a third aditional strike<br><br>" +
+                "Uncanny dodge, level 8<br>" +
+                "The berserker has a 25+1%/level chance of ignoring the effects of traps<br>"+
+                "Level 17: the chance increases to 45+1%/level<br><br>"+
 
-            "Uncanny dodge, level 8<br>" +
-            "The berserker has a 25+1%/level chance of ignoring the effects of traps<br>"+
-            "Level 17: the chance increases to 45+1%/level<br><br>"+
-            
-            "Pummeling Strikes, level 14<br>" +
-            "When making a strike with a two handed melee weapon, the berserker has a (level/4)% chance of ignoring the target's armor<br>"+
-            "Level 19: the chance increases to (levle/2)%<br><br>"+
-            
-            "Undying Wrath, level 20<br>" +
-            "If the berserker takes a hit that would reduce their hit points to 0 or less, they reduce it to 1 instead and the cooldown on their Warcry is set to zero.<br>"+
-            "This effect can trigger once per minute<br>"+
-            "</BASEFONT>";
+                "Pummeling Strikes, level 14<br>" +
+                "When making a strike with a two handed melee weapon, the berserker has a (level/4)% chance of ignoring the target's armor<br>"+
+                "Level 19: the chance increases to (levle/2)%<br><br>"+
+
+                "Undying Wrath, level 20<br>" +
+                "If the berserker takes a hit that would reduce their hit points to 0 or less, they reduce it to 1 instead and the cooldown on their Warcry is set to zero.<br>"+
+                "This effect can trigger once per minute<br>"+
+                "</BASEFONT>";                
+            }
+            else if ( type == AscensionType.Archmage)
+            {
+                return 
+                "<BASEFONT COLOR=#FFFFFF>" +
+                "These are the abilities that the Archmage learns as they level up:<br><br>" + 
+
+                "Arcane storm, level 1<br>" +
+                "command: [ArchmageArcaneStorm <br>" +
+                "The archmage unleashes (6 + 1 per 3 archmage levels) energy missiles at the target, each missile causes 10-18 + (int/25 + level/3) damage.<br>" + 
+                "Casting this spell costs 45 mana, and once used, it cannot be used again for (45-1/level) seconds.<br>" +
+                "level 10; a target hit by an arcane storm has a 3% chance per level of the archmage to receive a -(8 + level/4) energy resistance debuff.<br>" + 
+                "that lasts for 12 + archmage level /2 seconds.<br>" + 
+                "level 15: a target hit by an arcane storm loses 34 + level/2 stamina after being hit by a missile storm.<br>" + 
+                "level 20: if a target is killed by an arcane storm, the cooldown on Conflux is set to zero.<br><br>" +  
+
+                "Conflux, level 6<br>" + 
+                "command: [ArchmageConflux <br>" + 
+                "when activated, the archmage's spell damage is increased by 10% for (10 +1/level) seconds, 2 minutes cooldown.<br>" + 
+                "level 12: the spell damage is increased by 15%.<br><br>" +
+
+                "Mana Singularity, level 11.<br>" +
+                "command: [ArchmageMassSingularity <br>" +
+                "The Archmage creates a collapsing arcane vortex at a target location within 2 + (level/3) tiles. After 2.5 seconds, the singularity<br>" + 
+                "explodes, causing 25-40 + (int/10 + level/2) energy damage to all hostile targets up to 2 tiles away from the source point.<br>" + 
+                "Targets caught in the explosion also lose 20+level mana. The archmage recovers 4 mana per enemy hit. Activating this ability costs 50 mana.<br>" +
+                "This ability has a cooldown of 60 seconds.<br>" + 
+                "Level 16: all enemies hit by this ability are paralyzed for 4 seconds, and lose 20+level stamina.<br><br>" +
+
+                "Timestop, level 18<br>" +
+                "command:[ArchmageTimestop <br>" +
+                "all hostile creatures up to (3+(level/5)) tiles away from the caster are paralyzed for (6+level/4) seconds.<br>" +
+                "This ability costs 60 mana and has a 3 minutes cooldown.<br>" +
+                "Level 20: once the paralyze ends, all enemies hit by this ability lose 20+level mana and stamina.<br><br>" +
+
+
+                "mana vault, level 2<br>" +
+                "when an enemy would leech or drain mana from the archmage, there's a 2% chance per level that the mana in immediately refunded to the  archmage<br>" +
+                "Level 5: when an enemy would leech or drain mana from the archmage, they receive 15-25 + (level/2) energy damage<br>"+
+                "Level 13: when an enemy would leech or drain mana from the archmage, they are paralyzed for 2 seconds<br><br>"+
+
+                "weave reflection, level 8<br>"+
+                "- the archmage receives a 2.5%/level chance of reflecting spells<br>"+
+                "Level 17: when the archmage reflects a spell, they have a 1% chance / level of setting the cooldown on Conflux to zero<br>"+
+
+                "arcane tempest, level 14<br>"+
+                "when casting a spell at a hostile target, there's a (0.25 * level)% chance of triggering a Mana singularity at the target that costs<br>"+
+                " no mana and doesn't have a cooldown.<br>"+
+                "-Level 19: when arcane tempest triggers, there's a 1% chance/level that the cooldown on arcane storm is set to zero.<br><br>"+
+
+                "Weave Unraveling, level 20<br>"+
+                "when casting a harmful magery spell at a target, there's a 0.25% chance per level of creating weave disruptions around it.<br>"+ 
+                "The amount of disruptions varies between 3-7, and they last from 6 to 11 seconds.<br>"+ 
+                "Anyone standing on top of these disruptions receives 14-22 + (int/15) energy damage per second.<br>"+ 
+                "</BASEFONT>";  
+            }
+            else
+            {
+                return "No abilities defined.";                
+            }
         }
 
     }

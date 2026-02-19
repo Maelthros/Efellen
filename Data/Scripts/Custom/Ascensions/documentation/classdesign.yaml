@@ -124,15 +124,16 @@ Timestop, level 18
 command:[ArchmageTimestop
 all hostile creatures up to (3+(level/5)) tiles away from the caster are paralyzed for (6+level/4) seconds. This ability costs 60 mana and has a 3 minutes cooldown.
 At higher levels:
-at level 20, once the paralyze ends, all enemies hit by this ability are slowed for 12 seconds and lose 20+level mana and stamina.
+at level 20, once the paralyze ends, all enemies hit by this ability lose 20+level mana and stamina.
 
 passive:  mana vault, weave reflection, arcane tempest, Weave Dominion
 
 mana vault, level 2
 when an enemy would leech or drain mana from the archmage, there's a 2% chance per level that the mana in immediately refunded to the archmage
 at higher levels:
-- at level 5, when an enemy would leech or drain mana from the archmage, they receive 10-20 + (level/2) energy damage
-- level 13, when an enemy would leech or drain mana from the archmage, they are paralyzed for 2 seconds
+- at level 5, when an enemy would leech or drain mana from the archmage, they receive 15-25 + (level/2) energy damage
+- level 13, when an 
+enemy would leech or drain mana from the archmage, they are paralyzed for 2 seconds
 
 weave reflection, level 8
 - the archmage receives a 2.5%/level chance of reflecting spells
@@ -140,9 +141,10 @@ At higher levels:
 - at level 17, when the archmage reflects a spell, they have a 1% chance / level of setting the cooldown on Conflux to zero
 
 arcane tempest, level 14
-when casting a harmful spell at a target, there's a 0.5%/level chance of triggering a Mana singularity at the target that costs no mana and doesn't have a cooldown.
+when casting a spell at a hostile target, there's a (0.25 * level)% chance of triggering a Mana singularity at the target that costs no mana and doesn't have a cooldown.
 at higher levels: 
 - at level 19, when arcane tempest triggers, there's a 1% chance/level that the cooldown on arcane storm is set to zero.
 
-weave dominion, level 20
-when casting a harmful magery spell at a target, the spell's mana cost is inflicted as additional damage. 
+Weave Unraveling, level 20
+when casting a harmful magery spell at a target, there's a 0.25% chance per level of creating weave disruptions around it. The amount of disruptions 
+varies between 3-7, and they last from 6 to 11 seconds. Anyone standing on top of these disruptions receives 14-22 + (int/15) energy damage per second. 

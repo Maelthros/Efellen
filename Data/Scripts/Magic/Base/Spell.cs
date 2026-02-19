@@ -22,6 +22,7 @@ using Server.Spells.Shinobi;
 using Server.Spells.Elementalism;
 using Server.Spells.DeathKnight;
 using Server.Spells.Chivalry;
+using Server.Custom.Ascensions;
 
 namespace Server.Spells
 {
@@ -572,11 +573,6 @@ namespace Server.Spells
 			{
 				m_Caster.SendLocalizedMessage( 1061091 ); // You cannot cast that spell in this form.
 			}
-			/* else if (!CheckWildShapeCasting())
-			{
-				m_Caster.SendMessage( "You cannot cast that spell while in wild shape." );
-				return false;
-			} */
 			else if ( ( m_Caster.Paralyzed || m_Caster.Frozen ) && !( this is FerretFlee ) )
 			{
 				m_Caster.SendLocalizedMessage( 502643 ); // You can not cast a spell while frozen.
@@ -961,6 +957,8 @@ namespace Server.Spells
 			else if ( Caster.CanBeHarmful( target ) && CheckSequence() )
 			{
 				Caster.DoHarmful( target );
+				TryArcaneTempestProc(target);
+				TryWeaveUnravelingProc(target);
 				return true;
 			}
 			else
@@ -968,6 +966,65 @@ namespace Server.Spells
 				return false;
 			}
 		}
+
+		private void TryWeaveUnravelingProc(Mobile target)
+		{
+		    PlayerMobile pm = Caster as PlayerMobile;
+
+		    if (pm == null && !pm.HasActiveAscension && pm.ActiveAscension != AscensionType.Archmage)
+		        return;
+
+		    AscensionProgress prog = pm.AscensionProfile.Get(AscensionType.Archmage);
+
+		    if (prog == null || prog.Level < 20)
+		        return;
+
+		    double chance = prog.Level * 0.25;
+
+		    if (Utility.RandomDouble() < (chance / 100.0))
+		    {
+		        pm.SendMessage("The weave begins to unravel!");
+
+		        WeaveUnravelingAbility.Trigger(pm, target);
+		    }
+		}
+
+
+		private void TryArcaneTempestProc(Mobile target)
+		{
+		    PlayerMobile pm = m_Caster as PlayerMobile;
+
+		    if (pm == null && !pm.HasActiveAscension && pm.ActiveAscension != AscensionType.Archmage)
+		        return;
+
+		    AscensionProgress prog = pm.AscensionProfile.Get(AscensionType.Archmage);
+
+		    if (prog == null || prog.Level < 14)
+		        return;
+
+		    double procChance = prog.Level * 0.25;
+
+		    if (Utility.RandomDouble() < (procChance / 100.0))
+		    {
+		        pm.SendMessage("Arcane Tempest triggers a Mana Singularity!");
+
+		        ArchmageManaSingularityAbility ability = new ArchmageManaSingularityAbility();
+
+		        ability.CreateSingularityPassive(pm, target.Location, target.Map);
+
+		        if (prog.Level >= 19)
+		        {
+		            double resetChance = prog.Level * 1.0;
+
+		            if (Utility.RandomDouble() < (resetChance / 100.0))
+		            {
+		                pm.SetAbilityCooldown("Arcane Storm", TimeSpan.Zero);
+		                pm.SendMessage("Your Arcane Storm cooldown has been reset!");
+		            }
+		        }
+		    }
+		}
+
 
 		private class AnimTimer : Timer
 		{

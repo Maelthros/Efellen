@@ -102,6 +102,16 @@ namespace Server.Custom.Ascensions
 
         }
 
+        public void CreateSingularityPassive(PlayerMobile caster, Point3D loc, Map map)
+        {
+            AscensionProgress prog = caster.AscensionProfile.Get(Ascension);
+            int level = prog.Level;
+
+            VortexTimer timer = new VortexTimer(caster, loc, map, level);
+            timer.Start();
+        }
+
+
         private class VortexTimer : Timer
         {
             private PlayerMobile m_Caster;
@@ -242,7 +252,6 @@ namespace Server.Custom.Ascensions
                         m.Freeze(TimeSpan.FromSeconds(6));
                     }
                 }
-
                 if (manaReturn > 0)
                 {
                     m_Caster.Mana += manaReturn;
