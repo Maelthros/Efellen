@@ -20,6 +20,11 @@ namespace Server.Custom.Ascensions
             Register(new ArchmageConfluxAbility());
             Register(new ArchmageManaSingularityAbility());
             Register(new ArchmageTimestopAbility());
+            // ---- Pale master
+            Register(new PalemasterUndyingHordesAbility());
+            Register(new PaleMasterEnervateAbility());
+            Register(new PalemasterCircleOfDeathAbility());
+            Register(new PalemasterDanseMacabreAbility());
         }
 
         private static void Register(AscensionAbility ability)
