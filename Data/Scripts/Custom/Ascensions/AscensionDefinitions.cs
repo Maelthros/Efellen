@@ -12,12 +12,20 @@ namespace Server.Custom.Ascensions
                     return
                     "The Berserker is a savage warrior that wields two-handed weapons to great effect. In combat, they fly into a murderous rage that empowers them.<br><br>" +
                     "In order to activate this Ascension, you need to have 95 base skill in both Tactics and Magic Resist. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in both Tactics and Magic Resist.";
+                    "So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in both Tactics and Magic Resist.<br><br>"+
+                    "Berserkers also require their spirit to be free of the taint of civilization - a Berserker will not gain experience in this Ascension if they have learned Bushido, Knightship, Magery or Necromancy";
                 case AscensionType.Archmage:
                     return
                     "The Archmage is a master of the Arcane. In combat, they control their opponents and execute powerful spells to bend the Weave itself to their will itself.<br><br>" +
                     "In order to activate this Ascension, you need to have 95 base skill in both Magery and Psychology. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in both Magery and Psychology";
+                    "So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in both Magery and Psychology<br><br>"+
+                    "Archmages also require a singular focus on arcane magic, and they will not gain experience in this class if they have learned Knightship, Elementalism, Necromancy or Bushido";
+                case AscensionType.Palemaster:
+                    return
+                    "The Palemaster is death made flesh. In combat, they control an army of undead and curse and enfeeble their opponents until they have met their end.<br><br>" +
+                    "In order to activate this Ascension, you need to have 95 base skill in both Necromancy and Spiritualism. Every time you level up the class, the requirement also increases by 1.<br><br>" +
+                    "So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in both Necromancy and Spiritualism<br><br>"+
+                    "Palemasters also are required to revel in death and vileness, and they will not gain experience in this class if they have learned Knightship, Elementalism or Bushido, or if they stray from the path of evil";
                 default:
                     return "No description defined.";
             }
@@ -32,7 +40,7 @@ namespace Server.Custom.Ascensions
                 "<BASEFONT COLOR=#FFFFFF>" +
                 "These are the abilities that the berserker learns as they level up:<br><br>" + 
 
-                "Rage. Level 1<br>" +
+                "Rage, Level 1<br>" +
                 "Command: [BerserkerRage<br>" +
                 "Gain +(15+level) STR, immunity to paralyze, +10% damage, -10% defend chance.<br>" +
                 "Lasts 10 + level seconds. 1 min cooldown. Ends with 50% stamina loss.<br>" +
@@ -105,10 +113,9 @@ namespace Server.Custom.Ascensions
 
                 "Timestop, level 18<br>" +
                 "command:[ArchmageTimestop <br>" +
-                "all hostile creatures up to (3+(level/5)) tiles away from the caster are paralyzed for (6+level/4) seconds.<br>" +
+                "all hostile creatures up to (3+(level/5)) tiles away from the caster are paralyzed for (12+level/4) seconds.<br>" +
                 "This ability costs 60 mana and has a 3 minutes cooldown.<br>" +
-                "Level 20: once the paralyze ends, all enemies hit by this ability lose 20+level mana and stamina.<br><br>" +
-
+                "Level 20: once the paralyze ends, all enemies hit by this ability lose 40+level mana and stamina.<br><br>" +
 
                 "mana vault, level 2<br>" +
                 "when an enemy would leech or drain mana from the archmage, there's a 2% chance per level that the mana in immediately refunded to the  archmage<br>" +
@@ -126,9 +133,76 @@ namespace Server.Custom.Ascensions
 
                 "Weave Unraveling, level 20<br>"+
                 "when casting a harmful magery spell at a target, there's a 0.25% chance per level of creating weave disruptions around it.<br>"+ 
-                "The amount of disruptions varies between 3-7, and they last from 6 to 11 seconds.<br>"+ 
+                "The amount of disruptions varies between 6-12, and they last from 12 to 22 seconds.<br>"+ 
                 "Anyone standing on top of these disruptions receives 14-22 + (int/15) energy damage per second.<br>"+ 
                 "</BASEFONT>";  
+            }
+            else if ( type == AscensionType.Archmage)
+            {
+                return
+                "<BASEFONT COLOR=#FFFFFF>" +
+                "These are the abilities that the Archmage learns as they level up:<br><br>" + 
+                "Undying hordes, level 1<br>" + 
+                "command: [PalemasterUndyingHordes<br>" + 
+                "The Palemaster calls forth a mindless horde of undead to attack their enemies.<br>" + 
+                "These will attack anything hostile to the caster relentlessly until they are destroyed or until they crumble into dust. <br>" + 
+                "The Undying hordes has a 4 minutes cooldown between uses.<br>" +    
+                "The horde lasts for 60 (+3 per level) seconds and its composition is based on the Palemaster Level.<br>" +  
+                "Level 1-4: 3-5 skeletons, 2-3 skeleton warriors<br>" + 
+                "Level 4-8: 3-5 skeletons, 2-3 skeleton warriors, 1-2 skeleton knights<br>" + 
+                "Level 8-12: 3-4 skeleton warriors, 2-3 skeleton knights, 1-2 mummies<br>" + 
+                "Level 13-16: 2-3 skeleton knights, 2-3 mumies, 1-2 ancient mummies, 1 undead giant<br>" + 
+                "Level 17-19: 3-4 undead giants, 2-3 ancient mummies, 1 skeletal dragon<br>" + 
+                "Level 20: 4-5 undead giants, 3-4 ancient mummies, 1-2 skeletal dragons<br><br>" +          
+
+                "Enervate, level 6<br>" + 
+                "command: [PalemasterEnervate<br>" + 
+                "The palemaster syphons life from their enemies, feeding himself and enfeebling them.<br>" +  
+                "When cast, this spell causes all hostile living creatures in up to 3 + (1 per 5 levels) tiles receive 40 + (level /3 ) cold damage and lose the same amount in mana.<br>" +  
+                "For every creature hit, the palemaster recovers 5 hit points and 5 mana, to a maximum of 50 of each.<br>" + 
+                "Creatures hit also receive -(5 + palemaster level / 4)% on their strength and dexterity for 30 seconds.<br>" +
+                "This ability costs 30 mana to activate and has a one minute cooldown.<br>" + 
+                "Level 12: the maximum amount recovered is capped at 100 for hit points and mana.<br><br>" +         
+
+                "Circle Of Death, level 11.<br>" +
+                "command: [PalemasterCircleOfDeath.<br>" +
+                "The palemaster corrupts the weave to erode life from their enemies.<br>" +
+                "This ability creates a circle arount the target creature, and all living creatures up to 2 (+1 per 5 levels) of it receive 12-18 + (level /2 ) + (int / 20) cold damage per second for an amount of seconds equal to 3 + level / 4.<br>" +
+                "This ability has a 2 minutes cooldown and costs 60 mana to activate.<br>" +
+                "Level 16: creatures caught in the circle lose stamina every second equal to half the damage dealt.<br><br>" +            
+
+                "Danse Macabre, level 18.<br>" +
+                "The Palemaster shatters the gate between words, bringing the ever hungry hordes to the land of the living.<br>" + 
+                "This ability has a 4 minutes cooldown and costs 80 mana to activate.<br>" +
+                "Every second for level/3 seconds, one of those happens:.<br>" +
+                "    - 1-2 undead giants are spawned and attack the enemies of the pale master, they last for 30 seconds.<br>" + 
+                "    - 2-3 mummy lords are spawned and attack the enemies of the pale master, they last for 30 seconds.<br>" +
+                "    - every undead under the palemaster's control that is up to 5 tiles away from the palemaster heals an amount of hit points equal to 25% of their maximum hit points.<br>" +
+                "    - the palemaster heals to full health.<br>" +
+                
+                "at level 20, these effects are added to the possible effects that happen every second:.<br>" +
+                "    - every hostile living creature that is up to 3 tiles away from the palemaster and that is at less than 50% of their maximum hit points loses 10% of their hit points.<br>" +
+                "    - all living creatures up to 4 tiles away from the pale master receive a -20% debuff to their strenght that lasts for 30 seconds.<br>" +
+                "    - 1 skeletal dragon spawns and attack the enemies of the pale master, it lasts for 30 seconds.<br><br>" +
+
+                "deathless vigor, level 2.<br>" +
+                "When casting an offensive necromancy spell, 1.5% per level chance of recovering 2 + (level / 2) hit points.<br>" + 
+                "Level 5: 0.25% per level chance of gaining +10% spell damage for 15 seconds.<br>" +
+                "Level 13: the spell damage bonus increases to +15%, the duration increases to 25 and the chance increases to 0.45% per level.<br><br>" +
+
+                "undead graft, level 8.<br>" +
+                "When casting an offensive necromancy spell while wearing a full set of bone armor, there's a 0.25% per level chance all friendly summoned undead creatures will heal 5% of their hit points.<br>" +
+                "Level 17: when undead graft triggers, friendly summoned undead cretures recover 2% of their maximum health per second for level/2 seconds.<br>" + 
+            
+                "creeping cold, level 14.<br>" +
+                "When casting wither, there's a 0.25% chance per level that it will trigger an additional time.<br>" +
+                "Level 19: when the creeping cold effect triggers, there's a 0.25% chance per level that enervate will be cast automatically ignoring mana costs and cooldown.<br>" +
+            
+                "herald of hereafter, level 20.<br>" +
+                "When casting a harmful necromancy spell at a target, there's a 0.25% chance per level of creating weave disruptions around it. The amount of disruptions varies between 6-12, and they last from 12 to 22 seconds.<br>" +
+                "Anyone standing on top of these disruptions receives 14-22 + (int/15) poison damage per second.<br>"+ 
+
+                "</BASEFONT>"; 
             }
             else
             {
