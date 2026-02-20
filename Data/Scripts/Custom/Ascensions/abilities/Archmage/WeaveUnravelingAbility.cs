@@ -17,15 +17,15 @@ namespace Server.Custom.Ascensions
             Map map = center.Map;
             Point3D origin = center.Location;
 
-            int count = Utility.RandomMinMax(3, 7);
-            int durationSeconds = Utility.RandomMinMax(6, 11);
+            int count = Utility.RandomMinMax(6, 12);
+            int durationSeconds = Utility.RandomMinMax(12, 22);
 
             ArrayList spawned = new ArrayList();
 
             for (int i = 0; i < 20 && spawned.Count < count; i++)
             {
-                int xOffset = Utility.RandomMinMax(-4, 4);
-                int yOffset = Utility.RandomMinMax(-4, 4);
+                int xOffset = Utility.RandomMinMax(-7, 7);
+                int yOffset = Utility.RandomMinMax(-7, 7);
 
                 Point3D loc = new Point3D(origin.X + xOffset, origin.Y + yOffset, origin.Z);
 
