@@ -10,30 +10,14 @@ namespace Server.Custom.Ascensions
 {
     public class PaleMasterEnervateAbility : AscensionAbility
     {
-        public override string Name
-        {
-            get { return "Enervate"; }
-        }
+        public override string Name        { get { return "Enervate"; } }
+        public override AscensionType Ascension { get { return AscensionType.Palemaster; } }
+        public override int RequiredLevel  { get { return 6; } }
+        public override bool IsPassive     { get { return false; } }
+        public override TimeSpan Cooldown  { get { return TimeSpan.FromSeconds(60); } }
 
-        public override AscensionType Ascension
-        {
-            get { return AscensionType.Palemaster; }
-        }
-
-        public override int RequiredLevel
-        {
-            get { return 6; }
-        }
-
-        public override bool IsPassive
-        {
-            get { return false; }
-        }
-
-        public override TimeSpan Cooldown
-        {
-            get { return TimeSpan.FromSeconds(60); } 
-        }
+        private static readonly SlayerEntry s_Undead   = SlayerGroup.GetEntryByName(SlayerName.Silver);
+        private static readonly SlayerEntry s_Exorcism = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
 
         public override void Execute(PlayerMobile pm)
         {
@@ -56,111 +40,82 @@ namespace Server.Custom.Ascensions
             }
 
             AscensionProgress prog = pm.AscensionProfile.Get(Ascension);
-            int level = prog.Level;
-
-            DoEnervate(pm, level);
+            DoEnervate(pm, prog.Level, true);
         }
 
-        private void DoEnervate(PlayerMobile pm, int level)
+        public void ForceExecute(PlayerMobile pm, int level)
         {
-            pm.PublicOverheadMessage(
-                MessageType.Regular,
-                0x22,
-                false,
-                "*Enervate*"
-            );
-            int radius = 3 + (level / 5);
-            int damage = 40 + (level / 3);
+            DoEnervate(pm, level, false);
+        }
 
-            int maxLeech = 50;
-            if (level >= 12)
-                maxLeech = 100;
+        private void DoEnervate(PlayerMobile pm, int level, bool applyCost)
+        {
+            if (applyCost)
+            {
+                pm.Mana -= 30;
+                pm.SetAbilityCooldown(Name, Cooldown);
+            }
+
+            pm.PublicOverheadMessage(MessageType.Regular, 0x22, false, "*Enervate*");
+
+            int radius      = 3 + (level / 5);
+            int damage      = 40 + (level / 3);
+            int maxLeech    = level >= 12 ? 100 : 50;
+            int debuffPercent = 5 + (level / 5);
 
             int totalHeal = 0;
             int totalMana = 0;
-            pm.Mana -= 30;
 
             SlamVisuals.SlamVisual(pm, radius, 0x36B0, 1153);
-           
+
             IPooledEnumerable eable = pm.Map.GetMobilesInRange(pm.Location, radius);
 
-            foreach (Mobile m in eable)
+            try
             {
-                if (m == null || m.Deleted || !m.Alive || m == pm)
-                    continue;
+                foreach (Mobile m in eable)
+                {
+                    if (m == null || m.Deleted || !m.Alive || m == pm)
+                        continue;
 
-                if (!pm.CanBeHarmful(m))
-                    continue;
+                    if (!pm.CanBeHarmful(m))
+                        continue;
 
-                SlayerEntry undead = SlayerGroup.GetEntryByName(SlayerName.Silver);
-                SlayerEntry exorcism = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
+                    if (s_Undead.Slays(m) || s_Exorcism.Slays(m))
+                        continue;
 
-                if (undead.Slays(m) || exorcism.Slays(m))
-                    continue;
+                    pm.DoHarmful(m);
+                    AOS.Damage(m, pm, damage, 0, 0, 100, 0, 0);
 
-                AOS.Damage(m, pm, damage, 0, 0, 100, 0, 0);
-                pm.DoHarmful(m);
-                if (m.Mana >= damage)
-                    m.Mana -= damage;
-                else
-                    m.Mana = 0;
+                    m.Mana = (m.Mana >= damage) ? m.Mana - damage : 0;
 
-                totalHeal += 5;
-                totalMana += 5;
+                    totalHeal += 5;
+                    totalMana += 5;
 
-                int debuffPercent = 5 + (level / 5);
-
-                ApplyStatDebuff(m, debuffPercent);
+                    ApplyStatDebuff(m, debuffPercent);
+                }
             }
-            eable.Free();
+            finally
+            {
+                eable.Free();
+            }
 
-            if (totalHeal > maxLeech)
-                totalHeal = maxLeech;
+            totalHeal = Math.Min(totalHeal, maxLeech);
+            totalMana = Math.Min(totalMana, maxLeech);
 
-            if (totalMana > maxLeech)
-                totalMana = maxLeech;
-
-            if (pm.Hits + totalHeal > pm.HitsMax)
-                pm.Hits = pm.HitsMax;
-            else
-                pm.Hits += totalHeal;
-
-            if (pm.Mana + totalMana > pm.ManaMax)
-                pm.Mana = pm.ManaMax;
-            else
-                pm.Mana += totalMana;
+            pm.Hits = Math.Min(pm.Hits + totalHeal, pm.HitsMax);
+            pm.Mana = Math.Min(pm.Mana + totalMana, pm.ManaMax);
 
             pm.FixedParticles(0x374A, 10, 15, 5021, 2075, 0, EffectLayer.Waist);
             pm.PlaySound(0x1F8);
-            pm.SetAbilityCooldown(Name, TimeSpan.FromSeconds(60));
         }
 
         private static void ApplyStatDebuff(Mobile m, int percent)
         {
-            int strLoss = (m.RawStr * percent) / 100;
-            int dexLoss = (m.RawDex * percent) / 100;
+            int strLoss = Math.Max((m.RawStr * percent) / 100, 1);
+            int dexLoss = Math.Max((m.RawDex * percent) / 100, 1);
 
-            if (strLoss < 1)
-                strLoss = 1;
-
-            if (dexLoss < 1)
-                dexLoss = 1;
-
-            StatMod strMod = new StatMod(
-                StatType.Str,
-                "EnervateStr",
-                -strLoss,
-                TimeSpan.FromSeconds(30)
-            );
-
-            StatMod dexMod = new StatMod(
-                StatType.Dex,
-                "EnervateDex",
-                -dexLoss,
-                TimeSpan.FromSeconds(30)
-            );
-            m.AddStatMod(strMod);
-            m.AddStatMod(dexMod);
-        }       
+            m.AddStatMod(new StatMod(StatType.Str, "EnervateStr", -strLoss, TimeSpan.FromSeconds(30)));
+            m.AddStatMod(new StatMod(StatType.Dex, "EnervateDex", -dexLoss, TimeSpan.FromSeconds(30)));
+        }
     }
 }
