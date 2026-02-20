@@ -230,21 +230,30 @@ namespace Server.Spells
 
 		    damage = AOS.Scale( damage, evalScale );
 
-		    if ( Caster is PlayerMobile )
-		    {
-		        PlayerMobile pm = Caster as PlayerMobile;
+		    if (Caster is PlayerMobile)
+			{
+			    PlayerMobile pm = Caster as PlayerMobile;
+				if (pm != null)
+			    {
+			        if (pm.ActiveAscension == AscensionType.Palemaster)
+					{
+					    AscensionEffectState state;
 
-		        if ( pm != null )
-		        {
-		            if ( pm.ActiveAscension == AscensionType.Archmage )
-		            {
-		                if ( pm.ArchmageConfluxScalar > 0.0 && pm.ArchmageConfluxEnd > DateTime.UtcNow )
-		                {
-		                    scalar += pm.ArchmageConfluxScalar;
-		                }
-		            }
-		        }
-		    }
+					    if (pm.TryGetAscensionEffect("DeathlessVigorSpellDamage", out state))
+					    {
+					        damageBonus += state.Level;
+					    }
+					}
+
+			        if (pm.ActiveAscension == AscensionType.Archmage)
+			        {
+			            if (pm.ArchmageConfluxScalar > 0.0 && pm.ArchmageConfluxEnd > DateTime.UtcNow)
+			            {
+			                scalar += pm.ArchmageConfluxScalar;
+			            }
+			        }
+			    }
+			}
 
 		    damage = AOS.Scale( damage, (int)(scalar * 100) );
 
