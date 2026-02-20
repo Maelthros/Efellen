@@ -465,6 +465,16 @@ namespace Server.Mobiles
 		    }
 		}
 
+		public bool TryGetAscensionEffect(string key, out AscensionEffectState state)
+		{
+		    state = null;
+		
+		    if (m_AscensionEffects == null)
+		        return false;
+		
+		    return m_AscensionEffects.TryGetValue(key, out state);
+		}
+
 		public bool ActivateAscension(AscensionType type)
 		{
 		    if (AscensionProfile == null)
