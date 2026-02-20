@@ -257,6 +257,13 @@ namespace Server.Items
 			undead.Opposition = new SlayerGroup[]{ };
 			undead.FoundOn = new Type[]{ };
 			undead.Super = new SlayerEntry( SlayerName.Silver, 
+				typeof( PaleMasterUndeadGiant ),
+				typeof( PaleMasterMummy ),
+				typeof( PaleMasterMummyLord ),
+				typeof( PaleMasterSkeleton ),
+				typeof( PaleMasterSkeletonWarrior ),
+				typeof( PaleMasterSkeletonKnight ),
+				typeof( PaleMasterSkeletalDragon ),
 				typeof( Vraax ),
 				typeof( AncientLich ), 
 				typeof( LichKing ), 
