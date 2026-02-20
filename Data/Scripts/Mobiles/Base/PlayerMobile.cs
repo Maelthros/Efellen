@@ -629,13 +629,13 @@ namespace Server.Mobiles
 		    if (validTargets.Count == 0)
 		        return;
 
-		    // ---- FIRST CLEAVE ----
+		    // First Cleave
 		    if (Utility.RandomDouble() <= (0.04 + (0.01 * level)))
 		    {
 		        CleaveRandomTarget(validTargets, weapon);
 		    }
 
-		    // ---- SECOND CLEAVE (Level 5+) ----
+		    // Second Cleave
 		    if (level >= 5 && validTargets.Count > 0)
 		    {
 		        if (Utility.RandomDouble() <= (0.01 + (0.01 * level)))
@@ -644,7 +644,7 @@ namespace Server.Mobiles
 		        }
 		    }
 
-		    // ---- THIRD CLEAVE (Level 13+) ----
+		    // Third Cleave
 		    if (level >= 13 && validTargets.Count > 0)
 		    {
 		        if (Utility.RandomDouble() <= (0.01 + (0.01 * level)))
