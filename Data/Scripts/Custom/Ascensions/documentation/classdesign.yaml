@@ -1,15 +1,16 @@
+Quick reference
 Berserker
     active: Rage, leap slam, warcry, tenacity
     passive:  cleave, uncanny dodge, pummeling strikes, undying wrath
 Archmage
     active: Arcane storm, Conflux, Mana singularity , Timestop 
-    passive:  mana vault, weave reflection, arcane tempest, Weave Dominion
+    passive:  mana vault, weave reflection, arcane tempest, Weave Unraveling
 Battlemage
     active: Disruption, rending magic, Spell Blasting,  annihilation 
-    passive:  arcane siphoning,  arcane overload, piercing strikes, spell fracture
+    passive:  arcane siphoning,  arcane overload, piercing spells, spell fracture
 Palemaster
-    active: grave servants, enervate, ,Circle of Death
-    passive: herald of hereafter,  
+    active: Undying hordes, enervate,Circle of Death, Danse Macabre
+    passive: deathless vigor, undead graft, creeping cold, herald of hereafter,  
 Crusader
     active: Smite, charge, aura of renewal, heaven's gate
     passive:  Divine grace, Divine bastion, Inquisitorial Strikes, divine judgement
@@ -99,6 +100,10 @@ If the berserker takes a hit that would reduce their hit points to 0 or less, th
 Archmage abilities
      active: Arcane storm, Conflux, Mana singularity , Timestop 
     
+    "The Archmage is a master of the Arcane. In combat, they control their opponents and execute powerful spells to bend the Weave itself to their will itself.
+    In order to activate this Ascension, you need to have 95 base skill in both Magery and Psychology. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in both Magery and Psychology"
+
 Arcane storm, level 1
 command: [ArchmageArcaneStorm
 The archmage unleashes (6 + 1 per 3 archmage levels) energy missiles at the nearest target, each missile causes 10-18 + (int/25 + level/3) damage. Casting this spell costs 45 mana, and once used, it cannot be used again for (45-1/level) seconds. 
@@ -122,9 +127,9 @@ at level 16, all enemies hit by this ability are paralyzed for 4 seconds, and lo
 
 Timestop, level 18
 command:[ArchmageTimestop
-all hostile creatures up to (3+(level/5)) tiles away from the caster are paralyzed for (6+level/4) seconds. This ability costs 60 mana and has a 3 minutes cooldown.
+all hostile creatures up to (3+(level/5)) tiles away from the caster are paralyzed for (12+level/4) seconds. This ability costs 60 mana and has a 3 minutes cooldown.
 At higher levels:
-at level 20, once the paralyze ends, all enemies hit by this ability lose 20+level mana and stamina.
+at level 20, once the paralyze ends, all enemies hit by this ability lose 40+level mana and stamina.
 
 passive:  mana vault, weave reflection, arcane tempest, Weave Dominion
 
@@ -146,5 +151,77 @@ at higher levels:
 - at level 19, when arcane tempest triggers, there's a 1% chance/level that the cooldown on arcane storm is set to zero.
 
 Weave Unraveling, level 20
-when casting a harmful magery spell at a target, there's a 0.25% chance per level of creating weave disruptions around it. The amount of disruptions 
-varies between 3-7, and they last from 6 to 11 seconds. Anyone standing on top of these disruptions receives 14-22 + (int/15) energy damage per second. 
+when casting a harmful spell at a target, there's a 0.25% chance per level of creating weave disruptions around it. The amount of disruptions 
+varies between 6-12, and they last from 12 to 22 seconds. Anyone standing on top of these disruptions receives 14-22 + (int/15) energy damage per second. 
+
+
+
+Palemaster Abilities
+    
+    The Palemaster is death made flesh. In combat, they control an army of undead and curse and enfeeble their opponents until they have met their end.
+    In order to activate this Ascension, you need to have 95 base skill in both Necromancy and Spiritualism. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in both Necromancy and Spiritualism
+    Palemasters also are required to revel in death and vileness, and they will not gain experience in this class if they have learned Knightship, Elementalism or Bushido, or if they stray from the path of evil
+
+    Undying hordes, level 1
+    command: [PalemasterUndyingHordes
+    The Palemaster calls forth a mindless horde of undead to attack their enemies. These will attack anything hostile to the caster relentlessly until they are destroyed or until they crumble into dust. 
+    The Undying hordes has a 4 minutes cooldown between uses.   
+    The horde lasts for 60 (+3 per level) seconds and its composition is based on the Palemaster Level. 
+    Level 1-4: 3-5 skeletons, 2-3 skeleton warriors
+    Level 4-8: 3-5 skeletons, 2-3 skeleton warriors, 1-2 skeleton knights
+    Level 8-12: 3-4 skeleton warriors, 2-3 skeleton knights, 1-2 mummies
+    Level 13-16: 2-3 skeleton knights, 2-3 mumies, 1-2 ancient mummies, 1 undead giant
+    Level 17-19: 3-4 undead giants, 2-3 ancient mummies, 1 skeletal dragon
+    Level 20: 4-5 undead giants, 3-4 ancient mummies, 1-2 skeletal dragons
+
+    Enervate, level 6
+    command: [PalemasterEnervate
+    The palemaster syphons life from their enemies, feeding himself and enfeebling them. 
+    When cast, this spell causes all hostile living creatures in up to 3 + (1 per 5 levels) tiles receive 40 + (level /3 ) cold damage and lose the same amount in mana. 
+    For every creature hit, the palemaster recovers 5 hit points and 5 mana, to a maximum of 50 of each. Creatures hit also receive -(5 + palemaster level / 4)% on 
+    their strength and dexterity for 30 seconds. This ability costs 30 mana to activate and has a one minute cooldown. 
+    At higher levels:
+    - at level 12, the maximum amount recovered is capped at 100 for hit points and mana.
+
+    Circle Of Death, level 11
+    command: [PalemasterCircleOfDeath
+    The palemaster corrupts the weave to erode life from their enemies. This ability creates a circle arount the target creature, and all living creatures up to 2 (+1 per 5 levels)
+     of it receive 12-18 + (level /2 ) + (int / 20) cold damage per second for an amount of seconds equal to 3 + level / 4. This ability has a 2 minutes cooldown and costs 60 mana to activate.
+    At higher levels:
+    at level 16, creatures caught in the circle lose stamina every second equal to half the damage dealt
+
+    Danse Macabre, level 18
+    The Palemaster shatters the gate between words, bringing the ever hungry hordes to the land of the living. 
+    This ability has a 4 minutes cooldown and costs 80 mana to activate
+    Every second for level/3 seconds, one of those happens:
+        - 1-2 undead giants are spawned and attack the enemies of the pale master, they last for 30 seconds 
+        - 2-3 mummy lords are spawned and attack the enemies of the pale master, they last for 30 seconds
+        - every undead under the palemaster's control that is up to 5 tiles away from the palemaster heals an amount of hit points equal to 25% of their maximum hit points
+        - the palemaster heals to full health
+    At higher levels:
+    at level 20, these effects are added to the possible effects that happen every second:
+        - every hostile living creature that is up to 3 tiles away from the palemaster and that is at less than 50% of their maximum hit points loses 10% of their hit points
+        - all living creatures up to 4 tiles away from the pale master receive a -20% debuff to their strenght that lasts for 30 seconds
+        - 1 skeletal dragon spawns and attack the enemies of the pale master, it lasts for 30 seconds
+
+
+    deathless vigor, level 2
+    when casting an offensive necromancy spell, 1.5% per level chance of recovering 2 + (level / 2) hit points 
+    at higher levels:l
+    - at level 5, 0.25% per level chance of gaining +10% spell damage for 15 seconds
+    - level 13, the spell damage bonus increases to +15%, the duration increases to 25 and the chance increases to 0.45% per level
+    
+    undead graft, level 8
+    when casting an offensive necromancy spell while wearing a full set of bone armor, there's a 0.25% per level chance all friendly summoned undead creatures will heal 5% of their hit points.
+    at higher levels: 
+    at level 17: when undead graft triggers, friendly summoned undead cretures recover 2% of their maximum health per second for level/2 seconds 
+
+    creeping cold, level 14
+    when casting wither, there's a 0.25% chance per level that it will trigger an additional time
+    at higher levels: 
+    - at level 19, when the creeping cold effect triggers, there's a 0.25% chance per level that enervate will be cast automatically ignoring mana costs and cooldown
+
+    herald of hereafter, level 20
+    when casting a harmful spell at a target, there's a 0.25% chance per level of creating weave disruptions around it. The amount of disruptions 
+    varies between 6-12, and they last from 12 to 22 seconds. Anyone standing on top of these disruptions receives 14-22 + (int/15) poison damage per second. 
