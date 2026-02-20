@@ -68,7 +68,7 @@ namespace Server.Custom.Ascensions
             {
                 m_Caster = caster;
                 m_Level = level;
-                m_TicksRemaining = level / 4;
+                m_TicksRemaining = level / 3;
 
                 Priority = TimerPriority.TwoFiftyMS;
             }
