@@ -957,8 +957,14 @@ namespace Server.Spells
 			else if ( Caster.CanBeHarmful( target ) && CheckSequence() )
 			{
 				Caster.DoHarmful( target );
-				TryArcaneTempestProc(target);
-				TryWeaveUnravelingProc(target);
+				PlayerMobile pm = Caster as PlayerMobile;
+
+				if (pm != null && pm.HasActiveAscension && pm.ActiveAscension == AscensionType.Archmage)
+				{
+				    TryArcaneTempestProc(target);    
+				    TryWeaveUnravelingProc(target);                    
+				}
+
 				return true;
 			}
 			else
@@ -971,12 +977,12 @@ namespace Server.Spells
 		{
 		    PlayerMobile pm = Caster as PlayerMobile;
 
-		    if (pm == null && !pm.HasActiveAscension && pm.ActiveAscension != AscensionType.Archmage)
-		        return;
+		    if (pm == null || pm.AscensionProfile == null)
+			    return;
 
 		    AscensionProgress prog = pm.AscensionProfile.Get(AscensionType.Archmage);
-
-		    if (prog == null || prog.Level < 20)
+			
+			if (prog == null || prog.Level < 20)
 		        return;
 
 		    double chance = prog.Level * 0.25;
@@ -994,10 +1000,10 @@ namespace Server.Spells
 		{
 		    PlayerMobile pm = m_Caster as PlayerMobile;
 
-		    if (pm == null && !pm.HasActiveAscension && pm.ActiveAscension != AscensionType.Archmage)
-		        return;
+		    if (pm == null || pm.AscensionProfile == null)
+			    return;
 
-		    AscensionProgress prog = pm.AscensionProfile.Get(AscensionType.Archmage);
+		   	AscensionProgress prog = pm.AscensionProfile.Get(AscensionType.Archmage);
 
 		    if (prog == null || prog.Level < 14)
 		        return;

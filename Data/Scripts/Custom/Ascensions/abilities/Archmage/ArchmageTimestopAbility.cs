@@ -56,9 +56,9 @@ namespace Server.Custom.Ascensions
             int level = prog.Level;
 
             int range = 3 + (level / 5);
-            double duration = 6 + (level / 4);
+            double duration = 12 + (level / 4);
             bool drainOnExpire = (level >= 20);
-            int drain = 20 + level;
+            int drain = 40 + level;
 
             IPooledEnumerable eable = pm.Map.GetMobilesInRange(pm.Location, range);
             System.Collections.Generic.List<Mobile> targets = new System.Collections.Generic.List<Mobile>();
@@ -95,7 +95,6 @@ namespace Server.Custom.Ascensions
                         target.Stam = 0;
                 }
             }
-
             pm.Mana -= 60;
             pm.SetAbilityCooldown(Name, TimeSpan.FromSeconds(180));
         }
