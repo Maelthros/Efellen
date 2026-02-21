@@ -116,7 +116,7 @@ namespace Server.Custom.Ascensions
                 bc.ControlSlots = 0;
                 bc.Controlled   = false;
                 bc.FightMode    = FightMode.Closest;
-                bc.RangeHome    = 10;
+                bc.RangeHome    = 12;
                 bc.Home         = pm.Location;
 
                 Effects.SendLocationEffect(bc.Location, bc.Map, 0x3728, 15, 10, 2075, 0);
