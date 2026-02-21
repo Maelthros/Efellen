@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -21,35 +21,31 @@ namespace Server.Custom.Ascensions
             if (prog == null || prog.Level < 20)
                 return;
 
-            int level = prog.Level;
-
-            double chance = 0.0025 * level;
-
-            if (Utility.RandomDouble() > chance)
+            if (Utility.RandomDouble() > 0.0025 * prog.Level)
                 return;
 
-            SpawnCorruptions(pm, level);
+            SpawnCorruptions(pm, prog.Level);
         }
 
         private static void SpawnCorruptions(PlayerMobile caster, int level)
         {
             Map map = caster.Map;
-            Point3D origin = caster.Location;
 
             if (map == null)
                 return;
 
-            int count = Utility.RandomMinMax(6, 12);
-            int durationSeconds = Utility.RandomMinMax(12, 22);
-
-            int spawned = 0;
+            Point3D origin        = caster.Location;
+            int count             = Utility.RandomMinMax(6, 12);
+            int durationSeconds   = Utility.RandomMinMax(12, 22);
+            int spawned           = 0;
 
             for (int i = 0; i < 20 && spawned < count; i++)
             {
-                int xOffset = Utility.RandomMinMax(-7, 7);
-                int yOffset = Utility.RandomMinMax(-7, 7);
-
-                Point3D loc = new Point3D(origin.X + xOffset, origin.Y + yOffset, origin.Z);
+                Point3D loc = new Point3D(
+                    origin.X + Utility.RandomMinMax(-7, 7),
+                    origin.Y + Utility.RandomMinMax(-7, 7),
+                    origin.Z
+                );
 
                 if (!map.CanFit(loc, 16, false, false))
                     continue;
@@ -57,8 +53,7 @@ namespace Server.Custom.Ascensions
                 if (HasFieldAt(map, loc))
                     continue;
 
-                bool eastToWest = Utility.RandomBool();
-                int itemID = eastToWest ? 0x3915 : 0x3922;
+                int itemID = Utility.RandomBool() ? 0x3915 : 0x3922;
 
                 new CorruptionField(itemID, loc, caster, map, TimeSpan.FromSeconds(durationSeconds));
 
@@ -72,16 +67,19 @@ namespace Server.Custom.Ascensions
         {
             IPooledEnumerable eable = map.GetItemsInRange(loc, 0);
 
-            foreach (Item item in eable)
+            try
             {
-                if (item is CorruptionField)
+                foreach (Item item in eable)
                 {
-                    eable.Free();
-                    return true;
+                    if (item is CorruptionField)
+                        return true;
                 }
             }
+            finally
+            {
+                eable.Free();
+            }
 
-            eable.Free();
             return false;
         }
     }
@@ -89,7 +87,6 @@ namespace Server.Custom.Ascensions
     public class CorruptionField : Item
     {
         private PlayerMobile m_Caster;
-        private Timer m_ExpireTimer;
         private Timer m_DamageTimer;
 
         public override bool BlocksFit { get { return false; } }
@@ -99,17 +96,13 @@ namespace Server.Custom.Ascensions
         {
             Movable = false;
             Visible = true;
-            Hue = 0xB97;
-            Light = LightType.Circle300;
+            Hue     = 0xB97;
+            Light   = LightType.Circle300;
 
             MoveToWorld(loc, map);
 
-            m_Caster = caster;
-
-            m_ExpireTimer = new ExpireTimer(this, duration);
-            m_ExpireTimer.Start();
-
-            m_DamageTimer = new DamageTimer(this);
+            m_Caster      = caster;
+            m_DamageTimer = new DamageTimer(this, duration);
             m_DamageTimer.Start();
         }
 
@@ -118,9 +111,6 @@ namespace Server.Custom.Ascensions
         public override void OnAfterDelete()
         {
             base.OnAfterDelete();
-
-            if (m_ExpireTimer != null)
-                m_ExpireTimer.Stop();
 
             if (m_DamageTimer != null)
                 m_DamageTimer.Stop();
@@ -136,33 +126,22 @@ namespace Server.Custom.Ascensions
         {
             base.Deserialize(reader);
             reader.ReadInt();
-        }
-
-        private class ExpireTimer : Timer
-        {
-            private CorruptionField m_Field;
-
-            public ExpireTimer(CorruptionField field, TimeSpan duration)
-                : base(duration)
-            {
-                m_Field = field;
-            }
-
-            protected override void OnTick()
-            {
-                m_Field.Delete();
-            }
+            Delete();
         }
 
         private class DamageTimer : Timer
         {
             private CorruptionField m_Field;
+            private int m_TicksRemaining;
+            private int m_BonusDamage;
 
-            public DamageTimer(CorruptionField field)
-                : base(TimeSpan.Zero, TimeSpan.FromSeconds(1.0))
+            public DamageTimer(CorruptionField field, TimeSpan duration)
+                : base(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0))
             {
-                Priority = TimerPriority.OneSecond;
-                m_Field = field;
+                Priority         = TimerPriority.OneSecond;
+                m_Field          = field;
+                m_TicksRemaining = (int)duration.TotalSeconds;
+                m_BonusDamage    = field.m_Caster != null ? field.m_Caster.Int / 15 : 0;
             }
 
             protected override void OnTick()
@@ -175,33 +154,35 @@ namespace Server.Custom.Ascensions
 
                 IPooledEnumerable eable = m_Field.Map.GetMobilesInRange(m_Field.Location, 0);
 
-                foreach (Mobile m in eable)
+                try
                 {
-                    if (m == m_Field.m_Caster)
-                        continue;
+                    foreach (Mobile m in eable)
+                    {
+                        if (m == m_Field.m_Caster)
+                            continue;
 
-                    if (!m_Field.m_Caster.CanBeHarmful(m))
-                        continue;
+                        if (!m_Field.m_Caster.CanBeHarmful(m))
+                            continue;
 
-                    m_Field.m_Caster.DoHarmful(m);
+                        m_Field.m_Caster.DoHarmful(m);
 
-                    int damage = Utility.RandomMinMax(14, 22);
-                    damage += (m_Field.m_Caster.Int / 15);
+                        AOS.Damage(m, m_Field.m_Caster, Utility.RandomMinMax(14, 22) + m_BonusDamage, 0, 0, 0, 0, 100);
 
-                    AOS.Damage(m, m_Field.m_Caster, damage, 0, 0, 0, 0, 100);
-
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x376A,
-                        9,
-                        10,
-                        0xB97,
-                        0,
-                        5051,
-                        0
-                    );
+                        Effects.SendLocationParticles(
+                            EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
+                            0x376A, 9, 10, 0xB97, 0, 5051, 0
+                        );
+                    }
                 }
-                eable.Free();
+                finally
+                {
+                    eable.Free();
+                }
+
+                m_TicksRemaining--;
+
+                if (m_TicksRemaining <= 0)
+                    m_Field.Delete();
             }
         }
     }

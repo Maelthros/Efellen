@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Mobiles;
 using Server.Network;
@@ -10,10 +10,9 @@ namespace Server.Custom.Ascensions
     public class PalemasterUndyingHordesAbility : AscensionAbility
     {
         public override AscensionType Ascension { get { return AscensionType.Palemaster; } }
-        public override int RequiredLevel { get { return 1; } }
-        public override string Name { get { return "Undying Hordes"; } }
-        public override bool IsPassive { get { return false; } }
-        
+        public override int RequiredLevel       { get { return 1; } }
+        public override string Name             { get { return "Undying Hordes"; } }
+        public override bool IsPassive          { get { return false; } }
 
         public override TimeSpan Cooldown
         {
@@ -39,74 +38,64 @@ namespace Server.Custom.Ascensions
 
             pm.PublicOverheadMessage(MessageType.Regular, 0x48C, false, "*Undying Hordes*");
             pm.SendMessage("You call forth the undying hordes!");
-
             pm.SetAbilityCooldown(Name, Cooldown);
 
-            TimeSpan duration = TimeSpan.FromSeconds(60 + (level * 3));
+            List<BaseCreature> summons = SpawnHorde(pm, level);
 
-            ArrayList summons = SpawnHorde(pm, level);
-
-            HordeTimer timer = new HordeTimer(summons, pm, duration);
-            timer.Start();
-
-            CooldownNotifyTimer cdTimer = new CooldownNotifyTimer(pm, Cooldown);
-            cdTimer.Start();
+            new HordeTimer(summons, TimeSpan.FromSeconds(60 + (level * 3))).Start();
+            new CooldownNotifyTimer(pm, Cooldown).Start();
         }
 
-        private ArrayList SpawnHorde(PlayerMobile pm, int level)
+        private static List<BaseCreature> SpawnHorde(PlayerMobile pm, int level)
         {
-            ArrayList list = new ArrayList();
+            List<BaseCreature> list = new List<BaseCreature>();
 
-            Map map = pm.Map;
-            if (map == null)
+            if (pm.Map == null)
                 return list;
-
-            int spawnCount = 0;
 
             if (level <= 4)
             {
-                spawnCount += SpawnRange(pm, list, level, 3, 5, typeof(PaleMasterSkeleton));
-                spawnCount += SpawnRange(pm, list, level, 2, 3, typeof(PaleMasterSkeletonWarrior));
+                SpawnRange(pm, list, 3, 5, typeof(PaleMasterSkeleton));
+                SpawnRange(pm, list, 2, 3, typeof(PaleMasterSkeletonWarrior));
             }
             else if (level <= 8)
             {
-                spawnCount += SpawnRange(pm, list, level, 3, 5, typeof(PaleMasterSkeleton));
-                spawnCount += SpawnRange(pm, list, level, 2, 3, typeof(PaleMasterSkeletonWarrior));
-                spawnCount += SpawnRange(pm, list, level, 1, 2, typeof(PaleMasterSkeletonKnight));
+                SpawnRange(pm, list, 3, 5, typeof(PaleMasterSkeleton));
+                SpawnRange(pm, list, 2, 3, typeof(PaleMasterSkeletonWarrior));
+                SpawnRange(pm, list, 1, 2, typeof(PaleMasterSkeletonKnight));
             }
             else if (level <= 12)
             {
-                spawnCount += SpawnRange(pm, list, level, 3, 4, typeof(PaleMasterSkeletonWarrior));
-                spawnCount += SpawnRange(pm, list, level, 2, 3, typeof(PaleMasterSkeletonKnight));
-                spawnCount += SpawnRange(pm, list, level, 1, 2, typeof(PaleMasterMummy));
+                SpawnRange(pm, list, 3, 4, typeof(PaleMasterSkeletonWarrior));
+                SpawnRange(pm, list, 2, 3, typeof(PaleMasterSkeletonKnight));
+                SpawnRange(pm, list, 1, 2, typeof(PaleMasterMummy));
             }
             else if (level <= 16)
             {
-                spawnCount += SpawnRange(pm, list, level, 2, 3, typeof(PaleMasterSkeletonKnight));
-                spawnCount += SpawnRange(pm, list, level, 2, 3, typeof(PaleMasterMummy));
-                spawnCount += SpawnRange(pm, list, level, 1, 2, typeof(PaleMasterMummyLord));
-                spawnCount += SpawnRange(pm, list, level, 1, 1, typeof(PaleMasterUndeadGiant));
+                SpawnRange(pm, list, 2, 3, typeof(PaleMasterSkeletonKnight));
+                SpawnRange(pm, list, 2, 3, typeof(PaleMasterMummy));
+                SpawnRange(pm, list, 1, 2, typeof(PaleMasterMummyLord));
+                SpawnRange(pm, list, 1, 1, typeof(PaleMasterUndeadGiant));
             }
             else if (level <= 19)
             {
-                spawnCount += SpawnRange(pm, list, level, 3, 4, typeof(PaleMasterUndeadGiant));
-                spawnCount += SpawnRange(pm, list, level, 2, 3, typeof(PaleMasterMummyLord));
-                spawnCount += SpawnRange(pm, list, level, 1, 1, typeof(PaleMasterSkeletalDragon));
+                SpawnRange(pm, list, 3, 4, typeof(PaleMasterUndeadGiant));
+                SpawnRange(pm, list, 2, 3, typeof(PaleMasterMummyLord));
+                SpawnRange(pm, list, 1, 1, typeof(PaleMasterSkeletalDragon));
             }
             else
             {
-                spawnCount += SpawnRange(pm, list, level, 4, 5, typeof(PaleMasterUndeadGiant));
-                spawnCount += SpawnRange(pm, list, level, 3, 4, typeof(PaleMasterMummyLord));
-                spawnCount += SpawnRange(pm, list, level, 1, 2, typeof(PaleMasterSkeletalDragon));
+                SpawnRange(pm, list, 4, 5, typeof(PaleMasterUndeadGiant));
+                SpawnRange(pm, list, 3, 4, typeof(PaleMasterMummyLord));
+                SpawnRange(pm, list, 1, 2, typeof(PaleMasterSkeletalDragon));
             }
 
             return list;
         }
 
-        private int SpawnRange(PlayerMobile pm, ArrayList list, int level, int min, int max, Type type)
+        private static void SpawnRange(PlayerMobile pm, List<BaseCreature> list, int min, int max, Type type)
         {
             int amount = Utility.RandomMinMax(min, max);
-            int spawned = 0;
 
             for (int i = 0; i < amount; i++)
             {
@@ -121,42 +110,33 @@ namespace Server.Custom.Ascensions
                     continue;
                 }
 
-                bc.Summoned = true;
+                bc.Summoned     = true;
                 bc.SummonMaster = pm;
-                bc.IsTempEnemy = true;
+                bc.IsTempEnemy  = true;
                 bc.ControlSlots = 0;
-                bc.Controlled = false;
-                bc.FightMode = FightMode.Closest;
-                bc.RangeHome = 10;
-                bc.Home = pm.Location;
+                bc.Controlled   = false;
+                bc.FightMode    = FightMode.Closest;
+                bc.RangeHome    = 10;
+                bc.Home         = pm.Location;
 
-                Effects.SendLocationEffect(
-                    bc.Location,
-                    bc.Map,
-                    0x3728,
-                    15,
-                    10,
-                    2075,
-                    0
-                );
+                Effects.SendLocationEffect(bc.Location, bc.Map, 0x3728, 15, 10, 2075, 0);
 
                 list.Add(bc);
-                spawned++;
             }
-
-            return spawned;
         }
 
-        private bool TrySpawnNear(PlayerMobile pm, BaseCreature bc)
+        private static bool TrySpawnNear(PlayerMobile pm, BaseCreature bc)
         {
-            Map map = pm.Map;
+            Map map     = pm.Map;
             Point3D loc = pm.Location;
 
             for (int i = 0; i < 10; i++)
             {
-                int x = loc.X + Utility.RandomMinMax(-3, 3);
-                int y = loc.Y + Utility.RandomMinMax(-3, 3);
-                Point3D spawn = new Point3D(x, y, loc.Z);
+                Point3D spawn = new Point3D(
+                    loc.X + Utility.RandomMinMax(-3, 3),
+                    loc.Y + Utility.RandomMinMax(-3, 3),
+                    loc.Z
+                );
 
                 if (map.CanFit(spawn, 16, false, false))
                 {
@@ -164,20 +144,18 @@ namespace Server.Custom.Ascensions
                     return true;
                 }
             }
+
             return false;
         }
 
         private class HordeTimer : Timer
         {
-            private ArrayList m_List;
-            private PlayerMobile m_Master;
-        
-            public HordeTimer(ArrayList list, PlayerMobile master, TimeSpan duration)
+            private List<BaseCreature> m_List;
+
+            public HordeTimer(List<BaseCreature> list, TimeSpan duration)
                 : base(duration)
             {
                 m_List = list;
-                m_Master = master;
-
             }
 
             protected override void OnTick()
@@ -186,15 +164,7 @@ namespace Server.Custom.Ascensions
                 {
                     if (bc != null && !bc.Deleted)
                     {
-                        Effects.SendLocationEffect(
-                            bc.Location,
-                            bc.Map,
-                            0x3728,
-                            15,
-                            10,
-                            2075,
-                            0
-                        );
+                        Effects.SendLocationEffect(bc.Location, bc.Map, 0x3728, 15, 10, 2075, 0);
                         bc.Delete();
                     }
                 }

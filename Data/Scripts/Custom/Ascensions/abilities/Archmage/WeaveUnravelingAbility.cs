@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -14,20 +14,20 @@ namespace Server.Custom.Ascensions
             if (center == null || center.Map == null)
                 return;
 
-            Map map = center.Map;
+            Map map        = center.Map;
             Point3D origin = center.Location;
+            int count      = Utility.RandomMinMax(6, 12);
+            int duration   = Utility.RandomMinMax(12, 22);
 
-            int count = Utility.RandomMinMax(6, 12);
-            int durationSeconds = Utility.RandomMinMax(12, 22);
-
-            ArrayList spawned = new ArrayList();
+            List<WeaveDisruption> spawned = new List<WeaveDisruption>();
 
             for (int i = 0; i < 20 && spawned.Count < count; i++)
             {
-                int xOffset = Utility.RandomMinMax(-7, 7);
-                int yOffset = Utility.RandomMinMax(-7, 7);
-
-                Point3D loc = new Point3D(origin.X + xOffset, origin.Y + yOffset, origin.Z);
+                Point3D loc = new Point3D(
+                    origin.X + Utility.RandomMinMax(-7, 7),
+                    origin.Y + Utility.RandomMinMax(-7, 7),
+                    origin.Z
+                );
 
                 if (!map.CanFit(loc, 16, false, false))
                     continue;
@@ -35,8 +35,7 @@ namespace Server.Custom.Ascensions
                 if (HasDisruptionAt(map, loc))
                     continue;
 
-                WeaveDisruption field = new WeaveDisruption(loc, map, caster, TimeSpan.FromSeconds(durationSeconds));
-                spawned.Add(field);
+                spawned.Add(new WeaveDisruption(loc, map, caster, TimeSpan.FromSeconds(duration)));
             }
         }
 
@@ -44,16 +43,19 @@ namespace Server.Custom.Ascensions
         {
             IPooledEnumerable eable = map.GetItemsInRange(loc, 0);
 
-            foreach (Item item in eable)
+            try
             {
-                if (item is WeaveDisruption)
+                foreach (Item item in eable)
                 {
-                    eable.Free();
-                    return true;
+                    if (item is WeaveDisruption)
+                        return true;
                 }
             }
+            finally
+            {
+                eable.Free();
+            }
 
-            eable.Free();
             return false;
         }
     }
@@ -61,7 +63,6 @@ namespace Server.Custom.Ascensions
     public class WeaveDisruption : Item
     {
         private PlayerMobile m_Caster;
-        private Timer m_Timer;
         private Timer m_DamageTimer;
 
         public override bool BlocksFit { get { return false; } }
@@ -71,18 +72,13 @@ namespace Server.Custom.Ascensions
         {
             Movable = false;
             Visible = true;
-            Light = LightType.Circle300;
-
-            Hue = 0x0213;
+            Light   = LightType.Circle300;
+            Hue     = 0x0213;
 
             MoveToWorld(loc, map);
 
-            m_Caster = caster;
-
-            m_Timer = new ExpireTimer(this, duration);
-            m_Timer.Start();
-
-            m_DamageTimer = new DamageTimer(this);
+            m_Caster      = caster;
+            m_DamageTimer = new DamageTimer(this, duration);
             m_DamageTimer.Start();
 
             Effects.PlaySound(loc, map, 0x20B);
@@ -93,9 +89,6 @@ namespace Server.Custom.Ascensions
         public override void OnAfterDelete()
         {
             base.OnAfterDelete();
-
-            if (m_Timer != null)
-                m_Timer.Stop();
 
             if (m_DamageTimer != null)
                 m_DamageTimer.Stop();
@@ -111,38 +104,27 @@ namespace Server.Custom.Ascensions
         {
             base.Deserialize(reader);
             reader.ReadInt();
-        }
-
-        private class ExpireTimer : Timer
-        {
-            private WeaveDisruption m_Field;
-
-            public ExpireTimer(WeaveDisruption field, TimeSpan duration)
-                : base(duration)
-            {
-                m_Field = field;
-            }
-
-            protected override void OnTick()
-            {
-                m_Field.Delete();
-            }
+            Delete();
         }
 
         private class DamageTimer : Timer
         {
             private WeaveDisruption m_Field;
+            private int m_TicksRemaining;
+            private int m_BonusDamage;
 
-            public DamageTimer(WeaveDisruption field)
-                : base(TimeSpan.Zero, TimeSpan.FromSeconds(1.0))
+            public DamageTimer(WeaveDisruption field, TimeSpan duration)
+                : base(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0))
             {
-                Priority = TimerPriority.OneSecond;
-                m_Field = field;
+                Priority         = TimerPriority.OneSecond;
+                m_Field          = field;
+                m_TicksRemaining = (int)duration.TotalSeconds;
+                m_BonusDamage    = field.m_Caster != null ? field.m_Caster.Int / 15 : 0;
             }
 
             protected override void OnTick()
             {
-                if (m_Field.Deleted || m_Field.Map == null)
+                if (m_Field.Deleted || m_Field.Map == null || m_Field.m_Caster == null)
                 {
                     Stop();
                     return;
@@ -150,34 +132,32 @@ namespace Server.Custom.Ascensions
 
                 IPooledEnumerable eable = m_Field.Map.GetMobilesInRange(m_Field.Location, 0);
 
-                foreach (Mobile m in eable)
+                try
                 {
-                    if (m == m_Field.m_Caster)
-                        continue;
+                    foreach (Mobile m in eable)
+                    {
+                        if (m == m_Field.m_Caster || !m_Field.m_Caster.CanBeHarmful(m))
+                            continue;
 
-                    if (!m_Field.m_Caster.CanBeHarmful(m))
-                        continue;
+                        m_Field.m_Caster.DoHarmful(m);
 
-                    m_Field.m_Caster.DoHarmful(m);
+                        AOS.Damage(m, m_Field.m_Caster, Utility.RandomMinMax(14, 22) + m_BonusDamage, 0, 0, 0, 0, 100);
 
-                    int damage = Utility.RandomMinMax(14, 22);
-                    damage += (m_Field.m_Caster.Int / 15);
-
-                    AOS.Damage(m, m_Field.m_Caster, damage, 0, 0, 0, 0, 100);
-
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x376A,
-                        9,
-                        10,
-                        1161,
-                        0,
-                        5051,
-                        0
-                    );
+                        Effects.SendLocationParticles(
+                            EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
+                            0x376A, 9, 10, 1161, 0, 5051, 0
+                        );
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
-                eable.Free();
+                m_TicksRemaining--;
+
+                if (m_TicksRemaining <= 0)
+                    m_Field.Delete();
             }
         }
     }
