@@ -18,7 +18,7 @@ using System.Text;
 using Server;
 using System.IO;
 using Server.Custom.Ascensions;
-
+using Server.EffectsUtil;
 namespace Server.Mobiles
 {
 	#region Enums
@@ -8078,7 +8078,111 @@ public virtual int BreathComputeDamage()
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
+			/// Crusader Holy Fervor
+			
+			SlayerEntry holyFervorDemons = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
 
+			if ( holyFervorDemons.Slays( this ) && slayer is PlayerMobile )
+			{
+			    PlayerMobile fervorPm = (PlayerMobile)slayer;
+
+			    if ( fervorPm.ActiveAscension == AscensionType.Crusader )
+			    {
+			        AscensionProgress fervorProg = fervorPm.AscensionProfile.Get( AscensionType.Crusader );
+			        int fervorLevel = fervorProg.Level;
+
+			        if ( fervorLevel >= 8 && Utility.Random( 1000 ) < (fervorLevel * 15) ) // 1.5% per level
+			        {
+			            int fervorRadius = 2 + (fervorLevel / 5);
+			            int fervorDamage = Utility.RandomMinMax( 20, 32 ) + (fervorLevel / 2) + (fervorPm.Str / 15);
+
+			            SlamVisuals.SlamVisual( fervorPm, fervorRadius, 0x36B0, 0x498 );
+
+			            IPooledEnumerable fervorEable = fervorPm.Map.GetMobilesInRange( fervorPm.Location, fervorRadius );
+
+			            try
+			            {
+			                foreach ( Mobile fm in fervorEable )
+			                {
+			                    if ( fm == null || fm.Deleted || !fm.Alive || fm == fervorPm )
+			                        continue;
+
+			                    if ( fm.Karma >= 0 )
+			                        continue;
+
+			                    if ( !fervorPm.CanBeHarmful( fm, false ) )
+			                        continue;
+
+			                    fervorPm.DoHarmful( fm );
+			                    AOS.Damage( fm, fervorPm, fervorDamage, 100, 0, 0, 0, 0 );
+			                }
+			            }
+			            finally
+			            {
+			                fervorEable.Free();
+			            }
+						if ( fervorLevel >= 17 )
+			                fervorPm.SetAbilityCooldown( "Smite", TimeSpan.Zero );
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			// Crusader divine judgement 
+
+			if ( slayer is PlayerMobile && this.Karma <= -5000 )
+			{
+			    PlayerMobile djPm = (PlayerMobile)slayer;
+
+			    if ( djPm.ActiveAscension == AscensionType.Crusader )
+			    {
+			        AscensionProgress djProg = djPm.AscensionProfile.Get( AscensionType.Crusader );
+
+			        if ( djProg.Level >= 20 && Utility.Random( 1000 ) < 25 )
+			        {
+			            Map djMap = djPm.Map;
+
+			            if ( djMap != null && djMap != Map.Internal )
+			            {
+			                Point3D spawnLoc = djPm.Location;
+
+			                for ( int attempt = 0; attempt < 10; attempt++ )
+			                {
+			                    int x = djPm.X + Utility.RandomMinMax( -3, 3 );
+			                    int y = djPm.Y + Utility.RandomMinMax( -3, 3 );
+			                    int z = djMap.GetAverageZ( x, y );
+
+			                    if ( djMap.CanFit( x, y, z, 16, false, false ) )
+			                    {
+			                        spawnLoc = new Point3D( x, y, z );
+			                        break;
+			                    }
+			                }
+
+			                CrusaderLuminar luminar = new CrusaderLuminar();
+
+			                luminar.Summoned     = true;
+			                luminar.SummonMaster = djPm;
+			                luminar.IsTempEnemy  = true;
+			                luminar.ControlSlots = 0;
+			                luminar.Controlled   = false;
+			                luminar.FightMode    = FightMode.Closest;
+			                luminar.RangeHome    = 12;
+			                luminar.Home         = djPm.Location;
+
+			                luminar.MoveToWorld( spawnLoc, djMap );
+			                Effects.SendLocationParticles(
+			                    EffectItem.Create( spawnLoc, djMap, EffectItem.DefaultDuration ),
+			                    0x3728, 10, 10, 0x498, 0, 2023, 0
+			                );
+			                luminar.PlaySound( luminar.GetAngerSound() );
+			                new LuminarExpiryTimer( luminar ).Start();
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );
@@ -8182,6 +8286,32 @@ public virtual int BreathComputeDamage()
 				speechType.OnDeath( this );
 
 			return base.OnBeforeDeath();
+		}
+
+		// Divine judgement summon controller
+		private sealed class LuminarExpiryTimer : Timer
+		{
+		    private readonly CrusaderLuminar m_Luminar;
+
+		    public LuminarExpiryTimer( CrusaderLuminar luminar )
+		        : base( TimeSpan.FromSeconds( 60 ) )
+		    {
+		        m_Luminar = luminar;
+		        Priority  = TimerPriority.OneSecond;
+		    }
+
+		    protected override void OnTick()
+		    {
+		        if ( m_Luminar == null || m_Luminar.Deleted )
+		            return;
+
+		        Effects.SendLocationParticles(
+		            EffectItem.Create( m_Luminar.Location, m_Luminar.Map, EffectItem.DefaultDuration ),
+		            0x3728, 10, 10, 0x498, 0, 2023, 0
+		        );
+		        m_Luminar.PlaySound( 0x1FE );
+		        m_Luminar.Delete();
+		    }
 		}
 
 		private bool m_NoKillAwards;

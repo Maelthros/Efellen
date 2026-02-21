@@ -1633,6 +1633,36 @@ namespace Server.Items
 			        percentageBonus += rageBonus;
 			    }
 			}
+
+			// =============================
+			// Inquisitorial Strikes (Crusader passive, level 14+)
+			// =============================
+			if ( attacker is PlayerMobile )
+			{
+			    PlayerMobile inqPm = (PlayerMobile)attacker;
+
+			    if ( inqPm.ActiveAscension == AscensionType.Crusader )
+			    {
+			        AscensionProgress inqProg = inqPm.AscensionProfile.Get( AscensionType.Crusader );
+			        int inqLevel = inqProg.Level;
+
+			        if ( inqLevel >= 14 )
+			        {
+			            SlayerEntry inqDemons = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
+
+			            if ( inqDemons.Slays( defender ) )
+			            {
+			                percentageBonus += inqLevel / 2;
+			            }
+			            else if ( inqLevel >= 19 && defender.Karma < 0 )
+			            {
+			                percentageBonus += inqLevel / 4;
+			            }
+			        }
+			    }
+			}
+
+			
 			percentageBonus = Math.Min( percentageBonus, 300 );
 
 			damage = damage + (int)( damage * sneakBonus );

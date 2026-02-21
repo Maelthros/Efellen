@@ -26,6 +26,13 @@ namespace Server.Custom.Ascensions
                     "In order to activate this Ascension, you need to have 95 base skill in both Necromancy and Spiritualism. Every time you level up the class, the requirement also increases by 1.<br><br>" +
                     "So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in both Necromancy and Spiritualism<br><br>"+
                     "Palemasters also are required to revel in death and vileness, and they will not gain experience in this class if they have learned Knightship, Elementalism or Bushido, or if they stray from the path of evil";
+                 case AscensionType.Crusader:
+                    return
+                    "The Crusader is the embodiment of virtue. In combat, they stand tall in defiance against evil.<br><br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in both Knightship and Tactics. Every time you level up the class, the requirement also increases by 1.<br><br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Knightship and Tactics.<br><br>"+
+                    "Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy, Spiritualism or Forensics, or if they stray from the path of good.<br><br>";
+                   
                 default:
                     return "No description defined.";
             }
@@ -137,7 +144,7 @@ namespace Server.Custom.Ascensions
                 "Anyone standing on top of these disruptions receives 14-22 + (int/15) energy damage per second.<br>"+ 
                 "</BASEFONT>";  
             }
-            else if ( type == AscensionType.Archmage)
+            else if ( type == AscensionType.Palemaster)
             {
                 return
                 "<BASEFONT COLOR=#FFFFFF>" +
@@ -172,6 +179,7 @@ namespace Server.Custom.Ascensions
                 "Level 16: creatures caught in the circle lose stamina every second equal to half the damage dealt.<br><br>" +            
 
                 "Danse Macabre, level 18.<br>" +
+                "command: [PalemasterDanseMacabre<br>"+
                 "The Palemaster shatters the gate between words, bringing the ever hungry hordes to the land of the living.<br>" + 
                 "This ability has a 4 minutes cooldown and costs 80 mana to activate.<br>" +
                 "Every second for level/3 seconds, one of those happens:.<br>" +
@@ -203,6 +211,60 @@ namespace Server.Custom.Ascensions
                 "Anyone standing on top of these disruptions receives 14-22 + (int/15) poison damage per second.<br>"+ 
 
                 "</BASEFONT>"; 
+            }
+            else if (type == AscensionType.Crusader)
+            {
+                return
+                "<BASEFONT COLOR=#ffffff>"+
+                "Smite, level 1.<br>" +
+                "command: [CrusaderSmite<br>" +
+                "The crusader channels its valor and calls forth an explosion of purifying flame.<br>" + 
+                "This effect causes 20-32 +( level / 2 + str/15) damage to all evil creatures that are up to 2 (+1 per 5 levels) tiles away from the crusader.<br>" +
+                "Smite costs 20 mana and 20 stamina to activate, and has a 1 minute cooldown.<br>" +
+                "- Level 10: hostile creatures that have karma of -10k or lower are paralyzed for 4(+1 per 6 levels) seconds after being hit by the smite.<br>" +
+                "- Level 15: friendly creatures with positive karma caught in the area of the smite are healed for 20 + level/2 hit points.<br>" +
+                "- Level 20: hostile evil creatures that have karma of -10k or lower damaged by the smite are caught in searing flames. They receive 10-20 + str/15 fire damage every 2 seconds for 12 seconds.<br><br>" +
+
+                "Charge, level 6.<br>" +
+                "command: [CrusaderCharge<br>" +
+                "When used, the character chooses a free tile that is at least 2 tiles away from them and its moved to that tile.<br>" +
+                "The maximum range is equal to  3 + level/5. When arriving, every hostile creature adjacent to that tile has a 1% per level chance of being paralyzed for 3 seconds.<br>" +  
+                "Has a cooldown of 9 seconds, minus one second per 3 crusader levels.<br>" +
+                "- Level 12: when arriving, all hostile creatures adjacent to the destination square receive 30-45 + ((str / 15) + level / 3) physical damage.<br><br>" +
+
+                "Aura of Hope, level 11.<br>" +
+                "command: [CrusaderAuraOfHope<br>" +
+                "When used, the crusader and all friendly creatures up to 4 tiles away from the crusader receive the following benefits:<br>" +
+                "- they restore 12 + (crusader level / 2) hitpoints every 4 seconds per 30 seconds.<br>" +
+                "- they restore 6 + (crusader level / 2) mana every 4 seconds per 30 seconds.<br>" +
+                "- they restore 6 + (crusader level / 2) stamina every 4 seconds per 30 seconds.<br>" +
+                "This skill has a 3 minutes cooldown, and costs 40 mana and 40 stamina to activate.<br>" +
+                "- Level 16: creatures affected by the aura of hope are healed to full health once the buff expires.<br><br>" +
+
+                "Heavenly Gate, level 18.<br>" +
+                "command: [CrusaderHeavensGate<br>" +
+                "The crusader opens the pearly gates and calls forth a celestial companion to aid them in their war against all evil.<br>" +
+                "The creature is a powerful Archon that requires 2 control slots and remains at the crusader's site until defeated.<br>" +
+                "Activating this ability costs 60 mana and 60 stamina. It has a 5 minutes cooldown.<br>" +
+                "- Level 20: There's a 1% chance per level that two archons will be summoned instead.<br><br>" + 
+            
+                "Divine Grace, level 2.<br>" +
+                "the crusader has a 4% chance per level chance of automatically healing from lesser, regular and greater poisons.<br>" + 
+                "- Level 5:  the chance also applies to deadly poisons.<br>" +
+                "- Level 13:  the chance also applies to lethal poisons.<br><br>" +
+
+                "Holy Fervor, level 8.<br>" +
+                "When the crusader kills a demon, they have a 1.5% per level chance of triggering an AoE explosion of holy fire, causing 20-32 + (level/2 + str/15) damage to all evil hostile creatures that are up to 2 (+1 per 5 levels) tiles away from the crusader.<br>" +
+                "- Level 17: when Holy Fervor triggers, the Cooldown on Smite is set to zero.<br>" +
+            
+                "Inquisitorial Strikes, level 14.<br>" +
+                "the crusader's melee weapon strikes cause + (level/2)% damage against demons.<br>" +
+                "- Level 19: the crusader's melee weapon strikes cause + (level/4)% damage against evil creatures.<br>" +
+            
+                "Divine Judgement, level 20.<br>" +
+                "When the crusader kills a powerful evil creature, there's a 2.5% chance that a strong creature called Luminar will be summoned to aid the Crusader on their war against evil.<br>" +
+                " creature will attack any nearby opposing creature with great ferocity, and will remain in the material plane for one minute.<br>" +
+                "</BASEFONT>";
             }
             else
             {

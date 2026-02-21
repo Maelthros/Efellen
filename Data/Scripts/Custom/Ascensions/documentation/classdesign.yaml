@@ -1,19 +1,23 @@
 Quick reference
+These are the ascendancies that are currently implemented:
 Berserker
     active: Rage, leap slam, warcry, tenacity
     passive:  cleave, uncanny dodge, pummeling strikes, undying wrath
 Archmage
     active: Arcane storm, Conflux, Mana singularity , Timestop 
     passive:  mana vault, weave reflection, arcane tempest, Weave Unraveling
-Battlemage
-    active: Disruption, rending magic, Spell Blasting,  annihilation 
-    passive:  arcane siphoning,  arcane overload, piercing spells, spell fracture
 Palemaster
     active: Undying hordes, enervate,Circle of Death, Danse Macabre
     passive: deathless vigor, undead graft, creeping cold, herald of hereafter,  
+
+These are the ascendancies that are currently in development:
+
+Battlemage
+    active: Disruption, rending magic, Spell Blasting,  annihilation 
+    passive:  arcane siphoning,  arcane overload, piercing spells, spell fracture
 Crusader
-    active: Smite, charge, aura of renewal, heaven's gate
-    passive:  Divine grace, Divine bastion, Inquisitorial Strikes, divine judgement
+    active: Smite, charge, aura of hope, Heavenly gate
+    passive:  Divine grace, Holy Fervor, Inquisitorial Strikes, divine judgement
 Kensai
     active: culling strike
     passive:  practiced perfection, 
@@ -35,6 +39,8 @@ Shadowthief
 Archdruid
     active:
     passive:
+
+Future ascendancy ideas: Hierophant, Blackguard, arcane trickster
 
 Berserker abilities
 active abilities : Rage, leap slam, warcry, tenacity
@@ -192,6 +198,7 @@ Palemaster Abilities
     at level 16, creatures caught in the circle lose stamina every second equal to half the damage dealt
 
     Danse Macabre, level 18
+    command: [PalemasterDanseMacabre
     The Palemaster shatters the gate between words, bringing the ever hungry hordes to the land of the living. 
     This ability has a 4 minutes cooldown and costs 80 mana to activate
     Every second for level/3 seconds, one of those happens:
@@ -225,3 +232,61 @@ Palemaster Abilities
     herald of hereafter, level 20
     when casting a harmful spell at a target, there's a 0.25% chance per level of creating weave disruptions around it. The amount of disruptions 
     varies between 6-12, and they last from 12 to 22 seconds. Anyone standing on top of these disruptions receives 14-22 + (int/15) poison damage per second. 
+
+
+
+    Crusader
+
+    The Crusader is the embodiment of virtue. In combat, they stand tall in defiance against evil.
+    In order to activate this Ascension, you need to have 95 base skill in both Knightship and Tactics. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Knightship and Tactics
+    Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy, Spiritualism or Forensics, or if they stray from the path of good.
+
+    Smite, level 1
+    command: [CrusaderSmite
+    The crusader channels its valor and calls forth an explosion of purifying flame. This effect causes 20-32 +( level / 2 + str/15) damage to all evil creatures that are up to 2 (+1 per 5 levels) tiles away from the crusader
+    Smite costs 20 mana and 20 stamina to activate, and has a 1 minute cooldown.
+    - Level 10: hostile creatures that have karma of -10k or lower are paralyzed for 4(+1 per 6 levels) seconds after being hit by the smite
+    - Level 15: friendly creatures with positive karma caught in the area of the smite are healed for 20 + level/2 hit points
+    - Level 20: hostile evil creatures that have karma of -10k or lower damaged by the smite are caught in searing flames. They receive 10-20 + str/15 fire damage every 2 seconds for 12 seconds
+
+    Charge, level 6
+    command: [CrusaderCharge
+    When used, the character chooses a free tile that is at least 2 tiles away from them and its moved to that tile. The maximum range is equal to  3 + level/5. When arriving,
+    every hostile creature adjacent to that tile has a 1% per level chance of being paralyzed for 3 seconds.  
+    Has a cooldown of 9 seconds, minus one second per 3 crusader levels. 
+    At higher levels:
+    - Level 12: when arriving, all hostile creatures adjacent to the destination square receive 30-45 + ((str / 15) + level / 3) physical damage
+
+    Aura of Hope, level 11
+    command: [CrusaderAuraOfHope
+    When used, the crusader and all friendly creatures up to 4 tiles away from the crusader receive the following benefits:
+    - they restore 12 + (crusader level / 2) hitpoints every 4 seconds per 30 seconds
+    - they restore 6 + (crusader level / 2) mana every 4 seconds per 30 seconds
+    - they restore 6 + (crusader level / 2) stamina every 4 seconds per 30 seconds
+    This skill has a 3 minutes cooldown, and costs 40 mana and 40 stamina to activate
+    - Level 16: creatures affected by the aura of hope are healed to full health once the buff expires
+
+    Heavenly Gate, level 18
+    command: [CrusaderHeavensGate
+    The crusader opens the pearly gates and calls forth a celestial companion to aid them in their war against all evil.
+    The creature is a powerful Archon that requires 4 control slots and remains at the crusader's site until defeated. 
+    Activating this ability costs 60 mana and 60 stamina. It has a 5 minutes cooldown. 
+    - Level 20: there's a 1% chance per level that two archons will be summoned instead. 
+
+    Divine Grace, level 2
+    the crusader has a 4% chance per level chance of automatically healing from lesser, regular and greater poisons. 
+    - Level 5:  the chance also applies to deadly poisons.
+    - Level 13:  the chance also applies to lethal poisons.
+    
+    Holy Fervor, level 8
+    When the crusader kills a demon, they have a 1.5% per level chance of triggering an AoE explosion of holy fire, causing 20-32 + (level/2 + str/15) damage to all evil hostile creatures that are up to 2 (+1 per 5 levels) tiles away from the crusader
+    - Level 17: when Holy Fervor triggers, the Cooldown on Smite is set to zero
+
+    Inquisitorial Strikes, level 14
+    the crusader's melee weapon strikes cause + (level/2)% damage against demons
+    - Level 19: the crusader's melee weapon strikes cause + (level/4)% damage against evil creatures
+
+    Divine Judgement, level 20
+    When the crusader kills a powerful evil creature, there's a 2.5% chance that a strong creature called Luminar will be summoned to aid the Crusader on their war against evil.
+    The creature will attack any nearby opposing creature with great ferocity, and will remain in the material plane for one minute. 

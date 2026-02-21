@@ -25,6 +25,11 @@ namespace Server.Custom.Ascensions
             Register(new PaleMasterEnervateAbility());
             Register(new PalemasterCircleOfDeathAbility());
             Register(new PalemasterDanseMacabreAbility());
+            // ---- Crusader
+            Register(new CrusaderSmiteAbility());
+            Register(new CrusaderChargeAbility());
+            Register(new CrusaderAuraOfHopeAbility());
+            Register(new CrusaderHeavenlyGateAbility());
         }
 
         private static void Register(AscensionAbility ability)
