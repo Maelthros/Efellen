@@ -30,6 +30,11 @@ namespace Server.Custom.Ascensions
             Register(new CrusaderChargeAbility());
             Register(new CrusaderAuraOfHopeAbility());
             Register(new CrusaderHeavenlyGateAbility());
+            // ---- Assassin
+            Register(new AssassinNoxiousCloudAbility());
+            Register(new AssassinCripplingPoisonAbility());
+            Register(new AssassinToxicSurgeAbility());
+            Register(new AssassinCleansingAnnihilationAbility());
         }
 
         private static void Register(AscensionAbility ability)

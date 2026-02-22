@@ -39,6 +39,31 @@ namespace Server
 			return ( newPoison == null ? oldPoison : newPoison );
 		}
 
+		// Immediately resolves one poison tick's worth of damage against the target,
+		// attributed to 'from'. Used by Assassin Virulent Strikes passive.
+		public static void ResolveSingleTick( Mobile target, Mobile from )
+		{
+		    if ( target == null || target.Deleted || !target.Alive )
+		        return;
+
+		    PoisonImpl poison = target.Poison as PoisonImpl;
+
+		    if ( poison == null )
+		        return;
+
+		    int damage = 1 + (int)(target.Hits * poison.m_Scalar);
+
+		    if ( damage < poison.m_Minimum ) damage = poison.m_Minimum;
+		    if ( damage > poison.m_Maximum ) damage = poison.m_Maximum;
+
+		    if ( from != null )
+		        from.DoHarmful( target, true );
+
+		    AOS.Damage( target, from, damage, 0, 0, 0, 100, 0 );
+
+		    target.FixedParticles( 0x374A, 10, 15, 5021, 0x233, 0, EffectLayer.Waist );
+		}
+
 		// Info
 		private string m_Name;
 		private int m_Level;
@@ -119,11 +144,11 @@ namespace Server
 
 			            switch ( m_Poison.Level )
 			            {
-			                case 0: // Lesser
-			                case 1: // Regular
-			                case 2: eligible = true; break;              // Greater — level 2+
-			                case 3: eligible = level >= 5;  break;       // Deadly  — level 5+
-			                case 4: eligible = level >= 13; break;       // Lethal  — level 13+
+			                case 0:
+			                case 1:
+			                case 2: eligible = true; break;
+			                case 3: eligible = level >= 5;  break;
+			                case 4: eligible = level >= 13; break;
 			            }
 
 			            if ( eligible && Utility.Random( 100 ) < (level * 4) )
@@ -142,7 +167,7 @@ namespace Server
 			            }
 			        }
 			    }
-			
+
 			    if ( m_Index++ == m_Poison.m_Count )
 			    {
 			        m_Mobile.SendLocalizedMessage( 502136 ); // The poison seems to have worn off.
@@ -170,6 +195,22 @@ namespace Server
 
 			        m_LastDamage = damage;
 			    }
+
+			    // ── Dangerous Habits (Assassin passive, level 8+) ────────────────────
+			    PlayerMobile dangerousPm = m_From as PlayerMobile;
+
+			    if ( dangerousPm != null && !dangerousPm.Deleted
+			        && dangerousPm.ActiveAscension == AscensionType.Assassin )
+			    {
+			        AscensionProgress dangerousProg = dangerousPm.AscensionProfile.Get( AscensionType.Assassin );
+			        int dangerousLevel = dangerousProg.Level;
+
+			        if ( dangerousLevel >= 17 )
+			            damage = (int)(damage * 1.18);
+			        else if ( dangerousLevel >= 8 )
+			            damage = (int)(damage * 1.09);
+			    }
+			    // ── End Dangerous Habits ─────────────────────────────────────────────
 
 			    if ( m_From != null )
 			        m_From.DoHarmful( m_Mobile, true );

@@ -8183,6 +8183,50 @@ public virtual int BreathComputeDamage()
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
+			// Assassin Terminal
+
+			if ( slayer is PlayerMobile && this.Poisoned )
+			{
+			    PlayerMobile termPm = (PlayerMobile)slayer;
+
+			    if ( termPm.ActiveAscension == AscensionType.Assassin )
+			    {
+			        AscensionProgress termProg = termPm.AscensionProfile.Get( AscensionType.Assassin );
+			        int termLevel = termProg.Level;
+
+			        if ( termLevel >= 20 && Utility.Random( 10000 ) < (termLevel * 25) )
+			        {
+			            termPm.SendMessage( 0x233, "*Terminal*" );
+
+			            Map termMap = termPm.Map;
+
+			            IPooledEnumerable termEable = termMap.GetMobilesInRange( this.Location, 2 );
+
+			            try
+			            {
+			                foreach ( Mobile m in termEable )
+			                {
+			                    if ( m == null || m.Deleted || !m.Alive || m == termPm )
+			                        continue;
+
+			                    if ( !termPm.CanBeHarmful( m, false ) )
+			                        continue;
+
+			                    termPm.DoHarmful( m );
+			                    m.ApplyPoison( termPm, Poison.Lethal );
+
+			                    Effects.SendTargetParticles( m, 0x3729, 9, 40, 0x233, 0, 0, EffectLayer.Waist, 0 );
+			                }
+			            }
+			            finally
+			            {
+			                termEable.Free();
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );

@@ -8,12 +8,12 @@ namespace Server.Custom.Ascensions
 
         public override SkillName[] RequiredSkills
         {
-            get { return new SkillName[] { SkillName.Poisoning, SkillName.Stealth }; }
+            get { return new SkillName[] { SkillName.Poisoning, SkillName.Fencing }; }
         }
 
         public override SkillName[] ForbiddenSkills
         {
-            get { return new SkillName[] { SkillName.Knightship }; }
+            get { return new SkillName[] { SkillName.Knightship, SkillName.Bushido }; }
         }
 
         public override bool RequiresEvil { get { return true; } }

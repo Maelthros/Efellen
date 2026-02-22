@@ -26,13 +26,18 @@ namespace Server.Custom.Ascensions
                     "In order to activate this Ascension, you need to have 95 base skill in both Necromancy and Spiritualism. Every time you level up the class, the requirement also increases by 1.<br><br>" +
                     "So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in both Necromancy and Spiritualism<br><br>"+
                     "Palemasters also are required to revel in death and vileness, and they will not gain experience in this class if they have learned Knightship, Elementalism or Bushido, or if they stray from the path of evil";
-                 case AscensionType.Crusader:
+                case AscensionType.Crusader:
                     return
                     "The Crusader is the embodiment of virtue. In combat, they stand tall in defiance against evil.<br><br>"+
                     "In order to activate this Ascension, you need to have 95 base skill in both Knightship and Tactics. Every time you level up the class, the requirement also increases by 1.<br><br>"+
                     "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Knightship and Tactics.<br><br>"+
                     "Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy, Spiritualism or Forensics, or if they stray from the path of good.<br><br>";
-                   
+                case AscensionType.Assassin:
+                    return
+                    "The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.<br><br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in both Poisoning and Fencing. Every time you level up the class, the requirement also increases by 1.<br><br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning and Fencing.<br><br>"+
+                    "Crusaders also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.";   
                 default:
                     return "No description defined.";
             }
@@ -264,6 +269,55 @@ namespace Server.Custom.Ascensions
                 "Divine Judgement, level 20.<br>" +
                 "When the crusader kills a powerful evil creature, there's a 2.5% chance that a strong creature called Luminar will be summoned to aid the Crusader on their war against evil.<br>" +
                 " creature will attack any nearby opposing creature with great ferocity, and will remain in the material plane for one minute.<br>" +
+                "</BASEFONT>";
+            }
+            else if (type == AscensionType.Assassin)
+            {
+                return
+                "<BASEFONT COLOR=#ffffff>"+
+                "Noxious Cloud, level 1.<br>" +
+                "command: [AssassinNoxiousClou<br>" +
+                "The assassin creates a cloud of foul vapors at target location that poisons all enemies caught in its area.<br>" +
+                "The cloud inflicts greater poison on all affected enemies. This ability costs 30 mana and 30 stamina to activate.<br>" + 
+                "This ability has a 1 minute cooldown. The are of the cloud is equal to 1 + 1 per 6 levels.<br>" +
+                "- Level 10: The cloud inflics Deadly poison on all affected enemies.<br>" +
+                "- Level 15: The cloud inflicts Lethal poison on all affected enemies.<br>" +
+                "- Level 20: all affected enemies lose 20 poison resist for 30 seconds.<br><br>" +
+
+                "Crippling poison, level 6.<br>" +
+                "command: [AssassinCripplingPoison<br>" +
+                "The assassin throws a vial of crippling poison at a target, inflicting deadly poison on it and preventing them from walking for level / 2 seconds.<br>" +
+                "This ability costs 40 mana and 40 stamina to activate and has a 1 minute cooldown.<br>" +
+                "- Level 12: The crippling poison is Lethal and affects all hostile creatures up to 2 tiles away from the original target.<br><br>" + 
+
+                "Toxic surge, level 11.<br>" +
+                "command: [AssassinToxicSurge<br>" +
+                "For the next 30 seconds, the assassin causes + 10% damage bonus with weapon strikes against poisoned creatures.<br>" + 
+                "This ability costs 40 mana and 40 stamina to activate and has a 2 minutes cooldown.<br>" +
+                "- Level 16: When activated, there's a 1% chance per level of setting the cooldown on Noxious Cloud to zero.<br>" + 
+
+                "Cleansing Annihilation, level 18.<br>" +
+                "command: [AssassinCleansingAnnihilation<br>" +
+                "The assassin inflicts lethal poison on the target, then immediately consumes all of its ticks.<br>" + 
+                "If the target survives, all creatures around it to up to 3 tiles away are the inflicted with a lethal poison.<br>" + 
+                "Activating this ability costs 50 mana and 50 stamina and it has a 4 minutes cooldown.<br>" +
+                "- Level 20: when activating this ability, there's a 1% chance per level that the cooldown on toxic surge will be set to zero.<br><br>" +
+
+                "Virulent Strikes, level 2.<br>" +
+                "When applying a poison on a target with a strike, the assassin has a 1% per level chance of immediately resolving 1 poison tick.<br>" +
+                "- Level 5: when making a weapon attack against a poisoned creature, the assassin has a 0.25% chance per level of immediately resolving a poison tick.<br>" +
+                "- Level 13: when making a weapon attack against a poisoned creature, the assassin has a 0.12% chance per level of immediately resolving an additional poison tick.<br><br>" +
+
+                "dangerous habits, level 8.<br>" +
+                "increases tick damage of poisons inflicted by the assassin by 9%.<br>" +
+                "- Level 17: increases tick damage of poisons inflicted by the assassin by 18%.<br><br>" +
+
+                "Deadly Strikes, level 14.<br>" +
+                "The assassin causes 9% more damage with attacks to poisoned creatures.<br>" +
+                "- Level 19: attacks against poisoned creatures ignore 25% of the target's poison resistance.<br><br>" +
+
+                "Terminal, level 20.<br>" +
+                "When killing a poisoned creature, the assassin has a 0.25% chance per level of inflicting lethal poison on all hostile creatures that are up to 2 tiles away from it.<br>" +
                 "</BASEFONT>";
             }
             else

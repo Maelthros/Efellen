@@ -9,24 +9,25 @@ Archmage
 Palemaster
     active: Undying hordes, enervate,Circle of Death, Danse Macabre
     passive: deathless vigor, undead graft, creeping cold, herald of hereafter,  
+Crusader
+    active: Smite, charge, aura of hope, Heavenly gate
+    passive:  Divine grace, Holy Fervor, Inquisitorial Strikes, divine judgement
+Assassin
+    active:  Toxic surge, crippling poison, Noxious cloud, Cleansing Annihilation
+    passive:  virulent strikes, dangerous habits, deadly strikes, terminal
+    
 
 These are the ascendancies that are currently in development:
 
 Battlemage
     active: Disruption, rending magic, Spell Blasting,  annihilation 
     passive:  arcane siphoning,  arcane overload, piercing spells, spell fracture
-Crusader
-    active: Smite, charge, aura of hope, Heavenly gate
-    passive:  Divine grace, Holy Fervor, Inquisitorial Strikes, divine judgement
 Kensai
     active: culling strike
     passive:  practiced perfection, 
 Skald
     active: song of heroism, battle trance, song of valor, symphony of war
     passive:  brave heart, 
-Assassin
-    active:  Toxic surge, crippling poison, Noxious cloud
-    passive:  virulent strikes, dangerous habits, deadly strikes, terminal
 Reaver
     active: exsanguinate, Gorge, bloodstorm ,Call the blood
     passive: Vigor, flaying strikes, deep cuts, Exquisite Leech   
@@ -290,3 +291,56 @@ Palemaster Abilities
     Divine Judgement, level 20
     When the crusader kills a powerful evil creature, there's a 2.5% chance that a strong creature called Luminar will be summoned to aid the Crusader on their war against evil.
     The creature will attack any nearby opposing creature with great ferocity, and will remain in the material plane for one minute. 
+
+
+    Assassin
+
+    The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.
+    In order to activate this Ascension, you need to have 95 base skill in both Poisoning and Fencing. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning and Fencing
+    Crusaders also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.
+
+    Noxious Cloud, level 1
+    command: [AssassinNoxiousCloud
+    The assassin creates a cloud of foul vapors at target location that poisons all enemies caught in its area.
+    The cloud inflicts greater poison on all affected enemies. This ability costs 30 mana and 30 stamina to activate. 
+    This ability has a 1 minute cooldown. The are of the cloud is equal to 1 + 1 per 6 levels.
+    - Level 10: The cloud inflics Deadly poison on all affected enemies.
+    - Level 15: The cloud inflicts Lethal poison on all affected enemies.
+    - Level 20: all affected enemies lose 20 poison resist for 30 seconds.
+
+    Crippling poison, level 6
+    command: [AssassinCripplingPoison
+    The assassin throws a vial of crippling poison at a target, inflicting deadly poison on it and preventing them from walking for level / 2 seconds
+    This ability costs 40 mana and 40 stamina to activate and has a 1 minute cooldown.
+    At higher levels:
+    - Level 12: The crippling poison is Lethal and affects all hostile creatures up to 2 tiles away from the original target. 
+
+    Toxic surge, level 11
+    command: [AssassinToxicSurge
+    For the next 30 seconds, the assassin causes + 10% damage bonus with weapon strikes against poisoned creatures. 
+    This ability costs 40 mana and 40 stamina to activate and has a 2 minutes cooldown.
+    - Level 16: When activated, there's a 1% chance per level of setting the cooldown on Noxious Cloud to zero. 
+
+    Cleansing Annihilation, level 18
+    command: [AssassinCleansingAnnihilation
+    The assassin inflicts lethal poison on the target, then immediately consumes all of its ticks. 
+    If the target survives, all creatures around it to up to 3 tiles away are the inflicted with a lethal poison. 
+    Activating this ability costs 50 mana and 50 stamina and it has a 4 minutes cooldown. 
+    - Level 20: when activating this ability, there's a 1% chance per level that the cooldown on toxic surge will be set to zero. 
+    
+    Virulent Strikes, level 2
+    When applying a poison on a target with a strike, the assassin has a 1% per level chance of immediately resolving 1 poison tick
+    - Level 5: when making a weapon attack against a poisoned creature, the assassin has a 0.25% chance per level of immediately resolving a poison tick.
+    - Level 13: when making a weapon attack against a poisoned creature, the assassin has a 0.12% chance per level of immediately resolving an additional poison tick.
+    
+    dangerous habits, level 8
+    increases tick damage of poisons inflicted by the assassin by 9%
+    - Level 17: increases tick damage of poisons inflicted by the assassin by 18%
+
+    Deadly Strikes, level 14
+    The assassin causes 9% more damage with attacks to poisoned creatures.
+    - Level 19: attacks against poisoned creatures ignore 25% of the target's poison resistance. 
+
+    Terminal, level 20
+    When killing a poisoned creature, the assassin has a 0.25% chance per level of inflicting lethal poison on all hostile creatures that are up to 2 tiles away from it. 

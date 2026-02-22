@@ -1611,53 +1611,84 @@ namespace Server.Items
 				//factor *= 1.25; // Every necromancer transformation other than horrific beast takes an additional 25% damage
 				percentageBonus += 25;
 			}
+			
 			// =============================
-			// Berserker Rage Damage Bonus
+			// Ascension Damage Bonuses
 			// =============================
-			if (attacker is PlayerMobile)
+			PlayerMobile ascAttacker = attacker as PlayerMobile;
+
+			if (ascAttacker != null)
 			{
-			    PlayerMobile pm = (PlayerMobile)attacker;			
-
-			    if (pm.HasAscensionEffect("BerserkerRage"))
+			    // ── Berserker Rage ───────────────────────────────────────────────
+			    if (ascAttacker.HasAscensionEffect("BerserkerRage"))
 			    {
-			        AscensionEffectState state = pm.GetAscensionEffect("BerserkerRage");
-			        int level = state.Level;			
+			        AscensionEffectState rageState = ascAttacker.GetAscensionEffect("BerserkerRage");
+			        int rageBonus = 10;
 
-			        int rageBonus = 10;	
+			        if (rageState.Level >= 10) rageBonus += 5;
+			        if (rageState.Level >= 20) rageBonus += 5;
 
-			        if (level >= 10)
-			            rageBonus += 5;			
-
-			        if (level >= 20)
-			            rageBonus += 5;			
 			        percentageBonus += rageBonus;
 			    }
-			}
 
-			// =============================
-			// Inquisitorial Strikes (Crusader passive, level 14+)
-			// =============================
-			if ( attacker is PlayerMobile )
-			{
-			    PlayerMobile inqPm = (PlayerMobile)attacker;
+			    // ── Toxic Surge ──────────────────────────────────────────────────
+			    if (ascAttacker.HasAscensionEffect("ToxicSurge") && defender.Poisoned)
+			        percentageBonus += 10;
 
-			    if ( inqPm.ActiveAscension == AscensionType.Crusader )
+			    // ── Crusader passives ────────────────────────────────────────────
+			    if (ascAttacker.ActiveAscension == AscensionType.Crusader)
 			    {
-			        AscensionProgress inqProg = inqPm.AscensionProfile.Get( AscensionType.Crusader );
-			        int inqLevel = inqProg.Level;
+			        AscensionProgress crusaderProg = ascAttacker.AscensionProfile.Get(AscensionType.Crusader);
+			        int crusaderLevel = crusaderProg.Level;
 
-			        if ( inqLevel >= 14 )
+			        // Inquisitorial Strikes (level 14+)
+			        if (crusaderLevel >= 14)
 			        {
-			            SlayerEntry inqDemons = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
+			            SlayerEntry inqDemons = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
 
-			            if ( inqDemons.Slays( defender ) )
+			            if (inqDemons.Slays(defender))
+			                percentageBonus += crusaderLevel / 2;
+			            else if (crusaderLevel >= 19 && defender.Karma < 0)
+			                percentageBonus += crusaderLevel / 4;
+			        }
+			    }
+
+			    // ── Assassin passives ────────────────────────────────────────────
+			    else if (ascAttacker.ActiveAscension == AscensionType.Assassin)
+			    {
+			        AscensionProgress assassinProg = ascAttacker.AscensionProfile.Get(AscensionType.Assassin);
+			        int assassinLevel = assassinProg.Level;
+
+			        // Virulent Strikes: on-hit tick against already-poisoned targets (level 5+)
+			        if (assassinLevel >= 5 && defender.Poisoned)
+			        {
+			            if (Utility.Random(10000) < (assassinLevel * 25))
+			                PoisonImpl.ResolveSingleTick(defender, ascAttacker);
+
+			            // Additional tick chance (level 13+)
+			            if (assassinLevel >= 13 && Utility.Random(10000) < (assassinLevel * 12))
+			                PoisonImpl.ResolveSingleTick(defender, ascAttacker);
+			        }
+
+			        // Virulent Strikes: on-poison-application tick (level 2+)
+			        if (assassinLevel >= 2)
+			        {
+			            BaseWeapon virWeapon = ascAttacker.Weapon as BaseWeapon;
+
+			            if (virWeapon != null && virWeapon.Poison != null && defender.Poisoned)
 			            {
-			                percentageBonus += inqLevel / 2;
+			                if (Utility.Random(100) < assassinLevel)
+			                    PoisonImpl.ResolveSingleTick(defender, ascAttacker);
 			            }
-			            else if ( inqLevel >= 19 && defender.Karma < 0 )
-			            {
-			                percentageBonus += inqLevel / 4;
-			            }
+			        }
+
+			        // Deadly Strikes: bonus damage and resist shred against poisoned targets (level 14+)
+			        if (assassinLevel >= 14 && defender.Poisoned)
+			        {
+			            percentageBonus += 9;
+
+			            if (assassinLevel >= 19)
+			                new DeadlyStrikesResistDebuff(defender).Apply();
 			        }
 			    }
 			}
@@ -2011,6 +2042,38 @@ namespace Server.Items
 			        pm.TryBerserkerCleave(defender, this);
 			}
 
+		}
+
+		// ── Deadly Strikes: single-hit poison resist shred ───────────────────────
+		// Applies a -25 poison resistance mod before the hit's damage resolves,
+		// then removes it on the next server pulse via a zero-delay timer.
+		// This means exactly one AOS.Damage call sees the lowered resistance.
+		internal sealed class DeadlyStrikesResistDebuff
+		{
+		    private readonly Mobile          m_Target;
+		    private readonly ResistanceMod   m_Mod;
+
+		    public DeadlyStrikesResistDebuff(Mobile target)
+		    {
+		        m_Target = target;
+		        m_Mod    = new ResistanceMod(ResistanceType.Poison, -25);
+		    }
+
+		    public void Apply()
+		    {
+		        if (m_Target == null || m_Target.Deleted)
+		            return;
+
+		        m_Target.AddResistanceMod(m_Mod);
+
+		        Timer.DelayCall(TimeSpan.Zero, new TimerCallback(RemoveMod));
+		    }
+
+		    private void RemoveMod()
+		    {
+		        if (m_Target != null && !m_Target.Deleted)
+		            m_Target.RemoveResistanceMod(m_Mod);
+		    }
 		}
 
 		private bool CheckPummelingStrikes(Mobile attacker)
