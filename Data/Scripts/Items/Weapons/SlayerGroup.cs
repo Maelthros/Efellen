@@ -76,6 +76,8 @@ namespace Server.Items
 			humanoid.Opposition = new SlayerGroup[]{ };
 			humanoid.FoundOn = new Type[]{ };
 			humanoid.Super = new SlayerEntry( SlayerName.Repond, 
+				typeof(Caelan),
+				typeof(BloodstoneKeepKnight),
 				typeof(MetalHead),
 				typeof(SkyKnight),
 				typeof( FiorinTheArchdruid),
