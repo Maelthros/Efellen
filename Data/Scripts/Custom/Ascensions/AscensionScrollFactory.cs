@@ -8,15 +8,16 @@ namespace Server.Custom.Ascensions
         {
             AscensionType.Berserker,
             AscensionType.Archmage,
-            AscensionType.Archdruid,
             AscensionType.Palemaster,
-            AscensionType.Crusader,
-            AscensionType.Kensai,
-            AscensionType.Skald,
             AscensionType.Assassin,
+            AscensionType.Crusader,
+        // not implemented yet
+/*             AscensionType.Kensai,
+            AscensionType.Skald,
+            AscensionType.Archdruid,
             AscensionType.Reaver,
             AscensionType.Defender,
-            AscensionType.Shadowthief,
+            AscensionType.Shadowthief, */
         };
 
         public static AscensionType GetRandom()
