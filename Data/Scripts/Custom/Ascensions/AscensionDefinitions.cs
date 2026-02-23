@@ -39,7 +39,7 @@ namespace Server.Custom.Ascensions
                     "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing.<br><br>"+
                     "Crusaders also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.";   
                 default:
-                    return "No description defined.";
+                    return "IN DEVELOPMENT.";
             }
         }
 
@@ -322,7 +322,7 @@ namespace Server.Custom.Ascensions
             }
             else
             {
-                return "No abilities defined.";                
+                return "IN DEVELOPMENT.";                
             }
         }
 

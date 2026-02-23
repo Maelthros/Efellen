@@ -1,7 +1,6 @@
 using System;
 using Server;
 using Server.Items;
-using Server.Custom.Ascensions;
 
 namespace Server.Custom.Ascensions
 {
@@ -13,17 +12,23 @@ namespace Server.Custom.Ascensions
         public AscensionType Ascension
         {
             get { return m_Ascension; }
-            set { m_Ascension = value; InvalidateProperties(); }
+            set { m_Ascension = value; Hue = GetHueForAscension(value); InvalidateProperties(); }
         }
 
         [Constructable]
-        public AscensionScroll(AscensionType type) : base(0x1F4C) // Scroll itemID
+        public AscensionScroll() : this(AscensionScrollFactory.GetRandom())
         {
-            Weight = 0.2;
-            LootType = LootType.Regular;
-            m_Ascension = type;
+        }
+
+        [Constructable]
+        public AscensionScroll(AscensionType type) : base(0x2D9E)
+        {
+            Weight    = 0.2;
+            LootType  = LootType.Regular;
             Stackable = true;
-            Amount = 1;
+            Amount    = 1;
+            m_Ascension = type;
+            Hue  = GetHueForAscension(type);
             Name = type.ToString() + " Ascension Scroll";
         }
 
@@ -31,16 +36,29 @@ namespace Server.Custom.Ascensions
         {
         }
 
+        private static int GetHueForAscension(AscensionType type)
+        {
+            switch (type)
+            {
+                case AscensionType.Berserker:  return 0x0F1;
+                case AscensionType.Archmage:   return 0x213;
+                case AscensionType.Palemaster: return 0xB97;
+                case AscensionType.Crusader:   return 0x0F8;
+                case AscensionType.Assassin:   return 0x233;
+                default:                       return 0;
+            }
+        }
+
         public override void GetProperties(ObjectPropertyList list)
         {
             base.GetProperties(list);
-            list.Add("Required for unlocking the " + m_Ascension.ToString() + " Ascension.");
+            list.Add("Required for unlocking and advancing the " + m_Ascension.ToString() + " Ascension.");
         }
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write((int)0);
             writer.Write((int)m_Ascension);
         }
 
@@ -49,6 +67,7 @@ namespace Server.Custom.Ascensions
             base.Deserialize(reader);
             int version = reader.ReadInt();
             m_Ascension = (AscensionType)reader.ReadInt();
+            Hue = GetHueForAscension(m_Ascension);
         }
     }
 }

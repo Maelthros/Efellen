@@ -19,6 +19,11 @@ namespace Server.Custom.Ascensions
             AscensionType.Shadowthief,
         };
 
+        public static AscensionType GetRandom()
+        {
+            return m_UnlockableAscensions[Utility.Random(m_UnlockableAscensions.Length)];
+        }
+
         public static AscensionScroll CreateRandom()
         {
             AscensionType type = m_UnlockableAscensions[
