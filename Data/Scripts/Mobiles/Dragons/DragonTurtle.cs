@@ -134,7 +134,7 @@ namespace Server.Mobiles
 			    hue: 1160,
 			    rage: 2,
 			    range: 5, 
-				phisicalDmg:0,
+				physicalDmg:0,
 			    fireDmg: 100
 			);
 		}
