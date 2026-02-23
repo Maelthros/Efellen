@@ -163,6 +163,7 @@ namespace Server.Mobiles
                        hue: 0xb73,
                        rage: m_Rage+1,
                        range: 6,
+					   physicalDmg: 0,
                        fireDmg: 100
                    );
                    break;
