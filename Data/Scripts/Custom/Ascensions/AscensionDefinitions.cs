@@ -11,32 +11,32 @@ namespace Server.Custom.Ascensions
                 case AscensionType.Berserker:
                     return
                     "The Berserker is a savage warrior that wields two-handed weapons to great effect. In combat, they fly into a murderous rage that empowers them.<br><br>" +
-                    "In order to activate this Ascension, you need to have 95 base skill in both Tactics and Magic Resist. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in both Tactics and Magic Resist.<br><br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Tactics, camping and Magic Resist. Every time you level up the class, the requirement also increases by 1.<br><br>" +
+                    "So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in Tactics, camping and Magic Resist.<br><br>"+
                     "Berserkers also require their spirit to be free of the taint of civilization - a Berserker will not gain experience in this Ascension if they have learned Bushido, Knightship, Magery or Necromancy";
                 case AscensionType.Archmage:
                     return
                     "The Archmage is a master of the Arcane. In combat, they control their opponents and execute powerful spells to bend the Weave itself to their will itself.<br><br>" +
-                    "In order to activate this Ascension, you need to have 95 base skill in both Magery and Psychology. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in both Magery and Psychology<br><br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Magery, inscription and Psychology. Every time you level up the class, the requirement also increases by 1.<br><br>" +
+                    "So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in Magery , inscription and Psychology<br><br>"+
                     "Archmages also require a singular focus on arcane magic, and they will not gain experience in this class if they have learned Knightship, Elementalism, Necromancy or Bushido";
                 case AscensionType.Palemaster:
                     return
                     "The Palemaster is death made flesh. In combat, they control an army of undead and curse and enfeeble their opponents until they have met their end.<br><br>" +
-                    "In order to activate this Ascension, you need to have 95 base skill in both Necromancy and Spiritualism. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in both Necromancy and Spiritualism<br><br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Necromancy, forensics and Spiritualism. Every time you level up the class, the requirement also increases by 1.<br><br>" +
+                    "So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in Necromancy, forensics and Spiritualism<br><br>"+
                     "Palemasters also are required to revel in death and vileness, and they will not gain experience in this class if they have learned Knightship, Elementalism or Bushido, or if they stray from the path of evil";
                 case AscensionType.Crusader:
                     return
                     "The Crusader is the embodiment of virtue. In combat, they stand tall in defiance against evil.<br><br>"+
-                    "In order to activate this Ascension, you need to have 95 base skill in both Knightship and Tactics. Every time you level up the class, the requirement also increases by 1.<br><br>"+
-                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Knightship and Tactics.<br><br>"+
-                    "Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy, Spiritualism or Forensics, or if they stray from the path of good.<br><br>";
+                    "In order to activate this Ascension, you need to have 95 base skill in Knightship, spiritualism and Tactics. Every time you level up the class, the requirement also increases by 1.<br><br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, spiritualism and Tactics.<br><br>"+
+                    "Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy or Forensics, or if they stray from the path of good.<br><br>";
                 case AscensionType.Assassin:
                     return
                     "The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.<br><br>"+
-                    "In order to activate this Ascension, you need to have 95 base skill in both Poisoning and Fencing. Every time you level up the class, the requirement also increases by 1.<br><br>"+
-                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning and Fencing.<br><br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in both Poisoning, hiding and Fencing. Every time you level up the class, the requirement also increases by 1.<br><br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing.<br><br>"+
                     "Crusaders also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.";   
                 default:
                     return "No description defined.";

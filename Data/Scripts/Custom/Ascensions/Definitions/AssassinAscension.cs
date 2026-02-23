@@ -8,7 +8,7 @@ namespace Server.Custom.Ascensions
 
         public override SkillName[] RequiredSkills
         {
-            get { return new SkillName[] { SkillName.Poisoning, SkillName.Fencing }; }
+            get { return new SkillName[] { SkillName.Poisoning, SkillName.Fencing, SkillName.Hiding }; }
         }
 
         public override SkillName[] ForbiddenSkills

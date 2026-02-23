@@ -11,7 +11,7 @@ namespace Server.Custom.Ascensions
 
         public override SkillName[] RequiredSkills
         {
-            get { return new SkillName[] { SkillName.MagicResist, SkillName.Tactics }; }
+            get { return new SkillName[] { SkillName.MagicResist, SkillName.Tactics, SkillName.Camping }; }
         }
 
         public override SkillName[] ForbiddenSkills

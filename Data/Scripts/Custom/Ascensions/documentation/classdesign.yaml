@@ -15,7 +15,7 @@ Crusader
 Assassin
     active:  Toxic surge, crippling poison, Noxious cloud, Cleansing Annihilation
     passive:  virulent strikes, dangerous habits, deadly strikes, terminal
-    
+
 
 These are the ascendancies that are currently in development:
 
@@ -23,14 +23,14 @@ Battlemage
     active: Disruption, rending magic, Spell Blasting,  annihilation 
     passive:  arcane siphoning,  arcane overload, piercing spells, spell fracture
 Kensai
-    active: culling strike
-    passive:  practiced perfection, 
+    active: battle meditation, Kai, culling strike, tempest
+    passive: practiced perfection, singular focus, 
 Skald
-    active: song of heroism, battle trance, song of valor, symphony of war
+    active: song of heroism, joy of battle, song of valor, symphony of war
     passive:  brave heart, 
 Reaver
-    active: exsanguinate, Gorge, bloodstorm ,Call the blood
-    passive: Vigor, flaying strikes, deep cuts, Exquisite Leech   
+    active: exsanguinate, Gorge, bloodstorm ,Tyranny of blood
+    passive: Leech, Vigor, flaying strikes, deep cuts,    
 Defender
     active: Bulwark, 
     passive:  
@@ -38,8 +38,9 @@ Shadowthief
     active: 
     passive:  
 Archdruid
-    active:
+    active: 
     passive:
+
 
 Future ascendancy ideas: Hierophant, Blackguard, arcane trickster
 
@@ -47,8 +48,8 @@ Berserker abilities
 active abilities : Rage, leap slam, warcry, tenacity
 
 The Berserker is a savage warrior that wields two-handed weapons to great effect. In combat, they fly into a murderous rage that empowers them.
-In order to activate this Ascension, you need to have 95 base skill in both Tactics and Magic Resist. Every time you level up the class, the requirement also
-increases by 1. So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in both Tactics and Magic Resist.
+In order to activate this Ascension, you need to have 95 base skill in Tactics, camping and Magic Resist. Every time you level up the class, the requirement also
+increases by 1. So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in Tactics, camping and Magic Resist.
 
 These are the abilities that the berserker learns as they level up:
 rage, level 1
@@ -239,9 +240,9 @@ Palemaster Abilities
     Crusader
 
     The Crusader is the embodiment of virtue. In combat, they stand tall in defiance against evil.
-    In order to activate this Ascension, you need to have 95 base skill in both Knightship and Tactics. Every time you level up the class, the requirement also increases by 1.
-    So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Knightship and Tactics
-    Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy, Spiritualism or Forensics, or if they stray from the path of good.
+    In order to activate this Ascension, you need to have 95 base skill in Knightship, spiritualism and Tactics. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, spiritualism and Tactics
+    Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy or Forensics, or if they stray from the path of good.
 
     Smite, level 1
     command: [CrusaderSmite
@@ -296,8 +297,8 @@ Palemaster Abilities
     Assassin
 
     The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.
-    In order to activate this Ascension, you need to have 95 base skill in both Poisoning and Fencing. Every time you level up the class, the requirement also increases by 1.
-    So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning and Fencing
+    In order to activate this Ascension, you need to have 95 base skill in both Poisoning, hiding and Fencing. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing
     Crusaders also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.
 
     Noxious Cloud, level 1
@@ -344,3 +345,8 @@ Palemaster Abilities
 
     Terminal, level 20
     When killing a poisoned creature, the assassin has a 0.25% chance per level of inflicting lethal poison on all hostile creatures that are up to 2 tiles away from it. 
+
+
+Reaver
+    active: exsanguinate, Gorge, bloodstorm ,Tyranny of blood
+    passive: Leech, Vigor, flaying strikes, deep cuts,

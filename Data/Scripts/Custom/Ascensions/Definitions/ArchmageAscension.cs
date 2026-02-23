@@ -8,7 +8,7 @@ namespace Server.Custom.Ascensions
 
         public override SkillName[] RequiredSkills
         {
-            get { return new SkillName[] { SkillName.Magery, SkillName.Psychology }; }
+            get { return new SkillName[] { SkillName.Magery, SkillName.Psychology, SkillName.Inscribe }; }
         }
 
         public override SkillName[] ForbiddenSkills
