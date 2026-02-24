@@ -41,6 +41,7 @@ namespace Server.Custom.Ascensions
 
             AscensionProgress prog = pm.AscensionProfile.Get(Ascension);
             DoEnervate(pm, prog.Level, true);
+            new CooldownNotifyTimer(pm, Cooldown).Start();
         }
 
         public void ForceExecute(PlayerMobile pm, int level)
@@ -116,6 +117,22 @@ namespace Server.Custom.Ascensions
 
             m.AddStatMod(new StatMod(StatType.Str, "EnervateStr", -strLoss, TimeSpan.FromSeconds(30)));
             m.AddStatMod(new StatMod(StatType.Dex, "EnervateDex", -dexLoss, TimeSpan.FromSeconds(30)));
+        }
+        private class CooldownNotifyTimer : Timer
+        {
+            private PlayerMobile m_Player;
+
+            public CooldownNotifyTimer(PlayerMobile pm, TimeSpan delay)
+                : base(delay)
+            {
+                m_Player = pm;
+            }
+
+            protected override void OnTick()
+            {
+                if (m_Player != null)
+                    m_Player.SendMessage("You can enervate again.");
+            }
         }
     }
 }
