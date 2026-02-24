@@ -15,6 +15,9 @@ Crusader
 Assassin
     active:  Toxic surge, crippling poison, Noxious cloud, Cleansing Annihilation
     passive:  virulent strikes, dangerous habits, deadly strikes, terminal
+Blackguard
+    active: Dark Succor, Death's Advance, Chains of Ice, Frostwyrm's Fury
+    passive: Frozen heart, Morbidity, Merciless Strikes, Soul Reaper
 
 
 These are the ascendancies that are currently in development:
@@ -38,18 +41,11 @@ Shadowthief
     active: 
     passive:  
 Archdruid
-    active: 
+    active: imbue arrows, phase shift, arcane volley, barrage
+    passive: mystical ricochet, arcane precision, arcane feedback, arcane momentum
+Summoner:
+    active: Eidolon
     passive:
-Blackguard
-    active: Dark Succor, Death's Advance, Chains of Ice, Frostwyrm's Fury
-    passive: Frozen heart, Morbidity, Merciless Strikes, Soul Reaper
-arcane archer
-    active:
-    passive:
-hierophant:
-    active:
-    passive:
-
 
 Berserker abilities
 active abilities : Rage, leap slam, warcry, tenacity
