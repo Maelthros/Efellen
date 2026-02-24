@@ -57,7 +57,7 @@ namespace Server.Custom.DefenderOfTheRealm
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Berserker Ascension Scroll",        false, 0x0F1, AscensionType.Berserker),
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Palemaster Ascension Scroll",       false, 0xB97, AscensionType.Palemaster),
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Assassin Ascension Scroll",         false, 0x233, AscensionType.Assassin),
-            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Blackguard Ascension Scroll",         false, 0x233, AscensionType.Blackguard),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Blackguard Ascension Scroll",         false, 0x47E, AscensionType.Blackguard),
         };
 
         public static RewardInfo[] ShadowbrokerRewards = new RewardInfo[]
