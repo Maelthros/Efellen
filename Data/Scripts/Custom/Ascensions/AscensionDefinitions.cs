@@ -153,16 +153,16 @@ namespace Server.Custom.Ascensions
             {
                 return
                 "<BASEFONT COLOR=#FFFFFF>" +
-                "These are the abilities that the Archmage learns as they level up:<br><br>" + 
+                "These are the abilities that the Palemaster learns as they level up:<br><br>" + 
                 "Undying hordes, level 1<br>" + 
                 "command: [PalemasterUndyingHordes<br>" + 
                 "The Palemaster calls forth a mindless horde of undead to attack their enemies.<br>" + 
                 "These will attack anything hostile to the caster relentlessly until they are destroyed or until they crumble into dust. <br>" + 
-                "The Undying hordes has a 4 minutes cooldown between uses.<br>" +    
+                "The Undying hordes has a 3 minutes cooldown between uses.<br>" +    
                 "The horde lasts for 60 (+3 per level) seconds and its composition is based on the Palemaster Level.<br>" +  
                 "Level 1-4: 3-5 skeletons, 2-3 skeleton warriors<br>" + 
-                "Level 4-8: 3-5 skeletons, 2-3 skeleton warriors, 1-2 skeleton knights<br>" + 
-                "Level 8-12: 3-4 skeleton warriors, 2-3 skeleton knights, 1-2 mummies<br>" + 
+                "Level 5-8: 3-5 skeletons, 2-3 skeleton warriors, 1-2 skeleton knights<br>" + 
+                "Level 9-12: 3-4 skeleton warriors, 2-3 skeleton knights, 1-2 mummies<br>" + 
                 "Level 13-16: 2-3 skeleton knights, 2-3 mumies, 1-2 ancient mummies, 1 undead giant<br>" + 
                 "Level 17-19: 3-4 undead giants, 2-3 ancient mummies, 1 skeletal dragon<br>" + 
                 "Level 20: 4-5 undead giants, 3-4 ancient mummies, 1-2 skeletal dragons<br><br>" +          
