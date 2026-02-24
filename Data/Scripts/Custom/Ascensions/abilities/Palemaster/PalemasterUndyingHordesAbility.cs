@@ -16,7 +16,7 @@ namespace Server.Custom.Ascensions
 
         public override TimeSpan Cooldown
         {
-            get { return TimeSpan.FromMinutes(4); }
+            get { return TimeSpan.FromMinutes(3); }
         }
 
         public override void Execute(PlayerMobile pm)
