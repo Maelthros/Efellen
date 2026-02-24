@@ -105,12 +105,18 @@ namespace Server.Custom.Ascensions
             if (!CanGainExperience(pm, def, prog))
             {
                 pm.SendMessage("You either have restricted skills that prevent you from gaining experience on this Ascension or you have the incorrect required karma for it");
-                return;                
+                return;
             }
 
             prog.AddExperience(amount);
 
             pm.SendMessage(1153, "You gain " + amount + " ascension experience.");
+
+            if (pm.HasGump(typeof(AscensionQuickbarGump)))
+            {
+                pm.CloseGump(typeof(AscensionQuickbarGump));
+                pm.SendGump(new AscensionQuickbarGump(pm));
+            }
         }
     }
 }
