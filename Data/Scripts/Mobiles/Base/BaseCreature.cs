@@ -8227,6 +8227,158 @@ public virtual int BreathComputeDamage()
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
+			// DARK SUCCOR Level 15 + 20 (Blackguard active, kill triggers)
+
+			if ( slayer is PlayerMobile )
+			{
+			    PlayerMobile blackguardPm = (PlayerMobile)slayer;
+				AscensionProgress succorProg = blackguardPm.AscensionProfile.Get( AscensionType.Blackguard );
+			        int blackguardLevel = succorProg.Level;
+			    if ( blackguardPm.ActiveAscension == AscensionType.Blackguard
+				    && blackguardLevel >= 8)
+				{
+				    if ( this.Karma > 0 )
+				    {
+				        double chance = 0.0025 * blackguardLevel;
+
+				        if ( Utility.RandomDouble() < chance )
+				        {
+				            TimeSpan fleeDuration;
+
+				            if ( blackguardLevel >= 17 )
+				                fleeDuration = TimeSpan.FromSeconds( 6.0 );
+				            else
+				                fleeDuration = TimeSpan.FromSeconds( 3.0 );
+
+				            bool triggered = false;
+
+				            IPooledEnumerable eable = null;
+
+				            try
+				            {
+				                eable = blackguardPm.GetMobilesInRange( 2 );
+
+				                foreach ( Mobile m in eable )
+				                {
+				                    if ( m == null )
+				                        continue;
+
+				                    if ( m.Deleted || !m.Alive )
+				                        continue;
+
+				                    if ( m == blackguardPm )
+				                        continue;
+
+				                    if ( !(m is BaseCreature) )
+				                        continue;
+
+				                    BaseCreature bc = (BaseCreature)m;
+
+				                    if ( bc.Fame >= 12500 )
+				                        continue;
+
+				                    if ( bc.Controlled || bc.Summoned )
+				                        continue;
+
+				                    bc.BeginFlee( fleeDuration );
+				                    triggered = true;
+				                }
+				            }
+				            catch
+				            {}
+				            finally
+				            {
+				                if ( eable != null )
+				                    eable.Free();
+				            }
+
+				            if ( triggered )
+				            {
+				                blackguardPm.SendMessage( 0x47E, "Your morbidity panics your foes!" );
+				                blackguardPm.FixedParticles( 0x376A, 9, 32, 5005, 0x455, 0, EffectLayer.Waist );
+				            }
+				        }
+				    }
+				}
+				if ( blackguardPm.ActiveAscension == AscensionType.Blackguard
+			        && blackguardPm.HasAscensionEffect( "DarkSuccor" ) )
+			    {
+			        if ( blackguardLevel >= 15 && blackguardPm.Mana < (blackguardPm.ManaMax / 2) )
+			        {
+			            int manaRestore = 2 + (blackguardLevel / 2);
+			            blackguardPm.Mana = Math.Min( blackguardPm.ManaMax, blackguardPm.Mana + manaRestore );
+			            blackguardPm.SendMessage( 0x47E, "The fallen foe empowers your magic!" );
+			            blackguardPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
+			        }
+
+			        if ( blackguardLevel >= 20 && blackguardPm.Hits < (blackguardPm.HitsMax / 2) )
+			        {
+			            int hpRestore = 6 + (blackguardLevel / 2);
+			            blackguardPm.Hits = Math.Min( blackguardPm.HitsMax, blackguardPm.Hits + hpRestore );
+			            blackguardPm.SendMessage( 0x47E, "The fallen foe feeds your vileness!" );
+			            blackguardPm.FixedParticles( 0x376A, 9, 32, 5005, 0x47E, 0, EffectLayer.Waist );
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			// SOUL REAPER (Blackguard, level 20)
+
+			if ( slayer is PlayerMobile && this.Fame > 10000 )
+			{
+			    PlayerMobile reaperPm = (PlayerMobile)slayer;
+
+			    if ( reaperPm.ActiveAscension == AscensionType.Blackguard )
+			    {
+			        AscensionProgress reaperProg = reaperPm.AscensionProfile.Get( AscensionType.Blackguard );
+			        int reaperLevel = reaperProg.Level;
+
+			        // 0.25% per level
+			        if ( reaperLevel >= 20 && Utility.Random( 10000 ) < (reaperLevel * 25) )
+			        {
+			            Map reaperMap = reaperPm.Map;
+
+			            if ( reaperMap != null && reaperMap != Map.Internal )
+			            {
+			                int drainPerTarget = reaperLevel + (reaperPm.Str / 25);
+			                int totalHealing   = 0;
+
+			                IPooledEnumerable eable = reaperMap.GetMobilesInRange( this.Location, 2 );
+
+			                try
+			                {
+			                    foreach ( Mobile m in eable )
+			                    {
+			                        if ( m == null || m.Deleted || !m.Alive || m == reaperPm )
+			                            continue;
+
+			                        if ( !reaperPm.CanBeHarmful( m, false ) )
+			                            continue;
+
+			                        int actualDrain = Math.Min( m.Hits, drainPerTarget );
+			                        m.Hits -= actualDrain;
+
+			                        totalHealing += drainPerTarget;
+			                    }
+			                }
+			                finally
+			                {
+			                    eable.Free();
+			                }
+
+			                if ( totalHealing > 0 )
+			                {
+			                    reaperPm.Hits = Math.Min( reaperPm.HitsMax, reaperPm.Hits + drainPerTarget );
+			                    reaperPm.SendMessage( 0x47E, "You reap the soul of your foe!" );
+			                    reaperPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
+			                    reaperPm.PlaySound( 0x1FB );
+			                }
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );

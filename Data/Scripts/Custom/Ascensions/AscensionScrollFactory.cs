@@ -11,6 +11,7 @@ namespace Server.Custom.Ascensions
             AscensionType.Palemaster,
             AscensionType.Assassin,
             AscensionType.Crusader,
+            AscensionType.Blackguard,
         // not implemented yet
 /*             AscensionType.Kensai,
             AscensionType.Skald,

@@ -32,6 +32,8 @@ namespace Server.Custom.Ascensions
             Name = type.ToString() + " Ascension Scroll";
         }
 
+        public override string DefaultDescription{ get{ return "Scrolls of ascension are a form of currency used to unlock powerful abilities. Each scroll is tied to one specific form of ascension, and each ascension has its own set of prerequisites. Use [Ascension for more information."; } }
+
         public AscensionScroll(Serial serial) : base(serial)
         {
         }
@@ -45,6 +47,7 @@ namespace Server.Custom.Ascensions
                 case AscensionType.Palemaster: return 0xB97;
                 case AscensionType.Crusader:   return 0x0F8;
                 case AscensionType.Assassin:   return 0x233;
+                case AscensionType.Blackguard: return 0x47E;
                 default:                       return 0;
             }
         }

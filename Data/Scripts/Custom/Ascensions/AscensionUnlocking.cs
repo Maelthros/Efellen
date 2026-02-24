@@ -12,14 +12,14 @@ namespace Server.Custom.Ascensions
 
             if (totalLevels == 0)
             {
-                gold = 500;
-                dust = 250;
+                gold    = 500;
+                dust    = 250;
                 scrolls = 3;
                 return;
             }
 
-            gold = totalLevels * 1000;
-            dust = gold / 2;
+            gold    = totalLevels * 1000;
+            dust    = gold / 2;
             scrolls = 3;
         }
 
@@ -54,9 +54,9 @@ namespace Server.Custom.Ascensions
             ConsumeScrolls(pm, type, scrolls);
 
             AscensionProgress prog = pm.AscensionProfile.Get(type);
-            prog.Unlocked = true;
-            prog.Level = 1;
-            prog.Experience = 0;
+            prog.Unlocked    = true;
+            prog.Level       = 1;
+            prog.Experience  = 0;
 
             pm.SendMessage("You have unlocked the " + type.ToString() + " ascension.");
 
@@ -85,66 +85,121 @@ namespace Server.Custom.Ascensions
 
         internal static bool HasArcaneDust(PlayerMobile pm, int amount)
         {
-            return pm.Backpack != null && pm.Backpack.GetAmount(typeof(ArcaneDust)) >= amount;
+            int total = 0;
+
+            if (pm.Backpack != null)
+                total += pm.Backpack.GetAmount(typeof(ArcaneDust));
+
+            if (total >= amount)
+                return true;
+
+            if (pm.BankBox != null)
+                total += pm.BankBox.GetAmount(typeof(ArcaneDust));
+
+            return total >= amount;
         }
 
         internal static void ConsumeArcaneDust(PlayerMobile pm, int amount)
         {
+            int remaining = amount;
+
             if (pm.Backpack != null)
-                pm.Backpack.ConsumeTotal(typeof(ArcaneDust), amount);
-        }
-
-        internal static bool HasScrolls(PlayerMobile pm, AscensionType type, int amount)
-        {
-            if (pm == null || pm.Backpack == null)
-                return false;
-
-            int total = 0;
-
-            foreach (Item item in pm.Backpack.Items)
             {
-                AscensionScroll scroll = item as AscensionScroll;
+                int inPack = pm.Backpack.GetAmount(typeof(ArcaneDust));
 
-                if (scroll != null && scroll.Ascension == type)
+                if (inPack >= remaining)
                 {
-                    total += scroll.Amount;
+                    pm.Backpack.ConsumeTotal(typeof(ArcaneDust), remaining);
+                    return;
+                }
 
-                    if (total >= amount)
-                        return true;
+                if (inPack > 0)
+                {
+                    pm.Backpack.ConsumeTotal(typeof(ArcaneDust), inPack);
+                    remaining -= inPack;
                 }
             }
 
-            return false;
+            if (pm.BankBox != null && remaining > 0)
+                pm.BankBox.ConsumeTotal(typeof(ArcaneDust), remaining);
+        }
+
+        
+        internal static bool HasScrolls(PlayerMobile pm, AscensionType type, int amount)
+        {
+            if (pm == null)
+                return false;
+
+            int total = CountScrolls(pm.Backpack, type);
+
+            if (total >= amount)
+                return true;
+
+            total += CountScrolls(pm.BankBox, type);
+
+            return total >= amount;
         }
 
         internal static void ConsumeScrolls(PlayerMobile pm, AscensionType type, int amount)
         {
-            if (pm == null || pm.Backpack == null)
+            if (pm == null)
                 return;
+
+            int remaining = ConsumeScrollsFromContainer(pm.Backpack, type, amount);
+
+            if (remaining > 0)
+                ConsumeScrollsFromContainer(pm.BankBox, type, remaining);
+        }
+
+        
+        private static int CountScrolls(Container container, AscensionType type)
+        {
+            if (container == null)
+                return 0;
+
+            int total = 0;
+
+            foreach (Item item in container.Items)
+            {
+                AscensionScroll scroll = item as AscensionScroll;
+
+                if (scroll != null && scroll.Ascension == type)
+                    total += scroll.Amount;
+            }
+
+            return total;
+        }
+
+        private static int ConsumeScrollsFromContainer(Container container, AscensionType type, int amount)
+        {
+            if (container == null)
+                return amount;
 
             int remaining = amount;
 
-            for (int i = pm.Backpack.Items.Count - 1; i >= 0; i--)
+            for (int i = container.Items.Count - 1; i >= 0; i--)
             {
-                AscensionScroll scroll = pm.Backpack.Items[i] as AscensionScroll;
+                AscensionScroll scroll = container.Items[i] as AscensionScroll;
 
-                if (scroll != null && scroll.Ascension == type)
+                if (scroll == null || scroll.Ascension != type)
+                    continue;
+
+                if (scroll.Amount <= remaining)
                 {
-                    if (scroll.Amount <= remaining)
-                    {
-                        remaining -= scroll.Amount;
-                        scroll.Delete();
-                    }
-                    else
-                    {
-                        scroll.Amount -= remaining;
-                        remaining = 0;
-                    }
-
-                    if (remaining <= 0)
-                        break;
+                    remaining -= scroll.Amount;
+                    scroll.Delete();
                 }
+                else
+                {
+                    scroll.Amount -= remaining;
+                    remaining      = 0;
+                }
+
+                if (remaining <= 0)
+                    break;
             }
+
+            return remaining;
         }
     }
 }

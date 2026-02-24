@@ -37,7 +37,13 @@ namespace Server.Custom.Ascensions
                     "The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.<br><br>"+
                     "In order to activate this Ascension, you need to have 95 base skill in both Poisoning, hiding and Fencing. Every time you level up the class, the requirement also increases by 1.<br><br>"+
                     "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing.<br><br>"+
-                    "Crusaders also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.";   
+                    "Assassins also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.";   
+                case AscensionType.Blackguard:
+                    return
+                    "The Blackguard is a champion of evil and corruption. In combat, they are juggernauts that bring frost e blood into the battlefield.<br><br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Knightship, Arms lore and Necromancy. Every time you level up the class, the requirement also increases by 1.<br><br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, Arms lore and Necromancy.<br><br>"+
+                    "Blackguardss also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido, spiritualism or elementalism, or if they abandon the path of evil.";
                 default:
                     return "IN DEVELOPMENT.";
             }
@@ -318,6 +324,55 @@ namespace Server.Custom.Ascensions
 
                 "Terminal, level 20.<br>" +
                 "When killing a poisoned creature, the assassin has a 0.25% chance per level of inflicting lethal poison on all hostile creatures that are up to 2 tiles away from it.<br>" +
+                "</BASEFONT>";
+            }
+             else if (type == AscensionType.Blackguard)
+            {
+                return
+                "<BASEFONT COLOR=#ffffff>"+
+                "Dark Succor, level 1.<br>" +
+                "command: [BlackguardDarkSuccor<br>" +
+                "The blackguard enters an unholy trance for (30 +1 per level) seconds.<br>" +
+                "Dark succor costs 20 mana to activate. While its active, the Blackguard has 15 + level/2 strength.<br>" + 
+                "When Dark Succor ends, the blackguard loses half ot their remaining mana. This ability has a 90 seconds cooldown.<br>" +
+                "- Level 10: While on the trance and under 50% of their maximum hitpoints, the blackguard causes + 0.75%  damage per level against positive karma creatures.<br>" +
+                "- Level 15: While on the trance and under 50% of their maximum mana, whenever the blackguard kills a creature with a weapon strike, the blackguard recovers 2 + level/2 mana.<br>" + 
+                "- Level 20: While on the trance amd imder 50% of their maximum hitpoints, whenever the blackguard kills a creature with a weapon strike, the blackguard heals for 6 + level/2 hit points.<br><br>" +
+
+                "Death's Advance, level 6.<br>" +
+                "command: [BlackguardDeathsAdvance<br>" +
+                "When used, the blackguard chooses a free tile that is at least 2 tiles away from them and its moved to that tile. The maximum range is equal to  3 + level/5. When arriving, every hostile creature adjacent to that tile has a 1% per level chance of knockedback for 2 + 1 tile for every 5 levels of the blackguard.<br>" +  
+                "Has a cooldown of 9 seconds, minus one second per 3 Blackguard levels.<br>" + 
+                "- Level 12: when arriving, all hostile creatures adjacent to the destination square receive 30-45 + ((str / 15) + level / 3) physical damage<br><br>" +
+
+                "Chains of Ice, level 11.<br>" +
+                "command: [BlackguardChainsOfIce<br>" +
+                "The blackguard throws icy chains around themselves, freezing all hostile creatures for 3 + 1  per 4 levels seconds. Creatures caught by the chains receive 30-43 + (str/15) cold damage.<br>" +
+	            "costs 30 mana to activate and has a 90 seconds cooldown.<br>" +
+                "- Level 16: When the paralyze ends, the chains explode causing an additional 30-43 + (str/15) cold damage at each creature adjacent to an affected creature.<br><br>" +
+
+                "Frostwyrm's Fury, level 18.<br>" +
+                "command: [BlackguardsFrostwyrmsFury<br>" +
+                "The blackguard opens the netherworld gates and calls forth an undead dragon bound to his will.<br>" +
+                "The creature is a powerful dracolich that requires 4 control slots and remains at the blackguard's side until defeated.<br>" + 
+                "Activating this ability costs 60 mana and 60 stamina. It has a 5 minutes cooldown.<br>" +
+                "- Level 20: there's a 1% chance per level that two frostwyrms will be summoned instead.<br><br>" + 
+
+                "Frozen Heart, level 2.<br>" +
+                "Increases the cold damage done by the blackguard's weapon strikes by 6%.<br>" +
+                "- Level 5: Increases the cold damage done by the blackguard's weapon strikes by 12%.<br>" +
+                "- Level 13:Increases the cold damage done by the blackguard's weapon strikes by 18%.<br><br>" +
+
+                "Morbidity, level 8.<br>" +
+                "When the blackguard kills a positive karma creature, they have a 0.25% chance per level of terrorizing most nearby foes that are up to 2 tiles away and making them flee for 3 seconds.<br>" + 
+                "- Level 17: Terrorized enemies flee for 6 seconds instead.<br><br>" +
+
+                "Merciless Strikes, level 14.<br>" +
+                "The blackguard's weapon attacks have a 1% chance per level of affecting the target's weakest resistance.<br>" +
+                "- Level 19: The blackguard's merciless strikes have a 0.25% chance per level of paralyzing the target for 3 seconds.<br><br>" +
+
+                "Soul Reaper, level 20.<br>" +
+                "When killing a hostile creature, the blackguard has a 0.25% chance per level of syphoning level + str /25 health from  all hostile creatures that are up to 2 tiles away from it.<br>" +
                 "</BASEFONT>";
             }
             else

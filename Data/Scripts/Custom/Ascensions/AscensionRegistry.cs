@@ -21,6 +21,7 @@ public static class AscensionRegistry
         Register(new ReaverAscension());
         Register(new DefenderAscension());
         Register(new ShadowthiefAscension());
+        Register(new BlackguardAscension());
     }
 
     private static void Register(AscensionDefinition def)

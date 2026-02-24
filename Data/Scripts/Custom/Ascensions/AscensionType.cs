@@ -13,5 +13,6 @@ public enum AscensionType
     Assassin,
     Reaver,
     Defender,
-    Shadowthief
+    Shadowthief,
+    Blackguard
 }

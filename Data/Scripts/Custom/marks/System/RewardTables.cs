@@ -57,6 +57,7 @@ namespace Server.Custom.DefenderOfTheRealm
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Berserker Ascension Scroll",        false, 0x0F1, AscensionType.Berserker),
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Palemaster Ascension Scroll",       false, 0xB97, AscensionType.Palemaster),
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Assassin Ascension Scroll",         false, 0x233, AscensionType.Assassin),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Blackguard Ascension Scroll",         false, 0x233, AscensionType.Blackguard),
         };
 
         public static RewardInfo[] ShadowbrokerRewards = new RewardInfo[]
@@ -108,7 +109,6 @@ namespace Server.Custom.DefenderOfTheRealm
             new RewardInfo(typeof(Artifact_ArcaneGorget),                  1000,  0x13C7, "Arcane Gorget",                    true,  0),
             new RewardInfo(typeof(Artifact_ArcaneLeggings),                1000,  0x13CB, "Arcane Leggings",                  true,  0),
             new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Archmage Ascension Scroll",        false, 0x213, AscensionType.Archmage),
-            new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Palemaster Ascension Scroll",      false, 0xB97, AscensionType.Palemaster),
         };
     }
 }

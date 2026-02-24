@@ -35,6 +35,11 @@ namespace Server.Custom.Ascensions
             Register(new AssassinCripplingPoisonAbility());
             Register(new AssassinToxicSurgeAbility());
             Register(new AssassinCleansingAnnihilationAbility());
+            // ---- Blackguard
+            Register(new BlackguardDarkSuccorAbility());
+            Register(new BlackguardDeathsAdvanceAbility());
+            Register(new BlackguardChainsOfIceAbility());
+            Register(new BlackguardsFrostwyrmsFuryAbility());
         }
 
         private static void Register(AscensionAbility ability)
