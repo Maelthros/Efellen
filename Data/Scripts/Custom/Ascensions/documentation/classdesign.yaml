@@ -29,8 +29,8 @@ Kensai
     active: battle meditation, Kai, culling strike, tempest
     passive: practiced perfection, singular focus, 
 Skald
-    active: song of heroism, joy of battle, song of valor, symphony of war
-    passive:  brave heart, 
+    active: war chant, saga of valor, song of thunder, dirge of the fallen
+    passive:  Battlefield Rhythm, ressonance, harmonic echo, saga of steel
 Reaver
     active: gorge, exsanguinate, bloodstorm ,Tyranny of blood
     passive: Leech, Vigor, flaying strikes, deep cuts,    
@@ -245,7 +245,7 @@ Palemaster Abilities
     The Crusader is the embodiment of virtue. In combat, they stand tall in defiance against evil.
     In order to activate this Ascension, you need to have 95 base skill in Knightship, spiritualism and Tactics. Every time you level up the class, the requirement also increases by 1.
     So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, spiritualism and Tactics
-    Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy or Forensics, or if they stray from the path of good.
+    Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy, hiding or stealing, or if they stray from the path of good.
 
     Smite, level 1
     command: [CrusaderSmite
@@ -402,3 +402,52 @@ Blackguard
 
     Soul Reaper, level 20
     When killing a hostile creature, the blackguard has a 0.25% chance per level of syphoning level + str /25 health from  all hostile creatures that are up to 2 tiles away from it. 
+
+    Skald
+    active: war chant, saga of valor, song of thunder, dirge of the fallen
+    passive:  Battlefield Rhythm, ressonance, harmonic echo, saga of steel 
+
+    The Skald is the hero of song and the keeper of valor. In combat, they use powerful music to strengthen themselves and their allies.
+    In order to activate this Ascension, you need to have 95 base skill in Musicianship, Tactics and Discordance. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Skald cannot activate this ascension unless they have 115 base skill in Musicianship, Tactics and Discordance.
+    Skalds are proud and pragmatic. They will not gain experience in this class if they have learned bushido, necromancy, marksmanship, hiding or begging.
+
+    War Chant, level 1
+    command: [SkaldWarChant
+    The Skald channels a powerful song that empowers their allies. 
+    For 25 (+1 per level) seconds, the skald and all friendly creatures up to 4 tiles away receive + 20 strength and dexterity,  and a +1 bonus to tactics and magic resistance per level of the skald.
+    This skill costs 20 mana to activate and has a 90 seconds cooldown.
+    - Level 10: The skald and their allies received a 0.5% per level damage bonus with weapons while the warchant is active.
+    - Level 15: When the skald or their allies defeat an enemy while the warchant is active, they recover 5 health and 3 stamina.
+    - Level 20: When the War Chant ends on the Skald, there's a 1% chace per level of it being cast again without cooldown and mana cost.
+
+    Saga of Valor, level 6
+    command: [SkaldSagaOfValor
+    The skald and all of their allies up to 4 tiles away receive +(level/2)% hit chance bonus for 25 +1 per level seconds. 
+    This skill costs 30 mana to activate and has a 90 seconds cooldown.
+    - Level 12: The skald and all of their allies up to 4 tiles aawy receive a +(level/2)% defend chance increase for the duration of the sage. 
+
+    Song of Thunder, level 11
+    command: [SkaldSongOfThunder
+    The skald calls forth lightning to strike at their foes. For 25 + 1 per level seconds, lightningbolt hits a random nearby hostile target every 3 seconds causing 30-45 (+ skalds fame / 1000) energy damage
+    This skill costs 40 mana to activate and has a 90 seconds cooldown.
+    - Level 16: Every 3 seconds after the first lightning hit, an additional lightning strike happens at a different random nearby hostile target. 
+
+    Dirge Of The Fallen, level 18
+    command: [SkaldDirgeOfTheFallen
+    The skald sings about the valor of ancient heroes and brings them to battle. When this song is played, the skald summons (level/4) ancient warriors of legend that will attack the skald's foes for 25 + 1 per level seconds.
+    This skill costs 50 mana to activate and has a 180 seconds cooldown.
+    - Level 20: When using Dirge of The Fallen, the duration of any song spells casted by the skald affecting the skald and their allies is reset.
+    
+    Battlefield Rhythm, level 2
+    - Level 5: When casting a song spell, the Skald gains + 0.25% damage with weapons per level. This lasts for 15 seconds and does not stack.
+    - Level 13: When casting a song spell, the 
+    
+    Ressonance, level 8
+    - Level 17:
+
+    Harmonic Echo, level 14
+    - Level 19:
+
+    Saga of Steel, level 20
+    
