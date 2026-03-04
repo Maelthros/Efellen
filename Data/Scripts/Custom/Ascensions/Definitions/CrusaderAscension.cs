@@ -13,7 +13,7 @@ namespace Server.Custom.Ascensions
 
         public override SkillName[] ForbiddenSkills
         {
-            get { return new SkillName[] { SkillName.Bushido, SkillName.Necromancy,SkillName.Forensics }; }
+            get { return new SkillName[] { SkillName.Bushido, SkillName.Necromancy,SkillName.Hiding, SkillName.Stealing }; }
         }
 
         public override bool RequiresGood { get { return true; } }

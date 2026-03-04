@@ -211,7 +211,7 @@ namespace Server.Custom.Ascensions
 
                 "undead graft, level 8.<br>" +
                 "When casting an offensive necromancy spell while wearing a full set of bone armor, there's a 0.25% per level chance all friendly summoned undead creatures will heal 5% of their hit points.<br>" +
-                "Level 17: when undead graft triggers, friendly summoned undead cretures recover 2% of their maximum health per second for level/2 seconds.<br>" + 
+                "Level 17: when undead graft triggers, friendly summoned undead cretures recover 2% of their maximum health per second for level/2 seconds.<br><br>" + 
             
                 "creeping cold, level 14.<br>" +
                 "When casting wither, there's a 0.25% chance per level that it will trigger an additional time.<br>" +
