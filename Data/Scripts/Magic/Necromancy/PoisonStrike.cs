@@ -62,7 +62,7 @@ namespace Server.Spells.Necromancy
 				if ( Caster is PlayerMobile )
 					nBenefit = (int)(Caster.Skills[SkillName.Necromancy].Value / 10);
 
-				nBenefit += (int)(Caster.Skills[SkillName.Poisoning].Value / 4);
+				nBenefit += (int)(Caster.Skills[SkillName.Poisoning].Value / 3);
 
 				double damage = Utility.RandomMinMax( (Core.ML ? 32 : 36), 40 ) * ((300 + (GetDamageSkill( Caster ) * 9)) / 1000) + nBenefit;
 				
