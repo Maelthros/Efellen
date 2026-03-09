@@ -59,6 +59,12 @@ namespace Server.Spells.Song
 		public override SkillName DamageSkill{ get{ return SkillName.Musicianship; } } 
 
 		public override bool ClearHandsOnCast{ get{ return false; } } 
+		public override bool BlocksMovement{ get{ return false; } }
+
+		public override TimeSpan GetCastDelay()
+		{
+			return CastDelayBase;
+		}
 
 		public Song( Mobile caster, Item scroll, SpellInfo info ) : base( caster, scroll, info ) 
 		{ 

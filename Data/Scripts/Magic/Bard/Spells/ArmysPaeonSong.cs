@@ -49,7 +49,7 @@ namespace Server.Spells.Song
 					Mobile m = (Mobile)targets[i];
 					
 					int rounds = (int)( Caster.Skills[SkillName.Musicianship].Value * .16 );
-                    double allvalue = Caster.Skills[SkillName.Musicianship].Value + Caster.Skills[SkillName.Provocation].Value + Caster.Skills[SkillName.Discordance].Value + Caster.Skills[SkillName.Peacemaking].Value;
+                    int allvalue = MusicSkill(Caster);
 
 					if (allvalue < 120)
 						new ExpireTimer(m, 0, rounds, TimeSpan.FromSeconds(2)).Start(); //2 hits
@@ -65,7 +65,7 @@ namespace Server.Spells.Song
 						new ExpireTimer(m, 0, rounds, TimeSpan.FromSeconds(2)).Start();
 
 					BuffInfo.RemoveBuff( m, BuffIcon.ArmysPaeon );
-					BuffInfo.AddBuff( m, new BuffInfo( BuffIcon.ArmysPaeon, 1063561, TimeSpan.FromSeconds( (double)( rounds * 2.0 ) ), m ) );
+					BuffInfo.AddBuff( m, new BuffInfo( BuffIcon.ArmysPaeon, 1063560, TimeSpan.FromSeconds( (double)( rounds * 2.0 ) ), m ) );
 
 					m.FixedParticles( 0x376A, 9, 32, 5030, 0x21, 3, EffectLayer.Waist );
 				}
