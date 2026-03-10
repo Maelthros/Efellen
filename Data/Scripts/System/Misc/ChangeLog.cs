@@ -93,7 +93,7 @@ namespace Server.Misc
 		+"	* Progression & Systems:<BR>"
 		+"      • Ascensions have been added to the game. This system adds many new classes and abilities and a few form of progression for powerful characters.<br"
 		+"      	• use [Ascension to see a list of currently available options, their requirements and benefits.<br>"
-		+"      	• the followign ascensions are implemented currently: Archmage, Assassin, Berserker, Blackguard, Crusader, Palemaster.<br>"
+		+"      	• the followign ascensions are implemented currently: Archmage, Assassin, Berserker, Blackguard, Crusader, Palemaster, Skald.<br>"
 		+"		• Tome of Power added to mark vendors (2000 marks, unlimited Ethereal Power Scroll storage).<BR>"
 		+"		• An endgame Weapon Enchanting System has been added to Fanaedar: It requires you to trade 20 Essence of Lolth's Hatred at the sacrificial pit to enhance artifact weapons.<BR>"
 		+"		• Marks of The Weave: Mages Guild reward currency from defeating spellcasters and researching tomes.<BR>"
