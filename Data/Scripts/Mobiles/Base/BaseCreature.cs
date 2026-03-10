@@ -17,7 +17,9 @@ using Server.Spells.Elementalism;
 using System.Text;
 using Server;
 using System.IO;
-
+using Server.Custom.Ascensions;
+using Server.EffectsUtil;
+using Server.Spells.Song;
 namespace Server.Mobiles
 {
 	#region Enums
@@ -8077,7 +8079,360 @@ public virtual int BreathComputeDamage()
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
+			/// Crusader Holy Fervor
+			
+			SlayerEntry holyFervorDemons = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
 
+			if ( holyFervorDemons.Slays( this ) && slayer is PlayerMobile )
+			{
+			    PlayerMobile fervorPm = (PlayerMobile)slayer;
+
+			    if ( fervorPm.ActiveAscension == AscensionType.Crusader )
+			    {
+			        AscensionProgress fervorProg = fervorPm.AscensionProfile.Get( AscensionType.Crusader );
+			        int fervorLevel = fervorProg.Level;
+
+			        if ( fervorLevel >= 8 && Utility.Random( 1000 ) < (fervorLevel * 15) ) // 1.5% per level
+			        {
+			            int fervorRadius = 2 + (fervorLevel / 5);
+			            int fervorDamage = Utility.RandomMinMax( 20, 32 ) + (fervorLevel / 2) + (fervorPm.Str / 15);
+
+			            SlamVisuals.SlamVisual( fervorPm, fervorRadius, 0x36B0, 0x498 );
+
+			            IPooledEnumerable fervorEable = fervorPm.Map.GetMobilesInRange( fervorPm.Location, fervorRadius );
+
+			            try
+			            {
+			                foreach ( Mobile fm in fervorEable )
+			                {
+			                    if ( fm == null || fm.Deleted || !fm.Alive || fm == fervorPm )
+			                        continue;
+
+			                    if ( fm.Karma >= 0 )
+			                        continue;
+
+			                    if ( !fervorPm.CanBeHarmful( fm, false ) )
+			                        continue;
+
+			                    fervorPm.DoHarmful( fm );
+			                    AOS.Damage( fm, fervorPm, fervorDamage, 100, 0, 0, 0, 0 );
+			                }
+			            }
+			            finally
+			            {
+			                fervorEable.Free();
+			            }
+						if ( fervorLevel >= 17 )
+			                fervorPm.SetAbilityCooldown( "Smite", TimeSpan.Zero );
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			// Crusader divine judgement 
+
+			if ( slayer is PlayerMobile && this.Karma <= -5000 )
+			{
+			    PlayerMobile djPm = (PlayerMobile)slayer;
+
+			    if ( djPm.ActiveAscension == AscensionType.Crusader )
+			    {
+			        AscensionProgress djProg = djPm.AscensionProfile.Get( AscensionType.Crusader );
+
+			        if ( djProg.Level >= 20 && Utility.Random( 1000 ) < 25 )
+			        {
+			            Map djMap = djPm.Map;
+
+			            if ( djMap != null && djMap != Map.Internal )
+			            {
+			                Point3D spawnLoc = djPm.Location;
+
+			                for ( int attempt = 0; attempt < 10; attempt++ )
+			                {
+			                    int x = djPm.X + Utility.RandomMinMax( -3, 3 );
+			                    int y = djPm.Y + Utility.RandomMinMax( -3, 3 );
+			                    int z = djMap.GetAverageZ( x, y );
+
+			                    if ( djMap.CanFit( x, y, z, 16, false, false ) )
+			                    {
+			                        spawnLoc = new Point3D( x, y, z );
+			                        break;
+			                    }
+			                }
+
+			                CrusaderLuminar luminar = new CrusaderLuminar();
+
+			                luminar.Summoned     = true;
+			                luminar.SummonMaster = djPm;
+			                luminar.IsTempEnemy  = true;
+			                luminar.ControlSlots = 0;
+			                luminar.Controlled   = false;
+			                luminar.FightMode    = FightMode.Closest;
+			                luminar.RangeHome    = 12;
+			                luminar.Home         = djPm.Location;
+
+			                luminar.MoveToWorld( spawnLoc, djMap );
+			                Effects.SendLocationParticles(
+			                    EffectItem.Create( spawnLoc, djMap, EffectItem.DefaultDuration ),
+			                    0x3728, 10, 10, 0x498, 0, 2023, 0
+			                );
+			                luminar.PlaySound( luminar.GetAngerSound() );
+			                new LuminarExpiryTimer( luminar ).Start();
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			// Assassin Terminal
+
+			if ( slayer is PlayerMobile && this.Poisoned )
+			{
+			    PlayerMobile termPm = (PlayerMobile)slayer;
+
+			    if ( termPm.ActiveAscension == AscensionType.Assassin )
+			    {
+			        AscensionProgress termProg = termPm.AscensionProfile.Get( AscensionType.Assassin );
+			        int termLevel = termProg.Level;
+
+			        if ( termLevel >= 20 && Utility.Random( 10000 ) < (termLevel * 25) )
+			        {
+			            termPm.SendMessage( 0x233, "*Terminal*" );
+
+			            Map termMap = termPm.Map;
+
+			            IPooledEnumerable termEable = termMap.GetMobilesInRange( this.Location, 2 );
+
+			            try
+			            {
+			                foreach ( Mobile m in termEable )
+			                {
+			                    if ( m == null || m.Deleted || !m.Alive || m == termPm )
+			                        continue;
+
+			                    if ( !termPm.CanBeHarmful( m, false ) )
+			                        continue;
+
+			                    termPm.DoHarmful( m );
+			                    m.ApplyPoison( termPm, Poison.Lethal );
+
+			                    Effects.SendTargetParticles( m, 0x3729, 9, 40, 0x233, 0, 0, EffectLayer.Waist, 0 );
+			                }
+			            }
+			            finally
+			            {
+			                termEable.Free();
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			// DARK SUCCOR Level 15 + 20 (Blackguard active, kill triggers)
+
+			if ( slayer is PlayerMobile )
+			{
+			    PlayerMobile blackguardPm = (PlayerMobile)slayer;
+				AscensionProgress succorProg = blackguardPm.AscensionProfile.Get( AscensionType.Blackguard );
+			        int blackguardLevel = succorProg.Level;
+			    if ( blackguardPm.ActiveAscension == AscensionType.Blackguard
+				    && blackguardLevel >= 8)
+				{
+				    if ( this.Karma > 0 )
+				    {
+				        double chance = 0.0025 * blackguardLevel;
+
+				        if ( Utility.RandomDouble() < chance )
+				        {
+				            TimeSpan fleeDuration;
+
+				            if ( blackguardLevel >= 17 )
+				                fleeDuration = TimeSpan.FromSeconds( 6.0 );
+				            else
+				                fleeDuration = TimeSpan.FromSeconds( 3.0 );
+
+				            bool triggered = false;
+
+				            IPooledEnumerable eable = null;
+
+				            try
+				            {
+				                eable = blackguardPm.GetMobilesInRange( 2 );
+
+				                foreach ( Mobile m in eable )
+				                {
+				                    if ( m == null )
+				                        continue;
+
+				                    if ( m.Deleted || !m.Alive )
+				                        continue;
+
+				                    if ( m == blackguardPm )
+				                        continue;
+
+				                    if ( !(m is BaseCreature) )
+				                        continue;
+
+				                    BaseCreature bc = (BaseCreature)m;
+
+				                    if ( bc.Fame >= 12500 )
+				                        continue;
+
+				                    if ( bc.Controlled || bc.Summoned )
+				                        continue;
+
+				                    bc.BeginFlee( fleeDuration );
+				                    triggered = true;
+				                }
+				            }
+				            catch
+				            {}
+				            finally
+				            {
+				                if ( eable != null )
+				                    eable.Free();
+				            }
+
+				            if ( triggered )
+				            {
+				                blackguardPm.SendMessage( 0x47E, "Your morbidity panics your foes!" );
+				                blackguardPm.FixedParticles( 0x376A, 9, 32, 5005, 0x455, 0, EffectLayer.Waist );
+				            }
+				        }
+				    }
+				}
+				if ( blackguardPm.ActiveAscension == AscensionType.Blackguard
+			        && blackguardPm.HasAscensionEffect( "DarkSuccor" ) )
+			    {
+			        if ( blackguardLevel >= 15 && blackguardPm.Mana < (blackguardPm.ManaMax / 2) )
+			        {
+			            int manaRestore = 2 + (blackguardLevel / 2);
+			            blackguardPm.Mana = Math.Min( blackguardPm.ManaMax, blackguardPm.Mana + manaRestore );
+			            blackguardPm.SendMessage( 0x47E, "The fallen foe empowers your magic!" );
+			            blackguardPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
+			        }
+
+			        if ( blackguardLevel >= 20 && blackguardPm.Hits < (blackguardPm.HitsMax / 2) )
+			        {
+			            int hpRestore = 6 + (blackguardLevel / 2);
+			            blackguardPm.Hits = Math.Min( blackguardPm.HitsMax, blackguardPm.Hits + hpRestore );
+			            blackguardPm.SendMessage( 0x47E, "The fallen foe feeds your vileness!" );
+			            blackguardPm.FixedParticles( 0x376A, 9, 32, 5005, 0x47E, 0, EffectLayer.Waist );
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			// SOUL REAPER (Blackguard, level 20)
+
+			if ( slayer is PlayerMobile && this.Fame > 10000 )
+			{
+			    PlayerMobile reaperPm = (PlayerMobile)slayer;
+
+			    if ( reaperPm.ActiveAscension == AscensionType.Blackguard )
+			    {
+			        AscensionProgress reaperProg = reaperPm.AscensionProfile.Get( AscensionType.Blackguard );
+			        int reaperLevel = reaperProg.Level;
+
+			        // 0.25% per level
+			        if ( reaperLevel >= 20 && Utility.Random( 10000 ) < (reaperLevel * 25) )
+			        {
+			            Map reaperMap = reaperPm.Map;
+
+			            if ( reaperMap != null && reaperMap != Map.Internal )
+			            {
+			                int drainPerTarget = reaperLevel + (reaperPm.Str / 25);
+			                int totalHealing   = 0;
+
+			                IPooledEnumerable eable = reaperMap.GetMobilesInRange( this.Location, 2 );
+
+			                try
+			                {
+			                    foreach ( Mobile m in eable )
+			                    {
+			                        if ( m == null || m.Deleted || !m.Alive || m == reaperPm )
+			                            continue;
+
+			                        if ( !reaperPm.CanBeHarmful( m, false ) )
+			                            continue;
+
+			                        int actualDrain = Math.Min( m.Hits, drainPerTarget );
+			                        m.Hits -= actualDrain;
+
+			                        totalHealing += drainPerTarget;
+			                    }
+			                }
+			                finally
+			                {
+			                    eable.Free();
+			                }
+
+			                if ( totalHealing > 0 )
+			                {
+			                    reaperPm.Hits = Math.Min( reaperPm.HitsMax, reaperPm.Hits + drainPerTarget );
+			                    reaperPm.SendMessage( 0x47E, "You reap the soul of your foe!" );
+			                    reaperPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
+			                    reaperPm.PlaySound( 0x1FB );
+			                }
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
+            // WAR CHANT LEVEL 15
+            if ( slayer != null && !slayer.Deleted && slayer.Alive )
+            {
+                PlayerMobile chantSource = null;
+                // Slayer may be the skald themselves or a buffed ally —  find the skald who owns the active WarChant effect
+                if ( slayer is PlayerMobile )
+                {
+                    PlayerMobile slayerPm = (PlayerMobile)slayer;
+
+                    if ( slayerPm.ActiveAscension == AscensionType.Skald
+                        && slayerPm.HasAscensionEffect( "WarChant" ) )
+                    {
+                        AscensionEffectState chantState = slayerPm.GetAscensionEffect( "WarChant" );
+
+                        if ( chantState.Level >= 15 )
+                            chantSource = slayerPm;
+                    }
+                }
+
+                if ( chantSource != null )
+                {
+                    slayer.Hits = Math.Min( slayer.HitsMax, slayer.Hits + 5 );
+                    slayer.Stam = Math.Min( slayer.StamMax, slayer.Stam + 3 );
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+			// SAGA OF STEEL (Skald capstone, level 20)
+
+			if ( slayer is PlayerMobile )
+			{
+			    PlayerMobile sagaPm = (PlayerMobile)slayer;
+
+			    if ( sagaPm.ActiveAscension == AscensionType.Skald )
+			    {
+			        AscensionProgress sagaProg = sagaPm.AscensionProfile.Get( AscensionType.Skald );
+			        int sagaLevel = sagaProg.Level;
+
+			        if ( sagaLevel >= 20 && Utility.Random( 10000 ) < (sagaLevel * 25) )
+			        {
+			            Mobile requiemTarget = GetNearestHostile( sagaPm );
+
+			            if ( requiemTarget != null )
+			            {
+			                sagaPm.SendMessage( 0x445, "Your victory sings a requiem for the fallen!" );
+							sagaPm.PublicOverheadMessage(MessageType.Regular, 0x445, false, "*Dirge of the Fallen*");
+			                DoFoeRequiemDirect( sagaPm, requiemTarget );
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );
@@ -8181,6 +8536,124 @@ public virtual int BreathComputeDamage()
 				speechType.OnDeath( this );
 
 			return base.OnBeforeDeath();
+		}
+
+		private static Mobile GetNearestHostile( PlayerMobile pm )
+		{
+		    Map map = pm.Map;
+
+		    if ( map == null || map == Map.Internal )
+		        return null;
+
+		    Mobile nearest  = null;
+		    double nearestDist = double.MaxValue;
+
+		    IPooledEnumerable eable = map.GetMobilesInRange( pm.Location, 12 );
+
+		    try
+		    {
+		        foreach ( Mobile m in eable )
+		        {
+		            if ( m == null || m.Deleted || !m.Alive || m == pm )
+		                continue;
+
+		            if ( !pm.CanBeHarmful( m, false ) )
+		                continue;
+
+		            double dist = pm.GetDistanceToSqrt( m );
+
+		            if ( dist < nearestDist )
+		            {
+		                nearestDist = dist;
+		                nearest     = m;
+		            }
+		        }
+		    }
+		    finally
+		    {
+		        eable.Free();
+		    }
+
+		    return nearest;
+		}
+
+		private static bool m_FoeRequiemActive = false;
+
+		// Directly applies Foe Requiem damage without going through the spell cast sequence 
+
+		private static void DoFoeRequiemDirect( PlayerMobile pm, Mobile target )
+		{
+		    if ( m_FoeRequiemActive )
+		        return;
+
+		    if ( target == null || target.Deleted || !target.Alive )
+		        return;
+
+		    if ( !pm.CanBeHarmful( target, false ) )
+		        return;
+
+		    m_FoeRequiemActive = true;
+
+		    try
+		    {
+		        bool isSlayer = false;
+
+		        Spellbook book     = Spellbook.Find( pm, -1, SpellbookType.Song );
+		        SongBook  songBook = book as SongBook;
+
+		        if ( songBook != null && target is BaseCreature )
+		        {
+		            SlayerEntry atkSlayer  = SlayerGroup.GetEntryByName( songBook.Instrument.Slayer );
+		            SlayerEntry atkSlayer2 = SlayerGroup.GetEntryByName( songBook.Instrument.Slayer2 );
+
+		            if ( (atkSlayer  != null && atkSlayer.Slays( target ))  ||
+		                 (atkSlayer2 != null && atkSlayer2.Slays( target )) )
+		                isSlayer = true;
+		        }
+
+		        double damage = (double)(Song.MusicSkill( pm ) / 9);
+
+		        if ( isSlayer )
+		            damage *= 2;
+
+		        pm.DoHarmful( target );
+
+		        target.FixedParticles( 0x374A, 10, 15, 5028, EffectLayer.Head );
+		        pm.MovingParticles( target, 0x379F, 7, 0, false, true, 3043, 4043, 0x211 );
+		        target.PlaySound( 0x1EA );
+
+		        AOS.Damage( target, pm, (int)damage, 20, 20, 20, 20, 20 );
+		    }
+		    finally
+		    {
+		        m_FoeRequiemActive = false;
+		    }
+		}
+
+		// Divine judgement summon controller
+		private sealed class LuminarExpiryTimer : Timer
+		{
+		    private readonly CrusaderLuminar m_Luminar;
+
+		    public LuminarExpiryTimer( CrusaderLuminar luminar )
+		        : base( TimeSpan.FromSeconds( 60 ) )
+		    {
+		        m_Luminar = luminar;
+		        Priority  = TimerPriority.OneSecond;
+		    }
+
+		    protected override void OnTick()
+		    {
+		        if ( m_Luminar == null || m_Luminar.Deleted )
+		            return;
+
+		        Effects.SendLocationParticles(
+		            EffectItem.Create( m_Luminar.Location, m_Luminar.Map, EffectItem.DefaultDuration ),
+		            0x3728, 10, 10, 0x498, 0, 2023, 0
+		        );
+		        m_Luminar.PlaySound( 0x1FE );
+		        m_Luminar.Delete();
+		    }
 		}
 
 		private bool m_NoKillAwards;
@@ -8348,187 +8821,214 @@ public virtual int BreathComputeDamage()
 				Paragon.GiveArtifactTo( mob );
 		}
 
-		public override void OnDeath( Container c )
+		public override void OnDeath(Container c)
 		{
-			PremiumSpawner.ActivateSpawner( this );
+		    PremiumSpawner.ActivateSpawner(this);
 
-			Mobile killer = this.LastKiller;
+		    Mobile killer = this.LastKiller;
 
-			QuestTake.DropChest( this );
+		    QuestTake.DropChest(this);
 
-			if (killer is BaseCreature)
-			{
-				BaseCreature bc_killer = (BaseCreature)killer;
-				if(bc_killer.Summoned)
-				{
-					if(bc_killer.SummonMaster != null)
-						killer = bc_killer.SummonMaster;
-				}
-				else if(bc_killer.Controlled)
-				{
-					if(bc_killer.ControlMaster != null)
-						killer=bc_killer.ControlMaster;
-				}
-				else if(bc_killer.BardProvoked)
-				{
-					if(bc_killer.BardMaster != null)
-						killer=bc_killer.BardMaster;
-				}
-			}
+		    if (killer is BaseCreature)
+		    {
+		        BaseCreature bc_killer = (BaseCreature)killer;
 
-			if ( ( killer is PlayerMobile ) && (killer.AccessLevel < AccessLevel.GameMaster) )
-			{
-				LoggingFunctions.LogBattles( killer, this );
-			}
+		        if (bc_killer.Summoned && bc_killer.SummonMaster != null)
+		            killer = bc_killer.SummonMaster;
+		        else if (bc_killer.Controlled && bc_killer.ControlMaster != null)
+		            killer = bc_killer.ControlMaster;
+		        else if (bc_killer.BardProvoked && bc_killer.BardMaster != null)
+		            killer = bc_killer.BardMaster;
+		    }
 
-			if ( killer is PlayerMobile )
-			{
-				AssassinFunctions.CheckTarget( killer, this );
-				StandardQuestFunctions.CheckTarget( killer, this, null );
-				FishingQuestFunctions.CheckTarget( killer, this, null );
-				if ( killer.Backpack.FindItemByType( typeof ( MuseumBook ) ) != null && this.Fame >= 18000 )
-				{
-					MuseumBook.FoundItem( killer, 1 );
-				}
-				if ( killer.Backpack.FindItemByType( typeof ( QuestTome ) ) != null && this.Fame >= 18000 )
-				{
-					QuestTome.FoundItem( killer, 1, null );
-				}
-			}
+		    if ((killer is PlayerMobile) && (killer.AccessLevel < AccessLevel.GameMaster))
+		    {
+		        LoggingFunctions.LogBattles(killer, this);
+		    }
 
-			Server.Misc.DropRelic.DropSpecialItem( this, killer, c ); // SOME DROP RARE ITEMS
-			//powerful creatures can drop marks of the scourge / honor
-			if (killer != null)
-        		Server.Custom.DefenderOfTheRealm.MarkLootHelper.CheckForMarks(this, c, killer);
-			
-			if ( IsBonded )
-			{
-				int sound = this.GetDeathSound();
+		    if (killer is PlayerMobile)
+		    {
+		        AssassinFunctions.CheckTarget(killer, this);
+		        StandardQuestFunctions.CheckTarget(killer, this, null);
+		        FishingQuestFunctions.CheckTarget(killer, this, null);
 
-				if ( sound >= 0 )
-					Effects.PlaySound( this, this.Map, sound );
+		        if (killer.Backpack.FindItemByType(typeof(MuseumBook)) != null && this.Fame >= 18000)
+		            MuseumBook.FoundItem(killer, 1);
 
-				Warmode = false;
+		        if (killer.Backpack.FindItemByType(typeof(QuestTome)) != null && this.Fame >= 18000)
+		            QuestTome.FoundItem(killer, 1, null);
+		    }
 
-				Poison = null;
-				Combatant = null;
+		    Server.Misc.DropRelic.DropSpecialItem(this, killer, c);
 
-				Hits = 0;
-				Stam = 0;
-				Mana = 0;
+		    if (killer != null)
+		        Server.Custom.DefenderOfTheRealm.MarkLootHelper.CheckForMarks(this, c, killer);
 
-				IsDeadPet = true;
-				ControlTarget = ControlMaster;
-				ControlOrder = OrderType.Follow;
+		    if (IsBonded)
+		    {
+		        int sound = this.GetDeathSound();
 
-				ProcessDeltaQueue();
-				SendIncomingPacket();
-				SendIncomingPacket();
+		        if (sound >= 0)
+		            Effects.PlaySound(this, this.Map, sound);
 
-				List<AggressorInfo> aggressors = this.Aggressors;
+		        Warmode = false;
+		        Poison = null;
+		        Combatant = null;
 
-				for ( int i = 0; i < aggressors.Count; ++i )
-				{
-					AggressorInfo info = aggressors[i];
+		        Hits = 0;
+		        Stam = 0;
+		        Mana = 0;
 
-					if ( info.Attacker.Combatant == this )
-						info.Attacker.Combatant = null;
-				}
+		        IsDeadPet = true;
+		        ControlTarget = ControlMaster;
+		        ControlOrder = OrderType.Follow;
 
-				List<AggressorInfo> aggressed = this.Aggressed;
+		        ProcessDeltaQueue();
+		        SendIncomingPacket();
+		        SendIncomingPacket();
 
-				for ( int i = 0; i < aggressed.Count; ++i )
-				{
-					AggressorInfo info = aggressed[i];
+		        foreach (AggressorInfo info in Aggressors)
+		            if (info.Attacker.Combatant == this)
+		                info.Attacker.Combatant = null;
 
-					if ( info.Defender.Combatant == this )
-						info.Defender.Combatant = null;
-				}
+		        foreach (AggressorInfo info in Aggressed)
+		            if (info.Defender.Combatant == this)
+		                info.Defender.Combatant = null;
 
-				Mobile owner = this.ControlMaster;
+		        Mobile owner = this.ControlMaster;
 
-				if ( owner == null || owner.Deleted || owner.Map != this.Map || !owner.InRange( this, 12 ) || !this.CanSee( owner ) || !this.InLOS( owner ) )
-				{
-					if ( this.OwnerAbandonTime == DateTime.MinValue )
-						this.OwnerAbandonTime = DateTime.Now;
-				}
-				else
-				{
-					this.OwnerAbandonTime = DateTime.MinValue;
-				}
+		        if (owner == null || owner.Deleted || owner.Map != this.Map ||
+		            !owner.InRange(this, 12) || !this.CanSee(owner) || !this.InLOS(owner))
+		        {
+		            if (this.OwnerAbandonTime == DateTime.MinValue)
+		                this.OwnerAbandonTime = DateTime.Now;
+		        }
+		        else
+		        {
+		            this.OwnerAbandonTime = DateTime.MinValue;
+		        }
 
-				CheckStatTimers();
-			}
-			else
-			{
-				if ( !Summoned && !m_NoKillAwards )
-				{
-					int totalFame = Fame / 100;
-					int totalKarma = -Karma / 100;
+		        CheckStatTimers();
+		    }
+		    else
+		    {
+		        if (!Summoned && !m_NoKillAwards)
+		        {
+		            int totalFame = Fame / 100;
+		            int totalKarma = -Karma / 100;
 
-					List<DamageStore> list = GetLootingRights( this.DamageEntries, this.HitsMax );
-					List<Mobile> titles = new List<Mobile>();
-					List<int> fame = new List<int>();
-					List<int> karma = new List<int>();
+		            List<DamageStore> list = GetLootingRights(this.DamageEntries, this.HitsMax);
+		            List<Mobile> titles = new List<Mobile>();
+		            List<int> fame = new List<int>();
+		            List<int> karma = new List<int>();
 
-					for ( int i = 0; i < list.Count; ++i )
-					{
-						DamageStore ds = list[i];
+		            int baseAscensionXP = 0;
 
-						if ( !ds.m_HasRight )
-							continue;
+		            if (Fame > 125)
+		            {
+		                int min = Fame / 125;
+		                int max = Fame / 95;
 
-						Party party = Engines.PartySystem.Party.Get( ds.m_Mobile );
+		                if (max > 0)
+		                    baseAscensionXP = Utility.RandomMinMax(min, max);
+		            }
 
-						if ( party != null )
+		            for (int i = 0; i < list.Count; ++i)
+		            {
+		                DamageStore ds = list[i];
+
+		                if (!ds.m_HasRight)
+		                    continue;
+
+		                Mobile mob = ds.m_Mobile;
+
+		                PlayerMobile xpPlayer = null;
+
+						if (mob is PlayerMobile)
 						{
-							int divedFame = totalFame / party.Members.Count;
-							int divedKarma = totalKarma / party.Members.Count;
-
-							for ( int j = 0; j < party.Members.Count; ++j )
-							{
-								PartyMemberInfo info = party.Members[ j ] as PartyMemberInfo;
-
-								if ( info != null && info.Mobile != null )
-								{
-									int index = titles.IndexOf( info.Mobile );
-
-									if ( index == -1 )
-									{
-										titles.Add( info.Mobile );
-										fame.Add( divedFame );
-										karma.Add( divedKarma );
-									}
-									else
-									{
-										fame[ index ] += divedFame;
-										karma[ index ] += divedKarma;
-									}
-								}
-							}
+						    xpPlayer = (PlayerMobile)mob;
 						}
-						else
+						else if (mob is BaseCreature)
 						{
-							titles.Add( ds.m_Mobile );
-							fame.Add( totalFame );
-							karma.Add( totalKarma );
+						    BaseCreature bc = (BaseCreature)mob;
+
+						    if (bc.Summoned && bc.SummonMaster is PlayerMobile)
+						    {
+						        xpPlayer = (PlayerMobile)bc.SummonMaster;
+						    }
+						    else if (bc.Controlled && bc.ControlMaster is PlayerMobile)
+						    {
+						        xpPlayer = (PlayerMobile)bc.ControlMaster;
+						    }
 						}
+		                if (xpPlayer != null && baseAscensionXP > 0)
+		                {
+		                   	double damagePercent = (double)ds.m_Damage / this.HitsMax;
+							if (damagePercent > 1.0)
+							    damagePercent = 1.0;
 
-						OnKilledBy( ds.m_Mobile );
-					}
-					for ( int i = 0; i < titles.Count; ++i )
-					{
-						Titles.AwardFame( titles[ i ], fame[ i ], true );
-						Titles.AwardKarma( titles[ i ], karma[ i ], true );
-					}
-				}
+		                    int scaledXP = (int)(baseAscensionXP * damagePercent);
 
-				base.OnDeath( c );
+		                    if (scaledXP > 0)
+		                        Server.Custom.Ascensions.AscensionExperienceSystem.AwardExperienceDirect(xpPlayer, this, scaledXP);
+		                }
 
-				if ( DeleteCorpseOnDeath || ( ( this.Name == "a follower" || this.Name == "a sailor" || this.Name == "a pirate" ) && this.EmoteHue > 0 ) )
-					c.Delete();
-			}
+		                Party party = Engines.PartySystem.Party.Get(ds.m_Mobile);
+
+		                if (party != null)
+		                {
+		                    int dividedFame = totalFame / party.Members.Count;
+		                    int dividedKarma = totalKarma / party.Members.Count;
+
+		                    for (int j = 0; j < party.Members.Count; ++j)
+		                    {
+		                        PartyMemberInfo info = party.Members[j] as PartyMemberInfo;
+
+		                        if (info != null && info.Mobile != null)
+		                        {
+		                            int index = titles.IndexOf(info.Mobile);
+
+		                            if (index == -1)
+		                            {
+		                                titles.Add(info.Mobile);
+		                                fame.Add(dividedFame);
+		                                karma.Add(dividedKarma);
+		                            }
+		                            else
+		                            {
+		                                fame[index] += dividedFame;
+		                                karma[index] += dividedKarma;
+		                            }
+		                        }
+		                    }
+		                }
+		                else
+		                {
+		                    titles.Add(ds.m_Mobile);
+		                    fame.Add(totalFame);
+		                    karma.Add(totalKarma);
+		                }
+
+		                OnKilledBy(ds.m_Mobile);
+		            }
+
+		            for (int i = 0; i < titles.Count; ++i)
+		            {
+		                Titles.AwardFame(titles[i], fame[i], true);
+		                Titles.AwardKarma(titles[i], karma[i], true);
+		            }
+		        }
+
+		        base.OnDeath(c);
+
+		        if (DeleteCorpseOnDeath ||
+		            ((this.Name == "a follower" || this.Name == "a sailor" || this.Name == "a pirate") && this.EmoteHue > 0))
+		        {
+		            c.Delete();
+		        }
+		    }
 		}
+
 
 		/* To save on cpu usage, RunUO creatures only reacquire creatures under the following circumstances:
 		 *  - 10 seconds have elapsed since the last time it tried
