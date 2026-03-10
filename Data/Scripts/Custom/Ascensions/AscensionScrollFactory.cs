@@ -12,9 +12,9 @@ namespace Server.Custom.Ascensions
             AscensionType.Assassin,
             AscensionType.Crusader,
             AscensionType.Blackguard,
+            AscensionType.Skald,
         // not implemented yet
 /*             AscensionType.Kensai,
-            AscensionType.Skald,
             AscensionType.Archdruid,
             AscensionType.Reaver,
             AscensionType.Defender,

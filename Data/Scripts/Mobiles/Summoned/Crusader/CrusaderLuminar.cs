@@ -25,12 +25,12 @@ namespace Server.Mobiles
 			Body = 0x9e;
 			Hue = 0xf8;
 			BaseSoundID = 466;
-			SetStr( 200 );
-			SetDex( 200 );
+			SetStr( 250 );
+			SetDex( 250 );
 			SetInt( 100 );
 
-			SetHits( 250 );
-			SetStam( 250 );
+			SetHits( 350 );
+			SetStam( 150 );
 			SetMana( 0 );
 
 			SetDamage( 18, 22 );

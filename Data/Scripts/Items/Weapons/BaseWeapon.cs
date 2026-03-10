@@ -982,6 +982,19 @@ namespace Server.Items
 				if ( HitLower.IsUnderAttackEffect( attacker ) )
 					bonus -= 25; // Under Hit Lower Attack effect -> 25% malus
 
+				// ── Saga of Valor: hit chance bonus (Skald  level 6+) ────
+				if ( attacker is PlayerMobile )
+				{
+				    PlayerMobile sagaAttacker = (PlayerMobile)attacker;
+
+				    if ( sagaAttacker.HasAscensionEffect( "SagaOfValor" ) )
+				    {
+				        AscensionEffectState sagaState = sagaAttacker.GetAscensionEffect( "SagaOfValor" );
+				        bonus += sagaState.Level / 2;
+				    }
+				}
+				// ── End Saga of Valor hit chance ─────────────────────────────────
+
 				WeaponAbility ability = WeaponAbility.GetCurrentAbility( attacker );
 
 				if ( ability != null )
@@ -1026,6 +1039,22 @@ namespace Server.Items
 				        bonus -= penalty;
 				    }
 				}
+
+				// ── Saga of Valor: defend chance bonus (Skald level 12+) ─────────
+				if ( defender is PlayerMobile )
+				{
+				    PlayerMobile sagaDefender = (PlayerMobile)defender;
+
+				    if ( sagaDefender.HasAscensionEffect( "SagaOfValor" ) )
+				    {
+				        AscensionEffectState sagaState = sagaDefender.GetAscensionEffect( "SagaOfValor" );
+
+				        if ( sagaState.Level >= 12 )
+				            bonus += sagaState.Level / 2;
+				    }
+				}
+				// ── End Saga of Valor defend chance ──────────────────────────────
+
 
 
 				if ( HitLower.IsUnderDefenseEffect( defender ) )
@@ -1683,6 +1712,48 @@ namespace Server.Items
         		        // Level 19+: 0.25% per level chance to paralyze for 3 seconds
         		        if (blackguardLevel >= 19 && Utility.Random(10000) < (blackguardLevel * 25))
         		            defender.Paralyze(TimeSpan.FromSeconds(3));
+        		    }
+        		}
+				else if (ascAttacker.ActiveAscension == AscensionType.Skald)
+        		{
+        		    if (ascAttacker.HasAscensionEffect("WarChant"))
+        		    {
+        		        AscensionEffectState chantState = ascAttacker.GetAscensionEffect("WarChant");
+		
+        		        if (chantState.Level >= 10)
+        		            percentageBonus += (chantState.Level * 50) / 100;
+        		    }
+		
+        		    // Battlefield Rhythm, level 2+
+        		    AscensionProgress rhythmProg  = ascAttacker.AscensionProfile.Get(AscensionType.Skald);
+        		    int               rhythmLevel = rhythmProg.Level;
+	
+        		    if (rhythmLevel >= 2)
+        		    {
+        		        BaseCreature rhythmTarget = defender as BaseCreature;
+        		        bool         isBardAffected = false;
+	
+        		        if (rhythmTarget != null)
+        		        {
+        		            bool isPeaced   = rhythmTarget.BardPacified;
+        		            bool isProvoked = rhythmTarget.BardProvoked;
+	
+        		            int discordEffect = 0;
+        		            bool isDiscorded  = SkillHandlers.Discordance.GetEffect(rhythmTarget, ref discordEffect);
+	
+        		            isBardAffected = isPeaced || isProvoked || isDiscorded;
+        		        }
+	
+        		        if (isBardAffected)
+        		        {
+        		            int rhythmBonus = 0;
+	
+        		            if      (rhythmLevel >= 13) rhythmBonus = 18;
+        		            else if (rhythmLevel >= 5)  rhythmBonus = 9;
+        		            else                        rhythmBonus = 3;
+	
+        		            percentageBonus += rhythmBonus;
+        		        }
         		    }
         		}
 		    }

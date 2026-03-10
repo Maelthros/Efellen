@@ -48,6 +48,7 @@ namespace Server.Custom.Ascensions
                 case AscensionType.Crusader:   return 0x0F8;
                 case AscensionType.Assassin:   return 0x233;
                 case AscensionType.Blackguard: return 0x47E;
+                case AscensionType.Skald:      return 0x445;
                 default:                       return 0;
             }
         }

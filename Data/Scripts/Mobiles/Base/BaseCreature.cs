@@ -19,6 +19,7 @@ using Server;
 using System.IO;
 using Server.Custom.Ascensions;
 using Server.EffectsUtil;
+using Server.Spells.Song;
 namespace Server.Mobiles
 {
 	#region Enums
@@ -8379,6 +8380,59 @@ public virtual int BreathComputeDamage()
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
+            // WAR CHANT LEVEL 15
+            if ( slayer != null && !slayer.Deleted && slayer.Alive )
+            {
+                PlayerMobile chantSource = null;
+                // Slayer may be the skald themselves or a buffed ally —  find the skald who owns the active WarChant effect
+                if ( slayer is PlayerMobile )
+                {
+                    PlayerMobile slayerPm = (PlayerMobile)slayer;
+
+                    if ( slayerPm.ActiveAscension == AscensionType.Skald
+                        && slayerPm.HasAscensionEffect( "WarChant" ) )
+                    {
+                        AscensionEffectState chantState = slayerPm.GetAscensionEffect( "WarChant" );
+
+                        if ( chantState.Level >= 15 )
+                            chantSource = slayerPm;
+                    }
+                }
+
+                if ( chantSource != null )
+                {
+                    slayer.Hits = Math.Min( slayer.HitsMax, slayer.Hits + 5 );
+                    slayer.Stam = Math.Min( slayer.StamMax, slayer.Stam + 3 );
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+			// SAGA OF STEEL (Skald capstone, level 20)
+
+			if ( slayer is PlayerMobile )
+			{
+			    PlayerMobile sagaPm = (PlayerMobile)slayer;
+
+			    if ( sagaPm.ActiveAscension == AscensionType.Skald )
+			    {
+			        AscensionProgress sagaProg = sagaPm.AscensionProfile.Get( AscensionType.Skald );
+			        int sagaLevel = sagaProg.Level;
+
+			        if ( sagaLevel >= 20 && Utility.Random( 10000 ) < (sagaLevel * 25) )
+			        {
+			            Mobile requiemTarget = GetNearestHostile( sagaPm );
+
+			            if ( requiemTarget != null )
+			            {
+			                sagaPm.SendMessage( 0x445, "Your victory sings a requiem for the fallen!" );
+							sagaPm.PublicOverheadMessage(MessageType.Regular, 0x445, false, "*Dirge of the Fallen*");
+			                DoFoeRequiemDirect( sagaPm, requiemTarget );
+			            }
+			        }
+			    }
+			}
+
+			///////////////////////////////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );
@@ -8482,6 +8536,98 @@ public virtual int BreathComputeDamage()
 				speechType.OnDeath( this );
 
 			return base.OnBeforeDeath();
+		}
+
+		private static Mobile GetNearestHostile( PlayerMobile pm )
+		{
+		    Map map = pm.Map;
+
+		    if ( map == null || map == Map.Internal )
+		        return null;
+
+		    Mobile nearest  = null;
+		    double nearestDist = double.MaxValue;
+
+		    IPooledEnumerable eable = map.GetMobilesInRange( pm.Location, 12 );
+
+		    try
+		    {
+		        foreach ( Mobile m in eable )
+		        {
+		            if ( m == null || m.Deleted || !m.Alive || m == pm )
+		                continue;
+
+		            if ( !pm.CanBeHarmful( m, false ) )
+		                continue;
+
+		            double dist = pm.GetDistanceToSqrt( m );
+
+		            if ( dist < nearestDist )
+		            {
+		                nearestDist = dist;
+		                nearest     = m;
+		            }
+		        }
+		    }
+		    finally
+		    {
+		        eable.Free();
+		    }
+
+		    return nearest;
+		}
+
+		private static bool m_FoeRequiemActive = false;
+
+		// Directly applies Foe Requiem damage without going through the spell cast sequence 
+
+		private static void DoFoeRequiemDirect( PlayerMobile pm, Mobile target )
+		{
+		    if ( m_FoeRequiemActive )
+		        return;
+
+		    if ( target == null || target.Deleted || !target.Alive )
+		        return;
+
+		    if ( !pm.CanBeHarmful( target, false ) )
+		        return;
+
+		    m_FoeRequiemActive = true;
+
+		    try
+		    {
+		        bool isSlayer = false;
+
+		        Spellbook book     = Spellbook.Find( pm, -1, SpellbookType.Song );
+		        SongBook  songBook = book as SongBook;
+
+		        if ( songBook != null && target is BaseCreature )
+		        {
+		            SlayerEntry atkSlayer  = SlayerGroup.GetEntryByName( songBook.Instrument.Slayer );
+		            SlayerEntry atkSlayer2 = SlayerGroup.GetEntryByName( songBook.Instrument.Slayer2 );
+
+		            if ( (atkSlayer  != null && atkSlayer.Slays( target ))  ||
+		                 (atkSlayer2 != null && atkSlayer2.Slays( target )) )
+		                isSlayer = true;
+		        }
+
+		        double damage = (double)(Song.MusicSkill( pm ) / 9);
+
+		        if ( isSlayer )
+		            damage *= 2;
+
+		        pm.DoHarmful( target );
+
+		        target.FixedParticles( 0x374A, 10, 15, 5028, EffectLayer.Head );
+		        pm.MovingParticles( target, 0x379F, 7, 0, false, true, 3043, 4043, 0x211 );
+		        target.PlaySound( 0x1EA );
+
+		        AOS.Damage( target, pm, (int)damage, 20, 20, 20, 20, 20 );
+		    }
+		    finally
+		    {
+		        m_FoeRequiemActive = false;
+		    }
 		}
 
 		// Divine judgement summon controller

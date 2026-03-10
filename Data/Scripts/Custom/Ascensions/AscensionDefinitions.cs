@@ -10,40 +10,46 @@ namespace Server.Custom.Ascensions
             {
                 case AscensionType.Berserker:
                     return
-                    "The Berserker is a savage warrior that wields two-handed weapons to great effect. In combat, they fly into a murderous rage that empowers them.<br><br>" +
-                    "In order to activate this Ascension, you need to have 95 base skill in Tactics, camping and Magic Resist. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in Tactics, camping and Magic Resist.<br><br>"+
+                    "The Berserker is a savage warrior that wields two-handed weapons to great effect. In combat, they fly into a murderous rage that empowers them.<br>" +
+                    "In order to activate this Ascension, you need to have 95 base skill in Tactics, camping and Magic Resist. Every time you level up the class, the requirement also increases by 1.<br>" +
+                    "So a level 20 Berserker cannot activate this ascension unless they have 115 base skill in Tactics, camping and Magic Resist.<br>"+
                     "Berserkers also require their spirit to be free of the taint of civilization - a Berserker will not gain experience in this Ascension if they have learned Bushido, Knightship, Magery or Necromancy";
                 case AscensionType.Archmage:
                     return
-                    "The Archmage is a master of the Arcane. In combat, they control their opponents and execute powerful spells to bend the Weave itself to their will itself.<br><br>" +
-                    "In order to activate this Ascension, you need to have 95 base skill in Magery, inscription and Psychology. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in Magery , inscription and Psychology<br><br>"+
+                    "The Archmage is a master of the Arcane. In combat, they control their opponents and execute powerful spells to bend the Weave itself to their will itself.<br>" +
+                    "In order to activate this Ascension, you need to have 95 base skill in Magery, inscription and Psychology. Every time you level up the class, the requirement also increases by 1.<br>" +
+                    "So a level 20 Archmage cannot activate this ascension unless they have 115 base skill in Magery , inscription and Psychology<br>"+
                     "Archmages also require a singular focus on arcane magic, and they will not gain experience in this class if they have learned Knightship, Elementalism, Necromancy or Bushido";
                 case AscensionType.Palemaster:
                     return
-                    "The Palemaster is death made flesh. In combat, they control an army of undead and curse and enfeeble their opponents until they have met their end.<br><br>" +
-                    "In order to activate this Ascension, you need to have 95 base skill in Necromancy, forensics and Spiritualism. Every time you level up the class, the requirement also increases by 1.<br><br>" +
-                    "So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in Necromancy, forensics and Spiritualism<br><br>"+
+                    "The Palemaster is death made flesh. In combat, they control an army of undead and curse and enfeeble their opponents until they have met their end.<br>" +
+                    "In order to activate this Ascension, you need to have 95 base skill in Necromancy, forensics and Spiritualism. Every time you level up the class, the requirement also increases by 1.<br>" +
+                    "So a level 20 Palemaster cannot activate this ascension unless they have 115 base skill in Necromancy, forensics and Spiritualism<br>"+
                     "Palemasters also are required to revel in death and vileness, and they will not gain experience in this class if they have learned Knightship, Elementalism or Bushido, or if they stray from the path of evil";
                 case AscensionType.Crusader:
                     return
                     "The Crusader is the embodiment of virtue. In combat, they stand tall in defiance against evil.<br><br>"+
-                    "In order to activate this Ascension, you need to have 95 base skill in Knightship, spiritualism and Tactics. Every time you level up the class, the requirement also increases by 1.<br><br>"+
-                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, spiritualism and Tactics.<br><br>"+
-                    "Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy or Forensics, or if they stray from the path of good.<br><br>";
+                    "In order to activate this Ascension, you need to have 95 base skill in Knightship, spiritualism and Tactics. Every time you level up the class, the requirement also increases by 1.<br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, spiritualism and Tactics.<br>"+
+                    "Crusaders also are required to follow the path of justice and uphold good, and they will not gain experience in this class if they have learned Bushido, Necromancy or Forensics, or if they stray from the path of good.<br>";
                 case AscensionType.Assassin:
                     return
-                    "The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.<br><br>"+
-                    "In order to activate this Ascension, you need to have 95 base skill in both Poisoning, hiding and Fencing. Every time you level up the class, the requirement also increases by 1.<br><br>"+
-                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing.<br><br>"+
+                    "The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.<br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in both Poisoning, hiding and Fencing. Every time you level up the class, the requirement also increases by 1.<br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing.<br>"+
                     "Assassins also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.";   
                 case AscensionType.Blackguard:
                     return
-                    "The Blackguard is a champion of evil and corruption. In combat, they are juggernauts that bring frost e blood into the battlefield.<br><br>"+
-                    "In order to activate this Ascension, you need to have 95 base skill in Knightship, Arms lore and Necromancy. Every time you level up the class, the requirement also increases by 1.<br><br>"+
-                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, Arms lore and Necromancy.<br><br>"+
+                    "The Blackguard is a champion of evil and corruption. In combat, they are juggernauts that bring frost e blood into the battlefield.<br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Knightship, Arms lore and Necromancy. Every time you level up the class, the requirement also increases by 1.br>"+
+                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, Arms lore and Necromancy.<br>"+
                     "Blackguardss also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido, spiritualism or elementalism, or if they abandon the path of evil.";
+                case AscensionType.Skald:
+                    return 
+                    "The Skald is the hero of song and the keeper of valor. In combat, they use powerful music to strengthen themselves and their allies.<br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Musicianship, Tactics and Discordance. Every time you level up the class, the requirement also increases by 1.<br>"+
+                    "So a level 20 Skald cannot activate this ascension unless they have 115 base skill in Musicianship, Tactics and Discordance.<br>"+
+                    "Skalds are proud and pragmatic. They will not gain experience in this class if they have learned bushido, necromancy, marksmanship, hiding or begging.";
                 default:
                     return "IN DEVELOPMENT.";
             }
@@ -326,7 +332,7 @@ namespace Server.Custom.Ascensions
                 "When killing a poisoned creature, the assassin has a 0.25% chance per level of inflicting lethal poison on all hostile creatures that are up to 2 tiles away from it.<br>" +
                 "</BASEFONT>";
             }
-             else if (type == AscensionType.Blackguard)
+            else if (type == AscensionType.Blackguard)
             {
                 return
                 "<BASEFONT COLOR=#ffffff>"+
@@ -373,6 +379,54 @@ namespace Server.Custom.Ascensions
 
                 "Soul Reaper, level 20.<br>" +
                 "When killing a hostile creature, the blackguard has a 0.25% chance per level of syphoning level + str /25 health from  all hostile creatures that are up to 2 tiles away from it.<br>" +
+                "</BASEFONT>";
+            }
+              else if (type == AscensionType.Skald)
+            {
+                return
+                "<BASEFONT COLOR=#ffffff>"+
+                "War Chant, level 1<br>" +
+                "command: [SkaldWarChant<br>" +
+                "The Skald channels a powerful song that empowers their allies.<br>" +
+                "For 10 (+1 per level) seconds, the skald and all friendly creatures up to 4 tiles away receive (5 + 1 per level) strength and dexterity,  and a (5 +1 per level) bonus to tactics and magic resistance.<br>" +
+                "This skill costs 20 mana to activate and has a 90 seconds cooldown.<br>" +
+                "- Level 10: The skald and their allies received a 0.5% per level damage bonus with weapons while the warchant is active.<br>" +
+                "- Level 15: When the skald or their allies defeat an enemy while the warchant is active, they recover 5 health and 3 stamina.<br>" +
+                "- Level 20: When the War Chant ends on the Skald, there's a 2% chace per level of it being cast again ignoring its cooldown and mana cost.<br><br>" +
+
+                "Saga of Valor, level 6<br>" +
+                "command: [SkaldSagaOfValor<br>" +
+                "The skald and all of their allies up to 4 tiles away receive +(level/2)% hit chance bonus for 15 +1 per level seconds.<br>" + 
+                "This skill costs 30 mana to activate and has a 90 seconds cooldown.<br>" +
+                "- Level 12: The skald and all of their allies up to 4 tiles aawy receive a +(level/2)% defend chance increase for the duration of the sage.<br><br>" +
+
+                "Song of Thunder, level 11<br>" +
+                "command: [SkaldSongOfThunder<br>" +
+                "The skald calls forth lightning to strike at their foes. For 15 + 1 per level seconds, lightningbolt hits a random nearby hostile target every 3 seconds causing 30-45 (+ skalds fame / 1000) energy damage, to a maximum range of 4 tiles.<br>" + 
+                "This skill costs 40 mana to activate and has a 180 seconds cooldown.<br>" +
+                "- Level 16: Every 3 seconds after the first lightning hit, an additional lightning strike happens at a different random nearby hostile target.<br><br>" + 
+
+                "Dirge Of The Fallen, level 18<br>" +
+                "command: [SkaldDirgeOfTheFallen<br>" +
+                "The skald sings about the valor of ancient heroes and brings them to battle. When this song is played, the skald summons 3 + (level/4) ancient warriors of legend that will attack the skald's foes until they are defeated.<br>" +
+                "The acient warriors last for a maximum of 90 seconds, this skill costs 50 mana to activate and has a 5 minutes cooldown.<br>" +
+                "- Level 20: When using Dirge of The Fallen, there's a 1% chance per level of Song of Thunder automatically triggering.<br><br>" +
+
+                "Battlefield Rhythm, level 2<br>" +
+                "The skald gains a 3% damage bonus with weapons against creatures that are discorded, provoked or peaced.<br>" +
+                "- Level 5: The skald gains a 9% damage bonus with weapons against creatures that are discorded, provoked or peaced  instead.<br>" +
+                "- Level 13: The skald gains a 18% damage bonus with weapons against creatures that are discorded, provoked or peaced  instead.<br><br>" +
+
+                "Cutting Words, level 8<br>" +
+                "The skalds discordance attempts suppress an additional 4% of the target's attributes and skills.<br>" +
+                "- Level 17: The skalds discordance attempts suppress an additional 8% of the target's attributes and skills.<br><br>" +
+
+                "Ressonance, level 14.<br>" +
+                "Your musical prowess is considered 15% higher for song spells.<br>" +
+                "- Level 19: Your musical prowess is considered 25% higher for song spells instead.<br><br>" +
+
+                "Saga of Steel, level 20<br>" +
+                "When killing a hostile creature with a weapon, the Skald has a 0.25% chance per level of immediately triggering an instant Foe Requiem spell song on the nearest hostile creature.<br>"+
                 "</BASEFONT>";
             }
             else

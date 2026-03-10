@@ -40,6 +40,11 @@ namespace Server.Custom.Ascensions
             Register(new BlackguardDeathsAdvanceAbility());
             Register(new BlackguardChainsOfIceAbility());
             Register(new BlackguardsFrostwyrmsFuryAbility());
+            // ---- Skald
+            Register(new SkaldWarChantAbility());
+            Register(new SkaldSagaOfValorAbility());
+            Register(new SkaldSongOfThunderAbility());
+            Register(new SkaldDirgeOfTheFallenAbility());
         }
 
         private static void Register(AscensionAbility ability)

@@ -415,39 +415,43 @@ Blackguard
     War Chant, level 1
     command: [SkaldWarChant
     The Skald channels a powerful song that empowers their allies. 
-    For 25 (+1 per level) seconds, the skald and all friendly creatures up to 4 tiles away receive + 20 strength and dexterity,  and a +1 bonus to tactics and magic resistance per level of the skald.
+    For 10 (+1 per level) seconds, the skald and all friendly creatures up to 4 tiles away receive (5 + 1 per level) strength and dexterity,  and a (5 +1 per level) bonus to tactics and magic resistance.
     This skill costs 20 mana to activate and has a 90 seconds cooldown.
     - Level 10: The skald and their allies received a 0.5% per level damage bonus with weapons while the warchant is active.
     - Level 15: When the skald or their allies defeat an enemy while the warchant is active, they recover 5 health and 3 stamina.
-    - Level 20: When the War Chant ends on the Skald, there's a 1% chace per level of it being cast again without cooldown and mana cost.
+    - Level 20: When the War Chant ends on the Skald, there's a 2% chace per level of it being cast again ignoring its cooldown and mana cost.
 
     Saga of Valor, level 6
     command: [SkaldSagaOfValor
-    The skald and all of their allies up to 4 tiles away receive +(level/2)% hit chance bonus for 25 +1 per level seconds. 
+    The skald and all of their allies up to 4 tiles away receive +(level/2)% hit chance bonus for 15 +1 per level seconds. 
     This skill costs 30 mana to activate and has a 90 seconds cooldown.
     - Level 12: The skald and all of their allies up to 4 tiles aawy receive a +(level/2)% defend chance increase for the duration of the sage. 
 
     Song of Thunder, level 11
     command: [SkaldSongOfThunder
-    The skald calls forth lightning to strike at their foes. For 25 + 1 per level seconds, lightningbolt hits a random nearby hostile target every 3 seconds causing 30-45 (+ skalds fame / 1000) energy damage
-    This skill costs 40 mana to activate and has a 90 seconds cooldown.
+    The skald calls forth lightning to strike at their foes. For 15 + 1 per level seconds, lightningbolt hits a random nearby hostile target every 3 seconds causing 30-45 (+ skalds fame / 1000) energy damage, to a maximum range of 4 tiles. 
+    This skill costs 40 mana to activate and has a 180 seconds cooldown.
     - Level 16: Every 3 seconds after the first lightning hit, an additional lightning strike happens at a different random nearby hostile target. 
 
     Dirge Of The Fallen, level 18
     command: [SkaldDirgeOfTheFallen
-    The skald sings about the valor of ancient heroes and brings them to battle. When this song is played, the skald summons (level/4) ancient warriors of legend that will attack the skald's foes for 25 + 1 per level seconds.
-    This skill costs 50 mana to activate and has a 180 seconds cooldown.
-    - Level 20: When using Dirge of The Fallen, the duration of any song spells casted by the skald affecting the skald and their allies is reset.
+    The skald sings about the valor of ancient heroes and brings them to battle. When this song is played, the skald summons 3 + (level/4) ancient warriors of legend that will attack the skald's foes until they are defeated.
+    The acient warriors last for a maximum of 90 seconds, this skill costs 50 mana to activate and has a 5 minutes cooldown.
+    - Level 20: When using Dirge of The Fallen, there's a 1% chance per level of Song of Thunder automatically triggering.
     
     Battlefield Rhythm, level 2
-    - Level 5: When casting a song spell, the Skald gains + 0.25% damage with weapons per level. This lasts for 15 seconds and does not stack.
-    - Level 13: When casting a song spell, the 
+    The skald gains a 3% damage bonus with weapons against creatures that are discorded, provoked or peaced 
+    - Level 5: The skald gains a 9% damage bonus with weapons against creatures that are discorded, provoked or peaced  instead
+    - Level 13: The skald gains a 18% damage bonus with weapons against creatures that are discorded, provoked or peaced  instead
     
-    Ressonance, level 8
-    - Level 17:
+    Cutting Words, level 8
+    The skalds discordance attempts suppress an additional 4% of the target's attributes and skills
+    - Level 17: The skalds discordance attempts suppress an additional 8% of the target's attributes and skills
 
-    Harmonic Echo, level 14
-    - Level 19:
+    Ressonance, level 14
+    Your musical prowess is considered 15% higher for song spells
+    - Level 19: Your musical prowess is considered 25% higher for song spells instead
 
     Saga of Steel, level 20
-    
+    When killing a hostile creature with a weapon, the Skald has a 0.25% chance per level of immediately triggering an instant Foe Requiem spell song on the nearest hostile creature.
+
