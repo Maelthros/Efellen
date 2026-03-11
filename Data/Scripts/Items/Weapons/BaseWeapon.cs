@@ -1756,6 +1756,100 @@ namespace Server.Items
         		        }
         		    }
         		}
+				else if (ascAttacker.ActiveAscension == AscensionType.Reaver)
+            	{
+            	    // Absolute Tyranny, level 18
+            	    if (ascAttacker.HasAscensionEffect("AbsoluteTyranny"))
+            	    {
+            	        BaseWeapon atkWeapon = attacker.Weapon as BaseWeapon;
+
+            	        if (atkWeapon != null && atkWeapon.Type == WeaponType.Axe)
+            	            percentageBonus += 18;
+            	    }
+
+					 // ── Leech (level 2+) ──────────────────────────────────────────
+	                BaseWeapon leechWeapon = attacker.Weapon as BaseWeapon;
+
+	                if (leechWeapon != null && leechWeapon.Type == WeaponType.Axe)
+	                {
+	                    AscensionProgress leechProg  = ascAttacker.AscensionProfile.Get(AscensionType.Reaver);
+	                    int               leechLevel = leechProg.Level;
+
+	                    if (leechLevel >= 2)
+	                    {
+	                        if (Utility.Random(10000) < (leechLevel * 25))
+	                        {
+	                            int hpDrain = (defender.Hits * leechLevel * 10) / 10000;
+
+	                            if (hpDrain < 1) hpDrain = 1;
+
+	                            defender.Hits -= hpDrain;
+	                            ascAttacker.Hits = ascAttacker.Hits + hpDrain > ascAttacker.HitsMax ? ascAttacker.HitsMax : ascAttacker.Hits + hpDrain;
+
+	                            defender.FixedParticles(0x377A, 10, 15, 5030, 0x675, 0, EffectLayer.Waist);
+	                        }
+
+	                        if (leechLevel >= 5 && Utility.Random(10000) < (leechLevel * 25))
+	                        {
+	                            int manaDrain = (defender.Mana * leechLevel * 12) / 10000;
+
+	                            if (manaDrain < 1 && defender.Mana > 0) manaDrain = 1;
+
+	                            if (manaDrain > 0)
+	                            {
+	                                defender.Mana -= manaDrain;
+	                                ascAttacker.Mana = ascAttacker.Mana + manaDrain > ascAttacker.ManaMax ? ascAttacker.ManaMax : ascAttacker.Mana + manaDrain; 
+	                            }
+	                        }
+
+	                        // ── Execute,
+	                        if (leechLevel >= 13)
+	                        {
+	                            bool belowThreshold = (defender.Hits * 100) / Math.Max(defender.HitsMax, 1) <= 25;
+
+	                            if (belowThreshold && Utility.Random(10000) < (leechLevel * 50))
+	                            {
+	                                int execDrain = (defender.Hits * leechLevel) / 100;
+
+	                                if (execDrain < 1) execDrain = 1;
+
+	                                defender.Hits -= execDrain;
+									ascAttacker.Hits = ascAttacker.Hits + execDrain > ascAttacker.HitsMax ? ascAttacker.HitsMax : ascAttacker.Hits + execDrain;
+	                                attacker.FixedParticles(0x374A, 10, 15, 5021, 0x675, 0, EffectLayer.Waist);
+	                            }
+	                        }
+	                    }
+	                }
+	                // ── End Leech ────────────────────────────────────────
+					// ── Ruthless (level 8+) ───────────────────────────────────────
+                	AscensionProgress ruthlessProg  = ascAttacker.AscensionProfile.Get(AscensionType.Reaver);
+                	int               ruthlessLevel = ruthlessProg.Level;
+
+                	BaseWeapon ruthlessWeapon = attacker.Weapon as BaseWeapon;
+
+                	if (ruthlessWeapon != null && ruthlessWeapon.Type == WeaponType.Axe)
+                	{
+                	    if      (ruthlessLevel >= 17) percentageBonus += 18;
+                	    else if (ruthlessLevel >= 8)  percentageBonus += 9;
+                	}
+                	// ── End Ruthless
+					// ── Flaying Strikes (level 14+) ───────────────────────────────
+	                if (ruthlessLevel >= 14
+	                    && ruthlessWeapon != null && ruthlessWeapon.Type == WeaponType.Axe
+	                    && Utility.Random(100) < ruthlessLevel)
+	                {
+	                    ascAttacker.SendMessage(0x675, "You deliver a Flaying Strike!");
+	                    new FlayingStrikesDebuff(defender).Apply();	
+
+	                    // Level 19+: 0.25% per level chance to reset Gorge cooldown
+	                    if (ruthlessLevel >= 19 && Utility.Random(10000) < (ruthlessLevel * 25))
+	                    {
+	                        ascAttacker.SetAbilityCooldown("Gorge", TimeSpan.Zero);
+	                        ascAttacker.SendMessage(0x675, "You can now use Gorge again.");
+	                    }
+	                }
+	                // ── End Flaying Strikes ─────────────────────────────────────── 
+            	}
 		    }
 
 		    percentageBonus = Math.Min(percentageBonus, 300);
@@ -2169,6 +2263,42 @@ namespace Server.Items
     	            m_Target.RemoveResistanceMod(m_Mod);
     	    }
     	}
+
+	    internal sealed class FlayingStrikesDebuff
+	    {
+	        private readonly Mobile        m_Target;
+	        private readonly ResistanceMod m_Mod;	
+
+	        public FlayingStrikesDebuff(Mobile target)
+	        {
+	            m_Target = target;	
+
+	            ResistanceType weakest      = ResistanceType.Physical;
+	            int            weakestValue = target.PhysicalResistance;	
+
+	            if (target.FireResistance   < weakestValue) { weakestValue = target.FireResistance;   weakest = ResistanceType.Fire;   }
+	            if (target.ColdResistance   < weakestValue) { weakestValue = target.ColdResistance;   weakest = ResistanceType.Cold;   }
+	            if (target.PoisonResistance < weakestValue) { weakestValue = target.PoisonResistance; weakest = ResistanceType.Poison; }
+	            if (target.EnergyResistance < weakestValue) { weakestValue = target.EnergyResistance; weakest = ResistanceType.Energy; }	
+
+	            m_Mod = new ResistanceMod(weakest, -weakestValue);
+	        }	
+
+	        public void Apply()
+	        {
+	            if (m_Target == null || m_Target.Deleted)
+	                return;	
+
+	            m_Target.AddResistanceMod(m_Mod);
+	            Timer.DelayCall(TimeSpan.Zero, new TimerCallback(RemoveMod));
+	        }	
+
+	        private void RemoveMod()
+	        {
+	            if (m_Target != null && !m_Target.Deleted)
+	                m_Target.RemoveResistanceMod(m_Mod);
+	        }
+	    }
 
 		private bool CheckPummelingStrikes(Mobile attacker)
 		{
@@ -2724,16 +2854,17 @@ namespace Server.Items
 			double	strengthBonus = GetBonus( attacker.Str,										0.300, 100.0,  5.00 );
 			double	anatomyBonus = GetBonus( attacker.Skills[SkillName.Anatomy].Value,			0.500, 100.0,  5.00 );
 			double	tacticsBonus = GetBonus( attacker.Skills[SkillName.Tactics].Value,			0.625, 100.0,  6.25 );
-			double	lumberBonus = GetBonus( attacker.Skills[SkillName.Lumberjacking].Value,		0.200, 100.0, 10.00 );
 			double	armsLoreBonus = GetBonus( attacker.Skills[SkillName.ArmsLore].Value,		0.625, 100.0,  6.25 );
-			double	miningBonus = GetBonus( attacker.Skills[SkillName.Mining].Value,			0.200, 100.0, 10.00 );
-			double	fishingBonus = GetBonus( attacker.Skills[SkillName.Seafaring].Value,		0.200, 100.0, 10.00 );
-			double	ninjaBonus = GetBonus( attacker.Skills[SkillName.Ninjitsu].Value,			0.625, 100.0, 10.00 ); // slight boost to fencing weapons, at 125 skill damage bonus is 0.88125 (from 0.84375)
 			double	bushidoBonus = GetBonus( attacker.Skills[SkillName.Bushido].Value,			0.625, 100.0,  6.25 );
 			double	necroBonus = GetBonus( attacker.Skills[SkillName.Necromancy].Value,			0.625, 100.0,  6.25 );
 			double	wizardBonus = GetBonus( attacker.Skills[SkillName.Magery].Value,			0.625, 100.0,  6.25 );
 			double	bowyerBonus = GetBonus( attacker.Skills[SkillName.Bowcraft].Value,			0.625, 100.0,  6.25 );
 			double	ellyBonus = GetBonus( attacker.Skills[SkillName.Elementalism].Value,		0.625, 100.0,  6.25 );
+			double	miningBonus = GetBonus( attacker.Skills[SkillName.Mining].Value,			0.200, 100.0, 10.00 );
+			double	fishingBonus = GetBonus( attacker.Skills[SkillName.Seafaring].Value,		0.200, 100.0, 10.00 );
+			double	ninjaBonus = GetBonus( attacker.Skills[SkillName.Ninjitsu].Value,			0.625, 100.0, 10.00 ); // slight boost to fencing weapons, at 125 skill damage bonus is 0.88125 (from 0.84375)
+			double	lumberBonus = GetBonus( attacker.Skills[SkillName.Lumberjacking].Value,		0.200, 100.0, 10.00 );
+
 
 			if (Type != WeaponType.Piercing)// ninjas shouldnt be particularly good at using halberds
 				ninjaBonus = 0.0;

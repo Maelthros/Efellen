@@ -8099,29 +8099,41 @@ public virtual int BreathComputeDamage()
 
 			            SlamVisuals.SlamVisual( fervorPm, fervorRadius, 0x36B0, 0x498 );
 
-			            IPooledEnumerable fervorEable = fervorPm.Map.GetMobilesInRange( fervorPm.Location, fervorRadius );
+			            ArrayList fervorTargets = new ArrayList();
 
-			            try
-			            {
-			                foreach ( Mobile fm in fervorEable )
-			                {
-			                    if ( fm == null || fm.Deleted || !fm.Alive || fm == fervorPm )
-			                        continue;
+                		IPooledEnumerable fervorEable = fervorPm.Map.GetMobilesInRange( fervorPm.Location, fervorRadius );
 
-			                    if ( fm.Karma >= 0 )
-			                        continue;
+                		try
+                		{
+                		    foreach ( Mobile fm in fervorEable )
+                		    {
+                		        if ( fm == null || fm.Deleted || !fm.Alive || fm == fervorPm )
+                		            continue;
 
-			                    if ( !fervorPm.CanBeHarmful( fm, false ) )
-			                        continue;
+                		        if ( fm.Karma >= 0 )
+                		            continue;
 
-			                    fervorPm.DoHarmful( fm );
-			                    AOS.Damage( fm, fervorPm, fervorDamage, 100, 0, 0, 0, 0 );
-			                }
-			            }
-			            finally
-			            {
-			                fervorEable.Free();
-			            }
+                		        if ( !fervorPm.CanBeHarmful( fm, false ) )
+                		            continue;
+
+                		        fervorTargets.Add( fm );
+                		    }
+                		}
+                		finally
+                		{
+                		    fervorEable.Free();
+                		}
+
+                		for ( int i = 0; i < fervorTargets.Count; i++ )
+                		{
+                		    Mobile fm = (Mobile)fervorTargets[i];
+
+                		    if ( fm.Deleted || !fm.Alive )
+                		        continue;
+
+                		    fervorPm.DoHarmful( fm );
+                		    AOS.Damage( fm, fervorPm, fervorDamage, 100, 0, 0, 0, 0 );
+                		}
 						if ( fervorLevel >= 17 )
 			                fervorPm.SetAbilityCooldown( "Smite", TimeSpan.Zero );
 			        }
@@ -8201,28 +8213,39 @@ public virtual int BreathComputeDamage()
 
 			            Map termMap = termPm.Map;
 
-			            IPooledEnumerable termEable = termMap.GetMobilesInRange( this.Location, 2 );
+			            ArrayList termTargets = new ArrayList();
 
-			            try
-			            {
-			                foreach ( Mobile m in termEable )
-			                {
-			                    if ( m == null || m.Deleted || !m.Alive || m == termPm )
-			                        continue;
+                		IPooledEnumerable termEable = termMap.GetMobilesInRange( this.Location, 2 );
 
-			                    if ( !termPm.CanBeHarmful( m, false ) )
-			                        continue;
+                		try
+                		{
+                		    foreach ( Mobile m in termEable )
+                		    {
+                		        if ( m == null || m.Deleted || !m.Alive || m == termPm )
+                		            continue;
 
-			                    termPm.DoHarmful( m );
-			                    m.ApplyPoison( termPm, Poison.Lethal );
+                		        if ( !termPm.CanBeHarmful( m, false ) )
+                		            continue;
 
-			                    Effects.SendTargetParticles( m, 0x3729, 9, 40, 0x233, 0, 0, EffectLayer.Waist, 0 );
-			                }
-			            }
-			            finally
-			            {
-			                termEable.Free();
-			            }
+                		        termTargets.Add( m );
+                		    }
+                		}
+                		finally
+                		{
+                		    termEable.Free();
+                		}
+
+                		for ( int i = 0; i < termTargets.Count; i++ )
+                		{
+                		    Mobile m = (Mobile)termTargets[i];
+
+                		    if ( m.Deleted || !m.Alive )
+                		        continue;
+
+                		    termPm.DoHarmful( m );
+                		    m.ApplyPoison( termPm, Poison.Lethal );
+                		    Effects.SendTargetParticles( m, 0x3729, 9, 40, 0x233, 0, 0, EffectLayer.Waist, 0 );
+                		}
 			        }
 			    }
 			}
@@ -8341,39 +8364,51 @@ public virtual int BreathComputeDamage()
 
 			            if ( reaperMap != null && reaperMap != Map.Internal )
 			            {
-			                int drainPerTarget = reaperLevel + (reaperPm.Str / 25);
-			                int totalHealing   = 0;
+			            
+			                ArrayList reaperTargets = new ArrayList();
 
-			                IPooledEnumerable eable = reaperMap.GetMobilesInRange( this.Location, 2 );
-
-			                try
-			                {
-			                    foreach ( Mobile m in eable )
-			                    {
-			                        if ( m == null || m.Deleted || !m.Alive || m == reaperPm )
-			                            continue;
-
-			                        if ( !reaperPm.CanBeHarmful( m, false ) )
-			                            continue;
-
-			                        int actualDrain = Math.Min( m.Hits, drainPerTarget );
-			                        m.Hits -= actualDrain;
-
-			                        totalHealing += drainPerTarget;
-			                    }
-			                }
-			                finally
-			                {
-			                    eable.Free();
-			                }
-
-			                if ( totalHealing > 0 )
-			                {
-			                    reaperPm.Hits = Math.Min( reaperPm.HitsMax, reaperPm.Hits + drainPerTarget );
-			                    reaperPm.SendMessage( 0x47E, "You reap the soul of your foe!" );
-			                    reaperPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
-			                    reaperPm.PlaySound( 0x1FB );
-			                }
+			               IPooledEnumerable reaperEable = reaperMap.GetMobilesInRange( this.Location, 2 );
+			
+			               try
+			               {
+			                   foreach ( Mobile m in reaperEable )
+			                   {
+			                       if ( m == null || m.Deleted || !m.Alive || m == reaperPm )
+			                           continue;
+			
+			                       if ( !reaperPm.CanBeHarmful( m, false ) )
+			                           continue;
+			
+			                       reaperTargets.Add( m );
+			                   }
+			               }
+			               finally
+			               {
+			                   reaperEable.Free();
+			               }
+			
+			               int totalHealing = 0;
+			               int drainPerTarget = reaperLevel + (reaperPm.Str / 25);
+			
+			               for ( int i = 0; i < reaperTargets.Count; i++ )
+			               {
+			                   Mobile m = (Mobile)reaperTargets[i];
+			
+			                   if ( m.Deleted || !m.Alive )
+			                       continue;
+			
+			                   int actualDrain = Math.Min( m.Hits, drainPerTarget );
+			                   m.Hits -= actualDrain;
+			                   totalHealing += drainPerTarget;
+			               }
+			
+			               if ( totalHealing > 0 )
+			               {
+			                   reaperPm.Hits = Math.Min( reaperPm.HitsMax, reaperPm.Hits + drainPerTarget );
+			                   reaperPm.SendMessage( 0x47E, "You reap the soul of your foe!" );
+			                   reaperPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
+			                   reaperPm.PlaySound( 0x1FB );
+			               }
 			            }
 			        }
 			    }
@@ -8432,7 +8467,108 @@ public virtual int BreathComputeDamage()
 			    }
 			}
 
-			///////////////////////////////////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////////
+            // ABSOLUTE TYRANNY (Reaver , level 18)
+
+            if (slayer is PlayerMobile)
+            {
+                PlayerMobile tyrannyPm = (PlayerMobile)slayer;
+
+                if (tyrannyPm.ActiveAscension == AscensionType.Reaver
+                    && tyrannyPm.HasAscensionEffect("AbsoluteTyranny"))
+                {
+                    BaseWeapon tyrannyWeapon = tyrannyPm.Weapon as BaseWeapon;
+
+                    if (tyrannyWeapon != null && tyrannyWeapon.Type == WeaponType.Axe)
+                    {
+                        AscensionEffectState tyrannyState = tyrannyPm.GetAscensionEffect("AbsoluteTyranny");
+                        int tyrannyLevel = tyrannyState.Level;
+
+                        int hitsRestore = tyrannyPm.HitsMax / 10;
+                        int stamRestore = tyrannyPm.StamMax / 10;
+
+                        tyrannyPm.Hits += hitsRestore;
+                        tyrannyPm.Stam += stamRestore;
+
+                        if (tyrannyPm.Hits > tyrannyPm.HitsMax) tyrannyPm.Hits = tyrannyPm.HitsMax;
+                        if (tyrannyPm.Stam > tyrannyPm.StamMax) tyrannyPm.Stam = tyrannyPm.StamMax;
+
+                        tyrannyPm.FixedParticles(0x23B2, 10, 15, 0, 0x675, 0, EffectLayer.Waist);
+
+                        if (tyrannyLevel >= 20 && Utility.Random(10000) < (tyrannyLevel * 100))
+                            DoTyrannyCorpseExplosion(tyrannyPm, this.Location, this.Map);
+                    }
+                }
+            }
+
+			///////////////////////////////////////////////////////////////
+            // DEEP CUTS (Reaver, level 20)
+
+            if (slayer is PlayerMobile)
+            {
+                PlayerMobile deepCutsPm = (PlayerMobile)slayer;
+
+                if (deepCutsPm.ActiveAscension == AscensionType.Reaver)
+                {
+                    BaseWeapon deepCutsWeapon = deepCutsPm.Weapon as BaseWeapon;
+
+                    if (deepCutsWeapon != null && deepCutsWeapon.Type == WeaponType.Axe)
+                    {
+                        AscensionProgress deepCutsProg  = deepCutsPm.AscensionProfile.Get(AscensionType.Reaver);
+                        int               deepCutsLevel = deepCutsProg.Level;
+
+                        if (deepCutsLevel >= 20 && Utility.Random(10000) < (deepCutsLevel * 25))
+                        {
+                            deepCutsPm.SendMessage(0x675, "You cut your foes deeply!");
+
+                            Map     deepCutsMap = this.Map;
+                            Point3D deepCutsLoc = this.Location;
+
+                            if (deepCutsMap != null && deepCutsMap != Map.Internal)
+                            {
+                                ArrayList deepCutsTargets = new ArrayList();
+
+                                IPooledEnumerable deepCutsEable = deepCutsMap.GetMobilesInRange(deepCutsLoc, 1);
+
+                                try
+                                {
+                                    foreach (Mobile m in deepCutsEable)
+                                    {
+                                        if (m == null || m.Deleted || !m.Alive || m == deepCutsPm)
+                                            continue;
+
+                                        if (!deepCutsPm.CanBeHarmful(m, false))
+                                            continue;
+
+                                        deepCutsTargets.Add(m);
+                                    }
+                                }
+                                finally
+                                {
+                                    deepCutsEable.Free();
+                                }
+
+                                for (int i = 0; i < deepCutsTargets.Count; i++)
+                                {
+                                    Mobile m = (Mobile)deepCutsTargets[i];
+
+                                    if (m.Deleted || !m.Alive)
+                                        continue;
+
+                                    if (ReaverDeepCutsBleed.IsDeepCutsBleeding(m))
+                                        continue;
+
+                                    deepCutsPm.DoHarmful(m);
+
+                                    int bleedDuration = Utility.RandomMinMax(12, 21);
+                                    new ReaverDeepCutsBleed(m, deepCutsPm, deepCutsLevel, bleedDuration).Start();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ///////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );
@@ -8537,6 +8673,69 @@ public virtual int BreathComputeDamage()
 
 			return base.OnBeforeDeath();
 		}
+
+		private static bool m_TyrannyExplosionActive = false;
+
+        private static void DoTyrannyCorpseExplosion(PlayerMobile pm, Point3D loc, Map map)
+        {
+            if (m_TyrannyExplosionActive)
+                return;
+
+            if (map == null || map == Map.Internal)
+                return;
+
+            m_TyrannyExplosionActive = true;
+
+            try
+            {
+                Effects.SendLocationParticles(
+                    EffectItem.Create(loc, map, EffectItem.DefaultDuration),
+                    0x23B2, 10, 30, 0x675, 0, 0, 0
+                );
+                Effects.PlaySound(loc, map, 0x307);
+
+                int strBonus    = pm.Str / 15;
+                int tacBonus    = (int)(pm.Skills[SkillName.Tactics].Value / 12);
+                int blastDamage = Utility.RandomMinMax(30, 56) + strBonus + tacBonus;
+
+                ArrayList targets = new ArrayList();
+
+                IPooledEnumerable eable = map.GetMobilesInRange(loc, 2);
+
+                try
+                {
+                    foreach (Mobile m in eable)
+                    {
+                        if (m == null || m.Deleted || !m.Alive || m == pm)
+                            continue;
+
+                        if (!pm.CanBeHarmful(m, false))
+                            continue;
+
+                        targets.Add(m);
+                    }
+                }
+                finally
+                {
+                    eable.Free();
+                }
+
+                for (int i = 0; i < targets.Count; i++)
+                {
+                    Mobile m = (Mobile)targets[i];
+
+                    if (m.Deleted || !m.Alive)
+                        continue;
+
+                    pm.DoHarmful(m);
+                    AOS.Damage(m, pm, blastDamage, 100, 0, 0, 0, 0);
+                }
+            }
+            finally
+            {
+                m_TyrannyExplosionActive = false;
+            }
+        }
 
 		private static Mobile GetNearestHostile( PlayerMobile pm )
 		{

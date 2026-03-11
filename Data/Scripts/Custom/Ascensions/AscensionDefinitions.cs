@@ -50,6 +50,12 @@ namespace Server.Custom.Ascensions
                     "In order to activate this Ascension, you need to have 95 base skill in Musicianship, Tactics and Discordance. Every time you level up the class, the requirement also increases by 1.<br>"+
                     "So a level 20 Skald cannot activate this ascension unless they have 115 base skill in Musicianship, Tactics and Discordance.<br>"+
                     "Skalds are proud and pragmatic. They will not gain experience in this class if they have learned bushido, necromancy, marksmanship, hiding or begging.";
+                case AscensionType.Reaver:
+                    return 
+                    " The Reaver is a vicious and savage combatant. In combat, they specialize in making their opponents bleed and sap their will to live with powerful and crippling strikes.<br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Tactics, Anatomy and Forensics. Every time you level up the class, the requirement also increases by 1.<br>"+
+                    "So a level 20 Reaver cannot activate this ascension unless they have 115 base skill in Tactics, Anatomy and Forensics.<br>"+
+                    "Reavers will not gain experience in this class if they have learned Bushido, Healing, Veterinary or Spiritualism.";
                 default:
                     return "IN DEVELOPMENT.";
             }
@@ -381,7 +387,7 @@ namespace Server.Custom.Ascensions
                 "When killing a hostile creature, the blackguard has a 0.25% chance per level of syphoning level + str /25 health from  all hostile creatures that are up to 2 tiles away from it.<br>" +
                 "</BASEFONT>";
             }
-              else if (type == AscensionType.Skald)
+            else if (type == AscensionType.Skald)
             {
                 return
                 "<BASEFONT COLOR=#ffffff>"+
@@ -427,6 +433,55 @@ namespace Server.Custom.Ascensions
 
                 "Saga of Steel, level 20<br>" +
                 "When killing a hostile creature with a weapon, the Skald has a 0.25% chance per level of immediately triggering an instant Foe Requiem spell song on the nearest hostile creature.<br>"+
+                "</BASEFONT>";
+            }
+            else if (type == AscensionType.Reaver)
+            {
+                return
+                "<BASEFONT COLOR=#ffffff>"+
+                "Gorge, level 1.<br>" +
+                "command: [ReaverGorge<br>" +
+                "The Reaver lays a curse around target area, spread thick vicious blood on it (radius 2 + 1 / 4 levels).<br>" +
+                "Hostile creatures standing on the area receive -1.25 physical resistance per level of the reaver. The area lasts for 10 + 1/level seconds.<br>" + 
+                "This ability costs 15 stamina and 15 mana to activate and it has a 3 minutes cooldown.<br>" +
+                "- Level 10: Creatures caught inside the gorge's area are slowed and can't run.<br>" + 
+                "- Level 15: Creatures caught inside the gorge's area receive -0.66 penalty per level of the reaver on all elemental resistances.<br>" + 
+                "- Level 20: When a creature dies inside the gorge's area, there's a 1.5% chance per level of the reaver that it's corpse explodes, causing 40-66 + (reaver's str / 15 + reaver's tactics/12) physical damage on all hostile creatures that are up to 2 tiles away from it.<br><br>" + 
+
+                "Exsanguinate, level 6.<br>" +
+                "command: [ReaverExsanguinate <br>" +
+                "The Reaver performs a whirlwind attack that makes all adjacent targets bleed. The attack causes 18-26 + str/15 physical damage, and the bleed causes 26-32 physical damage every 3 seconds for 13 + level seconds. <br>" +
+                "This ability costs 20 mana and 20 stamina to activate, and has a 1 minute cooldown. <br>" +
+                "- Level 12: the reaver recovers 9 health for each enemy affected by the Exsanguinate. <br><br>" +
+
+                "Bloodstorm, level 11. <br>" +
+                "command: [ReaverBloodstorm <br>" +
+                "The reaver channels its scorn and calls forth an explosion of blood. This effect causes 20-32 + (level/2 + str/15) damage to all creatures that can bleed and are up to 3 (+1 per 5 levels) tiles away from the reaver. <br>" +
+                "Exsanguinate costs 25 mana and 25 stamina to activate, and has a 2 minutes cooldown. <br>" +
+                "- Level 16: When used, there's a 0.5% chance per level that the cooldown on Exsanguinate will be set to zero.<br><br>" +
+
+                "Absolute Tyranny, level 18. <br>" +
+                "command: [ReaverAbsoluteTyranny <br>" +
+                "For the next 30 seconds, the Reaver causes 18% extra physical damage with axes, and when they kill an enemy with an axe strike, they recover 10% of their hit points and stamina. <br>" + 
+                "Absolute tyranny costs 30 mana and 30 stamina to activate, and has a 3 minutes cooldown. <br>" +   
+                "- Level 20: When a Reaver kills an enemy while under the effect of Absolute Tyranny, there's a 1% chance per level that its corpse explodes, causing 30-56 + (str/15 + tactics/12) physical damage to all hostile creatures that are up to 2 tiles away from it. <br>" +
+
+                "Leech, level 2. <br>" +
+                "When the reaver makes an axe strike against a foe, they have a 0.25% chance per level of draining 0.10%/level hit points from the target. <br>" +
+                "- Level 5: When the reaver makes an axe strike against a foe, they have a 0.25% chance per level of draining 0.12%/level mana from the target. <br>" +
+                "- Level 13: when the reaver makes an axe strike against a foe that has 25% or less hit points remaining, they have a 0.5%/level chance of draining an additional 1%/level hit points from the target. <br><br>" +
+
+                "Ruthless, level 8. <br>" +
+                "The reaver causes 9% extra  damage with axes.<br>" +
+                "- Level 17: The reaver causes 18% extra  damage with axes instead.<br><br>" +
+           
+                "Flaying Strikes, level 14. <br>" +
+                "The Reaver's weapon attacks with axes have a 1% chance per level of affecting the target's weakest resistance. <br>" +
+                "- Level 19: The Reaver's merciless strikes have a 0.25% chance per level of setting the cooldown on Gorge to zero.<br><br>" +
+
+                "Deep Cuts, level 20.<br>" +
+                "When killing a hostile creature, the reaver has a 0.25% chance per level of applying a heavy bleed on all hostile creatures adjacent to it. <br>" + 
+                "These creatures are crippled (can't run) and take 52-72 + str/10 damage every 3 seconds for 12 to 21 seconds. This effect does not stack. <br>" +
                 "</BASEFONT>";
             }
             else

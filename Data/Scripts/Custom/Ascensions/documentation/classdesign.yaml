@@ -18,8 +18,13 @@ Assassin
 Blackguard
     active: Dark Succor, Death's Advance, Chains of Ice, Frostwyrm's Fury
     passive: Frozen heart, Morbidity, Merciless Strikes, Soul Reaper
-
-
+Skald
+    active: war chant, saga of valor, song of thunder, dirge of the fallen
+    passive:  Battlefield Rhythm, ressonance, harmonic echo, saga of steel
+Reaver
+    active: gorge, exsanguinate, bloodstorm , Absolute Tyranny
+    passive: Leech, Ruthless, flaying strikes, deep cuts,    
+    
 These are the ascendancies that are currently in development:
 
 Battlemage
@@ -28,23 +33,20 @@ Battlemage
 Kensai
     active: battle meditation, Kai, culling strike, tempest
     passive: practiced perfection, singular focus, 
-Skald
-    active: war chant, saga of valor, song of thunder, dirge of the fallen
-    passive:  Battlefield Rhythm, ressonance, harmonic echo, saga of steel
-Reaver
-    active: gorge, exsanguinate, bloodstorm ,Tyranny of blood
-    passive: Leech, Vigor, flaying strikes, deep cuts,    
 Defender
     active: Bulwark, 
     passive:  
 Shadowthief
     active: 
     passive:  
-Archdruid
+Arcane Archer
     active: imbue arrows, phase shift, arcane volley, barrage
     passive: mystical ricochet, arcane precision, arcane feedback, arcane momentum
 Summoner:
     active: Eidolon
+    passive:
+Primal Lord
+    active: Elemental Form, elemental overload
     passive:
 
 Berserker abilities
@@ -355,7 +357,7 @@ Blackguard
 
     The Blackguard is a champion of evil and corruption. In combat, they are juggernauts that bring frost e blood into the battlefield.
     In order to activate this Ascension, you need to have 95 base skill in Knightship, Arms lore and Necromancy. Every time you level up the class, the requirement also increases by 1.
-    So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in Knightship, Arms lore and Necromancy.
+    So a level 20 Blackguard cannot activate this ascension unless they have 115 base skill in Knightship, Arms lore and Necromancy.
     Blackguardss also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido, spiritualism or elementalism, or if they abandon the path of evil.
 
     Dark Succor, level 1
@@ -455,3 +457,58 @@ Blackguard
     Saga of Steel, level 20
     When killing a hostile creature with a weapon, the Skald has a 0.25% chance per level of immediately triggering an instant Foe Requiem spell song on the nearest hostile creature.
 
+Reaver
+    active: gorge, exsanguinate, bloodstorm , Absolute Tyranny
+    passive: Leech, Ruthless, flaying strikes, deep cuts,    
+
+    The Reaver is a vicious and savage combatant. In combat, they specialize in making their opponents bleed and sap their will to live with powerful and crippling strikes.
+    In order to activate this Ascension, you need to have 95 base skill in Tactics, Anatomy and Forensics. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Reaver cannot activate this ascension unless they have 115 base skill in Tactics, Anatomy and Forensics.
+    Reavers will not gain experience in this class if they have learned Bushido, Healing, Veterinary or Spiritualism.
+
+    Gorge, level 1
+    command: [ReaverGorge
+    The Reaver lays a curse around target area, spread thick vicious blood on it (radius 2 + 1 / 4 levels). 
+    Hostile creatures standing on the area receive -1.25 physical resistance per level of the reaver. The area lasts for 10 + 1/level seconds. 
+    This ability costs 15 stamina and 15 mana to activate and it has a 3 minutes cooldown. 
+    - Level 10: Creatures caught inside the gorge's area are slowed and can't run. 
+    - Level 15: Creatures caught inside the gorge's area receive -0.66 penalty per level of the reaver on all elemental resistances. 
+    - Level 20: When a creature dies inside the gorge's area, there's a 1.5% chance per level of the reaver that it's corpse explodes, 
+    causing 40-66 + (reaver's str / 15 + reaver's tactics/12) physical damage on all hostile creatures that are up to 2 tiles away from it. 
+
+    Exsanguinate, level 6
+    command: [ReaverExsanguinate
+    The Reaver performs a whirlwind attack that makes all adjacent targets bleed. The attack causes 18-26 + str/15 physical damage, and the bleed causes 26-32 physical damage every 3 seconds for 13 + level seconds.
+    This ability costs 20 mana and 20 stamina to activate, and has a 1 minute cooldown
+    - Level 12: the reaver recovers 9 health for each enemy affected by the Exsanguinate.
+
+
+    Bloodstorm, level 11
+    command: [ReaverBloodstorm
+    The reaver channels its scorn and calls forth an explosion of blood. This effect causes 20-32 + (level/2 + str/15) damage to all creatures that can bleed and are up to 3 (+1 per 5 levels) tiles away from the reaver.
+    Exsanguinate costs 25 mana and 25 stamina to activate, and has a 2 minutes cooldown.
+    - Level 16: When used, there's a 0.5% chance per level that the cooldown on Exsanguinate will be set to zero.
+
+    Absolute Tyranny, level 18
+    command: [ReaverAbsoluteTyranny
+    For the next 30 seconds, the Reaver causes 18% extra physical damage with axes, and when they kill an enemy with an axe strike, they recover 10% of their hit points and stamina. 
+    Absolute tyranny costs 30 mana and 30 stamina to activate, and has a 3 minutes cooldown.   
+    - Level 20: When a Reaver kills an enemy while under the effect of Absolute Tyranny, there's a 1% chance per level that its corpse explodes, causing 30-56 + (str/15 + tactics/12) physical damage to all hostile creatures
+    that are up to 2 tiles away from it.
+    
+    Leech, level 2
+    When the reaver makes an axe strike against a foe, they have a 0.25% chance per level of draining 0.10%/level hit points from the target.
+    - Level 5: When the reaver makes an axe strike against a foe, they have a 0.25% chance per level of draining 0.12%/level mana from the target.
+    - Level 13: when the reaver makes an axe strike against a foe that has 25% or less hit points remaining, they have a 0.5%/level chance of draining an additional 1%/level hit points from the target.
+    
+    Ruthless, level 8
+    The reaver causes 9% extra  damage with axes. 
+    - Level 17: The reaver causes 18% extra  damage with axes instead. 
+
+    Flaying Strikes, level 14
+    The Reaver's weapon attacks with axes have a 1% chance per level of affecting the target's weakest resistance.
+    - Level 19: The Reaver's merciless strikes have a 0.25% chance per level of setting the cooldown on Gorge to zero.
+
+    Deep Cuts, level 20
+    When killing a hostile creature, the reaver has a 0.25% chance per level of applying a heavy bleed on all hostile creatures adjacent to it. 
+    These creatures are crippled (can't run) and take 52-72 + str/10 damage every 3 seconds for 12 to 21 seconds. This effect does not stack.

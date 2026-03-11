@@ -45,6 +45,11 @@ namespace Server.Custom.Ascensions
             Register(new SkaldSagaOfValorAbility());
             Register(new SkaldSongOfThunderAbility());
             Register(new SkaldDirgeOfTheFallenAbility());
+            // ---- Reaver
+            Register(new ReaverGorgeAbility());
+            Register(new ReaverExsanguinateAbility());
+            Register(new ReaverBloodstormAbility());
+            Register(new ReaverAbsoluteTyrannyAbility());
         }
 
         private static void Register(AscensionAbility ability)
