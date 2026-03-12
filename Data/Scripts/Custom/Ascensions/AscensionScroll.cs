@@ -50,6 +50,7 @@ namespace Server.Custom.Ascensions
                 case AscensionType.Blackguard: return 0x47E;
                 case AscensionType.Skald:      return 0x445;
                 case AscensionType.Reaver:     return 0x675;
+                case AscensionType.Kensai:     return 0x448;
                 default:                       return 0;
             }
         }

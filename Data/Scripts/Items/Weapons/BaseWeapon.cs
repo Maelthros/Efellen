@@ -1108,70 +1108,74 @@ namespace Server.Items
 
 		public virtual TimeSpan GetDelay( Mobile m )
 		{
-			double speed = this.Speed;
+		    double speed = this.Speed;
 
-			if ( speed == 0 )
-				return TimeSpan.FromHours( 1.0 );
+		    if ( speed == 0 )
+		        return TimeSpan.FromHours( 1.0 );
 
-			double delayInSeconds;
+		    double delayInSeconds;
 
-			/*
-			 * This is likely true for Core.AOS as well... both guides report the same
-			 * formula, and both are wrong.
-			 * The old formula left in for AOS for legacy & because we aren't quite 100%
-			 * Sure that AOS has THIS formula
-			 */
-			int bonus = AosAttributes.GetValue( m, AosAttribute.WeaponSpeed );
+		    int bonus = AosAttributes.GetValue( m, AosAttribute.WeaponSpeed );
 
-			if ( Spells.Chivalry.DivineFurySpell.UnderEffect( m ) )
-				bonus += 10;
+		    if ( Spells.Chivalry.DivineFurySpell.UnderEffect( m ) )
+		        bonus += 10;
 
-			// Bonus granted by successful use of Honorable Execution.
-			bonus += HonorableExecution.GetSwingBonus( m );
+		    bonus += HonorableExecution.GetSwingBonus( m );
 
-			if( DualWield.Registry.Contains( m ) )
-				bonus += ((DualWield.DualWieldTimer)DualWield.Registry[m]).BonusSwingSpeed;
+		    if ( DualWield.Registry.Contains( m ) )
+		        bonus += ((DualWield.DualWieldTimer)DualWield.Registry[m]).BonusSwingSpeed;
 
-			if( Feint.Registry.Contains( m ) )
-				bonus -= ((Feint.FeintTimer)Feint.Registry[m]).SwingSpeedReduction;
+		    if ( Feint.Registry.Contains( m ) )
+		        bonus -= ((Feint.FeintTimer)Feint.Registry[m]).SwingSpeedReduction;
 
-			TransformContext context = TransformationSpellHelper.GetContext( m );
+		    TransformContext context = TransformationSpellHelper.GetContext( m );
 
-			int discordanceEffect = 0;
+		    int discordanceEffect = 0;
 
-			// Discordance gives a malus of -0/-28% to swing speed.
-			if ( SkillHandlers.Discordance.GetEffect( m, ref discordanceEffect ) )
-				bonus -= discordanceEffect;
+		    if ( SkillHandlers.Discordance.GetEffect( m, ref discordanceEffect ) )
+		        bonus -= discordanceEffect;
 
-			if ( bonus > 60 )
-				bonus = 60;
-			
-			double ticks;
+		    // ── Battle Meditation swing speed bonus (Kensai, level 1+) ──────────
+		    PlayerMobile swingPm = m as PlayerMobile;
 
-			if ( Core.ML )
-			{
-				int stamTicks = (int)( m.Stam / 30 );
+		    if ( swingPm != null
+		        && swingPm.ActiveAscension == AscensionType.Kensai
+		        && swingPm.HasAscensionEffect("BattleMeditation") )
+		    {
+		        AscensionEffectState swingState = swingPm.GetAscensionEffect("BattleMeditation");
+		        int swingBonus = 5 + (swingState.Level / 2);
+		        bonus += swingBonus;
+		    }
+		    // ── End Battle Meditation ────────────────────────────────────────────
 
-				ticks = speed * 4;
-				ticks = Math.Floor( ( ticks - stamTicks ) * ( 100.0 / ( 100 + bonus ) ) );
-			}
-			else
-			{
-				speed = Math.Floor( speed * ( bonus + 100.0 ) / 100.0 );
+		    if ( bonus > 60 )
+		        bonus = 60;
 
-				if ( speed <= 0 )
-					speed = 1;
+		    double ticks;
 
-				ticks = Math.Floor( ( 80000.0 / ( ( m.Stam + 100 ) * speed ) ) - 2 );
-			}
-			
-			// Swing speed currently capped at one swing every 1.25 seconds (5 ticks).
-			if ( ticks < 5 )
-				ticks = 5;
+		    if ( Core.ML )
+		    {
+		        int stamTicks = (int)( m.Stam / 30 );
 
-			delayInSeconds = ticks * 0.25;
+		        ticks = speed * 4;
+		        ticks = Math.Floor( ( ticks - stamTicks ) * ( 100.0 / ( 100 + bonus ) ) );
+		    }
+		    else
+		    {
+		        speed = Math.Floor( speed * ( bonus + 100.0 ) / 100.0 );
 
-			return TimeSpan.FromSeconds( delayInSeconds );
+		        if ( speed <= 0 )
+		            speed = 1;
+
+		        ticks = Math.Floor( ( 80000.0 / ( ( m.Stam + 100 ) * speed ) ) - 2 );
+		    }
+
+		    if ( ticks < 5 )
+		        ticks = 5;
+
+		    delayInSeconds = ticks * 0.25;
+
+		    return TimeSpan.FromSeconds( delayInSeconds );
 		}
 
 		public virtual void OnBeforeSwing( Mobile attacker, Mobile defender )
@@ -1487,7 +1491,7 @@ namespace Server.Items
 			OnHit( attacker, defender, 1.0 );
 		}
 
-		public virtual void OnHit(Mobile attacker, Mobile defender, double damageBonus)
+		public virtual void OnHit( Mobile attacker, Mobile defender, double damageBonus )
 		{
 		    // ── Druid shapeshifting specials ─────────────────────────────────────
 		    SpectralFormCombat.OnHit(attacker, defender);
@@ -1497,17 +1501,17 @@ namespace Server.Items
 
 		    if (attacker is PlayerMobile && ((PlayerMobile)attacker).SneakDamage)
 		    {
-		        PlayerMobile sneakPm    = (PlayerMobile)attacker;
-		        double sneakAttack      = attacker.Skills[SkillName.Hiding].Value
-		                                + attacker.Skills[SkillName.Stealth].Value;
+		        PlayerMobile sneakPm   = (PlayerMobile)attacker;
+		        double sneakAttack     = attacker.Skills[SkillName.Hiding].Value
+		                               + attacker.Skills[SkillName.Stealth].Value;
 
 		        double bonusRange = Utility.RandomDouble();
 		        if (bonusRange < 0.50) bonusRange += 0.40;
 		        if (bonusRange > 0.90) bonusRange -= 0.10;
 
 		        sneakBonus = ((0.015 * sneakAttack) / 1.50) * bonusRange;
-		        if (sneakBonus > 1.25)              sneakBonus = 1.25;
-		        if (this is BaseRanged)             sneakBonus = sneakBonus / 2;
+		        if (sneakBonus > 1.25)          sneakBonus = 1.25;
+		        if (this is BaseRanged)         sneakBonus = sneakBonus / 2;
 
 		        attacker.SendMessage("You perform a sneak attack for " + (int)(sneakBonus * 100) + "% more damage!");
 		        sneakPm.SneakDamage = false;
@@ -1620,7 +1624,7 @@ namespace Server.Items
 
 		    if (ascAttacker != null)
 		    {
-		        // Berserker Rage (effect-state, not ascension-gated)
+		        // Berserker Rage
 		        if (ascAttacker.HasAscensionEffect("BerserkerRage"))
 		        {
 		            AscensionEffectState rageState = ascAttacker.GetAscensionEffect("BerserkerRage");
@@ -1630,7 +1634,7 @@ namespace Server.Items
 		            percentageBonus += rageBonus;
 		        }
 
-		        // Toxic Surge (effect-state, not ascension-gated)
+		        // Toxic Surge
 		        if (ascAttacker.HasAscensionEffect("ToxicSurge") && defender.Poisoned)
 		            percentageBonus += 10;
 
@@ -1640,7 +1644,6 @@ namespace Server.Items
 		            AscensionProgress crusaderProg  = ascAttacker.AscensionProfile.Get(AscensionType.Crusader);
 		            int               crusaderLevel = crusaderProg.Level;
 
-		            // Inquisitorial Strikes (level 14+)
 		            if (crusaderLevel >= 14)
 		            {
 		                SlayerEntry inqDemons = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
@@ -1656,7 +1659,6 @@ namespace Server.Items
 		            AscensionProgress assassinProg  = ascAttacker.AscensionProfile.Get(AscensionType.Assassin);
 		            int               assassinLevel = assassinProg.Level;
 
-		            // Virulent Strikes: on-hit tick against already-poisoned targets (level 5+)
 		            if (assassinLevel >= 5 && defender.Poisoned)
 		            {
 		                if (Utility.Random(10000) < (assassinLevel * 25))
@@ -1666,7 +1668,6 @@ namespace Server.Items
 		                    PoisonImpl.ResolveSingleTick(defender, ascAttacker);
 		            }
 
-		            // Virulent Strikes: on-poison-application tick (level 2+)
 		            if (assassinLevel >= 2)
 		            {
 		                BaseWeapon virWeapon = ascAttacker.Weapon as BaseWeapon;
@@ -1677,7 +1678,6 @@ namespace Server.Items
 		                }
 		            }
 
-		            // Deadly Strikes: bonus damage and resist shred (level 14+)
 		            if (assassinLevel >= 14 && defender.Poisoned)
 		            {
 		                percentageBonus += 9;
@@ -1687,169 +1687,215 @@ namespace Server.Items
 		            }
 		        }
 		        else if (ascAttacker.ActiveAscension == AscensionType.Blackguard)
-        		{
-        		    AscensionProgress blackguardProg  = ascAttacker.AscensionProfile.Get(AscensionType.Blackguard);
-        		    int               blackguardLevel = blackguardProg.Level;
+		        {
+		            AscensionProgress blackguardProg  = ascAttacker.AscensionProfile.Get(AscensionType.Blackguard);
+		            int               blackguardLevel = blackguardProg.Level;
 
-        		    // Dark Succor Level 10: +0.75% per level vs positive-karma creatures
-        		    // while in trance and under 50% HP
-        		    if (blackguardLevel >= 10
-        		        && ascAttacker.HasAscensionEffect("DarkSuccor")
-        		        && ascAttacker.Hits < (ascAttacker.HitsMax / 2)
-        		        && defender.Karma > 0)
-        		    {
-        		        percentageBonus += (blackguardLevel * 75) / 100;
-        		    }
+		            if (blackguardLevel >= 10
+		                && ascAttacker.HasAscensionEffect("DarkSuccor")
+		                && ascAttacker.Hits < (ascAttacker.HitsMax / 2)
+		                && defender.Karma > 0)
+		            {
+		                percentageBonus += (blackguardLevel * 75) / 100;
+		            }
 
-        		    // Merciless Strikes (level 14+): 1% per level chance to exploit
-        		    // the target's weakest resistance for this hit
-        		    if (blackguardLevel >= 14 && Utility.Random(100) < blackguardLevel)
-        		    {
-        		        ascAttacker.SendMessage(0x47E, "You deliver a Merciless Strike!");
+		            if (blackguardLevel >= 14 && Utility.Random(100) < blackguardLevel)
+		            {
+		                ascAttacker.SendMessage(0x47E, "You deliver a Merciless Strike!");
+		                new MercilessStrikesDebuff(defender).Apply();
 
-        		        new MercilessStrikesDebuff(defender).Apply();
+		                if (blackguardLevel >= 19 && Utility.Random(10000) < (blackguardLevel * 25))
+		                    defender.Paralyze(TimeSpan.FromSeconds(3));
+		            }
+		        }
+		        else if (ascAttacker.ActiveAscension == AscensionType.Skald)
+		        {
+		            if (ascAttacker.HasAscensionEffect("WarChant"))
+		            {
+		                AscensionEffectState chantState = ascAttacker.GetAscensionEffect("WarChant");
 
-        		        // Level 19+: 0.25% per level chance to paralyze for 3 seconds
-        		        if (blackguardLevel >= 19 && Utility.Random(10000) < (blackguardLevel * 25))
-        		            defender.Paralyze(TimeSpan.FromSeconds(3));
-        		    }
-        		}
-				else if (ascAttacker.ActiveAscension == AscensionType.Skald)
-        		{
-        		    if (ascAttacker.HasAscensionEffect("WarChant"))
-        		    {
-        		        AscensionEffectState chantState = ascAttacker.GetAscensionEffect("WarChant");
-		
-        		        if (chantState.Level >= 10)
-        		            percentageBonus += (chantState.Level * 50) / 100;
-        		    }
-		
-        		    // Battlefield Rhythm, level 2+
-        		    AscensionProgress rhythmProg  = ascAttacker.AscensionProfile.Get(AscensionType.Skald);
-        		    int               rhythmLevel = rhythmProg.Level;
-	
-        		    if (rhythmLevel >= 2)
-        		    {
-        		        BaseCreature rhythmTarget = defender as BaseCreature;
-        		        bool         isBardAffected = false;
-	
-        		        if (rhythmTarget != null)
-        		        {
-        		            bool isPeaced   = rhythmTarget.BardPacified;
-        		            bool isProvoked = rhythmTarget.BardProvoked;
-	
-        		            int discordEffect = 0;
-        		            bool isDiscorded  = SkillHandlers.Discordance.GetEffect(rhythmTarget, ref discordEffect);
-	
-        		            isBardAffected = isPeaced || isProvoked || isDiscorded;
-        		        }
-	
-        		        if (isBardAffected)
-        		        {
-        		            int rhythmBonus = 0;
-	
-        		            if      (rhythmLevel >= 13) rhythmBonus = 18;
-        		            else if (rhythmLevel >= 5)  rhythmBonus = 9;
-        		            else                        rhythmBonus = 3;
-	
-        		            percentageBonus += rhythmBonus;
-        		        }
-        		    }
-        		}
-				else if (ascAttacker.ActiveAscension == AscensionType.Reaver)
-            	{
-            	    // Absolute Tyranny, level 18
-            	    if (ascAttacker.HasAscensionEffect("AbsoluteTyranny"))
-            	    {
-            	        BaseWeapon atkWeapon = attacker.Weapon as BaseWeapon;
+		                if (chantState.Level >= 10)
+		                    percentageBonus += (chantState.Level * 50) / 100;
+		            }
 
-            	        if (atkWeapon != null && atkWeapon.Type == WeaponType.Axe)
-            	            percentageBonus += 18;
-            	    }
+		            AscensionProgress rhythmProg  = ascAttacker.AscensionProfile.Get(AscensionType.Skald);
+		            int               rhythmLevel = rhythmProg.Level;
 
-					 // ── Leech (level 2+) ──────────────────────────────────────────
-	                BaseWeapon leechWeapon = attacker.Weapon as BaseWeapon;
+		            if (rhythmLevel >= 2)
+		            {
+		                BaseCreature rhythmTarget = defender as BaseCreature;
+		                bool         isBardAffected = false;
 
-	                if (leechWeapon != null && leechWeapon.Type == WeaponType.Axe)
-	                {
-	                    AscensionProgress leechProg  = ascAttacker.AscensionProfile.Get(AscensionType.Reaver);
-	                    int               leechLevel = leechProg.Level;
+		                if (rhythmTarget != null)
+		                {
+		                    bool isPeaced  = rhythmTarget.BardPacified;
+		                    bool isProvoked = rhythmTarget.BardProvoked;
 
-	                    if (leechLevel >= 2)
-	                    {
-	                        if (Utility.Random(10000) < (leechLevel * 25))
-	                        {
-	                            int hpDrain = (defender.Hits * leechLevel * 10) / 10000;
+		                    int  discordEffect = 0;
+		                    bool isDiscorded   = SkillHandlers.Discordance.GetEffect(rhythmTarget, ref discordEffect);
 
-	                            if (hpDrain < 1) hpDrain = 1;
+		                    isBardAffected = isPeaced || isProvoked || isDiscorded;
+		                }
 
-	                            defender.Hits -= hpDrain;
-	                            ascAttacker.Hits = ascAttacker.Hits + hpDrain > ascAttacker.HitsMax ? ascAttacker.HitsMax : ascAttacker.Hits + hpDrain;
+		                if (isBardAffected)
+		                {
+		                    int rhythmBonus = 0;
 
-	                            defender.FixedParticles(0x377A, 10, 15, 5030, 0x675, 0, EffectLayer.Waist);
-	                        }
+		                    if      (rhythmLevel >= 13) rhythmBonus = 18;
+		                    else if (rhythmLevel >= 5)  rhythmBonus = 9;
+		                    else                        rhythmBonus = 3;
 
-	                        if (leechLevel >= 5 && Utility.Random(10000) < (leechLevel * 25))
-	                        {
-	                            int manaDrain = (defender.Mana * leechLevel * 12) / 10000;
+		                    percentageBonus += rhythmBonus;
+		                }
+		            }
+		        }
+		        else if (ascAttacker.ActiveAscension == AscensionType.Reaver)
+		        {
+		            // Absolute Tyranny (level 18+)
+		            if (ascAttacker.HasAscensionEffect("AbsoluteTyranny"))
+		            {
+		                BaseWeapon atkWeapon = attacker.Weapon as BaseWeapon;
 
-	                            if (manaDrain < 1 && defender.Mana > 0) manaDrain = 1;
+		                if (atkWeapon != null && atkWeapon.Type == WeaponType.Axe)
+		                    percentageBonus += 18;
+		            }
 
-	                            if (manaDrain > 0)
-	                            {
-	                                defender.Mana -= manaDrain;
-	                                ascAttacker.Mana = ascAttacker.Mana + manaDrain > ascAttacker.ManaMax ? ascAttacker.ManaMax : ascAttacker.Mana + manaDrain; 
-	                            }
-	                        }
+		            BaseWeapon leechWeapon = attacker.Weapon as BaseWeapon;
 
-	                        // ── Execute,
-	                        if (leechLevel >= 13)
-	                        {
-	                            bool belowThreshold = (defender.Hits * 100) / Math.Max(defender.HitsMax, 1) <= 25;
+		            if (leechWeapon != null && leechWeapon.Type == WeaponType.Axe)
+		            {
+		                AscensionProgress leechProg  = ascAttacker.AscensionProfile.Get(AscensionType.Reaver);
+		                int               leechLevel = leechProg.Level;
 
-	                            if (belowThreshold && Utility.Random(10000) < (leechLevel * 50))
-	                            {
-	                                int execDrain = (defender.Hits * leechLevel) / 100;
+		                if (leechLevel >= 2)
+		                {
+		                    // HP drain
+		                    if (Utility.Random(10000) < (leechLevel * 25))
+		                    {
+		                        int hpDrain = (defender.Hits * leechLevel * 10) / 10000;
+		                        if (hpDrain < 1) hpDrain = 1;
 
-	                                if (execDrain < 1) execDrain = 1;
+		                        defender.Hits -= hpDrain;
+		                        ascAttacker.Hits = ascAttacker.Hits + hpDrain > ascAttacker.HitsMax
+		                            ? ascAttacker.HitsMax : ascAttacker.Hits + hpDrain;
 
-	                                defender.Hits -= execDrain;
-									ascAttacker.Hits = ascAttacker.Hits + execDrain > ascAttacker.HitsMax ? ascAttacker.HitsMax : ascAttacker.Hits + execDrain;
-	                                attacker.FixedParticles(0x374A, 10, 15, 5021, 0x675, 0, EffectLayer.Waist);
-	                            }
-	                        }
-	                    }
-	                }
-	                // ── End Leech ────────────────────────────────────────
-					// ── Ruthless (level 8+) ───────────────────────────────────────
-                	AscensionProgress ruthlessProg  = ascAttacker.AscensionProfile.Get(AscensionType.Reaver);
-                	int               ruthlessLevel = ruthlessProg.Level;
+		                        defender.FixedParticles(0x377A, 10, 15, 5030, 0x675, 0, EffectLayer.Waist);
+		                    }
 
-                	BaseWeapon ruthlessWeapon = attacker.Weapon as BaseWeapon;
+		                    // Mana drain (level 5+)
+		                    if (leechLevel >= 5 && Utility.Random(10000) < (leechLevel * 25))
+		                    {
+		                        int manaDrain = (defender.Mana * leechLevel * 12) / 10000;
+		                        if (manaDrain < 1 && defender.Mana > 0) manaDrain = 1;
 
-                	if (ruthlessWeapon != null && ruthlessWeapon.Type == WeaponType.Axe)
-                	{
-                	    if      (ruthlessLevel >= 17) percentageBonus += 18;
-                	    else if (ruthlessLevel >= 8)  percentageBonus += 9;
-                	}
-                	// ── End Ruthless
-					// ── Flaying Strikes (level 14+) ───────────────────────────────
-	                if (ruthlessLevel >= 14
-	                    && ruthlessWeapon != null && ruthlessWeapon.Type == WeaponType.Axe
-	                    && Utility.Random(100) < ruthlessLevel)
-	                {
-	                    ascAttacker.SendMessage(0x675, "You deliver a Flaying Strike!");
-	                    new FlayingStrikesDebuff(defender).Apply();	
+		                        if (manaDrain > 0)
+		                        {
+		                            defender.Mana -= manaDrain;
+		                            ascAttacker.Mana = ascAttacker.Mana + manaDrain > ascAttacker.ManaMax
+		                                ? ascAttacker.ManaMax : ascAttacker.Mana + manaDrain;
+		                        }
+		                    }
 
-	                    // Level 19+: 0.25% per level chance to reset Gorge cooldown
-	                    if (ruthlessLevel >= 19 && Utility.Random(10000) < (ruthlessLevel * 25))
-	                    {
-	                        ascAttacker.SetAbilityCooldown("Gorge", TimeSpan.Zero);
-	                        ascAttacker.SendMessage(0x675, "You can now use Gorge again.");
-	                    }
-	                }
-	                // ── End Flaying Strikes ─────────────────────────────────────── 
-            	}
+		                    // Execution drain (level 13+)
+		                    if (leechLevel >= 13)
+		                    {
+		                        bool belowThreshold = (defender.Hits * 100) / Math.Max(defender.HitsMax, 1) <= 25;
+
+		                        if (belowThreshold && Utility.Random(10000) < (leechLevel * 50))
+		                        {
+		                            int execDrain = (defender.Hits * leechLevel) / 100;
+		                            if (execDrain < 1) execDrain = 1;
+
+		                            defender.Hits -= execDrain;
+		                            ascAttacker.Hits = ascAttacker.Hits + execDrain > ascAttacker.HitsMax
+		                                ? ascAttacker.HitsMax : ascAttacker.Hits + execDrain;
+
+		                            attacker.FixedParticles(0x374A, 10, 15, 5021, 0x675, 0, EffectLayer.Waist);
+		                        }
+		                    }
+		                }
+
+		                // Ruthless (level 8+)
+		                int ruthlessLevel = leechProg.Level; // reuse leechProg — same ascension
+
+		                if (ruthlessLevel >= 17)      percentageBonus += 18;
+		                else if (ruthlessLevel >= 8)  percentageBonus += 9;
+
+		                // Flaying Strikes (level 14+)
+		                if (ruthlessLevel >= 14 && Utility.Random(100) < ruthlessLevel)
+		                {
+		                    ascAttacker.SendMessage(0x675, "You deliver a Flaying Strike!");
+		                    new FlayingStrikesDebuff(defender).Apply();
+
+		                    if (ruthlessLevel >= 19 && Utility.Random(10000) < (ruthlessLevel * 25))
+		                    {
+		                        ascAttacker.SetAbilityCooldown("Gorge", TimeSpan.Zero);
+		                        ascAttacker.SendMessage(0x675, "You can now use Gorge again.");
+		                    }
+		                }
+		            }
+		        }
+		        else if (ascAttacker.ActiveAscension == AscensionType.Kensai)
+		        {
+		            AscensionProgress kensaiProg  = ascAttacker.AscensionProfile.Get(AscensionType.Kensai);
+		            int               kensaiLevel = kensaiProg.Level;
+
+		            BaseWeapon kensaiWeapon = attacker.Weapon as BaseWeapon;
+		            bool       hasSword     = (kensaiWeapon != null && KensaiHelpers.IsSword(kensaiWeapon));
+
+		            if (hasSword)
+		                KensaiFullHealthTracker.RecordHit(ascAttacker, defender);
+
+		            if (hasSword && kensaiLevel >= 2)
+		            {
+		                if      (kensaiLevel >= 13) percentageBonus += 18;
+		                else if (kensaiLevel >= 5)  percentageBonus += 12;
+		                else                        percentageBonus += 6;
+		            }
+
+		            // Battle Meditation damage bonus + level 15 Culling Strike reset
+		            if (hasSword && ascAttacker.HasAscensionEffect("BattleMeditation"))
+		            {
+		                AscensionEffectState meditState = ascAttacker.GetAscensionEffect("BattleMeditation");
+		                percentageBonus += 10 + (meditState.Level / 2);
+
+		                if (meditState.Level >= 15 && Utility.Random(100) < meditState.Level)
+		                {
+		                    ascAttacker.SetAbilityCooldown("CullingStrike", TimeSpan.Zero);
+		                    ascAttacker.SendMessage(0x448, "Culling Strike can be used again.");
+		                }
+		            }
+
+		            // Singular Focus bonus damage while buff is active
+		            if (hasSword && kensaiLevel >= 8 && ascAttacker.HasAscensionEffect("SingularFocus"))
+		            {
+		                AscensionEffectState sfState = ascAttacker.GetAscensionEffect("SingularFocus");
+		                percentageBonus += (sfState.Level >= 17) ? 18 : 9;
+		            }
+
+		            // Culling Strike: 2%/level bonus on low-HP targets
+		            if (hasSword && kensaiLevel >= 11 && ascAttacker.HasAscensionEffect("CullingStrike"))
+		            {
+		                AscensionEffectState csState  = ascAttacker.GetAscensionEffect("CullingStrike");
+		                int                  csLevel  = csState.Level;
+		                int                  hpThresh = (csLevel >= 16) ? 15 : 10;
+		                int                  hpPct    = (defender.Hits * 100) / Math.Max(defender.HitsMax, 1);
+
+		                if (hpPct < hpThresh && Utility.Random(100) < (csLevel * 2))
+		                    percentageBonus += 80;
+		            }
+
+		            // Iaijutsu: 1%/level weakest resist exploit
+		            if (hasSword && kensaiLevel >= 14 && Utility.Random(100) < kensaiLevel)
+		            {
+		                ascAttacker.SendMessage(0x448, "Iaijutsu!");
+		                new IaijutsuDebuff(defender).Apply();
+
+		                // Level 19: 0.25%/level chance to trigger a second time
+		                if (kensaiLevel >= 19 && Utility.Random(10000) < (kensaiLevel * 25))
+		                    new IaijutsuDebuff(defender).Apply();
+		            }
+		        }
 		    }
 
 		    percentageBonus = Math.Min(percentageBonus, 300);
@@ -1868,7 +1914,6 @@ namespace Server.Items
 
 		    damage = AbsorbDamage(attacker, defender, damage);
 
-		    // Parry check
 		    if (Core.AOS && damage == 0)
 		    {
 		        if (a != null && a.Validate(attacker))
@@ -1892,7 +1937,6 @@ namespace Server.Items
 		            quiver.AlterBowDamage(ref phys, ref fire, ref cold, ref pois, ref nrgy, ref chaos, ref direct);
 		    }
 
-		    // Consecrated weapon overrides type split
 		    if (m_Consecrated)
 		    {
 		        phys = defender.PhysicalResistance;
@@ -1916,7 +1960,6 @@ namespace Server.Items
 		        else if (type == 4) nrgy = 100;
 		    }
 
-		    // ── Before-damage hooks ───────────────────────────────────────────────
 		    int damageGiven = damage;
 
 		    if (a != null && !a.OnBeforeDamage(attacker, defender))
@@ -1931,49 +1974,46 @@ namespace Server.Items
 		        move = null;
 		    }
 
-		    // Blade weaving / armor ignore
 		    WeaponAbility weaponA;
 		    bool bladeWeaving = Bladeweave.BladeWeaving(attacker, out weaponA);
 
 		    bool ignoreArmor =
-		        (a is ArmorIgnore)                          ||
-		        (move != null && move.IgnoreArmor(attacker))||
-		        (bladeWeaving && weaponA is ArmorIgnore)    ||
+		        (a is ArmorIgnore)                           ||
+		        (move != null && move.IgnoreArmor(attacker)) ||
+		        (bladeWeaving && weaponA is ArmorIgnore)     ||
 		        CheckPummelingStrikes(attacker);
 
 		    damageGiven = AOS.Damage(defender, attacker, damage, ignoreArmor,
 		        phys, fire, cold, pois, nrgy, chaos, direct, false, this is BaseRanged, false);
-			
-			// ── Frozen Heart (Blackguard passive, level 2+) ──────────────────────
-            // Increases cold damage dealt by 6/12/18% as a follow-up hit.
-            if (ascAttacker != null && ascAttacker.ActiveAscension == AscensionType.Blackguard && cold > 0)
-            {
-                AscensionProgress fhProg  = ascAttacker.AscensionProfile.Get(AscensionType.Blackguard);
-                int               fhLevel = fhProg.Level;
 
-                int fhBonus = 0;
-                if      (fhLevel >= 13) fhBonus = 18;
-                else if (fhLevel >= 5)  fhBonus = 12;
-                else if (fhLevel >= 2)  fhBonus = 6;
+		    // ── Frozen Heart (Blackguard passive, level 2+) ──────────────────────
+		    if (ascAttacker != null && ascAttacker.ActiveAscension == AscensionType.Blackguard && cold > 0)
+		    {
+		        AscensionProgress fhProg  = ascAttacker.AscensionProfile.Get(AscensionType.Blackguard);
+		        int               fhLevel = fhProg.Level;
 
-                if (fhBonus > 0)
-                {
-                    // Calculate how much of damageGiven was cold, then add the bonus %.
-                    int coldDamageDealt = (damageGiven * cold) / 100;
-                    int bonusColdDamage = (coldDamageDealt * fhBonus) / 100;
+		        int fhBonus = 0;
+		        if      (fhLevel >= 13) fhBonus = 18;
+		        else if (fhLevel >= 5)  fhBonus = 12;
+		        else if (fhLevel >= 2)  fhBonus = 6;
 
-                    if (bonusColdDamage > 0)
-                        AOS.Damage(defender, attacker, bonusColdDamage, 0, 0, 100, 0, 0);
-                }
-            }
-            // ── End Frozen Heart ─────────────────────────────────────────────────
+		        if (fhBonus > 0)
+		        {
+		            int coldDamageDealt = (damageGiven * cold) / 100;
+		            int bonusColdDamage = (coldDamageDealt * fhBonus) / 100;
+
+		            if (bonusColdDamage > 0)
+		                AOS.Damage(defender, attacker, bonusColdDamage, 0, 0, 100, 0, 0);
+		        }
+		    }
+		    // ── End Frozen Heart ─────────────────────────────────────────────────
 
 		    // ── Leech effects ─────────────────────────────────────────────────────
 		    double propertyBonus = (move == null) ? 1.0 : move.GetPropertyBonus(attacker);
 
-		    int lifeLeech  = 0;
-		    int stamLeech  = 0;
-		    int manaLeech  = 0;
+		    int lifeLeech   = 0;
+		    int stamLeech   = 0;
+		    int manaLeech   = 0;
 		    int wraithLeech = 0;
 
 		    if ((int)(m_AosWeaponAttributes.HitLeechHits * propertyBonus) > Utility.Random(100))
@@ -2014,9 +2054,9 @@ namespace Server.Items
 		        attacker.PlaySound(0x44D);
 
 		    // ── Weapon durability ─────────────────────────────────────────────────
-		    bool acidic = defender is Slime       || defender is GreenSlime  ||
-		                  defender is BlackPudding|| defender is LavaPuddle  ||
-		                  defender is AcidPuddle  || defender is ToxicElemental;
+		    bool acidic = defender is Slime        || defender is GreenSlime  ||
+		                  defender is BlackPudding || defender is LavaPuddle  ||
+		                  defender is AcidPuddle   || defender is ToxicElemental;
 
 		    int ruin = 20 + (int)Density;
 
@@ -2053,7 +2093,7 @@ namespace Server.Items
 		    // ── Vampire bat familiar leech ────────────────────────────────────────
 		    if (attacker is VampireBatFamiliar)
 		    {
-		        BaseCreature batBc = (BaseCreature)attacker;
+		        BaseCreature batBc  = (BaseCreature)attacker;
 		        Mobile       caster = batBc.ControlMaster ?? batBc.SummonMaster;
 
 		        if (caster != null && caster.Map == batBc.Map && caster.InRange(batBc, 2))
@@ -2254,6 +2294,42 @@ namespace Server.Items
 
     	        m_Target.AddResistanceMod(m_Mod);
 
+    	        Timer.DelayCall(TimeSpan.Zero, new TimerCallback(RemoveMod));
+    	    }
+
+    	    private void RemoveMod()
+    	    {
+    	        if (m_Target != null && !m_Target.Deleted)
+    	            m_Target.RemoveResistanceMod(m_Mod);
+    	    }
+    	}
+
+		internal sealed class IaijutsuDebuff
+    	{
+    	    private readonly Mobile        m_Target;
+    	    private readonly ResistanceMod m_Mod;
+
+    	    public IaijutsuDebuff(Mobile target)
+    	    {
+    	        m_Target = target;
+
+    	        ResistanceType weakest      = ResistanceType.Physical;
+    	        int            weakestValue = target.PhysicalResistance;
+
+    	        if (target.FireResistance   < weakestValue) { weakestValue = target.FireResistance;   weakest = ResistanceType.Fire;   }
+    	        if (target.ColdResistance   < weakestValue) { weakestValue = target.ColdResistance;   weakest = ResistanceType.Cold;   }
+    	        if (target.PoisonResistance < weakestValue) { weakestValue = target.PoisonResistance; weakest = ResistanceType.Poison; }
+    	        if (target.EnergyResistance < weakestValue) { weakestValue = target.EnergyResistance; weakest = ResistanceType.Energy; }
+
+    	        m_Mod = new ResistanceMod(weakest, -weakestValue);
+    	    }
+
+    	    public void Apply()
+    	    {
+    	        if (m_Target == null || m_Target.Deleted)
+    	            return;
+
+    	        m_Target.AddResistanceMod(m_Mod);
     	        Timer.DelayCall(TimeSpan.Zero, new TimerCallback(RemoveMod));
     	    }
 

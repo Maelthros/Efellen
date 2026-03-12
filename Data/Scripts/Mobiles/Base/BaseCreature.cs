@@ -8569,6 +8569,55 @@ public virtual int BreathComputeDamage()
                 }
             }
             ///////////////////////////////////////////////////////////////
+            // KENSAI: Battle Meditation level 20
+            if (slayer is PlayerMobile)
+            {
+                PlayerMobile kensaiPm = (PlayerMobile)slayer;
+                if (kensaiPm.ActiveAscension == AscensionType.Kensai
+                    && kensaiPm.HasAscensionEffect("BattleMeditation"))
+                {
+                    AscensionEffectState meditKillState = kensaiPm.GetAscensionEffect("BattleMeditation");
+                    if (meditKillState.Level >= 20 && kensaiPm.IsAbilityOnCooldown("Tempest"))
+						    new TempestCooldownReduceTimer(kensaiPm).Start();
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////
+            // KENSAI: Singular Focus (level 8+) and Final Cut (level 20)
+            if (slayer is PlayerMobile)
+            {
+                PlayerMobile kensaiFocusPm = (PlayerMobile)slayer;
+
+                if (kensaiFocusPm.ActiveAscension == AscensionType.Kensai)
+                {
+                    AscensionProgress kensaiFocusProg  = kensaiFocusPm.AscensionProfile.Get(AscensionType.Kensai);
+                    int               kensaiFocusLevel = kensaiFocusProg.Level;
+
+                    BaseWeapon focusWeapon = kensaiFocusPm.Weapon as BaseWeapon;
+                    bool       focusHasSword = (focusWeapon != null && KensaiHelpers.IsSword(focusWeapon));
+
+                    bool wasFullHealth = KensaiFullHealthTracker.WasFullHealth(kensaiFocusPm, this);
+                    KensaiFullHealthTracker.Clear(kensaiFocusPm, this);
+
+                    if (focusHasSword && wasFullHealth)
+                    {
+                        if (kensaiFocusLevel >= 8)
+                        {
+                            kensaiFocusPm.PublicOverheadMessage(MessageType.Regular, 0x448, false, "*Singular Focus*");
+                            kensaiFocusPm.FixedParticles(0x376A, 9, 32, 5030, 0x448, 0, EffectLayer.Waist);
+
+                            kensaiFocusPm.AddAscensionEffect("SingularFocus", TimeSpan.FromSeconds(30), kensaiFocusLevel);
+                        }
+
+                        if (kensaiFocusLevel >= 20 && Utility.Random(10000) < (kensaiFocusLevel * 25))
+                        {
+                            KensaiTempestAbility.DoTempest(kensaiFocusPm, kensaiFocusLevel, true);
+                        }
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );
@@ -8828,6 +8877,55 @@ public virtual int BreathComputeDamage()
 		        m_FoeRequiemActive = false;
 		    }
 		}
+
+		private sealed class TempestCooldownReduceTimer : Timer
+        {
+            private readonly PlayerMobile m_Player;
+            private static readonly TimeSpan FullCooldown = TimeSpan.FromMinutes(1);
+            private static readonly TimeSpan Reduction    = TimeSpan.FromSeconds(5);
+
+            // Tracks how much we have already reduced so far this cooldown cycle
+            private static readonly System.Collections.Hashtable m_Reductions
+                = new System.Collections.Hashtable();
+
+            public TempestCooldownReduceTimer(PlayerMobile pm)
+                : base(TimeSpan.Zero)
+            {
+                m_Player = pm;
+                Priority = TimerPriority.OneSecond;
+            }
+
+            protected override void OnTick()
+            {
+                if (m_Player == null || m_Player.Deleted)
+                    return;
+
+                if (!m_Player.IsAbilityOnCooldown("Tempest"))
+                {
+                    m_Reductions.Remove(m_Player);
+                    return;
+                }
+
+                double totalReduced = 0.0;
+
+                if (m_Reductions.ContainsKey(m_Player))
+                    totalReduced = (double)m_Reductions[m_Player];
+
+                totalReduced += Reduction.TotalSeconds;
+
+                if (totalReduced >= FullCooldown.TotalSeconds)
+                {
+                    m_Player.SetAbilityCooldown("Tempest", TimeSpan.Zero);
+                    m_Reductions.Remove(m_Player);
+                    return;
+                }
+
+                m_Reductions[m_Player] = totalReduced;
+
+                TimeSpan remaining = TimeSpan.FromSeconds(FullCooldown.TotalSeconds - totalReduced);
+                m_Player.SetAbilityCooldown("Tempest", remaining);
+            }
+        }
 
 		// Divine judgement summon controller
 		private sealed class LuminarExpiryTimer : Timer

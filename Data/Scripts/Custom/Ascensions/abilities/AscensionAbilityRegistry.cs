@@ -50,6 +50,11 @@ namespace Server.Custom.Ascensions
             Register(new ReaverExsanguinateAbility());
             Register(new ReaverBloodstormAbility());
             Register(new ReaverAbsoluteTyrannyAbility());
+            // ---- Kensai
+            Register(new KensaiBattleMeditationAbility());
+            Register(new KensaiKaiAbility());
+            Register(new KensaiCullingStrikeAbility());
+            Register(new KensaiTempestAbility());
         }
 
         private static void Register(AscensionAbility ability)

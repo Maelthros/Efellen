@@ -56,6 +56,12 @@ namespace Server.Custom.Ascensions
                     "In order to activate this Ascension, you need to have 95 base skill in Tactics, Anatomy and Forensics. Every time you level up the class, the requirement also increases by 1.<br>"+
                     "So a level 20 Reaver cannot activate this ascension unless they have 115 base skill in Tactics, Anatomy and Forensics.<br>"+
                     "Reavers will not gain experience in this class if they have learned Bushido, Healing, Veterinary or Spiritualism.";
+                case AscensionType.Kensai:
+                    return
+                    "The Kensai is master of the blade. In combat, they specialize in powerful strikes and pure mastery of the bushido.<br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Bushido, Arms Lore and Swordsmanship. Every time you level up the class, the requirement also increases by 1.<br>"+
+                    "So a level 20 Kensai cannot activate this ascension unless they have 115 base skill in Bushido, Arms Lore and Swordsmanship.<br>"+
+                    "Kensai will not gain experience in this class if they have learned Knightship, Magery, Necromancy or Ninjitsu.";
                 default:
                     return "IN DEVELOPMENT.";
             }
@@ -482,6 +488,53 @@ namespace Server.Custom.Ascensions
                 "Deep Cuts, level 20.<br>" +
                 "When killing a hostile creature, the reaver has a 0.25% chance per level of applying a heavy bleed on all hostile creatures adjacent to it. <br>" + 
                 "These creatures are crippled (can't run) and take 52-72 + str/10 damage every 3 seconds for 12 to 21 seconds. This effect does not stack. <br>" +
+                "</BASEFONT>";
+            }
+            else if (type == AscensionType.Kensai )
+            {
+                return 
+                "<BASEFONT COLOR=#ffffff>"+
+                "Battle Meditation, level 1<br>" +
+                "command: [KensaiBattleMeditation<br>" +
+                "The Kensai enters a powerful battle trance. For the next 20 + 1/level seconds, the Kensai causes +(10 + level/2) % damage with swords and has +(5 + level/2)% increased swing speed.<br>" + 
+                "This costs 20 stamina to activate and has a 2 minutes cooldown.<br>" +
+                "- Level 10: While under the effects of battle meditation, the Kensai has +(10+level/2) defense chance increase;<br>" +
+                "- Level 15: When the Kensai hits an enemy while under the effects of battle meditation, there's an 1%/level chance that the cooldown on Culling Strike is set to zero.<br>" +
+                "- Level 20: When the Kensai kills an enemy while under the effects of battle meditation, the cooldown on tempest is reduced by 5 seconds.<br><br>" +
+
+                "Kai, level 6<br>" +
+                "command: [KensaiKai<br>" +
+                "When used, the character chooses a free tile that is at least 2 tiles away from them and its moved to that tile. The maximum range is equal to  3 + level/4. When landing, the character causes 20-35 + ( (Dex / 15) + level / 3 ) damage on all targets adjacent to that tile. Has a cooldown of 9 seconds, minus one second per 3 Kensai levels.<br>" + 
+                "This ability costs 30 stamina to activate.<br>" +
+                "- Level 12, when landing, the kensai has a 1%/level chance of performing a culling strike on all adjacent targets if the kensai is wearing a sword. <br><br>" +
+
+                "Culling Strike, level 11<br>" +
+                "command: [KensaiCullingStrike<br>" +
+                "For the next 30 seconds, whenver the Kensai makes an attack with a sword against a target that has less than 10% of their total hit points, the Kensai has a 2%/level chance of causing + 80% damage with that strike.<br>" +
+                "This ability costs 50 stamina to activate and has a 3 minutes cooldown.<br>" +
+                "- Level 16: Culling strike's bonus damage can trigger on opponents that have less than 15% of their total hit points.<br><br>" +
+
+                "Tempest, level 18<br>" +
+                "command: [KensaiTempest<br>" +
+                "The Kensai becames a storm of swords. When this ability is activated, the Kensai will attack against every enemy up to 6 tiles away, causing 70-85 + dex/15 physical damage. <br>" +
+                "This ability costs 75 Stamina to activate and has a 1 minute cooldown.<br>" +
+                "- Level 20: When  Tempest kills an enemy, there's an 0.5%/level chance that it will trigger again immediately without requiring the stamina cost.<br><br>" + 
+
+                "Practiced Perfection, level 2<br>" +
+                "The Kensai causes 6% increased damage with swords.<br>" + 
+                "- Level 5: The Kensai causes 12% increased damage with swords.<br>" + 
+                "- Level 13: The Kensai causes 18% increased damage with swords.<br><br>" + 
+
+                "Singular Focus, level 8<br>" +
+                "When the Kensai kills an enemy that was at full health with a sword attack, they gain 9% extra damage with swords for 30 seconds. This effect does not stack.<br>" +
+                "- Level 17: When the Kensai kills an enemy that was at full health with a sword attack, they gain 18% extra damage with swords for 30 seconds. This effect does not stack.<br><br>" +
+
+                "Iaijutsu, level 14<br>" +
+                "The Kensai weapon attacks with swords have a 1% chance per level of affecting the target's weakest resistance.<br>" +
+                "- Level 19: The Kensai's Iaijutsu attacks have a 0.25% chance per level of triggering an additional time.<br><br>" +
+
+                "Final Cut, level 20<br>" +
+                "When the Kensai kills a full health enemy with a sword attack, they have a 0.25% chance per level of triggering a Tempest that does not cost stamina.<br>" +
                 "</BASEFONT>";
             }
             else

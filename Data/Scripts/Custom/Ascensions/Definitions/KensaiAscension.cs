@@ -8,12 +8,12 @@ namespace Server.Custom.Ascensions
 
         public override SkillName[] RequiredSkills
         {
-            get { return new SkillName[] { SkillName.Bushido, SkillName.ArmsLore }; }
+            get { return new SkillName[] { SkillName.Bushido, SkillName.ArmsLore, SkillName.Swords }; }
         }
 
         public override SkillName[] ForbiddenSkills
         {
-            get { return new SkillName[] { SkillName.Knightship, SkillName.Necromancy, SkillName.Elementalism, SkillName.Magery }; }
+            get { return new SkillName[] { SkillName.Knightship, SkillName.Necromancy, SkillName.Ninjitsu, SkillName.Magery }; }
         }
     }
 }
