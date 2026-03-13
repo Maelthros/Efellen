@@ -15,10 +15,11 @@ namespace Server.Custom.Ascensions
             AscensionType.Skald,
             AscensionType.Reaver,
             AscensionType.Kensai,
+            AscensionType.Hierophant,
         // not implemented yet
 /*          AscensionType.Archdruid,
             AscensionType.Defender,
-            AscensionType.Shadowthief, */
+*/
         };
 
         public static AscensionType GetRandom()

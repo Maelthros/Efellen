@@ -1896,6 +1896,25 @@ namespace Server.Items
 		                    new IaijutsuDebuff(defender).Apply();
 		            }
 		        }
+				else if (ascAttacker.ActiveAscension == AscensionType.Hierophant)
+        		{
+        		    AscensionProgress hieroProg  = ascAttacker.AscensionProfile.Get(AscensionType.Hierophant);
+        		    int               hieroLevel = hieroProg.Level;
+
+        		    BaseWeapon hieroWeapon = attacker.Weapon as BaseWeapon;
+        		    bool       hasBashing  = (hieroWeapon != null && hieroWeapon.Type == WeaponType.Bashing);
+
+        		    // ── Blessed Might (Hierophant, level 2) ──────────────────────────────────────
+        		    if (hasBashing && hieroLevel >= 2)
+        		    {
+        		        if      (hieroLevel >= 13) percentageBonus += 15;
+        		        else if (hieroLevel >= 5)  percentageBonus += 10;
+        		        else                       percentageBonus += 5;
+        		    }
+        		    // ── Divine Power (Hierophant, level 18): +20% bashing damage while active ────
+        		    if (hasBashing && ascAttacker.HasAscensionEffect("DivinePower"))
+        		        percentageBonus += 20;
+        		}
 		    }
 
 		    percentageBonus = Math.Min(percentageBonus, 300);

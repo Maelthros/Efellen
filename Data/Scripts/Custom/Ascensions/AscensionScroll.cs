@@ -51,6 +51,7 @@ namespace Server.Custom.Ascensions
                 case AscensionType.Skald:      return 0x445;
                 case AscensionType.Reaver:     return 0x675;
                 case AscensionType.Kensai:     return 0x448;
+                case AscensionType.Hierophant: return 0x439;
                 default:                       return 0;
             }
         }

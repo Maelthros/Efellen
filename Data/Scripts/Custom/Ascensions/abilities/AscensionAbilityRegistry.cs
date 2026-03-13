@@ -55,6 +55,11 @@ namespace Server.Custom.Ascensions
             Register(new KensaiKaiAbility());
             Register(new KensaiCullingStrikeAbility());
             Register(new KensaiTempestAbility());
+            // ---- Hierophant
+            Register(new HierophantDivineWrathAbility());
+            Register(new HierophantExaltedPresenceAbility());
+            Register(new HierophantConsecratedGroundAbility());
+            Register(new HierophantDivinePowerAbility());
         }
 
         private static void Register(AscensionAbility ability)

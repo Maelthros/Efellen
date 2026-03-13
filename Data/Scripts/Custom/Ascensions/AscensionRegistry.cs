@@ -20,7 +20,7 @@ public static class AscensionRegistry
         Register(new AssassinAscension());
         Register(new ReaverAscension());
         Register(new DefenderAscension());
-        Register(new ShadowthiefAscension());
+        Register(new HierophantAscension());
         Register(new BlackguardAscension());
     }
 

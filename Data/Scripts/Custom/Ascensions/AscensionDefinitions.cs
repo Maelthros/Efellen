@@ -62,6 +62,12 @@ namespace Server.Custom.Ascensions
                     "In order to activate this Ascension, you need to have 95 base skill in Bushido, Arms Lore and Swordsmanship. Every time you level up the class, the requirement also increases by 1.<br>"+
                     "So a level 20 Kensai cannot activate this ascension unless they have 115 base skill in Bushido, Arms Lore and Swordsmanship.<br>"+
                     "Kensai will not gain experience in this class if they have learned Knightship, Magery, Necromancy or Ninjitsu.";
+                case AscensionType.Hierophant:
+                    return 
+                    "The Hierophant is master of the divine. In combat, they specialize in conjuring aid from their deity and channeling divine power to aid their allies.<br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Healing, Spiritualism and Meditation. Every time you level up the class, the requirement also increases by 1.<br>"+
+                    "So a level 20 Hierophant cannot activate this ascension unless they have 115 base skill in Healing, Spiritualism and Meditation.<br>"+
+                    "Hierophants will not gain experience in this class if they have learned Knightship, Forensics, Necromancy, Bushido or Ninjitsu.";
                 default:
                     return "IN DEVELOPMENT.";
             }
@@ -497,7 +503,7 @@ namespace Server.Custom.Ascensions
                 "Battle Meditation, level 1<br>" +
                 "command: [KensaiBattleMeditation<br>" +
                 "The Kensai enters a powerful battle trance. For the next 20 + 1/level seconds, the Kensai causes +(10 + level/2) % damage with swords and has +(5 + level/2)% increased swing speed.<br>" + 
-                "This costs 20 stamina to activate and has a 2 minutes cooldown.<br>" +
+                "This costs 20 stamina to activate and has a 2 min]utes cooldown.<br>" +
                 "- Level 10: While under the effects of battle meditation, the Kensai has +(10+level/2) defense chance increase;<br>" +
                 "- Level 15: When the Kensai hits an enemy while under the effects of battle meditation, there's an 1%/level chance that the cooldown on Culling Strike is set to zero.<br>" +
                 "- Level 20: When the Kensai kills an enemy while under the effects of battle meditation, the cooldown on tempest is reduced by 5 seconds.<br><br>" +
@@ -535,6 +541,55 @@ namespace Server.Custom.Ascensions
 
                 "Final Cut, level 20<br>" +
                 "When the Kensai kills a full health enemy with a sword attack, they have a 0.25% chance per level of triggering a Tempest that does not cost stamina.<br>" +
+                "</BASEFONT>";
+            }
+            else if (type == AscensionType.Hierophant)
+            {
+                return
+                "<BASEFONT COLOR='#FFFFFF'>"+
+                "Divine Wrath, level 1<br>" +
+                "command: [HierophantDivineWrath<br>" +
+                "The Hierophant calls forth divine vengeance. The Hierophant selects a target location, and divine fire falls upon it, causing 30-48 + (karma/1000) fire damage on all targets up to 2 tiles away from that location.<br>" +
+                "Creatures with negative karma receive + 15% damage from this ability.<br>" +
+                "This ability costs 35 mana, and it has a 1 minute cooldown.<br>" +
+                "- Level 10: Creatures with negative Karma receive + 25% damage from this ability.<br>" +
+                "- Level 15: Creatures with negative Karma hit by this ability are paralyzed for 4 seconds and receive 15-24 fire damage every 2 seconds for 12 + level/3 seconds.<br>" +
+                "- Level 20: Whis this ability is cast, there's a 20% chance that it will be cast again immediately.<br><br>" + 
+            
+                "Exalted Presence, level 6<br>" +
+                "command: [HierophantExaltedPresence<br>" +
+                "The Hierophant calls forth the power of their god to humble and awe all enemies. They are forced to move level/3 tiles away from the Hierophant and stop attacking the hierophant immediately.<br>" + 
+                "This ability costs 45 mana to activate, and it has a 2 minutes cooldown.<br>" +
+                "- Level 12: Evil creatures affected by Exalted Presence are paralyzed for 8 seconds.<br><br>" + 
+                
+                "Consecrated Ground, level 11<br>" +
+                "command: [HierophantConsecratedGround<br>" +
+                "The Hierophant calls forth holy light to purify up to 4 tiles around it. Positive Karma creatures standing on it recover 12 + level/3 hit points and 5 + level/3 mana every 2 seconds for level/3 seconds.<br>" +
+                "Negative karma creatures standing on the consecrated ground receive 22-32 + level/3 fire damage every 2 seconds for level/3 seconds.<br>" +
+                "This ability costs 55 mana to activate, and it has a 3 minutes cooldown.<br>" +
+                "- Level 16: When the Hierophant casts Heal, Greater Heal or touch of life, the target recovers 25% extra hit points.<br><br>" +
+            
+                "Divine Power, level 18<br>" +
+                "command: [HierophantDivinePower<br>" +
+                "The Hierophant calls the power of their god to strengthen then. They receive +20 str and dex, +15 tactics and spiritualism, regenerate 8 hit points per second and cause + 20% damage with bashing weapons.<br>" + 
+                "This spell costs 55 mana to activate and it has a 3 minutes cooldown. It lasts for 30+level seconds.<br>" +
+                "- Level 20: When the Hierophant defeats an enemy with negative karma in combat, there's a 20% chance that the cooldown of Divine Wrath will be set to zero.<br><br>" + 
+                
+                "Blessed Might, level 2<br>" +
+                "The Hierophant causes 5% more damage with bashing weapons.<br>" +
+                "- Level 5: The Hierophant causes 10% more damage with bashing weapons.<br>" +
+                "- Level 13: The Hierophant causes 15% more damage with bashing weapons.<br><br>" +
+            
+                "Divine Resilience, level 8<br>" +
+                "The Hierophant receives 4% less damage from all sources.<br>" + 
+                "- Level 17: The Hierophant receives 8% less damage from all sources.<br><br>" + 
+            
+                "Death Ward, level 14<br>" +
+                "When the Hierophant receives damage that would kill them, they have a 1% chance per level of ignoring that damage.<br>" + 
+                "- Level 19: When death Ward triggers, the Hierophant recovers 33% of their hit points.<br><br>" + 
+            
+                "Divine Absolution, level 20<br>" +
+                "When the Hierophant receives damage from an evil creature, they have a 0.25%/level chance of triggering consecrated ground without paying its mana cost." + 
                 "</BASEFONT>";
             }
             else

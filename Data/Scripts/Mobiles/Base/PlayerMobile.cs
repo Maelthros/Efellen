@@ -2568,47 +2568,86 @@ namespace Server.Mobiles
 			m_NoRecursion = false;
 		}
 
-		public override void OnDamage( int amount, Mobile from, bool willKill )
-		{
-			int disruptThreshold;
+		public override void OnDamage(int amount, Mobile from, bool willKill)
+        {
+            int disruptThreshold;
 
-			if ( !Core.AOS )
-				disruptThreshold = 0;
-			else if ( from != null && from.Player )
-				disruptThreshold = 18;
-			else
-				disruptThreshold = 25;
+            if (!Core.AOS)
+                disruptThreshold = 0;
+            else if (from != null && from.Player)
+                disruptThreshold = 18;
+            else
+                disruptThreshold = 25;
 
-			if ( amount > disruptThreshold )
-			{
-				BandageContext c = BandageContext.GetContext( this );
+            if (amount > disruptThreshold)
+            {
+                BandageContext c = BandageContext.GetContext(this);
+                if (c != null)
+                    c.Slip();
+            }
 
-				if ( c != null )
-					c.Slip();
-			}
+            if (Confidence.IsRegenerating(this))
+                Confidence.StopRegenerating(this);
 
-			if( Confidence.IsRegenerating( this ) )
-				Confidence.StopRegenerating( this );
+            WeightOverloading.FatigueOnDamage(this, amount);
 
-			WeightOverloading.FatigueOnDamage( this, amount );
+            if (willKill && from is PlayerMobile)
+                Timer.DelayCall(TimeSpan.FromSeconds(10), new TimerCallback(((PlayerMobile)from).RecoverAmmo));
 
-			if ( willKill && from is PlayerMobile )
-				Timer.DelayCall( TimeSpan.FromSeconds( 10 ), new TimerCallback( ((PlayerMobile) from).RecoverAmmo ) );
+            if (HasAscensionEffect("BerserkerRage"))
+            {
+                AscensionEffectState state = GetAscensionEffect("BerserkerRage");
+                int level = state.Level;
+                if (state != null && state.Level >= 15)
+                {
+                    int maxAllowed = (int)(HitsMax * 0.4);
+                    if (amount > maxAllowed)
+                        amount = maxAllowed;
+                }
+            }
 
-			if (HasAscensionEffect("BerserkerRage"))
-			{
-			    AscensionEffectState state = GetAscensionEffect("BerserkerRage");
-			    int level = state.Level;
-			    // level 15 Berserkers can not take more than 40% of their health as a single hit. 
-    			if ( state != null && state.Level >= 15 )
-    			{
-    			    int maxAllowed = (int)( HitsMax * 0.4 );
-    			    if ( amount > maxAllowed )
-    			        amount = maxAllowed;
-    			}
-			}
-			base.OnDamage( amount, from, willKill );
-		}
+            // ── Divine Resilience (Hierophant, level 8) ──────────────────────
+            if (ActiveAscension == AscensionType.Hierophant)
+            {
+                AscensionProgress hieroProg  = AscensionProfile.Get(AscensionType.Hierophant);
+                int               hieroLevel = hieroProg.Level;
+
+                if (hieroLevel >= 8)
+                {
+                    int reductionPct = (hieroLevel >= 17) ? 8 : 4;
+                    amount = (amount * (100 - reductionPct)) / 100;
+                    if (amount < 0) amount = 0;
+                }
+
+                // ── Death Ward (Hierophant, level 14) ────────────────────────────────────
+                if (hieroLevel >= 14 && willKill && Utility.Random(100) < hieroLevel)
+                {
+                    amount = 0;
+                    willKill = false;
+
+                    FixedParticles(0x376A, 9, 32, 5030, 0x439, 0, EffectLayer.Waist);
+                    PlaySound(0x1F5);
+                    SendMessage(0x439, "Your faith protects you from death!");
+
+                    if (hieroLevel >= 19)
+                    {
+                        int restore = HitsMax / 3;
+                        Hits = Math.Min(HitsMax, Hits + restore);
+                    }
+                }
+
+                // ── Divine Absolution (Hierophant, level 20) ─────────────────────────────
+                if (hieroLevel >= 20 && from != null && from.Karma < 0
+                    && Utility.Random(10000) < (hieroLevel * 25))
+                {
+                    AscensionProgress absolProg = AscensionProfile.Get(AscensionType.Hierophant);
+                    HierophantConsecratedGroundAbility.DoConsecratedGround(this, absolProg.Level);
+                }
+            }
+            // ── End Hierophant OnDamage hooks ─────────────────────────────────
+
+            base.OnDamage(amount, from, willKill);
+        }
 
 		public override void Resurrect()
 		{
