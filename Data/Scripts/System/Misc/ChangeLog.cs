@@ -55,6 +55,7 @@ namespace Server.Misc
 		+"			• Fateweaver rules the glittering caves of Fanaedar.<BR>"
 		+"			• Xyrtaxis, Dean of Black Arts, teaches in Fanaedar's Arcane Academy.<BR>"
 		+"			• Annath, Shroud of the Lightless, preaches Lolth's mysteries in Fanaedar.<BR>"
+		+"          • Waervaerendor and Voaraghamanthar, the twin black dragons, now lead the cult at the temple of Osirus.<BR>"
 		+"		• Tier 5 (for very optimized groups): <BR>"
 		+"			• The Prince of Darkness holds court in Ravendark (RIP Ozzy).<BR>"
 		+"			• The Heavenly Marshall protects southern Sosaria from castle Griffin's Roost.<BR>"
