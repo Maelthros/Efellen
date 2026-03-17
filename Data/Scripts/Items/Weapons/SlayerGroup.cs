@@ -1376,6 +1376,8 @@ namespace Server.Items
 			reptilian.Opposition = new SlayerGroup[]{ };
 			reptilian.FoundOn = new Type[]{ };
 			reptilian.Super = new SlayerEntry( SlayerName.ReptilianDeath, 
+				typeof( Waervaerendor),
+				typeof(Voaraghamanthar),
 				typeof( Drakkul ), 
 				typeof( DrakkulMage ), 
 				typeof( DrakkulChief ), 
@@ -1533,6 +1535,8 @@ namespace Server.Items
 			reptilian.Entries = new SlayerEntry[]
 				{
 					new SlayerEntry( SlayerName.DragonSlaying, 
+						typeof( Waervaerendor),
+						typeof(Voaraghamanthar),
 						typeof( HeraldOfCinders),
 						typeof( Drakkul ), 
 						typeof( DrakkulMage ), 
