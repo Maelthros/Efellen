@@ -30,19 +30,15 @@ Kensai
 Hierophant
     active: Divine Wrath, Exalted Presence, Consecrated Ground, Divine Power
     passive: Blessed Might, Divine Resilience, Death Ward, Divine Absolution
-
+Arcane Archer
+    active: imbue arrows, Charged Arrows, arcane volley, barrage
+    passive: arcane precision, mystical ricochet, arcane feedback, arcane momentum
 
 These are the ascendancies that are currently in development:
 
 Battlemage
     active: Disruption, rending magic, Spell Blasting,  annihilation 
     passive:  arcane siphoning,  arcane overload, piercing spells, spell fracture
-Defender
-    active: Bulwark, 
-    passive:  
-Arcane Archer
-    active: imbue arrows, Charged Arrows, arcane volley, barrage
-    passive: arcane precision, mystical ricochet, arcane feedback, arcane momentum
 Primal Lord
     active: Elemental Form, elemental overload
     passive:
