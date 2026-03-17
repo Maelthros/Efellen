@@ -16,9 +16,9 @@ namespace Server.Custom.Ascensions
             AscensionType.Reaver,
             AscensionType.Kensai,
             AscensionType.Hierophant,
+            AscensionType.ArcaneArcher,
         // not implemented yet
 /*          AscensionType.Archdruid,
-            AscensionType.Defender,
 */
         };
 

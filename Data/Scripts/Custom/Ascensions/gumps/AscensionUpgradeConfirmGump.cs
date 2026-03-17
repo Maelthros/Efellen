@@ -25,8 +25,8 @@ namespace Server.Custom.Ascensions
             int nextLevel = prog.Level + 1;
 
             AddLabel(80, 20, 1152, isUnlock 
-            ? "Unlock " + type.ToString() + "?"
-            : "Upgrade " + type.ToString() + " to Level " + nextLevel + "?");
+            ? "Unlock " + AscensionTypeHelper.GetDisplayName(type) + "?"
+            : "Upgrade " + AscensionTypeHelper.GetDisplayName(type) + " to Level " + nextLevel + "?");
 
 
             int gold = AscensionCosts.GetGoldCost(nextLevel);

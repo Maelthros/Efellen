@@ -8466,7 +8466,6 @@ namespace Server.Mobiles
 			        }
 			    }
 			}
-
 			///////////////////////////////////////////////////////////////
             // ABSOLUTE TYRANNY (Reaver , level 18)
 
@@ -8500,7 +8499,6 @@ namespace Server.Mobiles
                     }
                 }
             }
-
 			///////////////////////////////////////////////////////////////
             // DEEP CUTS (Reaver, level 20)
 
@@ -8636,6 +8634,67 @@ namespace Server.Mobiles
                 }
             }
 
+			///////////////////////////////////////////////////////////////
+            // ARCANE FEEDBACK (Arcane Archer, level 14)
+            if (slayer is PlayerMobile)
+            {
+                PlayerMobile aaFeedbackPm = (PlayerMobile)slayer;
+
+                if (aaFeedbackPm.ActiveAscension == AscensionType.ArcaneArcher)
+                {
+                    AscensionProgress aaFeedbackProg  = aaFeedbackPm.AscensionProfile.Get(AscensionType.ArcaneArcher);
+                    int               aaFeedbackLevel = aaFeedbackProg.Level;
+
+                    BaseWeapon aaFeedbackWeapon = aaFeedbackPm.Weapon as BaseWeapon;
+                    bool       aaIsRanged       = (aaFeedbackWeapon != null && aaFeedbackWeapon is BaseRanged);
+
+                    if (aaFeedbackLevel >= 14 && aaIsRanged)
+                    {
+                        int manaRestore = (int)(aaFeedbackPm.Skills[SkillName.Inscribe].Value / 25.0);
+                        if (manaRestore > 0)
+                        {
+                            aaFeedbackPm.Mana = Math.Min(aaFeedbackPm.ManaMax, aaFeedbackPm.Mana + manaRestore);
+                            aaFeedbackPm.FixedParticles(0x376A, 9, 32, 5030, 0x48F, 0, EffectLayer.Waist);
+                        }
+                    }
+
+                    if (aaFeedbackLevel >= 19 && aaIsRanged)
+                    {
+                        int stamRestore = (int)(aaFeedbackPm.Skills[SkillName.Focus].Value / 25.0);
+                        if (stamRestore > 0)
+                            aaFeedbackPm.Stam = Math.Min(aaFeedbackPm.StamMax, aaFeedbackPm.Stam + stamRestore);
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////
+            // ARCANE MOMENTUM (Arcane Archer, level 20)
+            if (slayer is PlayerMobile)
+            {
+                PlayerMobile aaMomPm = (PlayerMobile)slayer;
+
+                if (aaMomPm.ActiveAscension == AscensionType.ArcaneArcher)
+                {
+                    AscensionProgress aaMomProg  = aaMomPm.AscensionProfile.Get(AscensionType.ArcaneArcher);
+                    int               aaMomLevel = aaMomProg.Level;
+
+                    if (aaMomLevel >= 20)
+                    {
+                        BaseWeapon aaMomWeapon = aaMomPm.Weapon as BaseWeapon;
+                        bool       aaMomRanged = (aaMomWeapon != null && aaMomWeapon is BaseRanged);
+
+                        if (aaMomRanged && !aaMomPm.HasAscensionEffect("ArcaneMomentumAbsorb"))
+                        {
+                            int absorb = (int)(aaMomPm.Skills[SkillName.Inscribe].Value / 10.0);
+                            aaMomPm.MagicDamageAbsorb += absorb;
+                            aaMomPm.AddAscensionEffect("ArcaneMomentumAbsorb", TimeSpan.FromSeconds(30), aaMomLevel);
+                            new ArcaneMomentumAbsorbExpiryTimer(aaMomPm, absorb).Start();
+                            aaMomPm.FixedParticles(0x376A, 9, 32, 5030, 0x48F, 0, EffectLayer.Waist);
+                        }
+                    }
+                }
+            }
+
             ///////////////////////////////////////////////////////////////
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
@@ -8741,6 +8800,30 @@ namespace Server.Mobiles
 
 			return base.OnBeforeDeath();
 		}
+
+		private sealed class ArcaneMomentumAbsorbExpiryTimer : Timer
+        {
+            private readonly PlayerMobile m_Player;
+            private readonly int          m_Absorb;
+
+            public ArcaneMomentumAbsorbExpiryTimer(PlayerMobile pm, int absorb)
+                : base(TimeSpan.FromSeconds(30))
+            {
+                m_Player = pm;
+                m_Absorb = absorb;
+                Priority = TimerPriority.OneSecond;
+            }
+
+            protected override void OnTick()
+            {
+                if (m_Player == null || m_Player.Deleted)
+                    return;
+
+                m_Player.MagicDamageAbsorb -= m_Absorb;
+                if (m_Player.MagicDamageAbsorb < 0)
+                    m_Player.MagicDamageAbsorb = 0;
+            }
+        }
 
 		private static bool m_TyrannyExplosionActive = false;
 

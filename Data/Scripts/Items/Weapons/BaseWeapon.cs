@@ -1915,6 +1915,57 @@ namespace Server.Items
         		    if (hasBashing && ascAttacker.HasAscensionEffect("DivinePower"))
         		        percentageBonus += 20;
         		}
+				else if (ascAttacker.ActiveAscension == AscensionType.ArcaneArcher)
+        		{
+        		    AscensionProgress aaProg  = ascAttacker.AscensionProfile.Get(AscensionType.ArcaneArcher);
+        		    int               aaLevel = aaProg.Level;
+		
+        		    bool isRanged = (this is BaseRanged);
+		
+        		    // ── Arcane Precision, level 2 ───────────────────────────────────
+        		    if (isRanged && aaLevel >= 2)
+        		    {
+        		        if      (aaLevel >= 13) percentageBonus += 18;
+        		        else if (aaLevel >= 5)  percentageBonus += 12;
+        		        else                    percentageBonus += 6;
+        		    }
+		
+        		    // ── Arcane Momentum, level 20
+        		    if (isRanged && ascAttacker.HasAscensionEffect("ArcaneMomentumRanged"))
+        		        percentageBonus += 25;
+		
+        		    // ── Imbue Arrows (level 1+): 2%/level chance to exploit worst resist
+        		    if (isRanged && ascAttacker.HasAscensionEffect("ImbueArrows"))
+        		    {
+        		        AscensionEffectState imbueState = ascAttacker.GetAscensionEffect("ImbueArrows");
+        		        int imbueLevel = imbueState.Level;
+		
+        		        if (Utility.Random(100) < (imbueLevel * 2))
+                		{
+                		    new ImbueArrowsDebuff(defender).Apply();
+
+                		    // Level 15: +25% damage on triggered procs
+                		    if (imbueLevel >= 15)
+                		        percentageBonus += 25;
+
+                		    // Level 10: 1%/level chance to trigger twice
+                		    if (imbueLevel >= 10 && Utility.Random(100) < imbueLevel)
+                		    {
+                		        new ImbueArrowsDebuff(defender).Apply();
+
+                		        if (imbueLevel >= 15)
+                		            percentageBonus += 25;
+                		    }
+                		}
+        		    }
+		
+        		    // ── Mystical Ricochet, level 8 ─────────────────────────────────
+        		    if (isRanged && aaLevel >= 8 && Utility.Random(10000) < (aaLevel * 25))
+        		    {
+        		        int ricochetCount = (aaLevel >= 17) ? 2 : 1;
+        		        new RicochetTimer(ascAttacker, defender, aaLevel, ricochetCount).Start();
+        		    }
+        		}
 		    }
 
 		    percentageBonus = Math.Min(percentageBonus, 300);
@@ -2151,6 +2202,24 @@ namespace Server.Items
 		        if (dispelChance    != 0 && dispelChance    > Utility.Random(100)) DoDispel(attacker, defender);
 		        if (laChance        != 0 && laChance        > Utility.Random(100)) DoLowerAttack(attacker, defender);
 		        if (ldChance        != 0 && ldChance        > Utility.Random(100)) DoLowerDefense(attacker, defender);
+
+				// ── Imbue Arrows level 10: 1%/level chance to double-trigger hit spells
+            	if (ascAttacker != null
+            	    && ascAttacker.ActiveAscension == AscensionType.ArcaneArcher
+            	    && ascAttacker.HasAscensionEffect("ImbueArrows")
+            	    && this is BaseRanged)
+            	{
+            	    AscensionEffectState imbueHitState = ascAttacker.GetAscensionEffect("ImbueArrows");
+            	    int imbueHitLevel = imbueHitState.Level;
+
+            	    if (imbueHitLevel >= 10)
+            	    {
+            	        if (maChance        != 0 && maChance        > Utility.Random(100) && Utility.Random(100) < imbueHitLevel) DoMagicArrow(attacker, defender);
+            	        if (fireballChance  != 0 && fireballChance  > Utility.Random(100) && Utility.Random(100) < imbueHitLevel) DoFireball(attacker, defender);
+            	        if (lightningChance != 0 && lightningChance > Utility.Random(100) && Utility.Random(100) < imbueHitLevel) DoLightning(attacker, defender);
+            	        if (dispelChance    != 0 && dispelChance    > Utility.Random(100) && Utility.Random(100) < imbueHitLevel) DoDispel(attacker, defender);
+            	    }
+            	}
 		    }
 
 		    // ── Creature hit callbacks ────────────────────────────────────────────
@@ -2250,6 +2319,126 @@ namespace Server.Items
 		            cleavePm.TryBerserkerCleave(defender, this);
 		    }
 		}
+
+		// ── Imbued Arrows have a chance of hitting the worst resist ────────────────────────────────
+    	internal sealed class ImbueArrowsDebuff
+    	{
+    	    private readonly Mobile        m_Target;
+    	    private readonly ResistanceMod m_Mod;
+	
+    	    public ImbueArrowsDebuff(Mobile target)
+    	    {
+    	        m_Target = target;
+	
+    	        ResistanceType worst      = ResistanceType.Physical;
+    	        int            worstValue = target.PhysicalResistance;
+	
+    	        if (target.FireResistance   > worstValue) { worstValue = target.FireResistance;   worst = ResistanceType.Fire;   }
+    	        if (target.ColdResistance   > worstValue) { worstValue = target.ColdResistance;   worst = ResistanceType.Cold;   }
+    	        if (target.PoisonResistance > worstValue) { worstValue = target.PoisonResistance; worst = ResistanceType.Poison; }
+    	        if (target.EnergyResistance > worstValue) { worstValue = target.EnergyResistance; worst = ResistanceType.Energy; }
+	
+    	        m_Mod = new ResistanceMod(worst, -worstValue);
+    	    }
+	
+    	    public void Apply()
+    	    {
+    	        if (m_Target == null || m_Target.Deleted)
+    	            return;
+	
+    	        m_Target.AddResistanceMod(m_Mod);
+    	        Timer.DelayCall(TimeSpan.Zero, new TimerCallback(RemoveMod));
+    	    }
+	
+    	    private void RemoveMod()
+    	    {
+    	        if (m_Target != null && !m_Target.Deleted)
+    	            m_Target.RemoveResistanceMod(m_Mod);
+    	    }
+    	}
+
+		// ── Mystical Ricochet: damages nearest enemy on a ranged hit ─────────────
+    	internal sealed class RicochetTimer : Timer
+    	{
+    	    private readonly PlayerMobile m_Attacker;
+    	    private readonly Mobile       m_Original;
+    	    private readonly int          m_Level;
+    	    private readonly int          m_Count;
+
+    	    public RicochetTimer(PlayerMobile attacker, Mobile original, int level, int count)
+    	        : base(TimeSpan.Zero)
+    	    {
+    	        m_Attacker = attacker;
+    	        m_Original = original;
+    	        m_Level    = level;
+    	        m_Count    = count;
+    	        Priority   = TimerPriority.TwoFiftyMS;
+    	    }
+
+    	    protected override void OnTick()
+    	    {
+    	        if (m_Attacker == null || m_Attacker.Deleted || !m_Attacker.Alive)
+    	            return;
+
+    	        Map map = m_Attacker.Map;
+    	        if (map == null) return;
+
+    	        BaseWeapon weapon = m_Attacker.Weapon as BaseWeapon;
+    	        if (weapon == null) return;
+
+    	        ArrayList candidates = new ArrayList();
+
+    	        IPooledEnumerable eable = map.GetMobilesInRange(m_Original.Location, 6);
+
+    	        try
+    	        {
+    	            foreach (Mobile m in eable)
+    	            {
+    	                if (m == null || m.Deleted || !m.Alive || m == m_Attacker || m == m_Original)
+    	                    continue;
+
+    	                if (!m_Attacker.CanBeHarmful(m, false))
+    	                    continue;
+
+    	                candidates.Add(m);
+    	            }
+    	        }
+    	        finally
+    	        {
+    	            eable.Free();
+    	        }
+
+    	        for (int i = 1; i < candidates.Count; i++)
+    	        {
+    	            Mobile mi   = (Mobile)candidates[i];
+    	            double dist = m_Attacker.GetDistanceToSqrt(mi);
+    	            int    j    = i - 1;
+
+    	            while (j >= 0 && m_Attacker.GetDistanceToSqrt((Mobile)candidates[j]) > dist)
+    	            {
+    	                candidates[j + 1] = candidates[j];
+    	                j--;
+    	            }
+
+    	            candidates[j + 1] = mi;
+    	        }
+
+    	        int hits = Math.Min(m_Count, candidates.Count);
+
+    	        for (int i = 0; i < hits; i++)
+    	        {
+    	            Mobile ricochetTarget = (Mobile)candidates[i];
+
+    	            if (ricochetTarget.Deleted || !ricochetTarget.Alive)
+    	                continue;
+
+    	            m_Attacker.MovingEffect(ricochetTarget, ((BaseRanged)weapon).EffectID, 18, 1, false, false);
+    	            m_Attacker.DoHarmful(ricochetTarget);
+
+    	            weapon.OnHit(m_Attacker, ricochetTarget, 1.0);
+    	        }
+    	    }
+    	}
 
 		// ── Deadly Strikes: single-hit poison resist shred ───────────────────────
 		// Applies a -25 poison resistance mod before the hit's damage resolves,

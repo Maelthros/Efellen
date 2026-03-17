@@ -68,6 +68,12 @@ namespace Server.Custom.Ascensions
                     "In order to activate this Ascension, you need to have 95 base skill in Healing, Spiritualism and Meditation. Every time you level up the class, the requirement also increases by 1.<br>"+
                     "So a level 20 Hierophant cannot activate this ascension unless they have 115 base skill in Healing, Spiritualism and Meditation.<br>"+
                     "Hierophants will not gain experience in this class if they have learned Knightship, Forensics, Necromancy, Bushido or Ninjitsu.";
+                case AscensionType.ArcaneArcher:
+                    return 
+                    "The Arcane Archer is master marksman and conjurer. In combat, they specialize in raining magical projectiles at their opponents.<br>"+
+                    "In order to activate this Ascension, you need to have 95 base skill in Magery, Focus, inscription and Marksmanship. Every time you level up the class, the requirement also increases by 1.<br>"+
+                    "So a level 20 Arcane Archers cannot activate this ascension unless they have 115 base skill in Magery, Focus, inscription and Marksmanship.<br>"+
+                    "Arcane archers will not gain experience in this class if they have learned Knightship, Necromancy, elementalism or Bushido.";
                 default:
                     return "IN DEVELOPMENT.";
             }
@@ -590,6 +596,52 @@ namespace Server.Custom.Ascensions
             
                 "Divine Absolution, level 20<br>" +
                 "When the Hierophant receives damage from an evil creature, they have a 0.25%/level chance of triggering consecrated ground without paying its mana cost." + 
+                "</BASEFONT>";
+            }
+            else if (type == AscensionType.ArcaneArcher)
+            {
+                return
+                "<BASEFONT COLOR='#FFFFFF'>"+
+                "Imbue Arrow, level 1<br>"+
+                "command: [ArcaneArcherImbueArrows<br>"+
+                "For the next 30 (+1/level) seconds, the arcane archer ranged attacks have a 2%/level chance of affecting the target's worst resistance.<br>"+ 
+                "This ability costs 40 mana to activate and has a 2 minutes cooldown.<br>"+
+                "- Level 10: When a triggered ability from a ranged attack would happen, there's a 1%/level chance that it will trigger twice.<br>"+
+                "- Level 15: Triggered abilities from ranged attacks do 25% more damage while Imbue Arrows is active.<br>"+
+                "- Level 20: When imbue arrows ends, there's a 1%/level chance of the cooldown on barrage being set to zero.<br><br>"+
+
+                "Charged Arrows, level 6<br>"+
+                "command: [ArcaneArcherChargedArrows<br>"+
+                "The arcane archer releases a powerful arrow that damages everything in its path for 45-75 + (int/15 + dex/15) damage of a random element.<br>"+ 
+                "This ability costs 50 mana to activate and has a 1 minute cooldown. It has a range of 6 tiles.<br>"+
+                "- Level 12: when charged arrows is cast, there's a 0.5%/level chance of setting the cooldown of Arcane Volley to zero.<br><br>"+
+
+                "Arcane Volley, level 11<br>"+
+                "command: [ArcaneArcherArcaneVolley<br>"+
+                "The arcane archer targets a location and rapidly fires multiple arrows at it, hitting every enemy that is up to 4 tiles for 55-75 + inscription/10 damage of a random element.<br>"+ 
+                "This ability costs 60 mana to activate and has a 2 minutes cooldown. <br>"+
+                "- Level 16: there's a 1%/level chance that Arcane volley will trigger twice when cast.<br><br>"+
+
+                "Barrage, level 18<br>"+
+                "command: [ArcaneArcherBarrage<br>"+
+                "The arcane archers fires a torrent of arrows towards the target, attacking level/4 times in an instant. This ability costs 70 mana to activate and has a 3 minutes cooldown.<br>"+
+                "- Level 20: there's a 0.25%/level chance of barrage firing twice when cast.<br><br>"+
+
+                "Arcane Precision, level 2<br>"+
+                "The arcane archer causes 6% more damage with ranged attacks.<br>"+
+                "- Level 5: The arcane archer causes 12% more damage with ranged attacks.<br>"+
+                "- Level 13: The arcane archer causes 18% more damage with ranged attacks.<br><br>"+
+
+                "Mystical Ricochet, level 8<br>"+
+                "When firing a ranged attack, there's a 0.25%/level chance that the nearest enemy will also be damaged by it.<br>"+
+                "- Level 17: Ricochet can trigger to up the two nearby enemies.<br><br>"+
+
+                "Arcane Feedback, level 14<br>"+
+                "When killing an opponent with a ranged attack, the arcane archer recovers inscription/25 mana.<br>"+
+                "- Level 19:  When killing an opponent with a spell, the arcane archer recovers focus/25 stamina.<br><br>"+
+
+                "Arcane Momentum, level 20<br>"+
+                "When killing an opponent with a ranged attack, the arcane archer gains inscription/10 spell absorbtion 30 seconds.<br>"+ 
                 "</BASEFONT>";
             }
             else

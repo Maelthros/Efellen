@@ -60,6 +60,11 @@ namespace Server.Custom.Ascensions
             Register(new HierophantExaltedPresenceAbility());
             Register(new HierophantConsecratedGroundAbility());
             Register(new HierophantDivinePowerAbility());
+            // ---- Arcane Archer
+            Register(new ArcaneArcherImbueArrowsAbility());
+            Register(new ArcaneArcherChargedArrowsAbility());
+            Register(new ArcaneArcherArcaneVolleyAbility());
+            Register(new ArcaneArcherBarrageAbility());
         }
 
         private static void Register(AscensionAbility ability)

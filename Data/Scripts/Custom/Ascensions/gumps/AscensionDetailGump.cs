@@ -40,7 +40,7 @@ namespace Server.Custom.Ascensions
             AddBackground(0, 0, 520, 610, 9270);
             AddAlphaRegion(10, 10, 510, 600);
 
-            AddLabel(140, 20, 1152, m_Type.ToString());
+            AddLabel(140, 20, 1152, AscensionTypeHelper.GetDisplayName(m_Type));
 
             AddLabel(30, 85, 88, "Level:");
             AddLabel(200, 85, 1152, m_Progress.Level.ToString());

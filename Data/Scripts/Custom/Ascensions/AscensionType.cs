@@ -12,7 +12,7 @@ public enum AscensionType
     Skald,
     Assassin,
     Reaver,
-    Defender,
+    ArcaneArcher,
     Hierophant,
     Blackguard
 }

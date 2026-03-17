@@ -1768,6 +1768,7 @@ namespace Server.Engines.Help
 				+ "[VetSupplies - automatically finds and uses veterinarian supplies from the character's inventory if they are there.<br><br>"
 				+ "[Ascension - show you the main ascension window.<br><br>"
 				+ "[AscensionQuickbar - opens the ability quickbar for the currently selected ascension.<br><br>"
+				+ "[SkillDrop - open the skill reduction gump.<br><br>"
 
 				+ "<br><br>"
 
