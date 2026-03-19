@@ -12,6 +12,7 @@ namespace Server.Custom.Ascensions
         public override AscensionType Ascension { get { return AscensionType.Assassin; } }
         public override int RequiredLevel       { get { return 6; } }
         public override string Name             { get { return "CripplingPoison"; } }
+        public override string        DisplayName { get { return "Crippling Poison"; } }
         public override bool IsPassive          { get { return false; } }
         public override TimeSpan Cooldown       { get { return TimeSpan.FromMinutes(1); } }
 

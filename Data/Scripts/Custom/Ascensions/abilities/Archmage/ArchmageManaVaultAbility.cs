@@ -7,7 +7,9 @@ namespace Server.Custom.Ascensions
 {
     public class ArchmageManaVaultAbility : AscensionAbility
     {
-        public override string Name { get { return "Mana Vault"; } }
+        public override string Name { get { return "ManaVault"; } }
+
+        public override string        DisplayName { get { return "Mana Vault"; } }
 
         public override AscensionType Ascension
         {

@@ -29,7 +29,7 @@ namespace Server.Custom.Ascensions
             Amount    = 1;
             m_Ascension = type;
             Hue  = GetHueForAscension(type);
-            Name = type.ToString() + " Ascension Scroll";
+            Name = AscensionTypeHelper.GetDisplayName(type) + " Ascension Scroll";
         }
 
         public override string DefaultDescription{ get{ return "Scrolls of ascension are a form of currency used to unlock powerful abilities. Each scroll is tied to one specific form of ascension, and each ascension has its own set of prerequisites. Use [Ascension for more information."; } }
@@ -60,7 +60,7 @@ namespace Server.Custom.Ascensions
         public override void GetProperties(ObjectPropertyList list)
         {
             base.GetProperties(list);
-            list.Add("Required for unlocking and advancing the " + m_Ascension.ToString() + " Ascension.");
+            list.Add("Required for unlocking and advancing the " + AscensionTypeHelper.GetDisplayName(m_Ascension) + " Ascension.");
         }
 
         public override void Serialize(GenericWriter writer)

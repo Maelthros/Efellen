@@ -6,6 +6,7 @@ namespace Server.Custom.Ascensions
     public abstract class AscensionAbility
     {
         public abstract string Name { get; }
+        public virtual string DisplayName { get { return Name; } }
         public abstract AscensionType Ascension { get; }
         public abstract int RequiredLevel { get; }
         public abstract bool IsPassive { get; }

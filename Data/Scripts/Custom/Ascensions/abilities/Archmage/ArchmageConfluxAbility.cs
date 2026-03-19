@@ -11,7 +11,7 @@ namespace Server.Custom.Ascensions
         {
             get { return "Conflux"; }
         }
-
+        public override string        DisplayName { get { return "Conflux"; } }
         public override AscensionType Ascension
         {
             get { return AscensionType.Archmage; }

@@ -72,7 +72,7 @@ namespace Server.Custom.Ascensions
                     return 
                     "The Arcane Archer is master marksman and conjurer. In combat, they specialize in raining magical projectiles at their opponents.<br>"+
                     "In order to activate this Ascension, you need to have 95 base skill in Magery, Focus, inscription and Marksmanship. Every time you level up the class, the requirement also increases by 1.<br>"+
-                    "So a level 20 Arcane Archers cannot activate this ascension unless they have 115 base skill in Magery, Focus, inscription and Marksmanship.<br>"+
+                    "So a level 20 Arcane Archer cannot activate this ascension unless they have 115 base skill in Magery, Focus, inscription and Marksmanship.<br>"+
                     "Arcane archers will not gain experience in this class if they have learned Knightship, Necromancy, elementalism or Bushido.";
                 default:
                     return "IN DEVELOPMENT.";
@@ -619,7 +619,7 @@ namespace Server.Custom.Ascensions
                 "Arcane Volley, level 11<br>"+
                 "command: [ArcaneArcherArcaneVolley<br>"+
                 "The arcane archer targets a location and rapidly fires multiple arrows at it, hitting every enemy that is up to 4 tiles for 55-75 + inscription/10 damage of a random element.<br>"+ 
-                "This ability costs 60 mana to activate and has a 2 minutes cooldown. <br>"+
+                "This ability costs 60 mana to activate and has a 30 seconds cooldown. <br>"+
                 "- Level 16: there's a 1%/level chance that Arcane volley will trigger twice when cast.<br><br>"+
 
                 "Barrage, level 18<br>"+
@@ -638,10 +638,10 @@ namespace Server.Custom.Ascensions
 
                 "Arcane Feedback, level 14<br>"+
                 "When killing an opponent with a ranged attack, the arcane archer recovers inscription/25 mana.<br>"+
-                "- Level 19:  When killing an opponent with a spell, the arcane archer recovers focus/25 stamina.<br><br>"+
+                "- Level 19:  When killing an opponent with a ranged attack, the arcane archer recovers either focus/25 stamina or focus/25 health.<br><br>"+
 
                 "Arcane Momentum, level 20<br>"+
-                "When killing an opponent with a ranged attack, the arcane archer gains inscription/10 spell absorbtion 30 seconds.<br>"+ 
+                "When killing an opponent with a ranged attack, the arcane archer gains inscription/8 spell absorbtion 30 seconds.<br>"+ 
                 "</BASEFONT>";
             }
             else

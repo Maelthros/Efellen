@@ -9,8 +9,10 @@ namespace Server.Custom.Ascensions
     {
         public override string Name
         {
-            get { return "Berserker Rage"; }
+            get { return "BerserkerRage"; }
         }
+
+        public override string        DisplayName { get { return "Berserker Rage"; } }
 
         public override AscensionType Ascension
         {

@@ -10,7 +10,8 @@ namespace Server.Custom.Ascensions
 {
     public class BlackguardsFrostwyrmsFuryAbility : AscensionAbility
     {
-        public override string Name             { get { return "Frostwyrms Fury"; } }
+        public override string Name             { get { return "FrostwyrmsFury"; } }
+        public override string        DisplayName { get { return "Frostwyrms Fury"; } }
         public override AscensionType Ascension { get { return AscensionType.Blackguard; } }
         public override int RequiredLevel       { get { return 18; } }
         public override bool IsPassive          { get { return false; } }

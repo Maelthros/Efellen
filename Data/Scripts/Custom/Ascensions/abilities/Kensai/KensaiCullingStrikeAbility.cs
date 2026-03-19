@@ -10,6 +10,7 @@ namespace Server.Custom.Ascensions
         public override AscensionType Ascension     { get { return AscensionType.Kensai; } }
         public override int           RequiredLevel { get { return 11; } }
         public override string        Name          { get { return "CullingStrike"; } }
+        public override string        DisplayName { get { return "Culling Strike"; } }
         public override bool          IsPassive     { get { return false; } }
         public override TimeSpan      Cooldown      { get { return TimeSpan.FromMinutes(3); } }
 

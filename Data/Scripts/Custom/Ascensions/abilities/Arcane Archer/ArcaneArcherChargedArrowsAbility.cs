@@ -12,7 +12,9 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension     { get { return AscensionType.ArcaneArcher; } }
         public override int           RequiredLevel { get { return 6; } }
-        public override string        Name          { get { return "Charged Arrows"; } }
+        public override string        Name          { get { return "ChargedArrows"; } }
+
+        public override string        DisplayName { get { return "Charged Arrows"; } }
         public override bool          IsPassive     { get { return false; } }
         public override TimeSpan      Cooldown      { get { return TimeSpan.FromMinutes(1); } }
 

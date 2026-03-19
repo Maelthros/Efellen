@@ -11,7 +11,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension     { get { return AscensionType.Hierophant; } }
         public override int           RequiredLevel { get { return 6; } }
-        public override string        Name          { get { return "Exalted Presence"; } }
+        public override string        Name          { get { return "ExaltedPresence"; } }
+        public override string        DisplayName { get { return "Exalted Presence"; } }
         public override bool          IsPassive     { get { return false; } }
         public override TimeSpan      Cooldown      { get { return TimeSpan.FromMinutes(2); } }
 

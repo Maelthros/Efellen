@@ -12,9 +12,10 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension     { get { return AscensionType.ArcaneArcher; } }
         public override int           RequiredLevel { get { return 11; } }
-        public override string        Name          { get { return "Arcane Volley"; } }
+        public override string        Name          { get { return "ArcaneVolley"; } }
+        public override string        DisplayName { get { return "Arcane Volley"; } }
         public override bool          IsPassive     { get { return false; } }
-        public override TimeSpan      Cooldown      { get { return TimeSpan.FromMinutes(2); } }
+        public override TimeSpan      Cooldown      { get { return TimeSpan.FromSeconds(30); } }
 
         public override void Execute(PlayerMobile pm)
         {
@@ -132,7 +133,7 @@ namespace Server.Custom.Ascensions
                 if (map == null) return;
 
                 m_Caster.Mana -= 60;
-                m_Caster.SetAbilityCooldown("ArcaneVolley", TimeSpan.FromMinutes(2));
+                m_Caster.SetAbilityCooldown("ArcaneVolley", TimeSpan.FromSeconds(30));
 
                 m_Caster.PublicOverheadMessage(MessageType.Regular, 0x48F, false, "*Arcane Volley*");
 

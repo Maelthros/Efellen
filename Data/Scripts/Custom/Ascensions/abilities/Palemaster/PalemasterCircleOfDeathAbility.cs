@@ -15,7 +15,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension { get { return AscensionType.Palemaster; } }
         public override int RequiredLevel { get { return 11; } }
-        public override string Name { get { return "Circle of Death"; } }
+        public override string Name { get { return "CircleofDeath"; } }
+        public override string        DisplayName { get { return "Circle of Death"; } }
         public override bool IsPassive { get { return false; } }
 
         public override TimeSpan Cooldown

@@ -10,7 +10,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension { get { return AscensionType.Blackguard; } }
         public override int RequiredLevel       { get { return 11; } }
-        public override string Name             { get { return "Chains Of Ice"; } }
+        public override string Name             { get { return "ChainsOfIce"; } }
+        public override string        DisplayName { get { return "Chains Of Ice"; } }
         public override bool IsPassive          { get { return false; } }
         public override TimeSpan Cooldown       { get { return TimeSpan.FromSeconds(90); } }
 

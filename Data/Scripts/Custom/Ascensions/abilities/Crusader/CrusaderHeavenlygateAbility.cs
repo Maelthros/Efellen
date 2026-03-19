@@ -11,6 +11,7 @@ namespace Server.Custom.Ascensions
     public class CrusaderHeavenlyGateAbility : AscensionAbility
     {
         public override string Name             { get { return "HeavenlyGate"; } }
+        public override string        DisplayName { get { return "Heavenly Gate"; } }
         public override AscensionType Ascension { get { return AscensionType.Crusader; } }
         public override int RequiredLevel       { get { return 18; } }
         public override bool IsPassive          { get { return false; } }

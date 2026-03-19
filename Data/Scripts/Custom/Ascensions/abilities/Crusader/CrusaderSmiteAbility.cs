@@ -11,6 +11,7 @@ namespace Server.Custom.Ascensions
     public class CrusaderSmiteAbility : AscensionAbility
     {
         public override string Name             { get { return "Smite"; } }
+        public override string        DisplayName { get { return "Smite"; } }
         public override AscensionType Ascension { get { return AscensionType.Crusader; } }
         public override int RequiredLevel       { get { return 1; } }
         public override bool IsPassive          { get { return false; } }

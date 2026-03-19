@@ -11,6 +11,7 @@ namespace Server.Custom.Ascensions
     public class PaleMasterEnervateAbility : AscensionAbility
     {
         public override string Name        { get { return "Enervate"; } }
+        public override string        DisplayName { get { return "Enervate"; } }
         public override AscensionType Ascension { get { return AscensionType.Palemaster; } }
         public override int RequiredLevel  { get { return 6; } }
         public override bool IsPassive     { get { return false; } }

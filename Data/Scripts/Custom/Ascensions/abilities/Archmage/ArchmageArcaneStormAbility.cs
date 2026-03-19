@@ -9,7 +9,8 @@ namespace Server.Custom.Ascensions
 {
     public class ArchmageArcaneStormAbility : AscensionAbility
     {
-        public override string Name { get { return "Arcane Storm"; } }
+        public override string Name { get { return "ArcaneStorm"; } }
+        public override string DisplayName { get { return "Arcane Storm"; } }
         public override AscensionType Ascension { get { return AscensionType.Archmage; } }
         public override int RequiredLevel { get { return 1; } }
         public override bool IsPassive { get { return false; } }

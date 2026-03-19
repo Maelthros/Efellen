@@ -10,6 +10,7 @@ namespace Server.Custom.Ascensions
     public class BerserkerWarCryAbility : AscensionAbility
     {
         public override string Name { get { return "Warcry"; } }
+        public override string        DisplayName { get { return "Warcry"; } }
 
         public override AscensionType Ascension
         {

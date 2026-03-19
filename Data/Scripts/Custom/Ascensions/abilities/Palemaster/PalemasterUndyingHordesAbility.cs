@@ -11,7 +11,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension { get { return AscensionType.Palemaster; } }
         public override int RequiredLevel       { get { return 1; } }
-        public override string Name             { get { return "Undying Hordes"; } }
+        public override string Name             { get { return "UndyingHordes"; } }
+        public override string        DisplayName { get { return "Undying Hordes"; } }
         public override bool IsPassive          { get { return false; } }
 
         public override TimeSpan Cooldown

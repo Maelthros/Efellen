@@ -38,7 +38,7 @@ namespace Server.Custom.Ascensions
             foreach (AscensionAbility ability in usable)
             {
                 AddButton(10, y, 4005, 4007, buttonID, GumpButtonType.Reply, 0);
-                AddLabel(45, y + 3, 1152, ability.Name);
+                AddLabel(45, y + 3, 1152, ability.DisplayName);
 
                 y        += RowHeight;
                 buttonID++;

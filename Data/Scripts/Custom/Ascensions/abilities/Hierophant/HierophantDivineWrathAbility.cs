@@ -12,7 +12,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension     { get { return AscensionType.Hierophant; } }
         public override int           RequiredLevel { get { return 1; } }
-        public override string        Name          { get { return "Divine Wrath"; } }
+        public override string        Name          { get { return "DivineWrath"; } }
+        public override string        DisplayName { get { return "Divine Wrath"; } }
         public override bool          IsPassive     { get { return false; } }
         public override TimeSpan      Cooldown      { get { return TimeSpan.FromMinutes(1); } }
 

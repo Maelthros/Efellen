@@ -10,6 +10,7 @@ namespace Server.Custom.Ascensions
     public class CrusaderChargeAbility : AscensionAbility
     {
         public override string Name { get { return "Charge"; } }
+        public override string        DisplayName { get { return "Charge"; } }
 
         public override AscensionType Ascension
         {

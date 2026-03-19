@@ -12,6 +12,7 @@ namespace Server.Custom.Ascensions
     public class CrusaderAuraOfHopeAbility : AscensionAbility
     {
         public override string Name             { get { return "AuraOfHope"; } }
+        public override string        DisplayName { get { return "Aura Of Hope"; } }
         public override AscensionType Ascension { get { return AscensionType.Crusader; } }
         public override int RequiredLevel       { get { return 11; } }
         public override bool IsPassive          { get { return false; } }

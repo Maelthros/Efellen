@@ -36,12 +36,9 @@ Arcane Archer
 
 These are the ascendancies that are currently in development:
 
-Battlemage
-    active: Disruption, rending magic, Spell Blasting,  annihilation 
-    passive:  arcane siphoning,  arcane overload, piercing spells, spell fracture
-Primal Lord
-    active: Elemental Form, elemental overload
-    passive:
+Summoner
+    active: Eidolon, Elemental Form, Elemental Overload, Elemental Conduit
+    passive: Aether Gates, Echoing Spells, elemental tempest ,Aether Nexus
 
 Berserker abilities
 active abilities : Rage, leap slam, warcry, tenacity
@@ -618,7 +615,7 @@ Hierophant
 
     The Arcane Archer is master marksman and conjurer. In combat, they specialize in raining magical projectiles at their opponents.
     In order to activate this Ascension, you need to have 95 base skill in Magery, Focus, inscription and Marksmanship. Every time you level up the class, the requirement also increases by 1.
-    So a level 20 Arcane Archers cannot activate this ascension unless they have 115 base skill in Magery, Focus, inscription and Marksmanship.
+    So a level 20 Arcane Archer cannot activate this ascension unless they have 115 base skill in Magery, Focus, inscription and Marksmanship.
     Arcane archers will not gain experience in this class if they have learned Knightship, Necromancy, elementalism or Bushido.
 
     Imbue Arrow, level 1
@@ -638,7 +635,7 @@ Hierophant
     Arcane Volley, level 11
     command: [ArcaneArcherArcaneVolley
     The arcane archer targets a location and rapidly fires multiple arrows at it, hitting every enemy that is up to 4 tiles for 55-75 + inscription/10 damage of a random element. 
-    This ability costs 60 mana to activate and has a 2 minutes cooldown. 
+    This ability costs 60 mana to activate and has a 30 seconds cooldown. 
     - Level 16: there's a 1%/level chance that Arcane volley will trigger twice when cast.
 
     Barrage, level 18
@@ -657,7 +654,61 @@ Hierophant
 
     Arcane Feedback, level 14
     When killing an opponent with a ranged attack, the arcane archer recovers inscription/25 mana.
-    - Level 19:  When killing an opponent with a spell, the arcane archer recovers focus/25 stamina.
+    - Level 19:  When killing an opponent with a ranged attack, the arcane archer recovers either focus/25 stamina or focus/25 health.
 
     Arcane Momentum, level 20
     When killing an opponent with a ranged attack, the arcane archer gains inscription/10 spell absorbtion 30 seconds. 
+
+
+Summoner
+    active: Eidolon, Elemental Form, Elemental Overload, Elemental Conduit
+    passive: Aether Gates, Echoing Spells, elemental tempest ,Aether Nexus
+
+
+    The Summoner is a powerful casters that channels elemental magic into the aether and condenses it into a variety of creatures. 
+    In combat, they specialize in bringing otherwordly aid into the battle and channeling powerful spells.
+    In order to activate this Ascension, you need to have 95 base skill in Elementalism, Spiritualism and Herding. Every time you level up the class, the requirement also increases by 1.
+    So a level 20 Summoner cannot activate this ascension unless they have 115 base skill in Elementalism, Spiritualism and Herding.
+    Summoners will not gain experience in this class if they have learned Knightship, taming, bushido or druidism.
+
+
+    Eidolon, level 1
+    command: [SummonerEidolon
+    The Summoner calls for a spiritual guardian that materializes and defends it until defeated.
+    Calling forth the Eidolon costs 40 mana. Only one Eidolon might be active at a time, and the ability has a 3 minutes cooldown. 
+    The Eidolon's abilities, forms and attributes depends on the currently selected elemental focus of the caster. 
+    The Eidolon requires 4 follower slots. 
+    - Level 10: Each of the Eidolon's melee attacks will restore 5 mana to the Summoner.
+    - Level 15: The Eidolon requires 3 follower slots instead of 4. 
+    - Level 20: When defeated, the Eidolon has a 20% chance of instantly returning.
+
+    Elemental Form, level 6
+    command: [Summoner
+    The summoner assumes the form of an elemental corresponding to their currently active focus. This transformation lasts until the Summoner dies or until the ability is cast again.
+    Activating this ability costs 50 mana. Each elemental form has different abilities, as follows:
+    Fire: Opponents hitting you in melee combat receive 15-25 + (int/15) fire damage. 
+    Water:
+    Earth:
+    Air:
+    - Level 12:
+    
+    Elemental Overload, level 11
+    command: [Summoner
+    - Level 16:
+
+    Elemental Conduit, level 18
+    command: [Summoner
+    - Level 20:
+    
+    Aether Gates, level 2
+    The Summoner has 1 extra follower slot.
+    - Level 5: The Summoner has 2 extra follower slots.
+    - Level 13: The Summoner has 3 extra follower slots.
+
+    Echoing Spells, level 8
+    - Level 17:
+
+    Elemental Tempest, level 14
+    - Level 19:
+
+    Aether Nexus, level 20

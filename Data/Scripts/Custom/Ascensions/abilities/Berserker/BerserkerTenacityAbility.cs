@@ -8,6 +8,7 @@ namespace Server.Custom.Ascensions
     public class BerserkerTenacityAbility : AscensionAbility
     {
         public override string Name { get { return "Tenacity"; } }
+        public override string        DisplayName { get { return "Tenacity"; } }
 
         public override AscensionType Ascension
         {

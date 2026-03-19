@@ -10,7 +10,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension { get { return AscensionType.Blackguard; } }
         public override int RequiredLevel       { get { return 6; } }
-        public override string Name             { get { return "Deaths Advance"; } }
+        public override string Name             { get { return "DeathsAdvance"; } }
+        public override string        DisplayName { get { return "Deaths Advance"; } }
         public override bool IsPassive          { get { return false; } }
         public override TimeSpan Cooldown       { get { return TimeSpan.FromSeconds(9); } }
 

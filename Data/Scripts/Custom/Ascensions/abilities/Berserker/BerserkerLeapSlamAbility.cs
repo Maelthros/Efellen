@@ -9,7 +9,8 @@ namespace Server.Custom.Ascensions
 {
     public class BerserkerLeapSlamAbility : AscensionAbility
     {
-        public override string Name { get { return "Leap Slam"; } }
+        public override string Name { get { return "LeapSlam"; } }
+        public override string        DisplayName { get { return "Leap Slam"; } }
 
         public override AscensionType Ascension
         {

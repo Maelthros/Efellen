@@ -12,7 +12,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension { get { return AscensionType.Palemaster; } }
         public override int RequiredLevel       { get { return 18; } }
-        public override string Name             { get { return "Danse Macabre"; } }
+        public override string Name             { get { return "DanseMacabre"; } }
+        public override string        DisplayName { get { return "Danse Macabre"; } }
         public override bool IsPassive          { get { return false; } }
 
         public override TimeSpan Cooldown

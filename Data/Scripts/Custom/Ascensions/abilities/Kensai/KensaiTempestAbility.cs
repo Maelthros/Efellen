@@ -12,6 +12,7 @@ namespace Server.Custom.Ascensions
         public override AscensionType Ascension     { get { return AscensionType.Kensai; } }
         public override int           RequiredLevel { get { return 18; } }
         public override string        Name          { get { return "Tempest"; } }
+        public override string        DisplayName { get { return "Tempest"; } }
         public override bool          IsPassive     { get { return false; } }
         public override TimeSpan      Cooldown      { get { return TimeSpan.FromMinutes(1); } }
 

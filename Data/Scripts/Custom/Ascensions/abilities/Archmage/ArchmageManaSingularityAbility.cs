@@ -11,7 +11,9 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension  { get { return AscensionType.Archmage; } }
         public override int RequiredLevel        { get { return 11; } }
-        public override string Name              { get { return "Mana Singularity"; } }
+        public override string Name              { get { return "ManaSingularity"; } }
+
+        public override string        DisplayName { get { return "Mana Singularity"; } }
         public override bool IsPassive           { get { return false; } }
 
         public override TimeSpan Cooldown

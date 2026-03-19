@@ -9,7 +9,8 @@ namespace Server.Custom.Ascensions
 {
     public class ArchmageTimestopAbility : AscensionAbility
     {
-        public override string Name          { get { return "Time Stop"; } }
+        public override string Name          { get { return "TimeStop"; } }
+        public override string        DisplayName { get { return "Time Stop"; } }
         public override AscensionType Ascension { get { return AscensionType.Archmage; } }
         public override int RequiredLevel    { get { return 18; } }
         public override bool IsPassive       { get { return false; } }

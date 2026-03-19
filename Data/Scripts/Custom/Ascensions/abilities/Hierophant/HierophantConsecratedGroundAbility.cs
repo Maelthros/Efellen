@@ -12,7 +12,8 @@ namespace Server.Custom.Ascensions
     {
         public override AscensionType Ascension     { get { return AscensionType.Hierophant; } }
         public override int           RequiredLevel { get { return 11; } }
-        public override string        Name          { get { return "Consecrated Ground"; } }
+        public override string        Name          { get { return "ConsecratedGround"; } }
+        public override string        DisplayName { get { return "Consecrated Ground"; } }
         public override bool          IsPassive     { get { return false; } }
         public override TimeSpan      Cooldown      { get { return TimeSpan.FromMinutes(3); } }
 
