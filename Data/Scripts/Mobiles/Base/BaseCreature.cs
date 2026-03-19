@@ -8647,22 +8647,23 @@ namespace Server.Mobiles
 
                     BaseWeapon aaFeedbackWeapon = aaFeedbackPm.Weapon as BaseWeapon;
                     bool       aaIsRanged       = (aaFeedbackWeapon != null && aaFeedbackWeapon is BaseRanged);
+					int		   restore  		= (int)(aaFeedbackPm.Skills[SkillName.Inscribe].Value / 25.0);
 
-                    if (aaFeedbackLevel >= 14 && aaIsRanged)
+                    if (aaFeedbackLevel >= 14 && aaIsRanged && restore > 0)
                     {
-                        int manaRestore = (int)(aaFeedbackPm.Skills[SkillName.Inscribe].Value / 25.0);
-                        if (manaRestore > 0)
-                        {
-                            aaFeedbackPm.Mana = Math.Min(aaFeedbackPm.ManaMax, aaFeedbackPm.Mana + manaRestore);
-                            aaFeedbackPm.FixedParticles(0x376A, 9, 32, 5030, 0x48F, 0, EffectLayer.Waist);
-                        }
-                    }
-
-                    if (aaFeedbackLevel >= 19 && aaIsRanged)
-                    {
-                        int stamRestore = (int)(aaFeedbackPm.Skills[SkillName.Focus].Value / 25.0);
-                        if (stamRestore > 0)
-                            aaFeedbackPm.Stam = Math.Min(aaFeedbackPm.StamMax, aaFeedbackPm.Stam + stamRestore);
+                        aaFeedbackPm.Mana = Math.Min(aaFeedbackPm.ManaMax, aaFeedbackPm.Mana + restore);
+						if(aaFeedbackLevel >= 19)
+						{
+							if (Utility.RandomBool())
+							{
+	                            aaFeedbackPm.Hits = Math.Min(aaFeedbackPm.HitsMax, aaFeedbackPm.Hits + restore);								
+							}
+							else
+							{
+	                            aaFeedbackPm.Stam = Math.Min(aaFeedbackPm.StamMax, aaFeedbackPm.Stam + restore);
+							}
+						}
+						aaFeedbackPm.FixedParticles(0x376A, 9, 32, 5030, 0x48F, 0, EffectLayer.Waist);
                     }
                 }
             }
@@ -8685,7 +8686,7 @@ namespace Server.Mobiles
 
                         if (aaMomRanged && !aaMomPm.HasAscensionEffect("ArcaneMomentumAbsorb"))
                         {
-                            int absorb = (int)(aaMomPm.Skills[SkillName.Inscribe].Value / 10.0);
+                            int absorb = (int)(aaMomPm.Skills[SkillName.Inscribe].Value / 8.0);
                             aaMomPm.MagicDamageAbsorb += absorb;
                             aaMomPm.AddAscensionEffect("ArcaneMomentumAbsorb", TimeSpan.FromSeconds(30), aaMomLevel);
                             new ArcaneMomentumAbsorbExpiryTimer(aaMomPm, absorb).Start();
