@@ -165,14 +165,14 @@ namespace Server.Misc
             if (item.LootType == LootType.Blessed)
                 return false;
 
-            // can't disenchant arties
+            // can't disenchant legendary/tribute arties
             try
             {
                 System.Reflection.PropertyInfo p = item.GetType().GetProperty("ArtifactLevel");
                 if (p != null)
                 {
                     object val = p.GetValue(item, null);
-                    if (val is int && (int)val > 0)
+                    if (val is int && (int)val != 2)
                         return false;
                 }
             }
@@ -349,16 +349,16 @@ namespace Server.Misc
             int min = 0, max = 0;
             if (total < 25) { return 1; }
             else if (total < 50) { min = 2; max = 6; }
-            else if (total < 100) { min = 6; max = 14; }
-            else if (total < 150) { min = 10; max = 22; }
-            else if (total < 200) { min = 16; max = 28; }
-            else if (total < 250) { min = 22; max = 38; }
-            else if (total < 300) { min = 30; max = 50; }
-            else if (total < 350) { min = 40; max = 64; }
-            else if (total < 400) { min = 52; max = 90; }
-            else if (total < 450) { min = 66; max = 114; }
-            else if (total < 500) { min = 82; max = 142; }
-            else { min = 120; max = 180; }
+            else if (total < 100) { min = 7; max = 14; }
+            else if (total < 150) { min = 15; max = 22; }
+            else if (total < 200) { min = 23; max = 38; }
+            else if (total < 250) { min = 39; max = 58; }
+            else if (total < 300) { min = 59; max = 70; }
+            else if (total < 350) { min = 71; max = 94; }
+            else if (total < 400) { min = 95; max = 110; }
+            else if (total < 450) { min = 111; max = 144; }
+            else if (total < 500) { min = 145; max = 162; }
+            else { min = 163; max = 226; }
 
             return Utility.RandomMinMax(min, max);
         }
