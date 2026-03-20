@@ -9261,6 +9261,24 @@ namespace Server.Mobiles
 
 		    Server.Misc.DropRelic.DropSpecialItem(this, killer, c);
 
+	        if (killer is PlayerMobile && this.Fame >= 15000)
+	        {
+	            PlayerMobile scrollKiller = (PlayerMobile)killer;	
+
+	            // 0.25% chance for a random scroll
+	            if (Utility.Random(10000) < 25)
+	            {
+	                c.DropItem(AscensionScrollFactory.CreateRandom());
+	            }	
+
+	            // 0.50% chance for a scroll matching the killer's active ascension
+	            if (scrollKiller.ActiveAscension != AscensionType.None
+	                && Utility.Random(10000) < 50)
+	            {
+	                c.DropItem(new AscensionScroll(scrollKiller.ActiveAscension));
+	            }
+	        }
+
 		    if (killer != null)
 		        Server.Custom.DefenderOfTheRealm.MarkLootHelper.CheckForMarks(this, c, killer);
 
