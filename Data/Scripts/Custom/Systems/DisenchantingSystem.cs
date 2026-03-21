@@ -172,7 +172,7 @@ namespace Server.Misc
                 if (p != null)
                 {
                     object val = p.GetValue(item, null);
-                    if (val is int && (int)val != 2)
+                    if (val is int && (int)val == 1 || val is int && (int)val == 3)
                         return false;
                 }
             }
