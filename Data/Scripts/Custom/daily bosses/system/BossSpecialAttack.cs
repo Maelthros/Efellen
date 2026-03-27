@@ -708,7 +708,7 @@ namespace Server.Custom.DailyBosses.System
             if (range > 8)
                 range = 8;
 
-            boss.PublicOverheadMessage(MessageType.Regular, hue, false, "*" + boss.Name + " is filling its lungs!*");
+            boss.PublicOverheadMessage(MessageType.Regular, hue, false, "*" + boss.Name + " is preparing an attack!*");
             boss.PlaySound(0x227);
             boss.FixedParticles(0x375A, 10, 15, 5037, hue, 0, EffectLayer.Head);
 
