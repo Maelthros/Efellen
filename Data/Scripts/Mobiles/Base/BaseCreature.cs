@@ -5483,7 +5483,7 @@ namespace Server.Mobiles
 
 			if ( m is BaseCreature )
 			{
-				if ( m is FrankenFighter || m is Robot || m is GolemFighter || m is HenchmanMonster || m is HenchmanWizard || m is HenchmanArcher || m is HenchmanFighter )
+				if ( m is FrankenFighter || m is GolemFighter || m is HenchmanMonster || m is HenchmanWizard || m is HenchmanArcher || m is HenchmanFighter )
 					return false;
 
 				BaseCreature bc = (BaseCreature)m;
@@ -5513,8 +5513,6 @@ namespace Server.Mobiles
 					!( this is FrankenFighter ) && 
 					!( this is GolemPorter ) && 
 					!( this is AerialServant ) && 
-					!( this is Robot ) && 
-					!( this is Robot ) && 
 					!( this is PackBeast ) && 
 					!( this is HenchmanFamiliar ) && 
 					!( this is HenchmanFighter ) && 
@@ -7792,13 +7790,11 @@ namespace Server.Mobiles
 				list.Add( "(Pack Animal)" );
 			else if ( this is GolemPorter || this is GolemFighter )
 				list.Add( "(automaton)" );
-			else if ( this is Robot )
-				list.Add( "(robot)" );
 			else if ( this is FrankenPorter || this is FrankenFighter )
 				list.Add( "(reanimation)" );
 			else if ( Summoned && !IsAnimatedDead && !IsNecroFamiliar )
 				list.Add( 1049646 ); // (summoned)
-			else if ( Controlled && Commandable && !(this is FrankenFighter) && !(this is AerialServant) && !(this is FrankenPorter) && !(this is Robot) && !(this is GolemFighter) && !(this is GolemPorter) && !(this is PackBeast) && !(this is HenchmanMonster) && !(this is HenchmanFighter) && !(this is HenchmanWizard) && !(this is HenchmanArcher) && !(this is HenchmanFamiliar) )
+			else if ( Controlled && Commandable && !(this is FrankenFighter) && !(this is AerialServant) && !(this is FrankenPorter) && !(this is GolemFighter) && !(this is GolemPorter) && !(this is PackBeast) && !(this is HenchmanMonster) && !(this is HenchmanFighter) && !(this is HenchmanWizard) && !(this is HenchmanArcher) && !(this is HenchmanFamiliar) )
 			{
 				if ( IsBonded )	//Intentional difference (showing ONLY bonded when bonded instead of bonded & tame)
 					list.Add( 1049608 ); // (bonded)
@@ -10377,7 +10373,7 @@ namespace Server.Mobiles
 							if ( pet.ControlOrder == OrderType.Guard || pet.ControlOrder == OrderType.Follow || pet.ControlOrder == OrderType.Come )
 								move.Add( pet );
 						}
-						else if ( pet is HenchmanFamiliar || pet is AerialServant || pet is PackBeast || pet is Robot || pet is GolemPorter || pet is GolemFighter || pet is FrankenPorter || pet is FrankenFighter ){ move.Add( pet ); }
+						else if ( pet is HenchmanFamiliar || pet is AerialServant || pet is PackBeast || pet is GolemPorter || pet is GolemFighter || pet is FrankenPorter || pet is FrankenFighter ){ move.Add( pet ); }
 					}
 				}
 			}

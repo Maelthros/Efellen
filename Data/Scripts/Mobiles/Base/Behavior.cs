@@ -199,7 +199,6 @@ namespace Server
 					typeof( RottingCorpse ),
 					typeof( RustGolem ),
 					typeof( GolemFighter ),
-					typeof( Robot ),
 					typeof( SeaweedElemental ),
 					typeof( SeaWeeder ),
 					typeof( SeaZombie ),
@@ -8118,31 +8117,6 @@ namespace Server.Mobiles
 					}
 				}
 			}
-			else if( m_Mobile is Robot )
-			{
-				ArrayList targets = new ArrayList();
-				foreach ( Item item in World.Items.Values )
-				if ( item is RobotItem )
-				{
-					RobotItem robotItem = (RobotItem)item;
-					if ( robotItem.RobotSerial == m_Mobile.Serial )
-					{
-						targets.Add( item );
-					}
-				}
-				for ( int i = 0; i < targets.Count; ++i )
-				{
-					Item item = ( Item )targets[ i ];
-					RobotItem robotThing = (RobotItem)item;
-					robotThing.LootType = LootType.Regular;
-					robotThing.RobotSerial = 0;
-					robotThing.RobotName = m_Mobile.Name;
-					robotThing.Visible = true;
-					robotThing.Hue = m_Mobile.Hue;
-					m_Mobile.PlaySound( 0x559 );
-					robotThing.InvalidateProperties();
-				}
-			}
 			else if ( !(Server.Mobiles.BaseCreature.AlwaysInvulnerable( m_Mobile )) && m_Mobile.Blessed )
 			{
 				m_Mobile.Blessed = false;
@@ -10826,7 +10800,7 @@ namespace Server.Mobiles
 					m_Mobile.DebugSay( "I should be closer to {0}", combatant.Name );
 			}
 
-			if ( !m_Mobile.Controlled && !m_Mobile.Summoned && !m_Mobile.IsParagon && !(m_Mobile is FrankenFighter) && !(m_Mobile is Robot) && !(m_Mobile is GolemFighter) && !(m_Mobile is HenchmanMonster) && !(m_Mobile is HenchmanArcher) && !(m_Mobile is HenchmanWizard) && !(m_Mobile is HenchmanFighter) )
+			if ( !m_Mobile.Controlled && !m_Mobile.Summoned && !m_Mobile.IsParagon && !(m_Mobile is FrankenFighter) && !(m_Mobile is GolemFighter) && !(m_Mobile is HenchmanMonster) && !(m_Mobile is HenchmanArcher) && !(m_Mobile is HenchmanWizard) && !(m_Mobile is HenchmanFighter) )
 			{
 				if ( m_Mobile.Hits < m_Mobile.HitsMax * 20/100 )
 				{

@@ -388,9 +388,6 @@ namespace Server
 				skills = 11;
 			else if ( area == "fugitive" )
 				skills = 13;
-			else if ( area == "alien" )
-				skills = 40;
-
 			return skills.ToString();
 		}
 
@@ -400,8 +397,6 @@ namespace Server
 
 			if ( area == "savage" )
 				pm.SkillStart = 11000;
-			else if ( area == "alien" )
-				pm.SkillStart = 40000;
 			else if ( area == "fugitive" )
 				pm.SkillStart = 13000;
 			else

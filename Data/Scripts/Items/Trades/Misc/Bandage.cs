@@ -557,7 +557,7 @@ namespace Server.Items
 			{
 				healer.SendMessage( "You cannot heal those that are extremely hungry." );
 			}
-			else if ( patient is Golem || patient is Robot )
+			else if ( patient is Golem )
 			{
 				healer.SendLocalizedMessage( 500970 ); // Bandages cannot be used on that.
 			}

@@ -754,7 +754,6 @@ namespace Server.Items
 				typeof( AncientFleshGolem ), 
 				typeof( FrankenFighter ), 
 				typeof( GolemFighter ), 
-				typeof( Robot ), 
 				typeof( SkinGolem ), 
 				typeof( Golem ), 
 				typeof( IceGolem ), 
