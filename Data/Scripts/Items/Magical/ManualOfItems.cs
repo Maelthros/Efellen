@@ -9,9 +9,6 @@ using Server.Network;
 
 namespace Server.Items
 {
-    // -------------------------------------------------------------------------
-    // Category definitions
-    // -------------------------------------------------------------------------
     public enum RelicCategory
     {
         OneHandedWeapons = 0,
@@ -22,9 +19,6 @@ namespace Server.Items
         Clothing         = 5
     }
 
-    // -------------------------------------------------------------------------
-    // Data record for one relic chest entry
-    // -------------------------------------------------------------------------
     public class RelicEntry
     {
         public string TypeName;
@@ -39,12 +33,8 @@ namespace Server.Items
         }
     }
 
-    // =========================================================================
     public class ManualOfItems : Item
     {
-        // ------------------------------------------------------------------
-        // Master list — add new entries here, order does not matter.
-        // ------------------------------------------------------------------
         public static readonly RelicEntry[] AllRelics = new RelicEntry[]
         {
             // ----- One-Handed Weapons -----
@@ -351,9 +341,6 @@ namespace Server.Items
             new RelicEntry( "GiftHikingBoots",      "Hiking Boots",      RelicCategory.Clothing ),
         };
 
-        // ------------------------------------------------------------------
-        // Static helpers
-        // ------------------------------------------------------------------
         public static ArrayList GetEntriesForCategory( RelicCategory cat )
         {
             ArrayList result = new ArrayList();
@@ -379,7 +366,6 @@ namespace Server.Items
             }
         }
 
-        // Talisman display-name fixups (preserved from original)
         private static string FixDisplayName( string displayName, string extra )
         {
             string sArty = displayName;
@@ -391,9 +377,6 @@ namespace Server.Items
             return sArty;
         }
 
-        // ------------------------------------------------------------------
-        // Item fields — unchanged
-        // ------------------------------------------------------------------
         public static ManualOfItems m_Book;
 
         public int m_Charges;
@@ -528,9 +511,6 @@ namespace Server.Items
             }
         }
 
-        // ------------------------------------------------------------------
-        // Shared item-creation logic extracted from the original OnResponse
-        // ------------------------------------------------------------------
         public static void CreateAndGiveReward( Mobile from, ManualOfItems book, RelicEntry entry )
         {
             string sArty = ManualOfItems.FixDisplayName( entry.DisplayName, book.m_Extra );
@@ -575,9 +555,6 @@ namespace Server.Items
                 book.Delete();
         }
 
-        // ------------------------------------------------------------------
-        // GiveItemBonus — unchanged from original
-        // ------------------------------------------------------------------
         public static void GiveItemBonus( Item item, int val1, int val2, int val3, int val4, int val5, double sk1, double sk2, double sk3, double sk4, double sk5, int slay1, int slay2 )
         {
             if ( item is BaseWeapon )
@@ -622,9 +599,6 @@ namespace Server.Items
             }
         }
 
-        // ==================================================================
-        // GUMP 1 — Introduction / welcome page (replaces page == 999999)
-        // ==================================================================
         public class RelicIntroGump : Gump
         {
             private ManualOfItems m_Book;
@@ -656,7 +630,6 @@ namespace Server.Items
                     "as you cannot change an attribute once you select it.</BASEFONT></BODY>",
                     false, false );
 
-                // Continue → category menu
                 AddButton( 668, 425, 4005, 4005, 1, GumpButtonType.Reply, 0 );
             }
 
@@ -673,9 +646,6 @@ namespace Server.Items
             }
         }
 
-        // ==================================================================
-        // GUMP 2 — Category selection
-        // ==================================================================
         public class RelicCategoryGump : Gump
         {
             private ManualOfItems m_Book;
@@ -748,9 +718,6 @@ namespace Server.Items
             }
         }
 
-        // ==================================================================
-        // GUMP 3 — Item list within a category (16 per page)
-        // ==================================================================
         public class RelicItemsGump : Gump
         {
             private ManualOfItems m_Book;
@@ -894,9 +861,6 @@ namespace Server.Items
             }
         }
 
-        // ==================================================================
-        // GUMP 4 — Confirm selection
-        // ==================================================================
         public class RelicConfirmGump : Gump
         {
             private ManualOfItems m_Book;
@@ -933,13 +897,11 @@ namespace Server.Items
                     "<BODY><BASEFONT Color=" + color + ">This will use one charge. Charges remaining: " + book.m_Charges.ToString() + "</BASEFONT></BODY>",
                     false, false );
 
-                // Confirm
                 AddButton( 60,  148, 4005, 4007, 1, GumpButtonType.Reply, 0 );
                 AddHtml( 95, 150, 80, 20,
                     "<BODY><BASEFONT Color=" + color + ">Confirm</BASEFONT></BODY>",
                     false, false );
 
-                // Back
                 AddButton( 260, 148, 4017, 4019, 0, GumpButtonType.Reply, 0 );
                 AddHtml( 295, 150, 80, 20,
                     "<BODY><BASEFONT Color=" + color + ">Back</BASEFONT></BODY>",
@@ -953,7 +915,6 @@ namespace Server.Items
 
                 if ( info.ButtonID == 1 )
                 {
-                    // Book may have been deleted if last charge was used by another session
                     if ( m_Book.Deleted )
                     {
                         from.SendMessage( "The chest has already been used up." );
@@ -962,7 +923,6 @@ namespace Server.Items
 
                     ManualOfItems.CreateAndGiveReward( from, m_Book, m_Entry );
 
-                    // If still alive, show category menu again (chest may be deleted inside CreateAndGiveReward)
                     if ( !m_Book.Deleted )
                     {
                         from.CloseGump( typeof( RelicConfirmGump ) );
@@ -977,9 +937,6 @@ namespace Server.Items
             }
         }
 
-        // ------------------------------------------------------------------
-        // Serialization — unchanged
-        // ------------------------------------------------------------------
         public ManualOfItems( Serial serial ) : base( serial ) { }
 
         public override void Serialize( GenericWriter writer )
