@@ -76,7 +76,10 @@ namespace Server.Items
 			new ArtifactEntry( "Artifact_Stormbringer",               "Stormbringer",                      ArtifactCategory.OneHandedWeapons ),
 			new ArtifactEntry( "Artifact_ScepterOfBlasting",          "Scepter of Blasting",               ArtifactCategory.OneHandedWeapons ),
 			new ArtifactEntry( "Artifact_WhistleofthePiper",          "Whistle of the Pied Piper",         ArtifactCategory.OneHandedWeapons ),
-			 new ArtifactEntry( "Artifact_WintersGrip",                "Arctic Death Dealer",               ArtifactCategory.OneHandedWeapons ),
+			new ArtifactEntry( "Artifact_WintersGrip",                "Arctic Death Dealer",               ArtifactCategory.OneHandedWeapons ),
+            new ArtifactEntry( "Artifact_EnchantedTitanLegBone",      "Enchanted Pirate Rapier",           ArtifactCategory.OneHandedWeapons ),
+            new ArtifactEntry( "Artifact_MelodyOfTriumph",      "Enchanted Pirate Rapier",                 ArtifactCategory.OneHandedWeapons ),
+         
 		    // ----- Two-Handed Weapons -----
 			new ArtifactEntry( "Artifact_Calm",                       "Calm",                              ArtifactCategory.TwoHandedWeapons ),
             new ArtifactEntry( "Artifact_Annihilation",               "Annihilation",                      ArtifactCategory.TwoHandedWeapons ),
@@ -93,7 +96,6 @@ namespace Server.Items
             new ArtifactEntry( "Artifact_FortunateBlades",            "Fortunate Blades",                  ArtifactCategory.TwoHandedWeapons ),
 			new ArtifactEntry( "Artifact_VampiricDaisho",             "Vampiric Daisho",                   ArtifactCategory.TwoHandedWeapons ),
             new ArtifactEntry( "Artifact_DarkLordsPitchfork",         "Dark Lord's PitchFork",             ArtifactCategory.TwoHandedWeapons ),
-            new ArtifactEntry( "Artifact_EnchantedTitanLegBone",      "Enchanted Pirate Rapier",           ArtifactCategory.TwoHandedWeapons ),
             new ArtifactEntry( "Artifact_GrimReapersScythe",          "Grim Reaper's Scythe",              ArtifactCategory.TwoHandedWeapons ),
             new ArtifactEntry( "Artifact_HammerofThor",               "Hammer of Thor",                    ArtifactCategory.TwoHandedWeapons ),
             new ArtifactEntry( "Artifact_HolyLance",                  "Holy Lance",                        ArtifactCategory.TwoHandedWeapons ),

@@ -3480,10 +3480,6 @@ namespace Server
 			new ItemSalesInfo( typeof(	WhiteScales	),	64	,	0	,	80	,	false	,	false	,	World.None	,	Category.Resource	,	Material.None	,	Market.Smith	),
 			new ItemSalesInfo( typeof(	YellowScales	),	64	,	0	,	80	,	false	,	false	,	World.None	,	Category.Resource	,	Material.None	,	Market.Smith	),
 			new ItemSalesInfo( typeof(	CadalyteScales	),	128	,	0	,	95	,	false	,	false	,	World.None	,	Category.Resource	,	Material.None	,	Market.Smith	),
-			new ItemSalesInfo( typeof(	GornScales	),	100	,	0	,	80	,	false	,	false	,	World.None	,	Category.Resource	,	Material.None	,	Market.Smith	),
-			new ItemSalesInfo( typeof(	TrandoshanScales	),	100	,	0	,	80	,	false	,	false	,	World.None	,	Category.Resource	,	Material.None	,	Market.Smith	),
-			new ItemSalesInfo( typeof(	SilurianScales	),	100	,	0	,	80	,	false	,	false	,	World.None	,	Category.Resource	,	Material.None	,	Market.Smith	),
-			new ItemSalesInfo( typeof(	KraytScales	),	100	,	0	,	80	,	false	,	false	,	World.None	,	Category.Resource	,	Material.None	,	Market.Smith	),
 			new ItemSalesInfo( typeof(	Scales	),	8	,	1	,	95	,	false	,	false	,	World.None	,	Category.None	,	Material.None	,	Market.Tinker	),
 			new ItemSalesInfo( typeof(	ScalingTools	),	21	,	15	,	75	,	false	,	false	,	World.None	,	Category.None	,	Material.None	,	Market.Smith	),
 			new ItemSalesInfo( typeof(	ScalyArms	),	158	,	0	,	0	,	false	,	false	,	World.None	,	Category.Armor	,	Material.Scales	,	Market.Smith	),
@@ -4092,6 +4088,7 @@ namespace Server
 			new ItemSalesInfo( typeof(	Artifact_RememberanceOfHereafter	),	5000	,	0	,	0	,	false	,	false	,	World.None	,	Category.Artifact	,	Material.None	,	Market.None	),
 			new ItemSalesInfo( typeof(	Artifact_SpellBreaker	),	5000	,	0	,	0	,	false	,	false	,	World.None	,	Category.Artifact	,	Material.None	,	Market.None	),	
 			new ItemSalesInfo( typeof(	Artifact_UgmarLastWord	),	5000	,	0	,	0	,	false	,	false	,	World.None	,	Category.Artifact	,	Material.None	,	Market.None	),			
+			new ItemSalesInfo( typeof(	Artifact_MelodyOfTriumph	),	5000	,	0	,	0	,	false	,	false	,	World.None	,	Category.Artifact	,	Material.None	,	Market.None	),				
 		};
 	}
 }
