@@ -36,41 +36,80 @@ namespace Server.Spells.First
 
 		public override void OnCast()
 		{
-			if ( CheckSequence() )
-			{
-				if ( Server.Items.BaseRace.BloodDrinker( Caster.RaceID ) )
-				{
-					Caster.AddToBackpack( new BloodyDrink() );
-					Caster.SendMessage( "Some fresh blood magically appears in your backpack." );
+		    if (CheckSequence())
+		    {
+		        Container pack = Caster.Backpack;
 
-					Caster.FixedParticles( 0, 10, 5, 2003, Server.Misc.PlayerSettings.GetMySpellHue( true, Caster, 0 ), 0, EffectLayer.RightHand );
-					Caster.PlaySound( 0x1E2 );
-				}
-				else if ( Server.Items.BaseRace.BrainEater( Caster.RaceID ) )
-				{
-					Caster.AddToBackpack( new FreshBrain() );
-					Caster.SendMessage( "Some fresh brains magically appears in your backpack." );
+		        if (pack == null)
+		        {
+		            Caster.SendMessage("You have no way of carrying more food.");
+		            FinishSequence();
+		            return;
+		        }
 
-					Caster.FixedParticles( 0, 10, 5, 2003, Server.Misc.PlayerSettings.GetMySpellHue( true, Caster, 0 ), 0, EffectLayer.RightHand );
-					Caster.PlaySound( 0x1E2 );
-				}
-				else
-				{
-					FoodInfo foodInfo = m_Food[Utility.Random( m_Food.Length )];
-					Item food = foodInfo.Create();
+		        if (Server.Items.BaseRace.BloodDrinker(Caster.RaceID))
+		        {
+		            Item blood = new BloodyDrink();
 
-					if ( food != null )
-					{
-						Caster.AddToBackpack( food );
-						Caster.AddToBackpack( new WaterBottle() );
-						Caster.SendMessage( "Some food and drink magically appear in your backpack." );
-						Caster.FixedParticles( 0, 10, 5, 2003, Server.Misc.PlayerSettings.GetMySpellHue( true, Caster, 0 ), 0, EffectLayer.RightHand );
-						Caster.PlaySound( 0x1E2 );
-					}
-				}
-			}
+		            if (!pack.CheckHold(Caster, blood, false, true))
+		            {
+		                blood.Delete();
+		                Caster.SendMessage("You have no way of carrying more food.");
+		                FinishSequence();
+		                return;
+		            }
 
-			FinishSequence();
+		            pack.DropItem(blood);
+		            Caster.SendMessage("Some fresh blood magically appears in your backpack.");
+		        }
+		        else if (Server.Items.BaseRace.BrainEater(Caster.RaceID))
+		        {
+		            Item brain = new FreshBrain();
+
+		            if (!pack.CheckHold(Caster, brain, false, true))
+		            {
+		                brain.Delete();
+		                Caster.SendMessage("You have no way of carrying more food.");
+		                FinishSequence();
+		                return;
+		            }
+
+		            pack.DropItem(brain);
+		            Caster.SendMessage("Some fresh brains magically appears in your backpack.");
+		        }
+		        else
+		        {
+		            FoodInfo foodInfo = m_Food[Utility.Random(m_Food.Length)];
+
+		            Item food = foodInfo.Create();
+		            Item water = new WaterBottle();
+
+		            if (!pack.CheckHold(Caster, food, false, true) ||
+		                !pack.CheckHold(Caster, water, false, true))
+		            {
+		                if (food != null) food.Delete();
+		                if (water != null) water.Delete();
+
+		                Caster.SendMessage("You have no way of carrying more food.");
+		                FinishSequence();
+		                return;
+		            }
+
+		            pack.DropItem(food);
+		            pack.DropItem(water);
+
+		            Caster.SendMessage("Some food and drink magically appear in your backpack.");
+		        }
+
+		        Caster.FixedParticles(0, 10, 5, 2003,
+		            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+		            0,
+		            EffectLayer.RightHand);
+
+		        Caster.PlaySound(0x1E2);
+		    }
+
+		    FinishSequence();
 		}
 	}
 
