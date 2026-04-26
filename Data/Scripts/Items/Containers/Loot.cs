@@ -626,11 +626,10 @@ namespace Server
 				typeof( MountedPixieGreenDeed ),	typeof( DecoBrimstone ),			typeof( Lockpicks ),			typeof( DecoTarot6 ),
 				typeof( MountedPixieLimeDeed ),		typeof( DecoDragonsBlood ),			typeof( ToolKit ),				typeof( DecoTarot7 ),
 				typeof( MountedPixieOrangeDeed ),	typeof( DecoDragonsBlood2 ),		typeof( UnfinishedBarrel ),		typeof( Cards ),
-				typeof( SacrificialAltarDeed ),		typeof( DecoEyeOfNewt ),			typeof( DecoRock2 ),			typeof( Cards2 ),
-				typeof( UnsettlingPortraitDeed ),	typeof( DecoGarlic ),				typeof( DecoRocks ),			typeof( Cards3 ),
-				typeof( GuillotineDeed ),			typeof( DecoGarlic2 ),				typeof( DecoRocks2 ),			typeof( Cards4 ),
-				typeof( WindSpirit ),				typeof( DecoGarlicBulb ),			typeof( DecoRock ),				typeof( DecoCards5 ),
-				typeof( SuitOfGoldArmorDeed ),		typeof( DecoGarlicBulb2 ),			typeof( DecoFlower ),			typeof( PlayingCards ),
+				typeof( SacrificialAltarDeed ),		typeof( Cards2 ),
+				typeof( UnsettlingPortraitDeed ),	typeof( Cards3 ),					typeof( GuillotineDeed ),			typeof( Cards4 ),
+				typeof( WindSpirit ),				typeof( DecoCards5 ),
+				typeof( SuitOfGoldArmorDeed ),		typeof( DecoFlower ),				typeof( PlayingCards ),
 				typeof( SuitOfSilverArmorDeed ),	typeof( DecoGinseng ),				typeof( DecoFlower2 ),			typeof( PlayingCards2 ),
 				typeof( WoodenCoffinDeed ),			typeof( DecoGinseng2 ),				typeof( JokeBook ),				typeof( HorseArmor ),
 				typeof( Dice4 ),					typeof( Dice6 ),					typeof( Dice8 ),				typeof( Dice10 ),
@@ -639,7 +638,8 @@ namespace Server
 				typeof( PandorasBox ),				typeof( ColoringBook ),				typeof( EverlastingBottle ),	typeof( EverlastingLoaf ),
 				typeof( GemOfSeeing ),				typeof( SlayerDeed ),				typeof( LuckyHorseShoes ),		typeof( FireHorn ),
 				typeof( SmallBagofHolding ),		typeof( MediumBagofHolding ),		typeof( LargeBagofHolding ),	typeof( BagOfHolding ),
-				typeof( DruidMirror ),				typeof( SpecialJars ),				typeof( EvilItems ),			typeof( MagicSkeltonsKey)
+				typeof( DruidMirror ),				typeof( SpecialJars ),				typeof( EvilItems ),			typeof( MagicSkeltonsKey),
+				typeof( DelsEverlastingWedge )
 			};
 		public static Type[] SArtyTypes{ get{ return m_SArtyTypes; } }
 

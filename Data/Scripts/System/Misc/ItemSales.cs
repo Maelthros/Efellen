@@ -2465,6 +2465,7 @@ namespace Server
 			new ItemSalesInfo( typeof(	EnormousBag	),	20	,	1	,	95	,	false	,	false	,	World.None	,	Category.None	,	Material.None	,	Market.Provisions	),
 			new ItemSalesInfo( typeof(	EverlastingBottle	),	5000	,	0	,	0	,	false	,	false	,	World.None	,	Category.Rare	,	Material.None	,	Market.None	),
 			new ItemSalesInfo( typeof(	EverlastingLoaf	),	5000	,	0	,	0	,	false	,	false	,	World.None	,	Category.Rare	,	Material.None	,	Market.None	),
+			new ItemSalesInfo( typeof(	DelsEverlastingWedge	),	5000	,	0	,	0	,	false	,	false	,	World.None	,	Category.Rare	,	Material.None	,	Market.None	),
 			new ItemSalesInfo( typeof(	EvilFireplaceEastFaceAddonDeed	),	6800	,	3	,	95	,	false	,	false	,	World.None	,	Category.Rare	,	Material.None	,	Market.Death	),
 			new ItemSalesInfo( typeof(	EvilFireplaceSouthFaceAddonDeed	),	6800	,	3	,	95	,	false	,	false	,	World.None	,	Category.Rare	,	Material.None	,	Market.Death	),
 			new ItemSalesInfo( typeof(	ExecutionersAxe	),	30	,	15	,	0	,	false	,	false	,	World.None	,	Category.Weapon	,	Material.Metal	,	Market.Smith	),
