@@ -30,10 +30,8 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
-			base.OnHit(attacker, defender, damageBonus);
-
-			if (attacker == null || defender == null || defender.Deleted)
-				return;
+			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
 
 			if (DateTime.UtcNow < m_NextArtifactAttackAllowed)
 				return;
@@ -47,13 +45,13 @@ namespace Server.Items
 			if (duration < 4) duration = 4;
 			if (duration > 9) duration = 9;
 
-
 			DotEffect.ApplyDot(defender, duration, attacker, Utility.RandomMinMax(1, 5));
 
 			attacker.SendMessage(33, "The Jade Scimitar bursts with power!");
 			attacker.PlaySound(0x208);
 
 			m_NextArtifactAttackAllowed = DateTime.UtcNow + TimeSpan.FromMinutes(2);
+			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_JadeScimitar( Serial serial ) : base( serial )

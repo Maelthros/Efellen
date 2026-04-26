@@ -36,9 +36,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
-		    base.OnHit(attacker, defender, damageBonus);
-
-		    if (attacker == null || defender == null)
+		    if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
 		    if (attacker.Skills[SkillName.Bludgeoning].Value <= 105.0 || attacker.Str <= 111)
@@ -116,6 +114,7 @@ namespace Server.Items
 
 		    attacker.SendMessage("Your Maul sets the ground ablaze!");
 		    SlamVisuals.SlamVisual(attacker, 5, 0x36B0, 1160);
+			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_CinderForgedMaul( Serial serial ) : base( serial )

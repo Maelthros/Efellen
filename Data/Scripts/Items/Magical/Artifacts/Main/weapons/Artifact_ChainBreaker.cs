@@ -33,8 +33,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
-		    base.OnHit(attacker, defender, damageBonus);
-		    if (attacker == null || defender == null)
+		    if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 		    if (attacker.Skills[SkillName.Bludgeoning].Value <= 105.0 || attacker.Str <= 91)
 		        return;
@@ -90,6 +89,7 @@ namespace Server.Items
 		            0x3728, 10, 10, 2023
 		        );
 		    }
+			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_ChainBreaker( Serial serial ) : base( serial )

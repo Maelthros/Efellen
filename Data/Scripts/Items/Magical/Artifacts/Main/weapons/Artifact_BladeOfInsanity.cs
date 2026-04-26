@@ -30,9 +30,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
-		    base.OnHit(attacker, defender, damageBonus);
-
-		    if (attacker == null || defender == null)
+		    if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
 		    if (attacker.Skills[SkillName.Poisoning].Value > 105.0  && attacker.Dex > 101)
@@ -109,6 +107,7 @@ namespace Server.Items
 		    }
 			attacker.SendMessage("Your blade of insanity unleashes poisonous fire!");
 			SlamVisuals.SlamVisual(attacker, 5, 0x36B0, 63);
+			base.OnHit(attacker, defender, damageBonus);
 		}
 		public Artifact_BladeOfInsanity( Serial serial ) : base( serial )
 		{

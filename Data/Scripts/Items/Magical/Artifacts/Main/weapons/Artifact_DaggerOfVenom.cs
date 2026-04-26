@@ -28,59 +28,62 @@ namespace Server.Items
 
 		public override void OnHit( Mobile attacker, Mobile defender, double damageBonus )
 		{
-			base.OnHit( attacker, defender, damageBonus );
+			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
 
-			if (Utility.RandomDouble() > 0.25)
-				return;
-			double poisoning = attacker.Skills[SkillName.Poisoning].Value;
+		    if (Utility.RandomDouble() > 0.25)
+		        return;
+
+		    double poisoning = attacker.Skills[SkillName.Poisoning].Value;
 		    double roll = Utility.RandomDouble();
-			Poison chosen = null;
+		    Poison chosen = null;
 
-    		if (poisoning < 25.0)
-    		{
-    		    if (roll < 0.20) chosen = Poison.Regular;
-    		    else chosen = Poison.Lesser;
-    		}
-    		else if (poisoning < 50.0)
-    		{
-    		    if (roll < 0.20) chosen = Poison.Greater;
-    		    else if (roll < 0.60) chosen = Poison.Regular;
-    		    else chosen = Poison.Lesser;
-    		}
-    		else if (poisoning < 75.0)
-    		{
-    		    if (roll < 0.20) chosen = Poison.Deadly;
-    		    else if (roll < 0.40) chosen = Poison.Greater;
-    		    else chosen = Poison.Lesser;
-    		}
-    		else if (poisoning < 100.0)
-    		{
-    		    if (roll < 0.33) chosen = Poison.Deadly;
-    		    else if (roll < 0.77) chosen = Poison.Greater;
-    		    else chosen = Poison.Lesser;
-    		}
-    		else
-    		{
-    		    if(roll < 0.12) chosen = Poison.Lethal;
-				else if (roll < 0.44) chosen = Poison.Deadly;
-    		    else chosen = Poison.Greater;
-    		}
+		    if (poisoning < 25.0)
+		    {
+		        if (roll < 0.20) chosen = Poison.Regular;
+		        else chosen = Poison.Lesser;
+		    }
+		    else if (poisoning < 50.0)
+		    {
+		        if (roll < 0.20) chosen = Poison.Greater;
+		        else if (roll < 0.60) chosen = Poison.Regular;
+		        else chosen = Poison.Lesser;
+		    }
+		    else if (poisoning < 75.0)
+		    {
+		        if (roll < 0.20) chosen = Poison.Deadly;
+		        else if (roll < 0.40) chosen = Poison.Greater;
+		        else chosen = Poison.Lesser;
+		    }
+		    else if (poisoning < 100.0)
+		    {
+		        if (roll < 0.33) chosen = Poison.Deadly;
+		        else if (roll < 0.77) chosen = Poison.Greater;
+		        else chosen = Poison.Lesser;
+		    }
+		    else
+		    {
+		        if (roll < 0.12) chosen = Poison.Lethal;
+		        else if (roll < 0.44) chosen = Poison.Deadly;
+		        else chosen = Poison.Greater;
+		    }
 
-    		if (chosen != null)
-    		{
-    		    defender.ApplyPoison(attacker, chosen);
+		    if (chosen != null)
+		    {
+		        defender.ApplyPoison(attacker, chosen);
 
-    		    if (chosen == Poison.Lesser)
-    		        Misc.Titles.AwardKarma(attacker, -50, true);
-    		    else if (chosen == Poison.Regular)
-    		        Misc.Titles.AwardKarma(attacker, -60, true);
-    		    else if (chosen == Poison.Greater)
-    		        Misc.Titles.AwardKarma(attacker, -70, true);
-    		    else if (chosen == Poison.Deadly)
-    		        Misc.Titles.AwardKarma(attacker, -80, true);
-			    else if (chosen == Poison.Lethal)
-    		        Misc.Titles.AwardKarma(attacker, -90, true);
-    		}
+		        if (chosen == Poison.Lesser)
+		            Misc.Titles.AwardKarma(attacker, -50, true);
+		        else if (chosen == Poison.Regular)
+		            Misc.Titles.AwardKarma(attacker, -60, true);
+		        else if (chosen == Poison.Greater)
+		            Misc.Titles.AwardKarma(attacker, -70, true);
+		        else if (chosen == Poison.Deadly)
+		            Misc.Titles.AwardKarma(attacker, -80, true);
+		        else if (chosen == Poison.Lethal)
+		            Misc.Titles.AwardKarma(attacker, -90, true);
+		    }
+			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_DaggerOfVenom( Serial serial ) : base( serial )

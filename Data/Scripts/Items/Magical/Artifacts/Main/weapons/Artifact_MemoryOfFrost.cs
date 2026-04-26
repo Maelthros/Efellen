@@ -32,9 +32,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
-		    base.OnHit(attacker, defender, damageBonus);
-
-		    if (attacker == null || defender == null)
+		    if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
 		    if (attacker.Skills[SkillName.Bludgeoning].Value <= 95.0 || attacker.Dex <= 101)
@@ -112,6 +110,7 @@ namespace Server.Items
 
 		    attacker.SendMessage("Your Tessen brings forth a chilling wind!");
 		    SlamVisuals.SlamVisual(attacker, 5, 0x36B0, 0x186);
+			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_MemoryOfFrost( Serial serial ) : base( serial )

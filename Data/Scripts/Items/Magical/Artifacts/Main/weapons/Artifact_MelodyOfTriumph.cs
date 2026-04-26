@@ -51,7 +51,8 @@ namespace Server.Items
 
 		public override void OnHit( Mobile attacker, Mobile defender, double damageBonus )
 		{
-			base.OnHit( attacker, defender, damageBonus );
+			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
 
 			if ( Utility.RandomDouble() >= 0.05 )
 				return;
@@ -86,11 +87,10 @@ namespace Server.Items
 			attacker.AddStatMod( new StatMod( StatType.Str, "MelodyOfTriumph_Str", bonus, TimeSpan.Zero ) );
 			attacker.AddStatMod( new StatMod( StatType.Dex, "MelodyOfTriumph_Dex", bonus, TimeSpan.Zero ) );
 			attacker.AddStatMod( new StatMod( StatType.Int, "MelodyOfTriumph_Int", bonus, TimeSpan.Zero ) );
-
 			MelodyOfTriumphTimer t = new MelodyOfTriumphTimer( attacker, bonus, bonus, bonus, TimeSpan.FromSeconds( secs ) );
 			t.Start();
-
 			attacker.SendMessage( "The Melody of Triumph sings with joy!" );
+			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_MelodyOfTriumph( Serial serial ) : base( serial )

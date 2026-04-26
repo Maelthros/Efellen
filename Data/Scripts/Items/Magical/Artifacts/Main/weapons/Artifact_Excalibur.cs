@@ -49,10 +49,8 @@ namespace Server.Items
 
         public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
         {
-            base.OnHit(attacker, defender, damageBonus);
-
-            if (attacker == null || attacker.Deleted || !attacker.Player)
-                return;
+            if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
 
             if (attacker.Karma < 0)
                 return;
@@ -149,6 +147,7 @@ namespace Server.Items
                 attacker.Say("Fear no darkness, my companions!");
             else
                 attacker.Say("Light protects me!");
+            base.OnHit(attacker, defender, damageBonus);
         }
 
         public override void Serialize(GenericWriter writer)

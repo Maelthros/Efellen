@@ -25,10 +25,8 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damage)
         {
-            base.OnHit(attacker, defender, damage);
-
-            if (attacker == null || defender == null)
-                return;
+            if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
 
             if (!defender.Alive || defender.Hits <= 0)
             {
@@ -39,6 +37,7 @@ namespace Server.Items
 				    attacker.SendMessage(33, "Blade Dance devour the energy of the fallen enemy!");
                 }
             }
+			base.OnHit(attacker, defender, damageBonus);
         }
 
 		public Artifact_BladeDance( Serial serial ) : base( serial )

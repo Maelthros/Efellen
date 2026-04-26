@@ -43,10 +43,8 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageDealt)
 		{
-			base.OnHit(attacker, defender, damageDealt);
-
-			if (attacker == null || defender == null || !defender.Alive)
-				return;
+			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
 
 			if (DateTime.UtcNow < m_NextSlayTime)
 				return;
@@ -86,6 +84,7 @@ namespace Server.Items
 				m_PoisonTimer = new PoisonMaintenanceTimer(attacker, this);
 				m_PoisonTimer.Start();
 			}
+			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		private class PoisonMaintenanceTimer : Timer

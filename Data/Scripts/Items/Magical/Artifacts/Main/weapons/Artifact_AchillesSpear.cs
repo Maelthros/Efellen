@@ -23,6 +23,9 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
+
 		    if (Utility.RandomDouble() < 0.15)
 		    {
 		        damageBonus += 0.35;

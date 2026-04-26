@@ -23,8 +23,8 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
         {
-            if (attacker == null || defender == null)
-                return;
+            if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
 
             if (defender.Hits > 0 && defender.Hits < (defender.HitsMax / 8) && defender.Karma < 1000)
             {

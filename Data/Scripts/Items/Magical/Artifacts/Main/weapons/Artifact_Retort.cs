@@ -24,8 +24,8 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damage)
         {
-            base.OnHit(attacker, defender, damage);
-
+            if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		        return;
             if (attacker == null || defender == null)
                 return;
 
@@ -38,6 +38,7 @@ namespace Server.Items
 				    attacker.SendMessage(33, "Retort saps the will of the fallen enemy!");
                 }
             }
+			base.OnHit(attacker, defender, damageBonus);
         }
 
 		public Artifact_Retort( Serial serial ) : base( serial )
