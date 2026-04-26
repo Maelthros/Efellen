@@ -42,7 +42,7 @@ namespace Server.Items
                     attacker.SendMessage(33, "Grim Reaper's Scythe devours the enemy's soul!");
                 }
             }
-			base.OnHit(attacker, defender, damageBonus);
+			base.OnHit(attacker, defender, damage);
         }
 
 		public Artifact_GrimReapersScythe( Serial serial ) : base( serial )

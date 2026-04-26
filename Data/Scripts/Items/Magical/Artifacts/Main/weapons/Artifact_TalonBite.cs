@@ -41,7 +41,7 @@ namespace Server.Items
                     attacker.SendMessage(33, "The Talon Bite empowers you!");
                 }
             }
-			base.OnHit(attacker, defender, damageBonus);
+			base.OnHit(attacker, defender, damage);
         }
 
 		public Artifact_TalonBite( Serial serial ) : base( serial )

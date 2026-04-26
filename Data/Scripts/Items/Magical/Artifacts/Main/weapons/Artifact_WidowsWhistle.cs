@@ -48,7 +48,7 @@ namespace Server.Items
             attacker.SendMessage(33, "The fallen humanoid empowers you!");
             attacker.PlaySound(0x1E9);
             m_NextArtifactBuff = DateTime.UtcNow + TimeSpan.FromMinutes(5.0);
-            base.OnHit(attacker, defender, damageBonus);
+            base.OnHit(attacker, defender, damage);
         }
 
         private static SlayerEntry s_RepondDeathEntry = null;

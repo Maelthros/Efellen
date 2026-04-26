@@ -38,7 +38,7 @@ namespace Server.Items
 				    attacker.SendMessage(33, "Retort saps the will of the fallen enemy!");
                 }
             }
-			base.OnHit(attacker, defender, damageBonus);
+			base.OnHit(attacker, defender, damage);
         }
 
 		public Artifact_Retort( Serial serial ) : base( serial )
