@@ -32,6 +32,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 			if (Utility.RandomDouble() < 0.15)
 		    {
 		        damageBonus += 0.35;
@@ -61,7 +62,6 @@ namespace Server.Items
 			attacker.PlaySound(0x208);
 
 			m_NextArtifactAttackAllowed = DateTime.UtcNow + TimeSpan.FromMinutes(2);
-			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_GaiasScimitar( Serial serial ) : base( serial )

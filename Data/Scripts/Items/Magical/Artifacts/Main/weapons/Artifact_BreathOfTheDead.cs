@@ -26,6 +26,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damage)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -50,7 +51,6 @@ namespace Server.Items
 			attacker.PlaySound(0x1E9);
 
 			m_NextArtifactBuff = DateTime.UtcNow + TimeSpan.FromMinutes(5.0);
-			base.OnHit(attacker, defender, damage);
 		}
 
 		private bool IsSlayerEffective(Mobile m)

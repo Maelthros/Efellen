@@ -51,6 +51,7 @@ namespace Server.Items
 
 		public override void OnHit( Mobile attacker, Mobile defender, double damageBonus )
 		{
+			base.OnHit(attacker, defender, damageBonus);
 			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -90,7 +91,6 @@ namespace Server.Items
 			MelodyOfTriumphTimer t = new MelodyOfTriumphTimer( attacker, bonus, bonus, bonus, TimeSpan.FromSeconds( secs ) );
 			t.Start();
 			attacker.SendMessage( "The Melody of Triumph sings with joy!" );
-			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_MelodyOfTriumph( Serial serial ) : base( serial )

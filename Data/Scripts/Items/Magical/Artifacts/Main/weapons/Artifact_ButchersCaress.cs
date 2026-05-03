@@ -29,6 +29,7 @@ namespace Server.Items
 
         public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
         {
+            base.OnHit(attacker, defender, damageBonus);
             if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -47,7 +48,6 @@ namespace Server.Items
                 attacker.SendMessage("Your vicious blow chops a limb out of your opponent!");
             
             m_NextParalyze = DateTime.UtcNow + TimeSpan.FromSeconds(60);
-            base.OnHit(attacker, defender, damageBonus);
         }
 
         private static SlayerEntry s_RepondEntry = null;

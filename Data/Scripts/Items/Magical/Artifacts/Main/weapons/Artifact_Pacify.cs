@@ -27,6 +27,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
         {
+			base.OnHit(attacker, defender, damageBonus);
             if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
             if (DateTime.Now < m_NextArtifactAttackAllowed)
@@ -41,8 +42,7 @@ namespace Server.Items
                     m_NextArtifactAttackAllowed = DateTime.Now + TimeSpan.FromSeconds(90);
                 }
             }
-			base.OnHit(attacker, defender, damageBonus);
-        }
+		}
 
 		public Artifact_Pacify( Serial serial ) : base( serial )
 		{

@@ -24,6 +24,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -45,7 +46,6 @@ namespace Server.Items
 			attacker.PlaySound(0x208);
 
 			m_NextArtifactAttackAllowed = DateTime.UtcNow + TimeSpan.FromMinutes(2);
-			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_TheBeserkersMaul( Serial serial ) : base( serial )

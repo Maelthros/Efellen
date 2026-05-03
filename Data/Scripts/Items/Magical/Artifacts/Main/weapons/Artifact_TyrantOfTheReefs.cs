@@ -26,6 +26,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
         {
+			base.OnHit(attacker, defender, damageBonus);
             if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
             if (DateTime.Now < m_NextParalyze)
@@ -47,8 +48,7 @@ namespace Server.Items
                     m_NextParalyze = DateTime.Now + TimeSpan.FromSeconds(30);
                 }
             }
-			base.OnHit(attacker, defender, damageBonus);
-        }
+		}
 
 		public override void GetDamageTypes( Mobile wielder, out int phys, out int fire, out int cold, out int pois, out int nrgy, out int chaos, out int direct )
 		{

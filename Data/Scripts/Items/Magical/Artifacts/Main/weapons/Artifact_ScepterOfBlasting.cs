@@ -31,6 +31,7 @@ namespace Server.Items
 		
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -74,7 +75,6 @@ namespace Server.Items
 			int missiles = GetMissileCount(secondary);
 			
 			FireEnergyMissiles(attacker, defender, missiles);
-			base.OnHit(attacker, defender, damageBonus);
 		}
 		
 		private int GetMissileCount(double secondary)

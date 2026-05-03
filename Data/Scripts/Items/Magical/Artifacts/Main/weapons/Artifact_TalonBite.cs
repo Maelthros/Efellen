@@ -25,6 +25,7 @@ namespace Server.Items
 		
 		public override void OnHit(Mobile attacker, Mobile defender, double damage)
         {
+			base.OnHit(attacker, defender, damageBonus);
             if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -41,8 +42,7 @@ namespace Server.Items
                     attacker.SendMessage(33, "The Talon Bite empowers you!");
                 }
             }
-			base.OnHit(attacker, defender, damage);
-        }
+		}
 
 		public Artifact_TalonBite( Serial serial ) : base( serial )
 		{

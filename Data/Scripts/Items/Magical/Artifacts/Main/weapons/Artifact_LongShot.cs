@@ -28,6 +28,7 @@ namespace Server.Items
 
         public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
         {
+            base.OnHit(attacker, defender, damageBonus);
             if (!m_WasHiddenBeforeShot)
                 return;
 
@@ -67,7 +68,6 @@ namespace Server.Items
             attacker.SendMessage(1161, "Headshot for " + extra+ " extra damage");
             defender.FixedParticles(0x36BD, 10, 10, 5044, 0, 0, EffectLayer.Head);
             defender.PlaySound(0x22F);
-            base.OnHit(attacker, defender, damageBonus);
         }
 
         public override TimeSpan OnSwing(Mobile attacker, Mobile defender)

@@ -25,6 +25,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damage)
         {
+			base.OnHit(attacker, defender, damageBonus);
             if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -36,8 +37,7 @@ namespace Server.Items
                 attacker.Mana += mana;
                 attacker.SendMessage(33, "Grim Reaper's Scythe devours the enemy's soul!");
             }
-			base.OnHit(attacker, defender, damage);
-        }
+		}
 
 		public Artifact_EndOfHope( Serial serial ) : base( serial )
 		{

@@ -27,6 +27,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 		    if (Utility.RandomDouble() < 0.10)
@@ -35,7 +36,6 @@ namespace Server.Items
 		        attacker.SendMessage("Your strike pierces through your enemy!");
 		        attacker.PlaySound(0x20F);
 		    }
-		    base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public ButchersViolence( Serial serial ) : base( serial )

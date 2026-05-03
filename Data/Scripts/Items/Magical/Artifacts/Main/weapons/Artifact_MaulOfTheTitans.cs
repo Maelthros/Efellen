@@ -29,6 +29,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 		    if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -102,9 +103,8 @@ namespace Server.Items
 		    {
 		        eable.Free();
 		    }
-			attacker.SendMessage("Your Maul of the titans shatters the ground!");
+			attacker.SendMessage("Your Maul shatters the ground!");
 			SlamVisuals.SlamVisual(attacker, 5, 0x36B0, 0x455);
-			base.OnHit(attacker, defender, damageBonus);
 		}
 		public Artifact_MaulOfTheTitans( Serial serial ) : base( serial )
 		{

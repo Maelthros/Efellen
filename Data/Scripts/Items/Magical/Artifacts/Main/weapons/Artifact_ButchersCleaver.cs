@@ -25,6 +25,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damage)
         {
+			base.OnHit(attacker, defender, damageBonus);
             if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -37,8 +38,7 @@ namespace Server.Items
                     attacker.SendMessage(33, "The Butcher's Cleaver gorges on the fallen enemy!");
                 }
             }
-			base.OnHit(attacker, defender, damage);
-        }
+		}
 
 		public override void GetDamageTypes( Mobile wielder, out int phys, out int fire, out int cold, out int pois, out int nrgy, out int chaos, out int direct )
 		{

@@ -30,6 +30,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 		    if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -105,7 +106,6 @@ namespace Server.Items
 		    }
 			attacker.SendMessage("Your Rune Carving Knife unleashes a shockwave!");
 			SlamVisuals.SlamVisual(attacker, 5, 0x36B0, 92);
-			base.OnHit(attacker, defender, damageBonus);
 		}
 		public Artifact_RuneCarvingKnife( Serial serial ) : base( serial )
 		{

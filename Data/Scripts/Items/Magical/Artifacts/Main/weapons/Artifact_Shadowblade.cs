@@ -34,6 +34,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
+			base.OnHit(attacker, defender, damageBonus);
 		    if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -107,7 +108,6 @@ namespace Server.Items
 		    }
 		    attacker.SendMessage("Your Shadow Blade erupts with vile darkness!");
 			SlamVisuals.SlamVisual(attacker, 5, 0x36B0, 1153);
-			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public override bool OnEquip(Mobile from)

@@ -28,6 +28,7 @@ namespace Server.Items
 
 		public override void OnHit( Mobile attacker, Mobile defender, double damageBonus )
 		{
+			base.OnHit(attacker, defender, damageBonus);
 			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -83,7 +84,6 @@ namespace Server.Items
 		        else if (chosen == Poison.Lethal)
 		            Misc.Titles.AwardKarma(attacker, -90, true);
 		    }
-			base.OnHit(attacker, defender, damageBonus);
 		}
 
 		public Artifact_DaggerOfVenom( Serial serial ) : base( serial )

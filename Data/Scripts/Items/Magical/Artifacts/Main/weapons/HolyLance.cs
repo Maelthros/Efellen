@@ -23,6 +23,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
         {
+			base.OnHit(attacker, defender, damageBonus);
             if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
@@ -39,8 +40,6 @@ namespace Server.Items
                 attacker.FixedParticles(0x3728, 10, 10, 5052, 0, 0, EffectLayer.Head);
                 attacker.PlaySound(0x1F1);
             }
-
-            base.OnHit(attacker, defender, damageBonus);
         }
 
 		public override bool OnEquip(Mobile from)
