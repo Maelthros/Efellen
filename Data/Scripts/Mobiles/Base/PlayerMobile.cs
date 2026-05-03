@@ -626,15 +626,21 @@ namespace Server.Mobiles
 		    List<Mobile> validTargets = new List<Mobile>();
 
 		    foreach (Mobile m in GetMobilesInRange(2))
-		    {
-		        if (m == this || m == defender)
-		            continue;
+			{
+			    if (m == null || m.Deleted || m == this || m == defender || !m.Alive || !CanBeHarmful(m))
+			        continue;
 
-		        if (!CanBeHarmful(m))
-		            continue;
+			    BaseCreature bc = m as BaseCreature;
 
-		        validTargets.Add(m);
-		    }
+			    if (bc != null)
+			    {
+			        if (bc.Controlled && bc.ControlMaster == this)
+			            continue;
+			        if (bc.Summoned && bc.SummonMaster == this)
+			            continue;
+			    }
+			    validTargets.Add(m);
+			}
 
 		    if (validTargets.Count == 0)
 		        return;
