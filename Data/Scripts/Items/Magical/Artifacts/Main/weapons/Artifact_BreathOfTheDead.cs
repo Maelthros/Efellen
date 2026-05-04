@@ -26,7 +26,7 @@ namespace Server.Items
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damage)
 		{
-			base.OnHit(attacker, defender, damageBonus);
+			base.OnHit(attacker, defender, damage);
 			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
 
