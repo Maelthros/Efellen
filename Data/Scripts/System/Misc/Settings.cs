@@ -307,9 +307,6 @@ namespace Server
 			if ( fee < 2000 )
 				fee = 2000;
 
-			if ( GetPlayerInfo.isFromSpace( m ) )
-				fee = fee * 4;
-
 			return fee;
 		}
 

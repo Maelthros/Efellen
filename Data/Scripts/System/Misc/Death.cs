@@ -39,13 +39,6 @@ namespace Server.Gumps
 			string c2 = "10";
 			string loss = "";
 
-			if ( GetPlayerInfo.isFromSpace( owner ) )
-			{
-				loss = " If you do, you will suffer a " + c2 + "% loss to your fame and karma. You will also lose " + c1 + "% of your statistics and skills.";
-				c1 = "10";
-				c2 = "20";
-			}
-
 			if ( m_Price > 0 )
 			{
 				if ( m_Price > m_Bank && m_Price > m_Tithe )
@@ -368,12 +361,6 @@ namespace Server.Gumps
 			string c2 = "10";
 			string loss = "";
 
-			if ( GetPlayerInfo.isFromSpace( from ) )
-			{
-				loss = " If you do, you will suffer a " + c2 + "% loss to your fame and karma. You will also lose " + c1 + "% of your statistics and skills.";
-				c1 = "10";
-				c2 = "20";
-			}
 
 			if ( from.SkillsTotal > 200 && ( from.RawDex + from.RawInt + from.RawStr ) > 90 )
 			{
@@ -472,16 +459,10 @@ namespace Server.Misc
     {
         public static void Penalty( Mobile from, bool allPenalty )
         {
-			if ( from is PlayerMobile && ( ( GetPlayerInfo.isFromSpace( from ) && !allPenalty ) || allPenalty ) )
+			if ( from is PlayerMobile && allPenalty )
 			{
 				double val1 = 0.10;
 				double val2 = (100.0 - MyServerSettings.DeathStatAndSkillLoss()) / 100;
-
-				if ( GetPlayerInfo.isFromSpace( from ) && allPenalty )
-				{
-					val1 = 0.20;
-					val2 = 0.90;
-				}
 
 				if( from.Fame > 0 ) // 10% FAME LOSS
 				{

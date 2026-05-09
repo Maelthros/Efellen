@@ -282,10 +282,6 @@ namespace Server.Items
 				Mobile from = state.Mobile; 
 				Server.Spells.Jedi.JediSpell.CastSpell( from, info.ButtonID );
 				from.CloseGump( typeof( PowerRow ) );
-				if ( Server.Misc.GetPlayerInfo.isJedi ( from, true ) )
-				{
-					from.SendGump( new PowerRow( from, mBook ) );
-				}
 			}
 		}
 
@@ -384,10 +380,6 @@ namespace Server.Items
 				Mobile from = state.Mobile; 
 				Server.Spells.Jedi.JediSpell.CastSpell( from, info.ButtonID );
 				from.CloseGump( typeof( PowerColumn ) );
-				if ( Server.Misc.GetPlayerInfo.isJedi ( from, true ) )
-				{
-					from.SendGump( new PowerColumn( from, mBook ) );
-				}
 			}
 		}
 
