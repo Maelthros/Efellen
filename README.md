@@ -14,3 +14,5 @@ To host your own server, you will need to download the server files found in thi
 
 Once the world has been generated, login with the admin account and run [buildworld once to populate the game world. 
 
+If you want to support the project's development, you can do so in my [patreon](https://www.patreon.com/cw/EstelMatiazi/membership).
+
