@@ -26,6 +26,17 @@ namespace Server.Items
 			Server.Misc.Arty.ArtySetup( this, "Dripping With Venom" );
 		}
 
+		public override void GetDamageTypes( Mobile wielder, out int phys, out int fire, out int cold, out int pois, out int nrgy, out int chaos, out int direct )
+        {
+            phys = 0;
+            cold = 0;
+            fire = 0;
+            nrgy = 0;
+            pois = 100;
+            chaos = 0;
+            direct = 0;
+        }
+
 		public override void OnHit( Mobile attacker, Mobile defender, double damageBonus )
 		{
 			base.OnHit(attacker, defender, damageBonus);

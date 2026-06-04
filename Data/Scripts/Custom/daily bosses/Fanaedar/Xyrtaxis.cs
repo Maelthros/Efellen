@@ -263,7 +263,7 @@ namespace Server.Mobiles
 		{
 			base.OnDeath( c );
             BossLootSystem.BossEnchant(this, c, 550, 100, 3, "DrowMage");
-			BossLootSystem.AwardBossSpecial( this, BossDrops, 15 );
+			BossLootSystem.AwardBossSpecial(this,BossDrops, 45);
 			for ( int i = 0; i < 4; i++ )
 			{
 				c.DropItem( Loot.RandomArty() );

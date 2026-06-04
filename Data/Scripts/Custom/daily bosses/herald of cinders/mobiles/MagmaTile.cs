@@ -53,7 +53,7 @@ namespace Server.Mobiles
 				{
 					m_Caster.DoHarmful( m );
 
-					int damage = Utility.RandomMinMax( 28, 36 );
+					int damage = Utility.RandomMinMax( 38, 46 );
 					AOS.Damage( m, m_Caster, damage, 0, 100, 0, 0, 0 );
 
 					m.FixedParticles( 0x3709, 10, 30, 5052, EffectLayer.Waist );
@@ -69,10 +69,11 @@ namespace Server.Mobiles
 		{
 			if ( Deleted )
 				return;
-				Effects.SendLocationParticles(
-                            EffectItem.Create(Location, Map, EffectItem.DefaultDuration), 
-                            0x3709, 20, 10, 0x208,0
-                        );
+
+			Effects.SendLocationParticles(
+				EffectItem.Create(Location, Map, EffectItem.DefaultDuration), 
+				0x3709, 20, 10, 0x208, 0
+			);
 
 			// Occasional smoke
 			if ( Utility.RandomBool() )
@@ -90,21 +91,17 @@ namespace Server.Mobiles
 			if ( HeraldOfCinders.IsImmuneToMagma( m ) )
 				return true;
 
-			// Only damage if not already damaged this tick
-			if ( !m_DamagedThisTick.Contains( m ) && m_Caster != null && !m_Caster.Deleted )
+			if ( m_Caster != null && !m_Caster.Deleted && !m_DamagedThisTick.ContainsKey( m ) && m_Caster.CanBeHarmful( m ) )
 			{
-				if ( m_Caster.CanBeHarmful( m ) )
-				{
-					m_Caster.DoHarmful( m );
+				m_Caster.DoHarmful( m );
 
-					int damage = Utility.RandomMinMax( 15, 25 );
-					AOS.Damage( m, m_Caster, damage, 0, 100, 0, 0, 0 );
+				int damage = Utility.RandomMinMax( 15, 25 );
+				AOS.Damage( m, m_Caster, damage, 0, 100, 0, 0, 0 );
 
-					m.FixedParticles( 0x3709, 10, 30, 5052, EffectLayer.Waist );
-					m.PlaySound( 0x208 );
+				m.FixedParticles( 0x3709, 10, 30, 5052, EffectLayer.Waist );
+				m.PlaySound( 0x208 );
 
-					m_DamagedThisTick[m] = true;
-				}
+				m_DamagedThisTick[m] = true;
 			}
 
 			return true;

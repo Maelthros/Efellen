@@ -1209,16 +1209,16 @@ namespace Server
 			return Construct( m_ArtyTypes );
 		}
 
-		public static bool isBag( Item i )
+		public static bool ShouldRerollBagOfHolding(Mobile m, Item i )
 		{
-			if ( i is SmallBagofHolding )
-				return true;
-			else if ( i is MediumBagofHolding )
-				return true;
-			else if ( i is LargeBagofHolding )
-				return true;
-			else if ( i is BagOfHolding )
-				return true;
+			if ( m == null )
+				return false;
+			// Rare. Re-roll these half the time
+			if ( i is SmallBagofHolding
+				|| i is MediumBagofHolding
+				|| i is LargeBagofHolding
+				|| i is BagOfHolding )
+				return Utility.RandomBool();
 
 			return false;
 		}
@@ -1232,28 +1232,12 @@ namespace Server
 			else
 				i = Construct( m_SArtyTypes );
 				
-			if ( m != null && isBag( i ) )
+			if ( m != null && ShouldRerollBagOfHolding(m, i ) )
 			{
-				bool bagged = false;
-
-				if ( m != null && m.Backpack != null )
-				{
-					List<Item> list = new List<Item>();
-					(m.Backpack).RecurseItems( list );
-					foreach ( Item im in list )
-					{
-						if ( isBag( im ) )
-							bagged = true;
-					}
-				}
-
-				if ( bagged )
-				{
 					i.Delete();
 					i = Construct( m_SArtyTypes );
-				}
 			}
-			else if ( Utility.RandomBool() && isBag( i ) )
+			else if ( Utility.RandomBool() && ShouldRerollBagOfHolding( m, i ) )
 			{
 				i.Delete();
 				i = Construct( m_SArtyTypes );
