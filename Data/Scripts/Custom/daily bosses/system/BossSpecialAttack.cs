@@ -13,7 +13,7 @@ namespace Server.Custom.DailyBosses.System
 {
     public static class BossSpecialAttack
     {
-        private static ArrayList m_BossBleeds = new ArrayList();
+        private static Dictionary<Mobile, BossBleedEntry> m_BossBleeds = new Dictionary<Mobile, BossBleedEntry>();
         private static Dictionary<Mobile, Dictionary<ResistanceType, ResistanceMod>> m_ActiveResistBreaches = new Dictionary<Mobile, Dictionary<ResistanceType, ResistanceMod>>();
         private const double TELEGRAPH_DELAY = 2;
         #region slam
@@ -146,7 +146,7 @@ namespace Server.Custom.DailyBosses.System
                 int maxDamage = 55 + (rage * 4);//55-67
 
                 List<Point3D> path = BuildRampagePath(boss, chargeCount);
-                List<Mobile> damagedMobiles = new List<Mobile>();
+                Hashtable damagedMobiles = new Hashtable();
 
                 foreach (Point3D loc in path)
                 {
@@ -158,13 +158,13 @@ namespace Server.Custom.DailyBosses.System
                     IPooledEnumerable eable = boss.Map.GetMobilesInRange(loc, 1);
                     foreach (Mobile m in eable)
                     {
-                        if (m != boss && m.Player && m.Alive && boss.CanBeHarmful(m) && !damagedMobiles.Contains(m))
+                        if (m != boss && m.Player && m.Alive && boss.CanBeHarmful(m) && !damagedMobiles.ContainsKey(m))
                         {
                             boss.DoHarmful(m);
                             int damage = Utility.RandomMinMax(minDamage, maxDamage);
                             AOS.Damage(m, boss, damage, 100, 0, 0, 0, 0);
                             m.FixedParticles(0x36B0, 1, 10, 5013, hue, 0, EffectLayer.Waist);
-                            damagedMobiles.Add(m);
+                            damagedMobiles[m] = true;
                         }
                     }
                     eable.Free();
@@ -463,7 +463,7 @@ namespace Server.Custom.DailyBosses.System
 
                 Point3D[] points = CrossPoints(target.Location, rage*2);
 
-                List<Mobile> damagedMobiles = new List<Mobile>();
+                Hashtable damagedMobiles = new Hashtable();
 
                 foreach (Point3D point in points)
                 {
@@ -472,7 +472,7 @@ namespace Server.Custom.DailyBosses.System
                     IPooledEnumerable eable = targetMap.GetMobilesInRange(point, 0);
                     foreach (Mobile m in eable)
                     {
-                        if (damagedMobiles.Contains(m) || m == boss || !m.Alive || !m.Player)
+                        if (damagedMobiles.ContainsKey(m) || m == boss || !m.Alive || !m.Player)
                             continue;
 
                         if (!boss.CanBeHarmful(m))
@@ -484,7 +484,7 @@ namespace Server.Custom.DailyBosses.System
                         AOS.Damage(m, boss, damage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
 
                         m.FixedParticles(0x36B0, 1, 10, 5013, hue, 0, EffectLayer.Waist);
-                        damagedMobiles.Add(m);
+                        damagedMobiles[m] = true;
                     }
                     eable.Free();
                 }
@@ -737,7 +737,7 @@ namespace Server.Custom.DailyBosses.System
                 int minDamage = 55 + (rage * 3);
                 int maxDamage = 65 + (rage * 3);
 
-                List<Mobile> damagedMobiles = new List<Mobile>();
+                Hashtable damagedMobiles = new Hashtable();
 
                 for (int currentRange = 1; currentRange <= range; currentRange++)
                 {
@@ -769,7 +769,7 @@ namespace Server.Custom.DailyBosses.System
                                 IPooledEnumerable eable = map.GetMobilesInRange(tile, 0);
                                 foreach (Mobile m in eable)
                                 {
-                                    if (damagedMobiles.Contains(m) || m == boss || !m.Alive || !m.Player)
+                                    if (damagedMobiles.ContainsKey(m) || m == boss || !m.Alive || !m.Player)
                                         continue;
 
                                     if (!boss.CanBeHarmful(m))
@@ -781,7 +781,7 @@ namespace Server.Custom.DailyBosses.System
                                     AOS.Damage(m, boss, damage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
 
                                     m.FixedParticles(0x36B0, 1, 10, 5013, hue, 0, EffectLayer.Waist);
-                                    damagedMobiles.Add(m);
+                                    damagedMobiles[m] = true;
                                 }
                                 eable.Free();
                             }
@@ -843,10 +843,14 @@ namespace Server.Custom.DailyBosses.System
             List<Point3D> validLocations = new List<Point3D>();
         
             // Find valid spawn locations
+            int radiusSq = radius * radius;
             for (int x = -radius; x <= radius; x++)
             {
                 for (int y = -radius; y <= radius; y++)
                 {
+                    if ((x * x) + (y * y) > radiusSq)
+                        continue;
+
                     Point3D loc = new Point3D(boss.X + x, boss.Y + y, boss.Z);
                     
                     if (!boss.Map.CanSpawnMobile(loc.X, loc.Y, loc.Z))
@@ -1062,6 +1066,13 @@ namespace Server.Custom.DailyBosses.System
         }
         #endregion
         #region degen aura
+        private enum DegenAuraAttribute
+        {
+            Health,
+            Mana,
+            Stamina
+        }
+
         /// <summary>
         /// Creates a degenerative aura around the boss that drains player attributes over time
         /// </summary>
@@ -1087,11 +1098,21 @@ namespace Server.Custom.DailyBosses.System
             if (boss == null || boss.Deleted || !boss.Alive)
                 return;
 
-            attribute = attribute.ToLower();
-            if (attribute != "health" && attribute != "mana" && attribute != "stamina")
+            DegenAuraAttribute attributeType;
+            switch ((attribute ?? "").ToLower())
             {
-                Console.WriteLine("Warning: Invalid attribute '" + attribute + "' for DegenAura. Must be health, mana, or stamina.");
-                return;
+                case "health":
+                    attributeType = DegenAuraAttribute.Health;
+                    break;
+                case "mana":
+                    attributeType = DegenAuraAttribute.Mana;
+                    break;
+                case "stamina":
+                    attributeType = DegenAuraAttribute.Stamina;
+                    break;
+                default:
+                    Console.WriteLine("Warning: Invalid attribute '" + attribute + "' for DegenAura. Must be health, mana, or stamina.");
+                    return;
             }
 
             if (!string.IsNullOrEmpty(warcry))
@@ -1105,7 +1126,7 @@ namespace Server.Custom.DailyBosses.System
             int finalDuration = duration + rage*2;
             int damagePerTick = intensity + rage;
 
-            new DegenAura(boss, radius, finalDuration, damagePerTick, attribute, hue);
+            new DegenAura(boss, radius, finalDuration, damagePerTick, attributeType, hue);
         }
 
         /// <summary>
@@ -1116,62 +1137,44 @@ namespace Server.Custom.DailyBosses.System
             private BaseCreature m_Boss;
             private int m_Radius;
             private int m_DamagePerTick;
-            private string m_Attribute;
+            private DegenAuraAttribute m_AttributeType;
             private int m_Hue;
-            private Timer m_TickTimer;
-            private Timer m_DurationTimer;
-            private Timer m_VisualTimer;
-            private int m_TicksRemaining;
+            private Timer m_Timer;
+            private int m_IntervalsRemaining;
+            private int m_IntervalCount;
             private bool m_Active;
 
-            private const double TICK_INTERVAL = 2.0; // Damage tick every 2 seconds
+            private const double INTERVAL_SECONDS = 0.5;
+            private const int VISUALS_PER_TICK = 4; // 4 * 0.5s = 2s
 
             public DegenAura(
                 BaseCreature boss,
                 int radius,
                 int durationSeconds,
                 int damagePerTick,
-                string attribute,
+                DegenAuraAttribute attribute,
                 int hue
             )
             {
                 m_Boss = boss;
                 m_Radius = radius;
                 m_DamagePerTick = damagePerTick;
-                m_Attribute = attribute;
+                m_AttributeType = attribute;
                 m_Hue = hue;
-                m_TicksRemaining = (int)(durationSeconds / TICK_INTERVAL);
+                m_IntervalsRemaining = durationSeconds * 2;
+                m_IntervalCount = 0;
                 m_Active = true;
 
-                m_TickTimer = Timer.DelayCall(
-                    TimeSpan.FromSeconds(TICK_INTERVAL),
-                    TimeSpan.FromSeconds(TICK_INTERVAL),
-                    new TimerCallback(OnTick)
-                );
-
-                m_VisualTimer = Timer.DelayCall(
-                    TimeSpan.FromSeconds(0.5),
-                    TimeSpan.FromSeconds(0.5),
-                    new TimerCallback(ShowVisualEffect)
-                );
-
-                m_DurationTimer = Timer.DelayCall(
-                    TimeSpan.FromSeconds(durationSeconds),
-                    new TimerCallback(End)
+                m_Timer = Timer.DelayCall(
+                    TimeSpan.FromSeconds(INTERVAL_SECONDS),
+                    TimeSpan.FromSeconds(INTERVAL_SECONDS),
+                    new TimerCallback(OnTimerTick)
                 );
             }
 
-            private void OnTick()
+            private void OnTimerTick()
             {
                 if (!m_Active || m_Boss == null || m_Boss.Deleted || !m_Boss.Alive)
-                {
-                    End();
-                    return;
-                }
-
-                m_TicksRemaining--;
-
-                if (m_TicksRemaining <= 0)
                 {
                     End();
                     return;
@@ -1184,66 +1187,15 @@ namespace Server.Custom.DailyBosses.System
                     return;
                 }
 
-                IPooledEnumerable eable = map.GetMobilesInRange(m_Boss.Location, m_Radius);
-
-                foreach (Mobile m in eable)
-                {
-                    if (m == null || m == m_Boss || !m.Alive || !m.Player)
-                        continue;
-
-                    if (!m_Boss.CanBeHarmful(m))
-                        continue;
-
-                    ApplyDegen(m);
-                }
-
-                eable.Free();
-            }
-
-            private void ApplyDegen(Mobile target)
-            {
-                if (target == null || target.Deleted || !target.Alive)
-                    return;
-
-                switch (m_Attribute)
-                {
-                    case "health":
-                        AOS.Damage(target, m_Boss, m_DamagePerTick, 100, 0, 0, 0, 0);
-                        target.FixedParticles(0x374A, 10, 15, 5013, m_Hue, 0, EffectLayer.Waist);
-                        target.PlaySound(0x1F1);
-                        break;
-
-                    case "mana":
-                        int manaDrain = Math.Min(m_DamagePerTick, target.Mana);
-                        target.Mana -= manaDrain;
-                        target.FixedParticles(0x374A, 10, 15, 5032, m_Hue, 0, EffectLayer.Head);
-                        target.PlaySound(0x1F8);
-                        break;
-
-                    case "stamina":
-                        int stamDrain = Math.Min(m_DamagePerTick, target.Stam);
-                        target.Stam -= stamDrain;
-                        target.FixedParticles(0x374A, 10, 15, 5028, m_Hue, 0, EffectLayer.CenterFeet);
-                        target.PlaySound(0x1F2);
-                        break;
-                }
-            }
-
-            private void ShowVisualEffect()
-            {
-                // Sanity
-                if (!m_Active || m_Boss == null || m_Boss.Deleted || !m_Boss.Alive)
-                {
-                    End();
-                    return;
-                }
+                m_IntervalCount++;
+                m_IntervalsRemaining--;
 
                 m_Boss.FixedParticles(0x375A, 1, 10, 5037, m_Hue, 0, EffectLayer.Waist);
 
-                if (m_Boss.Map != null && Utility.RandomBool())
+                if (Utility.RandomBool())
                 {
                     Effects.SendLocationParticles(
-                        EffectItem.Create(m_Boss.Location, m_Boss.Map, TimeSpan.FromSeconds(0.5)),
+                        EffectItem.Create(m_Boss.Location, map, TimeSpan.FromSeconds(0.5)),
                         0x3728,
                         10,
                         10,
@@ -1252,6 +1204,58 @@ namespace Server.Custom.DailyBosses.System
                         5042,
                         0
                     );
+                }
+
+                if ((m_IntervalCount % VISUALS_PER_TICK) == 0)
+                {
+                    IPooledEnumerable eable = map.GetMobilesInRange(m_Boss.Location, m_Radius);
+
+                    foreach (Mobile m in eable)
+                    {
+                        if (m == null || m == m_Boss || !m.Alive || !m.Player)
+                            continue;
+
+                        if (!m_Boss.CanBeHarmful(m))
+                            continue;
+
+                        ApplyDegen(m);
+                    }
+
+                    eable.Free();
+                }
+
+                if (m_IntervalsRemaining <= 0)
+                {
+                    End();
+                }
+            }
+
+            private void ApplyDegen(Mobile target)
+            {
+                if (target == null || target.Deleted || !target.Alive)
+                    return;
+
+                switch (m_AttributeType)
+                {
+                    case DegenAuraAttribute.Health:
+                        AOS.Damage(target, m_Boss, m_DamagePerTick, 100, 0, 0, 0, 0);
+                        target.FixedParticles(0x374A, 10, 15, 5013, m_Hue, 0, EffectLayer.Waist);
+                        target.PlaySound(0x1F1);
+                        break;
+
+                    case DegenAuraAttribute.Mana:
+                        int manaDrain = Math.Min(m_DamagePerTick, target.Mana);
+                        target.Mana -= manaDrain;
+                        target.FixedParticles(0x374A, 10, 15, 5032, m_Hue, 0, EffectLayer.Head);
+                        target.PlaySound(0x1F8);
+                        break;
+
+                    case DegenAuraAttribute.Stamina:
+                        int stamDrain = Math.Min(m_DamagePerTick, target.Stam);
+                        target.Stam -= stamDrain;
+                        target.FixedParticles(0x374A, 10, 15, 5028, m_Hue, 0, EffectLayer.CenterFeet);
+                        target.PlaySound(0x1F2);
+                        break;
                 }
             }
 
@@ -1262,22 +1266,10 @@ namespace Server.Custom.DailyBosses.System
 
                 m_Active = false;
 
-                if (m_TickTimer != null)
+                if (m_Timer != null)
                 {
-                    m_TickTimer.Stop();
-                    m_TickTimer = null;
-                }
-
-                if (m_VisualTimer != null)
-                {
-                    m_VisualTimer.Stop();
-                    m_VisualTimer = null;
-                }
-
-                if (m_DurationTimer != null)
-                {
-                    m_DurationTimer.Stop();
-                    m_DurationTimer = null;
+                    m_Timer.Stop();
+                    m_Timer = null;
                 }
 
                 if (m_Boss != null && !m_Boss.Deleted && m_Boss.Map != null)
@@ -1856,13 +1848,13 @@ namespace Server.Custom.DailyBosses.System
 
         private static BossBleedEntry FindBleedEntry(Mobile m)
         {
-            for (int i = 0; i < m_BossBleeds.Count; i++)
-            {
-                BossBleedEntry entry = (BossBleedEntry)m_BossBleeds[i];
+            if (m == null)
+                return null;
 
-                if (entry.Mobile == m)
-                    return entry;
-            }        
+            BossBleedEntry entry;
+            if (m_BossBleeds.TryGetValue(m, out entry))
+                return entry;
+
             return null;
         }
         private static bool IsBleedImmune(Mobile m)
@@ -1886,11 +1878,11 @@ namespace Server.Custom.DailyBosses.System
                 if (entry.Timer != null)
                     entry.Timer.Stop();
 
-                m_BossBleeds.Remove(entry);
+                m_BossBleeds.Remove(m);
             }
 
             Timer t = new BossBleedTimer(from, m, totalTicks);
-            m_BossBleeds.Add(new BossBleedEntry(m, t));
+            m_BossBleeds[m] = new BossBleedEntry(m, t);
             t.Start();
         }
 
@@ -1927,7 +1919,7 @@ namespace Server.Custom.DailyBosses.System
             if (entry.Timer != null)
                 entry.Timer.Stop();
 
-            m_BossBleeds.Remove(entry);
+            m_BossBleeds.Remove(m);
 
             if (message && m is PlayerMobile)
                 m.SendMessage("The bleeding has stopped.");
@@ -1962,33 +1954,32 @@ namespace Server.Custom.DailyBosses.System
         private static void LightTilesOnFire( Point3D center, Map map, int radius, int hue )
         {
         	if ( map == null )
-        		return;
+			return;
 
+            int radiusSq = radius * radius;
         	for ( int x = -radius; x <= radius; x++ )
-        	{
-        		for ( int y = -radius; y <= radius; y++ )
-        		{
-        			Point3D loc = new Point3D( center.X + x, center.Y + y, center.Z );
+         	{
+			for ( int y = -radius; y <= radius; y++ )
+			{
+				Point3D loc = new Point3D( center.X + x, center.Y + y, center.Z );
 
-        			int dx = center.X - loc.X;
-        			int dy = center.Y - loc.Y;
-        			double distance = Math.Sqrt( (dx * dx) + (dy * dy) );
+				int dx = center.X - loc.X;
+				int dy = center.Y - loc.Y;
+				if ((dx * dx) + (dy * dy) > radiusSq)
+					continue;
 
-        			if ( distance > radius )
-        				continue;
-
-        			Effects.SendLocationParticles(
-        				EffectItem.Create( loc, map, TimeSpan.FromSeconds( 2.0 ) ),
-        				0x3709,
-        				10,
-        				30,
-        				hue,
-        				0,
-        				5052,
-        				0
-        			);
-        		}
-        	}
+				Effects.SendLocationParticles(
+					EffectItem.Create( loc, map, TimeSpan.FromSeconds( 2.0 ) ),
+					0x3709,
+					10,
+					30,
+					hue,
+					0,
+					5052,
+					0
+				);
+			}
+         	}
         }
 
         private static void SetOnFire( Mobile m, int hue )
