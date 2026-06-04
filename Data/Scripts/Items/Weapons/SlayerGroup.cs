@@ -1168,6 +1168,7 @@ namespace Server.Items
 			abyss.Opposition = new SlayerGroup[]{ };
 			abyss.FoundOn = new Type[]{ };
 			abyss.Super = new SlayerEntry( SlayerName.Exorcism,
+				typeof( LolthQueenOfTheDemonweb),
 				typeof( IraelLolthsMorbidReverie),
 				typeof( BaabLolthsEndlessLust),
 				typeof( OrthanLolthsConsumingTenderness ),
