@@ -33,7 +33,7 @@ namespace Server.Misc
 
         +"Lolth's Gift - X of Y of (hopefully) 2026<BR>"
         +" <BR>"
-        +"	* New Bosses:<BR>"
+        +"	* New Bosses were added to various regions of the game:<BR>"
 		+"  • Tier 1 (Solo):<BR>"
         +"• Mother Superior defends her convent east of Gray.<BR>"
 		+"• Blacktooth the Trollbear raids southern Sosarian caravans.<BR>"
@@ -60,6 +60,8 @@ namespace Server.Misc
 		+"• The Prince of Darkness holds court in Ravendark (RIP Ozzy).<BR>"
 		+"• The Heavenly Marshall protects southern Sosaria from castle Griffin's Roost.<BR>"
 		+"• The Herald of Cinders protects his brood in Destard.<BR>"
+		+"  • Tier 6+ (for groups of masochists:)<BR>"
+		+"• The Queen of the Demonweb pits is lonely and would love some company.<BR>"
 		+"  • Each boss can drop drop themed and powerful items, skill scrolls and a variety of treasure.<BR>"
 		+" <BR>"
         +"  * Crafting Overhaul:<BR>"
