@@ -31,13 +31,13 @@ namespace Server.Custom
             int targetZ = target.Z;
             WealthTier tier = WealthTiers[wealthLevel - 1];
 
+            int radiusSq = radius * radius;
+
             for (int x = -radius; x <= radius; ++x)
             {
                 for (int y = -radius; y <= radius; ++y)
                 {
-                    double dist = Math.Sqrt(x * x + y * y);
-
-                    if (dist <= radius)
+                    if (x * x + y * y <= radiusSq)
                         new RichesSpawnTimer(map, target.X + x, target.Y + y, targetZ, tier).Start();
                 }
             }
