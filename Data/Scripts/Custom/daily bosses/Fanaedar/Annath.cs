@@ -392,7 +392,7 @@ namespace Server.Mobiles
 		{
 		    BossLootSystem.BossEnchant(this, c, 550, 100, 3, "DrowPriestess");
 
-			BossLootSystem.AwardBossSpecial( this, BossDrops, 15 );
+			BossLootSystem.AwardBossSpecial(this,BossDrops, 45);
 			for ( int i = 0; i < 4; i++ )
 			{
  	           	c.DropItem( Loot.RandomArty() );				
