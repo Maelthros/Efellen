@@ -31,7 +31,7 @@ namespace Server.Mobiles
 		{
 			Name = "Orthan";
 			Title = "Lolths Consuming Tenderness";
-            Body = 784;
+            Body = 222;
 			BaseSoundID = 959;
 			Hue = 0x0b32;
 

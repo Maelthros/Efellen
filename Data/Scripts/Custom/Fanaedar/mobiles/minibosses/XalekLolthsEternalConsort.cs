@@ -31,7 +31,7 @@ namespace Server.Mobiles
 		{
 			Name = "Xalek";
 			Title = "Lolths Eternal Consort";
-            Body = 1240;
+            Body = 769;
 			BaseSoundID = 471;
 		
 			SetStr( 596, 670 );
