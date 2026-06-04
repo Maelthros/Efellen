@@ -2126,11 +2126,11 @@ namespace Server.Items
 		    // ── Weapon durability ─────────────────────────────────────────────────
 		    bool acidic = defender is Slime        || defender is GreenSlime  ||
 		                  defender is BlackPudding || defender is LavaPuddle  ||
-		                  defender is AcidPuddle   || defender is ToxicElemental || defender is LolthsJealousy;
+		                  defender is AcidPuddle   || defender is ToxicElemental || defender is LolthsJealousy || defender is NathyrraLolthsErodingLove;
 
 		    int ruin = 20 + (int)Density;
 
-			if (defender is LolthsJealousy)
+			if (defender is LolthsJealousy || defender is NathyrraLolthsErodingLove)
 			{
 				ruin = (int)(ruin * 1.25);
 			}
