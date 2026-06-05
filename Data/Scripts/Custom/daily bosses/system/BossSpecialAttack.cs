@@ -66,7 +66,7 @@ namespace Server.Custom.DailyBosses.System
 
             Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
             {
-                if (boss.Deleted || !boss.Alive || bossMap == null)
+                if (boss.Deleted || !boss.Alive || bossMap == null || boss.Map != bossMap)
                     return;
 
                 boss.PlaySound(0x64F);
@@ -128,11 +128,12 @@ namespace Server.Custom.DailyBosses.System
             boss.FixedParticles(0x376A, 9, 32, 5030, hue, 0, EffectLayer.Waist);
             boss.PlaySound(0x15E);
 
-            Effects.SendLocationEffect(boss.Location, boss.Map, 0x3728, 30, 10, hue, 0);
+            Map bossMap = boss.Map;
+            Effects.SendLocationEffect(boss.Location, bossMap, 0x3728, 30, 10, hue, 0);
 
             Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
             {
-                if (boss.Deleted || !boss.Alive)
+                if (boss.Deleted || !boss.Alive || boss.Map == null || boss.Map != bossMap)
                 {
                     boss.Frozen = false;
                     return;
@@ -174,7 +175,7 @@ namespace Server.Custom.DailyBosses.System
                 boss.Frozen = true;
                 Timer.DelayCall(TimeSpan.FromSeconds(stunDuration), delegate()
                 {
-                    if (boss.Deleted)
+                    if (boss.Deleted || !boss.Alive || boss.Map == null)
                         return;
 
                     boss.Frozen = false;
@@ -237,7 +238,7 @@ namespace Server.Custom.DailyBosses.System
 
             Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
             {
-                if (boss.Deleted || !boss.Alive || map == null)
+                if (boss.Deleted || !boss.Alive || map == null || boss.Map != map)
                     return;
 
                 foreach (Point3D loc in spawnLocations)
@@ -263,7 +264,7 @@ namespace Server.Custom.DailyBosses.System
                     monster.IsTempEnemy = true;
                     monster.MoveToWorld(loc, map);
                     
-                    if (target != null && target.Alive)
+                    if (target != null && target.Alive && target.Map == map)
                         monster.Combatant = target;
                 }
             });
@@ -355,7 +356,7 @@ namespace Server.Custom.DailyBosses.System
 
             Timer.DelayCall(TimeSpan.FromSeconds(2.0), delegate()
             {
-                if (boss.Deleted || !boss.Alive || bossMap == null)
+                if (boss.Deleted || !boss.Alive || bossMap == null || boss.Map != bossMap)
                     return;
 
                 if (!string.IsNullOrEmpty(warcry))
@@ -455,7 +456,7 @@ namespace Server.Custom.DailyBosses.System
 
             Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY * 2), delegate()
             {
-                if (boss.Deleted || !boss.Alive || targetMap == null)
+                if (boss.Deleted || !boss.Alive || boss.Map == null || boss.Map != targetMap || target == null || target.Deleted || targetMap == null || target.Map != targetMap)
                     return;
 
                 int minDamage = 55 + (rage * 3);//55-64
@@ -527,6 +528,9 @@ namespace Server.Custom.DailyBosses.System
         	int minDamage = (int)(45 + (rage * 2));//45-51
         	int maxDamage = 55 + (rage * 4);//55-77
 
+        	Point3D targetLocation = target.Location;
+            Map targetMap = target.Map;
+
         	if (!string.IsNullOrEmpty(warcry))
             {
                 boss.PublicOverheadMessage(MessageType.Regular, hue, false, warcry);
@@ -550,25 +554,25 @@ namespace Server.Custom.DailyBosses.System
 
         	Timer.DelayCall( TimeSpan.FromSeconds( TELEGRAPH_DELAY ), delegate()
         	{
-        		if ( target == null || target.Deleted || target.Map == null )
-        			return;
+				if ( boss == null || boss.Deleted || !boss.Alive || target == null || target.Deleted || targetMap == null || target.Map != targetMap || boss.Map != targetMap )
+					return;
 
-        		Map map = target.Map;
+				Map map = targetMap;
 
-        		Effects.SendLocationParticles(
-        			EffectItem.Create( target.Location, map, EffectItem.DefaultDuration ),
-        			0x36BD,
-        			20,
-        			10,
-        			hue,
-        			0,
-        			5044,
-        			0
-        		);
+			Effects.SendLocationParticles(
+				EffectItem.Create( targetLocation, map, EffectItem.DefaultDuration ),
+				0x36BD,
+				20,
+				10,
+				hue,
+				0,
+				5044,
+				0
+			);
 
-        		Effects.PlaySound( target.Location, map, 0x307 );
+			Effects.PlaySound( targetLocation, map, 0x307 );
 
-        		IPooledEnumerable eable = target.GetMobilesInRange( radius );
+			IPooledEnumerable eable = targetMap.GetMobilesInRange( targetLocation, radius );
         		foreach ( Mobile m in eable )
         		{
         			if ( m == null || m.Deleted || !m.Alive || m == boss )
@@ -597,7 +601,7 @@ namespace Server.Custom.DailyBosses.System
         			SetOnFire( m, hue );
         		}
         		eable.Free();
-        		LightTilesOnFire( target.Location, map, radius, hue );
+        		LightTilesOnFire( targetLocation, map, radius, hue );
         	});
         }
         #endregion
@@ -646,7 +650,7 @@ namespace Server.Custom.DailyBosses.System
             Map bossMap = boss.Map;
             Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
             {
-                if (boss.Deleted || !boss.Alive || bossMap == null || target == null || target.Deleted || !target.Alive)
+                if (boss.Deleted || !boss.Alive || bossMap == null || boss.Map != bossMap || target == null || target.Deleted || !target.Alive || target.Map != bossMap)
                     return;
                 
                 boss.PlaySound(0x64F);
@@ -722,7 +726,7 @@ namespace Server.Custom.DailyBosses.System
 
             Timer.DelayCall(TimeSpan.FromSeconds(2.0), delegate()
             {
-                if (boss.Deleted || !boss.Alive || map == null)
+                if (boss.Deleted || !boss.Alive || map == null || boss.Map != map || target == null || target.Deleted || target.Map != map)
                     return;
                 
                 boss.Frozen = false;
@@ -746,7 +750,7 @@ namespace Server.Custom.DailyBosses.System
 
                     Timer.DelayCall(TimeSpan.FromMilliseconds(delay * 150), delegate()
                     {
-                        if (boss.Deleted || !boss.Alive || map == null)
+                        if (boss.Deleted || !boss.Alive || map == null || boss.Map != map)
                             return;
 
                         List<Point3D> coneTiles = GetConeTiles(bossLocation, direction, capturedRange);
@@ -981,12 +985,12 @@ namespace Server.Custom.DailyBosses.System
         
             private void Explode()
             {
-                if (m_Map == null || m_Boss == null || m_Boss.Deleted)
+                if (m_Map == null || m_Boss == null || m_Boss.Deleted || !m_Boss.Alive || m_Boss.Map != m_Map)
                 {
                     Stop();
                     return;
                 }
-        
+
                 // Explosion effect
                 Effects.SendLocationParticles(
                     EffectItem.Create(m_Location, m_Map, EffectItem.DefaultDuration),
@@ -1385,20 +1389,20 @@ namespace Server.Custom.DailyBosses.System
 
             Timer.DelayCall(TimeSpan.FromSeconds(4.0), delegate
             {
-                if (boss == null || boss.Deleted || !boss.Alive || boss.Map == null)
+                if (boss == null || boss.Deleted || !boss.Alive || boss.Map == null || map == null || boss.Map != map)
                     return;
 
                 IPooledEnumerable eable = map.GetMobilesInRange(center, 6);
 
                 foreach (Mobile m in eable)
                 {
-                    if (m == null || m.Deleted || !m.Alive)
+                    if (m == null || m.Deleted || !m.Alive || m.Map == null || m.Map != map)
                         continue;
 
                     if (!m.Player)
                         continue;
 
-                    if (!boss.CanBeHarmful(m))
+                    if (!boss.CanBeHarmful(m, false))
                         continue;
 
                     Point3D dest = FindAdjacentTile(boss, map);
@@ -1482,7 +1486,7 @@ namespace Server.Custom.DailyBosses.System
 
             Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
             {
-                if (boss.Deleted || !boss.Alive || targetMap == null)
+                if (boss.Deleted || !boss.Alive || boss.Map == null || targetMap == null)
                     return;
 
                 int sapAmount  = 30 + rage * 3;
