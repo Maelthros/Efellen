@@ -100,25 +100,27 @@ namespace Server.Items
             List<Item> toDelete = new List<Item>();
             int totalAdded = 0;
 
-            foreach (Item item in pack.Items)
+            List<Item> found = new List<Item>();
+            GetAllScrollsInBackpack(pack, found);
+
+            foreach (Item item in found)
             {
-                if (item is EtherealPowerScroll)
-                {
-                    EtherealPowerScroll scroll = (EtherealPowerScroll)item;
-                    SkillName skill = scroll.Skill;
+                if (item == null || item.Deleted)
+                    continue;
 
-                    if (m_Entries.ContainsKey(skill))
-                    {
-                        m_Entries[skill]++;
-                    }
-                    else
-                    {
-                        m_Entries[skill] = 1;
-                    }
+                EtherealPowerScroll scroll = item as EtherealPowerScroll;
+                if (scroll == null)
+                    continue;
 
-                    toDelete.Add(item);
-                    totalAdded++;
-                }
+                SkillName skill = scroll.Skill;
+
+                if (m_Entries.ContainsKey(skill))
+                    m_Entries[skill]++;
+                else
+                    m_Entries[skill] = 1;
+
+                toDelete.Add(item);
+                totalAdded++;
             }
 
             foreach (Item item in toDelete)
@@ -140,6 +142,23 @@ namespace Server.Items
             else
             {
                 from.SendMessage("There are no Ethereal Power Scrolls in your backpack to organize.");
+            }
+        }
+
+        private void GetAllScrollsInBackpack(Container container, List<Item> list)
+        {
+            if (container == null)
+                return;
+
+            foreach (Item item in container.Items)
+            {
+                if (item == null || item.Deleted)
+                    continue;
+
+                if (item is Container)
+                    GetAllScrollsInBackpack((Container)item, list);
+                else if (item is EtherealPowerScroll)
+                    list.Add(item);
             }
         }
 
