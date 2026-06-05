@@ -97,7 +97,7 @@ namespace Server.Items
 		{
 			base.OnHit(attacker, defender, damageBonus);
 
-			if (attacker == null || defender == null)
+			if (attacker == null || defender == null || attacker.Deleted || defender.Deleted || !attacker.Alive || !defender.Alive || attacker.Map == null || defender.Map == null)
 				return;
 
 			if ( attacker.Karma > -15000 )
@@ -123,7 +123,7 @@ namespace Server.Items
 				return;
 			}
 
-			if (DateTime.Now < m_NextArtifactAttackAllowed)
+			if (DateTime.UtcNow < m_NextArtifactAttackAllowed)
 				return;
 
 			if (m_Table.ContainsKey(defender))
@@ -133,7 +133,7 @@ namespace Server.Items
 				return;
 
 
-			m_NextArtifactAttackAllowed = DateTime.Now + TimeSpan.FromSeconds(60.0);
+			m_NextArtifactAttackAllowed = DateTime.UtcNow + TimeSpan.FromSeconds(60.0);
 
 			int penalty = GetResistancePenalty(attacker);
 
@@ -165,14 +165,14 @@ namespace Server.Items
 			if (luck > 2000)
 				luck = 2000;
 
-			total += ((double)luck / 2000.0) * 7.5;
+			total += luck * 0.00375; // 7.5 / 2000
 
 			double skill = attacker.Skills[SkillName.Bludgeoning].Base;
 
 			if (skill > 125.0)
 				skill = 125.0;
 
-			total += (skill / 125.0) * 7.5;
+			total += skill * 0.06; // 7.5 / 125
 
 			int penalty = (int)total;
 

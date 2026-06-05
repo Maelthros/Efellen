@@ -106,7 +106,7 @@ namespace Server.Items
 		{
 			base.OnHit(attacker, defender, damageBonus);
 
-			if (attacker == null || defender == null)
+			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted || !defender.Alive || !attacker.Alive)
 				return;
 
 			if (attacker.Karma > -15000)
@@ -165,6 +165,9 @@ namespace Server.Items
 
 		private void TryPoisonBurst(Mobile attacker, Mobile defender)
 		{
+			if (attacker == null || defender == null || attacker.Deleted || defender.Deleted || !attacker.Alive || !defender.Alive)
+				return;
+
 			if (DateTime.UtcNow < m_NextArtifactAttackAllowed)
 				return;
 
@@ -186,7 +189,7 @@ namespace Server.Items
 			{
 				foreach (Mobile m in eable)
 				{
-					if (m == null || m.Deleted || !m.Alive)
+					if (m == null || m.Deleted || !m.Alive || m == attacker)
 						continue;
 
 					if (!attacker.CanBeHarmful(m, false))
@@ -199,7 +202,7 @@ namespace Server.Items
 					if (damage < 1)
 						damage = 1;
 
-					m.Damage(damage, attacker);
+					m.Hits = Math.Max(0, m.Hits - damage);
 
 					int gfx = CloudGraphics[Utility.Random(cloudLen)];
 

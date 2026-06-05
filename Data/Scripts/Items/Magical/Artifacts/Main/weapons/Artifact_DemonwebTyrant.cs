@@ -64,7 +64,7 @@ namespace Server.Items
 		{
 			base.OnHit( attacker, defender, damageBonus );
 
-			if ( attacker == null || defender == null )
+			if (attacker == null || defender == null || attacker.Deleted || defender.Deleted || !attacker.Alive || !defender.Alive || attacker.Map == null || defender.Map == null)
 				return;
 
 			if ( attacker.Karma > -15000 )
@@ -90,7 +90,10 @@ namespace Server.Items
 				return;
 			}
 
-			if ( DateTime.Now < m_NextArtifactAttackAllowed )
+			if ( DateTime.UtcNow < m_NextArtifactAttackAllowed )
+				return;
+
+			if ( !attacker.CanBeHarmful( defender, false ) )
 				return;
 
 			double chance = GetProcChance( attacker );
@@ -98,7 +101,7 @@ namespace Server.Items
 			if ( Utility.RandomDouble() > chance )
 				return;
 
-			m_NextArtifactAttackAllowed = DateTime.Now + TimeSpan.FromSeconds( 60.0 );
+			m_NextArtifactAttackAllowed = DateTime.UtcNow + TimeSpan.FromSeconds( 60.0 );
 
 			int hitLoss = GetPositiveKarmaLoss( defender.Karma );
 			int stamLoss = GetNegativeKarmaLoss( defender.Karma );
@@ -140,28 +143,19 @@ namespace Server.Items
 
 		private double GetProcChance( Mobile from )
 		{
-			double luckChance = 0.0;
-			double swordsChance = 0.0;
+			int cappedLuck = from.Luck;
 
-			if ( from.Luck > 0 )
-			{
-				int cappedLuck = from.Luck;
+			if ( cappedLuck > 2000 )
+				cappedLuck = 2000;
 
-				if ( cappedLuck > 2000 )
-					cappedLuck = 2000;
+			double luckChance = cappedLuck * 0.0000125; // 0.025 / 2000
 
-				luckChance = (double)cappedLuck / 2000.0 * 0.025;
-			}
+			double swords = from.Skills[SkillName.Swords].Base;
 
-			if ( from.Skills[SkillName.Swords] != null )
-			{
-				double swords = from.Skills[SkillName.Swords].Base;
+			if ( swords > 125.0 )
+				swords = 125.0;
 
-				if ( swords > 125.0 )
-					swords = 125.0;
-
-				swordsChance = swords / 125.0 * 0.025;
-			}
+			double swordsChance = swords * 0.0002; // 0.025 / 125
 
 			return luckChance + swordsChance;
 		}
@@ -214,7 +208,7 @@ namespace Server.Items
 
 		private int GetLossAmount( int max, int percent )
 		{
-			int amount = (int)( (double)max * (double)percent / 100.0 );
+			int amount = max * percent / 100;
 
 			if ( amount < 1 )
 				amount = 1;
