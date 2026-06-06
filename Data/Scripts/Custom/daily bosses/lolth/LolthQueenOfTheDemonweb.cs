@@ -175,7 +175,7 @@ namespace Server.Mobiles
 
 			if (Utility.RandomDouble() < 0.10)
 			{
-				switch (Utility.RandomMinMax(1, 3))
+				switch (Utility.RandomMinMax(1, 4))
 				{
 					case 1:
 						BossSpecialAttack.PerformTargettedAoE(this, from, m_Rage, "Come closer, take my kiss!", 0x922, 0, 0, 0, 100, 0);
@@ -186,10 +186,11 @@ namespace Server.Mobiles
 					case 3:
 						BossSpecialAttack.PerformSlam(this, "My love shall devour thee!", 0x922, m_Rage, 6, 0, 0, 0, 100, 0);
 						break;
+					case 4:
+						BossSpecialAttack.SummonHonorGuard(this, from, "Hosts of the Demonweb, answer me!", 4, typeof(Archfiend), 0x922);
+						break;
 				}
 			}
-
-
 			base.OnDamage(amount, from, willKill);
 		}
 
@@ -324,7 +325,7 @@ namespace Server.Mobiles
 				c.DropItem(Loot.RandomArty());
 				c.DropItem(new EtherealPowerScroll());
 				c.DropItem(AscensionScrollFactory.CreateRandom());
-				if(Utility.RandomDouble() < 0.55)
+				if (Utility.RandomDouble() < 0.55)
 				{
 					c.DropItem(new OrbOfTheDemonwebPits());
 				}
