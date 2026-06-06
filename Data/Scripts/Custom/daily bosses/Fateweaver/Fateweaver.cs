@@ -42,7 +42,6 @@ namespace Server.Mobiles
 		private static readonly List<Type> BossDrops = new List<Type>
     	{
     	   	typeof(Artifact_RobeOfTheFateweaver),
-			typeof(Artifact_CircletOfTheDreamweaver),
 			typeof(Artifact_MantleOfTheFateweaver),
 			typeof(Artifact_CloakOfTheFateweaver),
 			typeof(Artifact_TalonOfLolth),
