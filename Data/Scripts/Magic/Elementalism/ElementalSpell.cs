@@ -320,10 +320,10 @@ namespace Server.Spells.Elementalism
 			}
 			else if ( id == 308 )
 			{
-				description = "A lesser fire elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires a control slot.";
-				if ( elm == "air" ){ description = "A lesser air elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires a control slot."; }
-				else if ( elm == "earth" ){ description = "A lesser earth elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires a control slot."; }
-				else if ( elm == "water" ){ description = "A lesser water elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires a control slot."; }
+				description = "A lesser fire elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires two control slots.";
+				if ( elm == "air" ){ description = "A lesser air elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires two control slots."; }
+				else if ( elm == "earth" ){ description = "A lesser earth elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires two control slots."; }
+				else if ( elm == "water" ){ description = "A lesser water elemental is summoned to serve the caster. The elemental disappears after a set amount of time and requires two control slots."; }
 			}
 			else if ( id == 309 )
 			{
