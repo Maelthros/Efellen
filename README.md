@@ -38,7 +38,7 @@ Efellen is a custom server built on [Secrets of Sosaria](https://github.com/Secr
 
 ### Running a Local Server
 
-1. Download the [latest server files](https://github.com/EstelMatiazi/Efellent/releases/latest) from the assets page
+1. Download the [latest server files](https://github.com/EstelMatiazi/Efellen/releases/latest) from the assets page
 2. Extract and run the executable
 3. Update your client settings to connect to `127.0.0.1`
 
