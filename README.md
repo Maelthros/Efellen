@@ -1,18 +1,64 @@
 # Efellen
 
-For instructions, see the [manual](Docs/Manual.md).
+**A challenging medieval fantasy UO shard designed for solo and small group adventures.**
 
-This is a rewrite of Secrets of Sosaria, focused on medieval fantasy and a general increase in difficulty. There are many new dungeons and perils, and many new systems to master. 
+Efellen is a custom server built on [Secrets of Sosaria](https://github.com/Secrets-of-Sosaria/World) that reimagines the Ultima Online experience with a focus on engaging combat, meaningful progression, and dangerous mysteries waiting to be uncovered.
 
-All artifact weapons have unique and interesting abilities, many enemies have been tweaked and made more dangerous, and the land itself is more hostile to adventurers that dare to brave it. 
+---
 
-It was build for experienced rnr/aoa/sos players, or to those brave enough to face it. Virtually every aspect of the game has been touched in some way, some systems have been retired, some have been altered for a more streamlined experience. It's a constant work in progress that aims to create a less bloated and more dnd-focused and internaly consistent experience. 
+## What Awaits You
 
-To play, you will need the Client [found here](https://drive.google.com/file/d/1cMoSQilGKJOanFro-OonOFza1m482lTx/view). The client comes with the default IP of our dedicated multiplayer setting. If you want to play offline, you need to open the settings file and change the ip to 127.0.0.1 (or whatever you are using locally).
+### Challenging Content
+- **20+ Unique Bosses** — Each with distinct mechanics, summons, and brutal challenges that reward the brave with powerful artifacts and treasure.
+- **Expanded Dungeons** — Classic locations reimagined with new rooms, enhanced encounters, additional quests, and hidden secrets to discover.
+- **Dynamic Encounters** — Various groups of adventurers and villains traverse the lands, offering both challenges and opportunities for those bold enough to engage them.
 
-To host your own server, you will need to download the server files found in this repository. Click the green 'Code' button in this page and download the zip.  Once the download finishes, unzip it in your C drive root and run the world.exe file. The first run will build the entire world, so it might take a while depending on your system. It will also prompt you to create the admin account. Take note of the credentials you provide to it. 
+### Character Progression
+- **Ascensions** — Endgame upgrade paths that let you specialize your character with unique passive and active abilities. Master up to level 20 with significant gameplay impacts.
+- **Class Archetypes** — Reworked systems with meaningful build diversity. Various skills have been touched in significant ways to increase the variety of possible builds.
+- **Shapeshifting Druids** — Unlock ancient secrets of transformation, maul your enemies with tooth and claw.
 
-Once the world has been generated, login with the admin account and run [buildworld once to populate the game world. 
+### Enhanced Systems
+- **Refined Itemization** — Less property bloat, greater focus on consistent optimization and meaningful choices for endgame advancement. 
+- **Balanced Progression** — Early, mid, and late-game transitions feel more streamlined. Huge power spikes have been mostly removed, and the general gearing flow has been upgraded dramatically.
+- **Artifact Weapons** — All artifact weapons now have unique abilities that can dramatically change your approach to challenges and your plans for how your character's journey will shape up after finding them.
+- **Varied Enemy Spellcasters** — Enemy spellcasters now have over D&D-inspired spells to choose from based on their class. Druids, clerics, bards and wizards now feel very different from each other, and require careful maneuvering around in combat. 
 
-If you want to support the project's development, you can do so in my [patreon](https://www.patreon.com/cw/EstelMatiazi/membership).
+---
+
+## 🚀 Quick Start
+
+### Playing Online
+
+1. Download the [latest client release](https://github.com/EstelMatiazi/Efellen/releases/latest)
+2. Extract and run the executable
+3. You'll be automatically connected to our public multiplayer server
+
+**What about Razor?** Make sure your launcher's settings file points to Razor's path correctly.
+
+### Running a Local Server
+
+1. Download the [latest server files](https://github.com/EstelMatiazi/Efellent/releases/latest) from the assets page
+2. Extract and run the executable
+3. Update your client settings to connect to `127.0.0.1`
+
+**Admin Access:** A default admin account is provided:
+- **Username:** `admin`
+- **Password:** `password`
+
+**Important:** If hosting a multiplayer server, you might want to use the `[password` command in-game with the admin character.
+
+Other than that, new accounts are created automatically by providing a username and password. 
+
+---
+
+## Documentation
+
+For more detailed information, lore, systems, and gameplay guides, see the [Player Manual](Docs/Manual.md).
+
+---
+
+## Support the Project
+
+Enjoying Efellen? Consider supporting development on [Patreon](https://www.patreon.com/cw/EstelMatiazi/). The game will always be free and completely open source, so this is by no means required to enjoy the shard. 
 
