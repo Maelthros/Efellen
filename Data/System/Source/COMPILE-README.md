@@ -21,3 +21,16 @@ Ensure [dotnet](https://formulae.brew.sh/formula/dotnet) is installed via [Homeb
 ```
 dotnet build Source
 ```
+## Compiling on Linux
+
+To compile under Linux, navigate do /Data/System and run the following:
+
+```
+mcs -optimize+ -unsafe -t:exe -out:../../WorldLinux.exe -win32icon:Source/icon.ico -nowarn:219,414 -d:NEWTIMERS -d:NEWPARENT -d:MONO -recurse:Source/*.cs
+```
+
+later, run it with mono on the root folder, where WorldLinux.exe was created:
+
+```
+mono WorldLinux.exe
+```
