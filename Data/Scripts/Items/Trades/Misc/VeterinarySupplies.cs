@@ -98,7 +98,7 @@ namespace Server.Items
             if (Utility.RandomDouble() <= successChance)
             {
                 from.SendMessage("You begin tending to your followers... ({0:F1}s)", cooldown.TotalSeconds);
-                from.PublicOverheadMessage(MessageType.Regular, 0x22, false, String.Format("You begin tending to your followers... ({0}s)", cooldown.TotalSeconds));
+                from.PrivateOverheadMessage(MessageType.Regular, 0x22, false, "You being tending to your followers..." + cooldown.TotalSeconds+ "s" , from.NetState);
                 Timer.DelayCall(cooldown, new TimerStateCallback(ApplyVetSupplies), from);
             }
             else
@@ -123,7 +123,7 @@ namespace Server.Items
 
             bool anyAffected = false;
 
-            IPooledEnumerable eable = from.GetMobilesInRange(2);
+            IPooledEnumerable eable = from.GetMobilesInRange(4);
             foreach (Mobile m in eable)
             {
                 BaseCreature pet = m as BaseCreature;
