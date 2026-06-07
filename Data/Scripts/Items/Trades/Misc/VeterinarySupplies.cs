@@ -148,7 +148,7 @@ namespace Server.Items
                         }
                     }
 
-                    if (pet.Alive && from.InRange(pet.Location, 2))
+                    if (pet.Alive && from.InRange(pet.Location, 4))
                     {
                         int healed = 0;
 
