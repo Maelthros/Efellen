@@ -66,7 +66,7 @@ namespace Server.Items
 				return;
 			}
 
-			if (from.Skills[SkillName.Druidism].Value < 70.0 || from.Skills[SkillName.Druidism].Value < 70.0 )
+			if (from.Skills[SkillName.Druidism].Value < 70.0 || from.Skills[SkillName.Spiritualism].Value < 70.0 )
 			{
 				from.SendMessage("You are not skilled enough to shapeshift. You need at least 70 in Druidism and Spiritualism.");
 				return;
