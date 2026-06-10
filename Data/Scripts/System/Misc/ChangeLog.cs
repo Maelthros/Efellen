@@ -37,7 +37,9 @@ namespace Server.Misc
 		+"• Hunter's mark system:"
 		+"  • Added the [HuntersMark command, which allows for skilled trackers to gain a damage bonus against their prey based on their skill level.<BR>"
 		+"  • When Hunter's Mark is active on a target, the tracker can raise its tracking skill by hitting it. Hunter's mark has a 1 minute cooldown between uses, and can also be triggered by regular use of the tracking skill.<BR>"
-
+		+" <BR>"
+		+"  * Items:<BR>"
+		+"  * Added various new artifacts as boss reward and global drops / sage quest rewards.<BR>"
 		+ sepLine()
 		+"Lolth's Gift - 6th of June of 2026<BR>"
 		+" <BR>"
