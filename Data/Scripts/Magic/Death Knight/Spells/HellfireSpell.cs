@@ -18,7 +18,7 @@ namespace Server.Spells.DeathKnight
 		public override TimeSpan CastDelayBase { get { return TimeSpan.FromSeconds( 1 ); } }
 		public override int RequiredTithing{ get{ return 42; } }
 		public override double RequiredSkill{ get{ return 70.0; } }
-		public override int RequiredMana{ get{ return 52; } }
+		public override int RequiredMana{ get{ return 42; } }
 
 		public HellfireSpell( Mobile caster, Item scroll ) : base( caster, scroll, m_Info )
 		{
@@ -43,7 +43,7 @@ namespace Server.Spells.DeathKnight
 
 				SpellHelper.Turn( Caster, m );
 
-				double damage = GetKarmaPower( Caster ) / 5;
+				double damage = GetKarmaPower( Caster ) / 3;
 
 				SpellHelper.Damage( TimeSpan.Zero, m, Caster, damage, 0, 100, 0, 0, 0 );
 
