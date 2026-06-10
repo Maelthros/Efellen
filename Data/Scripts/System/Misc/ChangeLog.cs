@@ -33,13 +33,19 @@ namespace Server.Misc
 
         +"Wrath of Ashardalom - Xth of Y of Z<BR>"
 		+" <BR>"
-		+"  * Progression & Systems:<BR>"
+		+"  * Progression, game balance & Systems:<BR>"
 		+"• Hunter's mark system:"
 		+"  • Added the [HuntersMark command, which allows for skilled trackers to gain a damage bonus against their prey based on their skill level.<BR>"
 		+"  • When Hunter's Mark is active on a target, the tracker can raise its tracking skill by hitting it. Hunter's mark has a 1 minute cooldown between uses, and can also be triggered by regular use of the tracking skill.<BR>"
+		+"• Various spells from unlockable classes (mystic, death knight, holy priest, shinobi) have been buffed and rebalanced.<BR>"
 		+" <BR>"
 		+"  * Items:<BR>"
-		+"  * Added various new artifacts as boss reward and global drops / sage quest rewards.<BR>"
+		+"• Added various new artifacts as boss reward and global drops / sage quest rewards.<BR>"
+		+" <BR>"
+		+"  * Quality of Life:<BR>"
+		+"• spellbooks for mages, necromancer and elementalists and songbooks now have a 'setup' context menu entry which will auto-collect missing scrolls from the player's inventory and add them to the book.<BR>"
+		+" <BR>"
+
 		+ sepLine()
 		+"Lolth's Gift - 6th of June of 2026<BR>"
 		+" <BR>"
