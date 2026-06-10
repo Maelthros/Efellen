@@ -31,7 +31,18 @@ namespace Server.Misc
        
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        +"Lolth's Gift - 6th of June of 2026<BR>"
+        +"Wrath of Ashardalom - Xth of Y of Z<BR>"
+		+" <BR>"
+		+"  * Progression & Systems:<BR>"
+		+"• Hunter's mark system:"
+		+"  • Added the [HuntersMark command, which allows for skilled trackers to gain a damage bonus against their prey based on their skill level.<BR>"
+		+"  • When Hunter's Mark is active on a target, the tracker can raise its tracking skill by hitting it. Hunter's mark has a 1 minute cooldown between uses, and can also be triggered by regular use of the tracking skill.<BR>"
+
+		+ sepLine()
+		+"Lolth's Gift - 6th of June of 2026<BR>"
+		+" <BR>"
+		+"  * New Bosses were added to various regions of the game:<BR>"
+	    +"Lolth's Gift - 6th of June of 2026<BR>"
         +" <BR>"
         +"	* New Bosses were added to various regions of the game:<BR>"
 		+"• Each boss can drop drop themed and powerful items, skill scrolls and a variety of treasure.<BR>"

@@ -1769,6 +1769,7 @@ namespace Server.Engines.Help
 				+ "[Ascension - show you the main ascension window.<br><br>"
 				+ "[AscensionQuickbar - opens the ability quickbar for the currently selected ascension.<br><br>"
 				+ "[SkillDrop - open the skill reduction gump.<br><br>"
+				+" [HuntersMark - Allows a skilled tracker to gain a damage bonus against their prey based on their skill level.<br><br>"
 
 				+ "<br><br>"
 

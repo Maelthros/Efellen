@@ -3996,10 +3996,23 @@ namespace Server.Mobiles
 			if ( willKill && from is PlayerMobile )
 				Timer.DelayCall( TimeSpan.FromSeconds( 10 ), new TimerCallback( ((PlayerMobile) from).RecoverAmmo ) );
 
-			if (from != null)
+			if ( from != null && from is PlayerMobile && from.Skills.Tracking.Value > 8.33 )
 			{
-				double bonus = HunterMarkSystem.GetDamageBonus(from, this);
-				amount = (int)(amount * bonus);
+				double bonus = HunterMarkSystem.GetDamageBonus( from, this );
+
+				if ( bonus > 1.0 )
+				{
+					amount = (int)( amount * bonus );
+
+					if ( Utility.RandomDouble() < 0.10 )
+					{
+						from.CheckSkill(
+							SkillName.Tracking,
+							0.0,
+							125.0
+						);
+					}
+				}
 			}
 
 
