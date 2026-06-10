@@ -64,7 +64,7 @@ namespace Server.Custom.DailyBosses.System
             Point3D bossLocation = boss.Location;
             Map bossMap = boss.Map;
 
-            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate ()
             {
                 if (boss.Deleted || !boss.Alive || bossMap == null || boss.Map != bossMap)
                     return;
@@ -76,7 +76,7 @@ namespace Server.Custom.DailyBosses.System
                 int maxDamage = 70 + (rage * 6);//70-88
 
                 IPooledEnumerable eable = bossMap.GetMobilesInRange(bossLocation, range);
-                
+
                 foreach (Mobile m in eable)
                 {
                     if (m == null || m == boss || !m.Player || !m.Alive)
@@ -86,7 +86,7 @@ namespace Server.Custom.DailyBosses.System
                         continue;
 
                     boss.DoHarmful(m);
-                    
+
                     int damage = Utility.RandomMinMax(minDamage, maxDamage);
                     AOS.Damage(m, boss, damage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
 
@@ -131,7 +131,7 @@ namespace Server.Custom.DailyBosses.System
             Map bossMap = boss.Map;
             Effects.SendLocationEffect(boss.Location, bossMap, 0x3728, 30, 10, hue, 0);
 
-            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate ()
             {
                 if (boss.Deleted || !boss.Alive || boss.Map == null || boss.Map != bossMap)
                 {
@@ -173,12 +173,15 @@ namespace Server.Custom.DailyBosses.System
 
                 // Post-rampage stun
                 boss.Frozen = true;
-                Timer.DelayCall(TimeSpan.FromSeconds(stunDuration), delegate()
+                Timer.DelayCall(TimeSpan.FromSeconds(stunDuration), delegate ()
                 {
+                    if (boss != null && !boss.Deleted)
+                        boss.Frozen = false;
+
                     if (boss.Deleted || !boss.Alive || boss.Map == null)
                         return;
 
-                    boss.Frozen = false;
+
                     boss.PublicOverheadMessage(MessageType.Regular, hue, false, "*recovers balance*");
                     boss.FixedParticles(0x375A, 10, 15, 5013, hue, 0, EffectLayer.Waist);
                 });
@@ -236,7 +239,7 @@ namespace Server.Custom.DailyBosses.System
                 Effects.PlaySound(loc, map, 0x20F);
             }
 
-            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate ()
             {
                 if (boss.Deleted || !boss.Alive || map == null || boss.Map != map)
                     return;
@@ -263,7 +266,7 @@ namespace Server.Custom.DailyBosses.System
                     monster.Team = boss.Team;
                     monster.IsTempEnemy = true;
                     monster.MoveToWorld(loc, map);
-                    
+
                     if (target != null && target.Alive && target.Map == map)
                         monster.Combatant = target;
                 }
@@ -298,7 +301,7 @@ namespace Server.Custom.DailyBosses.System
             boss.PlaySound(0x64D);
 
             IPooledEnumerable eable = boss.GetMobilesInRange(range);
-            
+
             foreach (Mobile m in eable)
             {
                 if (m == boss || !m.Alive || !m.Player || !boss.CanBeHarmful(m))
@@ -316,7 +319,7 @@ namespace Server.Custom.DailyBosses.System
 
                 boss.DoHarmful(m);
 
-                m.Paralyze(TimeSpan.FromSeconds(GetParalyzeDuration(m,rage)));
+                m.Paralyze(TimeSpan.FromSeconds(GetParalyzeDuration(m, rage)));
                 m.SendMessage("You are frozen in terror!");
                 m.FixedParticles(0x376A, 9, 32, 5030, EffectLayer.Head);
             }
@@ -354,7 +357,7 @@ namespace Server.Custom.DailyBosses.System
             Point3D bossLocation = boss.Location;
             Map bossMap = boss.Map;
 
-            Timer.DelayCall(TimeSpan.FromSeconds(2.0), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(2.0), delegate ()
             {
                 if (boss.Deleted || !boss.Alive || bossMap == null || boss.Map != bossMap)
                     return;
@@ -454,7 +457,7 @@ namespace Server.Custom.DailyBosses.System
             Point3D targetLocation = target.Location;
             Map targetMap = target.Map;
 
-            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY * 2), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY * 2), delegate ()
             {
                 if (boss.Deleted || !boss.Alive || boss.Map == null || boss.Map != targetMap || target == null || target.Deleted || targetMap == null || target.Map != targetMap)
                     return;
@@ -462,7 +465,7 @@ namespace Server.Custom.DailyBosses.System
                 int minDamage = 55 + (rage * 3);//55-64
                 int maxDamage = 75 + (rage * 6);//75-93
 
-                Point3D[] points = CrossPoints(target.Location, rage*2);
+                Point3D[] points = CrossPoints(target.Location, rage * 2);
 
                 Hashtable damagedMobiles = new Hashtable();
 
@@ -480,7 +483,7 @@ namespace Server.Custom.DailyBosses.System
                             continue;
 
                         boss.DoHarmful(m);
-                        
+
                         int damage = Utility.RandomMinMax(minDamage, maxDamage);
                         AOS.Damage(m, boss, damage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
 
@@ -509,100 +512,100 @@ namespace Server.Custom.DailyBosses.System
         /// <param name="energyDmg">Energy damage percentage (0-100)</param>
         public static void PerformTargettedAoE(
             BaseCreature boss,
-        	Mobile target,
-        	int rage,
-        	string warcry,
-        	int hue,
-        	int physicalDmg,
-        	int fireDmg,
-        	int coldDmg,
-        	int poisonDmg,
-        	int energyDmg
+            Mobile target,
+            int rage,
+            string warcry,
+            int hue,
+            int physicalDmg,
+            int fireDmg,
+            int coldDmg,
+            int poisonDmg,
+            int energyDmg
         )
         {
-        	if ( target == null || target.Deleted || target.Map == null )
-        		return;
+            if (target == null || target.Deleted || target.Map == null)
+                return;
 
-        	int radius = 4 + rage;
+            int radius = 4 + rage;
 
-        	int minDamage = (int)(45 + (rage * 2));//45-51
-        	int maxDamage = 55 + (rage * 4);//55-77
+            int minDamage = (int)(45 + (rage * 2));//45-51
+            int maxDamage = 55 + (rage * 4);//55-77
 
-        	Point3D targetLocation = target.Location;
+            Point3D targetLocation = target.Location;
             Map targetMap = target.Map;
 
-        	if (!string.IsNullOrEmpty(warcry))
+            if (!string.IsNullOrEmpty(warcry))
             {
                 boss.PublicOverheadMessage(MessageType.Regular, hue, false, warcry);
             }
 
-        	boss.MovingParticles(
-        		target,
-        		0x1C19,
-        		1,
-        		0,
-        		false,
-        		true,
-        		hue,
-        		0,
-        		9502,
-        		6014,
-        		0x11D,
-        		EffectLayer.Waist,
-        		0
-        	);
+            boss.MovingParticles(
+                target,
+                0x1C19,
+                1,
+                0,
+                false,
+                true,
+                hue,
+                0,
+                9502,
+                6014,
+                0x11D,
+                EffectLayer.Waist,
+                0
+            );
 
-        	Timer.DelayCall( TimeSpan.FromSeconds( TELEGRAPH_DELAY ), delegate()
-        	{
-				if ( boss == null || boss.Deleted || !boss.Alive || target == null || target.Deleted || targetMap == null || target.Map != targetMap || boss.Map != targetMap )
-					return;
+            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate ()
+            {
+                if (boss == null || boss.Deleted || !boss.Alive || target == null || target.Deleted || targetMap == null || target.Map != targetMap || boss.Map != targetMap)
+                    return;
 
-				Map map = targetMap;
+                Map map = targetMap;
 
-			Effects.SendLocationParticles(
-				EffectItem.Create( targetLocation, map, EffectItem.DefaultDuration ),
-				0x36BD,
-				20,
-				10,
-				hue,
-				0,
-				5044,
-				0
-			);
+                Effects.SendLocationParticles(
+                    EffectItem.Create(targetLocation, map, EffectItem.DefaultDuration),
+                    0x36BD,
+                    20,
+                    10,
+                    hue,
+                    0,
+                    5044,
+                    0
+                );
 
-			Effects.PlaySound( targetLocation, map, 0x307 );
+                Effects.PlaySound(targetLocation, map, 0x307);
 
-			IPooledEnumerable eable = targetMap.GetMobilesInRange( targetLocation, radius );
-        		foreach ( Mobile m in eable )
-        		{
-        			if ( m == null || m.Deleted || !m.Alive || m == boss )
-        				continue;
+                IPooledEnumerable eable = targetMap.GetMobilesInRange(targetLocation, radius);
+                foreach (Mobile m in eable)
+                {
+                    if (m == null || m.Deleted || !m.Alive || m == boss)
+                        continue;
 
-        			if ( m is BaseCreature )
-        			{
-        				BaseCreature bc = (BaseCreature)m;
-        				if ( bc.Team == boss.Team )
-        					continue;
-        			}
+                    if (m is BaseCreature)
+                    {
+                        BaseCreature bc = (BaseCreature)m;
+                        if (bc.Team == boss.Team)
+                            continue;
+                    }
 
-        			int damage = Utility.RandomMinMax( minDamage, maxDamage );
+                    int damage = Utility.RandomMinMax(minDamage, maxDamage);
 
-        			AOS.Damage(
-        				m,
-        				boss,
-        				damage,
-        				physicalDmg,
-        				fireDmg,
-        				coldDmg,
-        				poisonDmg,
-        				energyDmg
-        			);
+                    AOS.Damage(
+                        m,
+                        boss,
+                        damage,
+                        physicalDmg,
+                        fireDmg,
+                        coldDmg,
+                        poisonDmg,
+                        energyDmg
+                    );
 
-        			SetOnFire( m, hue );
-        		}
-        		eable.Free();
-        		LightTilesOnFire( targetLocation, map, radius, hue );
-        	});
+                    SetOnFire(m, hue);
+                }
+                eable.Free();
+                LightTilesOnFire(targetLocation, map, radius, hue);
+            });
         }
         #endregion
         #region smite
@@ -621,18 +624,18 @@ namespace Server.Custom.DailyBosses.System
         /// <param name="energyDmg">Energy damage percentage (0-100)</param>
         public static void PerformSmite(
             BaseCreature boss,
-        	Mobile target,
-        	int rage,
-        	string warcry,
-        	int hue,
-        	int physicalDmg,
-        	int fireDmg,
-        	int coldDmg,
-        	int poisonDmg,
-        	int energyDmg
+            Mobile target,
+            int rage,
+            string warcry,
+            int hue,
+            int physicalDmg,
+            int fireDmg,
+            int coldDmg,
+            int poisonDmg,
+            int energyDmg
         )
         {
-           if (boss == null || boss.Deleted || !boss.Alive || target == null || target.Deleted || !target.Alive)
+            if (boss == null || boss.Deleted || !boss.Alive || target == null || target.Deleted || !target.Alive)
                 return;
 
             int totalDamage = physicalDmg + fireDmg + coldDmg + poisonDmg + energyDmg;
@@ -648,19 +651,19 @@ namespace Server.Custom.DailyBosses.System
             boss.PlaySound(0x208);
             Point3D bossLocation = boss.Location;
             Map bossMap = boss.Map;
-            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate ()
             {
                 if (boss.Deleted || !boss.Alive || bossMap == null || boss.Map != bossMap || target == null || target.Deleted || !target.Alive || target.Map != bossMap)
                     return;
-                
+
                 boss.PlaySound(0x64F);
                 Effects.SendLocationEffect(bossLocation, bossMap, 0x36B0, 30, 10, hue, 0);
                 int minDamage = 65 + (int)(rage * 3);//65-77
                 int maxDamage = 80 + (rage * 4);//80-92
                 boss.DoHarmful(target);
                 int damage = Utility.RandomMinMax(minDamage, maxDamage);
-	            target.BoltEffect(0);
-	            target.PlaySound(0x1FB);
+                target.BoltEffect(0);
+                target.PlaySound(0x1FB);
                 AOS.Damage(target, boss, damage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
                 target.FixedParticles(0x36B0, 1, 10, 5013, hue, 0, EffectLayer.Waist);
             });
@@ -724,12 +727,14 @@ namespace Server.Custom.DailyBosses.System
 
             Direction direction = GetDirection(bossLocation, targetLocation);
 
-            Timer.DelayCall(TimeSpan.FromSeconds(2.0), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(2.0), delegate ()
             {
+                if (boss != null && !boss.Deleted)
+                    boss.Frozen = false;
+
                 if (boss.Deleted || !boss.Alive || map == null || boss.Map != map || target == null || target.Deleted || target.Map != map)
                     return;
-                
-                boss.Frozen = false;
+
 
                 if (!string.IsNullOrEmpty(warcry))
                 {
@@ -748,7 +753,7 @@ namespace Server.Custom.DailyBosses.System
                     int delay = currentRange - 1;
                     int capturedRange = currentRange;
 
-                    Timer.DelayCall(TimeSpan.FromMilliseconds(delay * 150), delegate()
+                    Timer.DelayCall(TimeSpan.FromMilliseconds(delay * 150), delegate ()
                     {
                         if (boss.Deleted || !boss.Alive || map == null || boss.Map != map)
                             return;
@@ -768,27 +773,26 @@ namespace Server.Custom.DailyBosses.System
                                 0
                             );
 
-                            if (capturedRange == range)
+
+                            IPooledEnumerable eable = map.GetMobilesInRange(tile, 0);
+                            foreach (Mobile m in eable)
                             {
-                                IPooledEnumerable eable = map.GetMobilesInRange(tile, 0);
-                                foreach (Mobile m in eable)
-                                {
-                                    if (damagedMobiles.ContainsKey(m) || m == boss || !m.Alive || !m.Player)
-                                        continue;
+                                if (damagedMobiles.ContainsKey(m) || m == boss || !m.Alive || !m.Player)
+                                    continue;
 
-                                    if (!boss.CanBeHarmful(m))
-                                        continue;
+                                if (!boss.CanBeHarmful(m))
+                                    continue;
 
-                                    boss.DoHarmful(m);
+                                boss.DoHarmful(m);
 
-                                    int damage = Utility.RandomMinMax(minDamage, maxDamage);
-                                    AOS.Damage(m, boss, damage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
+                                int damage = Utility.RandomMinMax(minDamage, maxDamage);
+                                AOS.Damage(m, boss, damage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
 
-                                    m.FixedParticles(0x36B0, 1, 10, 5013, hue, 0, EffectLayer.Waist);
-                                    damagedMobiles[m] = true;
-                                }
-                                eable.Free();
+                                m.FixedParticles(0x36B0, 1, 10, 5013, hue, 0, EffectLayer.Waist);
+                                damagedMobiles[m] = true;
                             }
+                            eable.Free();
+
                         }
                         Effects.PlaySound(bossLocation, map, 0x208);
                     });
@@ -828,24 +832,24 @@ namespace Server.Custom.DailyBosses.System
         {
             if (boss == null || boss.Deleted || !boss.Alive || boss.Map == null)
                 return;
-        
+
             int totalDamage = physicalDmg + fireDmg + coldDmg + poisonDmg + energyDmg;
             if (totalDamage != 100)
             {
                 Console.WriteLine("Warning: Damage percentages for " + boss.Name + " delayed explosion total " + totalDamage + "%, expected 100%");
             }
-        
+
             int tilesToMark = Utility.RandomMinMax(8, 12) + (rage * 3);
-        
+
             if (!string.IsNullOrEmpty(warcry))
             {
                 boss.PublicOverheadMessage(MessageType.Regular, hue, false, warcry);
             }
-        
+
             boss.PlaySound(0x233);
-        
+
             List<Point3D> validLocations = new List<Point3D>();
-        
+
             // Find valid spawn locations
             int radiusSq = radius * radius;
             for (int x = -radius; x <= radius; x++)
@@ -856,10 +860,10 @@ namespace Server.Custom.DailyBosses.System
                         continue;
 
                     Point3D loc = new Point3D(boss.X + x, boss.Y + y, boss.Z);
-                    
+
                     if (!boss.Map.CanSpawnMobile(loc.X, loc.Y, loc.Z))
                         continue;
-        
+
                     bool occupied = false;
                     IPooledEnumerable eable = boss.Map.GetMobilesInRange(loc, 0);
                     foreach (Mobile m in eable)
@@ -868,24 +872,24 @@ namespace Server.Custom.DailyBosses.System
                         break;
                     }
                     eable.Free();
-        
+
                     if (!occupied)
                         validLocations.Add(loc);
                 }
             }
-        
+
             int marked = 0;
             while (marked < tilesToMark && validLocations.Count > 0)
             {
                 int index = Utility.Random(validLocations.Count);
                 Point3D loc = validLocations[index];
                 validLocations.RemoveAt(index);
-        
+
                 CreateDelayedExplosiveTile(boss, loc, hue, rage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
                 marked++;
             }
         }
-        
+
         /// <summary>
         /// Creates a single explosive tile that detonates after a delay
         /// </summary>
@@ -903,10 +907,10 @@ namespace Server.Custom.DailyBosses.System
         {
             if (boss.Map == null)
                 return;
-        
+
             new DelayedExplosiveTile(boss, location, boss.Map, hue, rage, physicalDmg, fireDmg, coldDmg, poisonDmg, energyDmg);
         }
-        
+
         /// <summary>
         /// Represents an explosive tile that detonates after a delay
         /// </summary>
@@ -924,7 +928,7 @@ namespace Server.Custom.DailyBosses.System
             private int m_PoisonDmg;
             private int m_EnergyDmg;
             private int m_Damage;
-        
+
             public DelayedExplosiveTile(
                 BaseCreature boss,
                 Point3D location,
@@ -948,15 +952,15 @@ namespace Server.Custom.DailyBosses.System
                 m_PoisonDmg = poisonDmg;
                 m_EnergyDmg = energyDmg;
                 m_Damage = 150 + (rage * 10);
-        
+
                 // Create visual marker
                 m_Visual = new ExplosiveRuneItem(hue);
                 m_Visual.MoveToWorld(location, map);
-        
+
                 // Show warning effect
                 Effects.SendLocationParticles(
                     EffectItem.Create(location, map, TimeSpan.FromSeconds(0.5)),
-                    0x3728, 
+                    0x3728,
                     5,
                     10,
                     0,
@@ -965,24 +969,24 @@ namespace Server.Custom.DailyBosses.System
                     0
                 );
                 Effects.PlaySound(location, map, 0x44D);
-        
+
                 // Calculate delay: base 5-9 seconds, -1 min and max per rage
                 int minDelay = Math.Max(1, 5 - rage);
                 int maxDelay = Math.Max(2, 9 - rage);
                 double delay = Utility.RandomMinMax(minDelay * 10, maxDelay * 10) / 10.0;
-                
+
                 m_Timer = Timer.DelayCall(TimeSpan.FromSeconds(delay), new TimerCallback(Explode));
             }
-        
+
             public void Stop()
             {
                 if (m_Timer != null && m_Timer.Running)
                     m_Timer.Stop();
-        
+
                 if (m_Visual != null && !m_Visual.Deleted)
                     m_Visual.Delete();
             }
-        
+
             private void Explode()
             {
                 if (m_Map == null || m_Boss == null || m_Boss.Deleted || !m_Boss.Alive || m_Boss.Map != m_Map)
@@ -997,49 +1001,49 @@ namespace Server.Custom.DailyBosses.System
                     0x3709,
                     10,
                     30,
-                    0,     
+                    0,
                     0,
                     5052,
                     0
                 );
-                
+
                 // Smoke after explosion
                 Effects.SendLocationParticles(
                     EffectItem.Create(m_Location, m_Map, TimeSpan.FromSeconds(1.5)),
                     0x3728,
                     10,
                     15,
-                    0,    
+                    0,
                     0,
                     0,
                     0
                 );
-                
+
                 Effects.PlaySound(m_Location, m_Map, 0x307);
-        
+
                 // Damage anyone standing on this tile
                 IPooledEnumerable eable = m_Map.GetMobilesInRange(m_Location, 0);
                 foreach (Mobile m in eable)
                 {
                     if (m == null || m == m_Boss || !m.Alive)
                         continue;
-        
+
                     if (m is BaseCreature)
                     {
                         BaseCreature bc = m as BaseCreature;
                         if (bc != null && bc.Team == m_Boss.Team)
                             continue;
                     }
-        
+
                     AOS.Damage(m, m_Boss, m_Damage, m_PhysicalDmg, m_FireDmg, m_ColdDmg, m_PoisonDmg, m_EnergyDmg);
                     m.FixedParticles(0x3709, 10, 30, 5052, m_Hue, 0, EffectLayer.Waist);
                 }
                 eable.Free();
-        
+
                 if (m_Visual != null && !m_Visual.Deleted)
                     m_Visual.Delete();
             }
-        
+
             private class ExplosiveRuneItem : Item
             {
                 public ExplosiveRuneItem(int hue) : base(0x1B1F) // Fire runes
@@ -1048,22 +1052,22 @@ namespace Server.Custom.DailyBosses.System
                     Hue = hue;
                     Name = "Explosive Runes";
                 }
-        
+
                 public ExplosiveRuneItem(Serial serial) : base(serial)
                 {
                 }
-        
+
                 public override void Serialize(GenericWriter writer)
                 {
                     base.Serialize(writer);
                     writer.Write((int)0);
                 }
-        
+
                 public override void Deserialize(GenericReader reader)
                 {
                     base.Deserialize(reader);
                     int version = reader.ReadInt();
-                    
+
                     Timer.DelayCall(TimeSpan.Zero, new TimerCallback(Delete));
                 }
             }
@@ -1124,10 +1128,10 @@ namespace Server.Custom.DailyBosses.System
                 boss.PublicOverheadMessage(MessageType.Regular, hue, false, warcry);
             }
 
-           boss.FixedParticles(0x375A, 10, 15, 5037, hue, 0, EffectLayer.Waist);
+            boss.FixedParticles(0x375A, 10, 15, 5037, hue, 0, EffectLayer.Waist);
             boss.PlaySound(0x1F5);
 
-            int finalDuration = duration + rage*2;
+            int finalDuration = duration + rage * 2;
             int damagePerTick = intensity + rage;
 
             new DegenAura(boss, radius, finalDuration, damagePerTick, attributeType, hue);
@@ -1285,7 +1289,7 @@ namespace Server.Custom.DailyBosses.System
         }
         #endregion
         #region demonweb ritual
-          /// <summary>
+        /// <summary>
         /// Te'els ultimate - spawns spider webs, brings forth lightning, roots and summons nasty spiders
         /// </summary>
         /// <param name="boss">The boss performing the attack</param>
@@ -1349,10 +1353,10 @@ namespace Server.Custom.DailyBosses.System
                             if (spawn == Point3D.Zero)
                                 continue;
                             BaseCreature s = new DemonwebSpinner();
-				            Point3D loc = GetSpawnLocation( bc,boss.Map );
-				            s.IsTempEnemy = true;
-				            s.MoveToWorld( loc, boss.Map );
-				         }
+                            Point3D loc = GetSpawnLocation(bc, boss.Map);
+                            s.IsTempEnemy = true;
+                            s.MoveToWorld(loc, boss.Map);
+                        }
                     }
 
                     eable.Free();
@@ -1362,7 +1366,7 @@ namespace Server.Custom.DailyBosses.System
 
         #endregion
         #region perform pull
-         /// <summary>
+        /// <summary>
         /// Pulls players close to the boss, paralyzes and optionally poisons them
         /// </summary>
         /// <param name="boss">The boss performing the attack</param>
@@ -1484,13 +1488,13 @@ namespace Server.Custom.DailyBosses.System
             Point3D targetLocation = target.Location;
             Map targetMap = target.Map;
 
-            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(TELEGRAPH_DELAY), delegate ()
             {
                 if (boss.Deleted || !boss.Alive || boss.Map == null || targetMap == null)
                     return;
 
-                int sapAmount  = 30 + rage * 3;
-                int duration   = 10 + rage * 3;
+                int sapAmount = 30 + rage * 3;
+                int duration = 10 + rage * 3;
 
                 Effects.PlaySound(targetLocation, targetMap, 0x208);
 
@@ -1532,7 +1536,7 @@ namespace Server.Custom.DailyBosses.System
 
             m.SendMessage("Your " + resistLabel + " resistance has been sapped by " + sapAmount + " for " + duration + " seconds!");
 
-            Timer.DelayCall(TimeSpan.FromSeconds(duration), delegate()
+            Timer.DelayCall(TimeSpan.FromSeconds(duration), delegate ()
             {
                 if (m == null || m.Deleted)
                     return;
@@ -1572,11 +1576,11 @@ namespace Server.Custom.DailyBosses.System
             switch (resist)
             {
                 case "physical": result = ResistanceType.Physical; return true;
-                case "fire":     result = ResistanceType.Fire;     return true;
-                case "cold":     result = ResistanceType.Cold;     return true;
-                case "poison":   result = ResistanceType.Poison;   return true;
-                case "energy":   result = ResistanceType.Energy;   return true;
-                default:         result = ResistanceType.Physical; return false;
+                case "fire": result = ResistanceType.Fire; return true;
+                case "cold": result = ResistanceType.Cold; return true;
+                case "poison": result = ResistanceType.Poison; return true;
+                case "energy": result = ResistanceType.Energy; return true;
+                default: result = ResistanceType.Physical; return false;
             }
         }
         #endregion
@@ -1829,14 +1833,14 @@ namespace Server.Custom.DailyBosses.System
             return boss.Location;
         }
         private static int GetParalyzeDuration(Mobile m, int rage)
-		{
-			int resist = (int)(m.Skills.MagicResist.Value);
-			// base 2s at 125, caps 8s at 0 magic resist, adds rage afterwards
-			int duration = (8 - (int)(resist * (6.0 / 125.0))) + rage;
-            if (duration < 2 )
+        {
+            int resist = (int)(m.Skills.MagicResist.Value);
+            // base 2s at 125, caps 8s at 0 magic resist, adds rage afterwards
+            int duration = (8 - (int)(resist * (6.0 / 125.0))) + rage;
+            if (duration < 2)
                 duration = 2;
-			return duration;
-		}
+            return duration;
+        }
 
         private class BossBleedEntry
         {
@@ -1893,14 +1897,14 @@ namespace Server.Custom.DailyBosses.System
 
         public static void DoBossBleed(Mobile m, Mobile from, int level)
         {
-            if (!m.Alive || !Server.Items.BaseRace.IsBleeder(m) || m == null || m.Deleted )
+            if (!m.Alive || !Server.Items.BaseRace.IsBleeder(m) || m == null || m.Deleted)
             {
                 EndBossBleed(m, false);
                 return;
             }
 
             int damage = Utility.RandomMinMax(level * 3, level * 5);
-            
+
             if (!m.Player)
                 damage *= 2;
 
@@ -1937,7 +1941,7 @@ namespace Server.Custom.DailyBosses.System
             private int m_Count;
             private int m_MaxTicks;
 
-            public BossBleedTimer(Mobile from, Mobile m, int maxTicks) 
+            public BossBleedTimer(Mobile from, Mobile m, int maxTicks)
                 : base(TimeSpan.FromSeconds(2.0), TimeSpan.FromSeconds(2.0))
             {
                 m_From = from;
@@ -1949,57 +1953,57 @@ namespace Server.Custom.DailyBosses.System
             protected override void OnTick()
             {
                 DoBossBleed(m_Mobile, m_From, m_MaxTicks - m_Count);
-                
+
                 if (++m_Count == m_MaxTicks)
                     EndBossBleed(m_Mobile, true);
             }
         }
 
-        private static void LightTilesOnFire( Point3D center, Map map, int radius, int hue )
+        private static void LightTilesOnFire(Point3D center, Map map, int radius, int hue)
         {
-        	if ( map == null )
-			return;
+            if (map == null)
+                return;
 
             int radiusSq = radius * radius;
-        	for ( int x = -radius; x <= radius; x++ )
-         	{
-			for ( int y = -radius; y <= radius; y++ )
-			{
-				Point3D loc = new Point3D( center.X + x, center.Y + y, center.Z );
+            for (int x = -radius; x <= radius; x++)
+            {
+                for (int y = -radius; y <= radius; y++)
+                {
+                    Point3D loc = new Point3D(center.X + x, center.Y + y, center.Z);
 
-				int dx = center.X - loc.X;
-				int dy = center.Y - loc.Y;
-				if ((dx * dx) + (dy * dy) > radiusSq)
-					continue;
+                    int dx = center.X - loc.X;
+                    int dy = center.Y - loc.Y;
+                    if ((dx * dx) + (dy * dy) > radiusSq)
+                        continue;
 
-				Effects.SendLocationParticles(
-					EffectItem.Create( loc, map, TimeSpan.FromSeconds( 2.0 ) ),
-					0x3709,
-					10,
-					30,
-					hue,
-					0,
-					5052,
-					0
-				);
-			}
-         	}
+                    Effects.SendLocationParticles(
+                        EffectItem.Create(loc, map, TimeSpan.FromSeconds(2.0)),
+                        0x3709,
+                        10,
+                        30,
+                        hue,
+                        0,
+                        5052,
+                        0
+                    );
+                }
+            }
         }
 
-        private static void SetOnFire( Mobile m, int hue )
+        private static void SetOnFire(Mobile m, int hue)
         {
-        	if ( m == null || m.Deleted )
-        		return;
+            if (m == null || m.Deleted)
+                return;
 
-        	m.FixedParticles(
-        		0x3709,
-        		10,
-        		30,
-        		5052,
-        		hue,
-        		0,
-        		EffectLayer.Waist
-        	);
+            m.FixedParticles(
+                0x3709,
+                10,
+                30,
+                5052,
+                hue,
+                0,
+                EffectLayer.Waist
+            );
         }
 
         private static List<Point3D> GetConeTiles(Point3D origin, Direction direction, int range)
