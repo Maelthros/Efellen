@@ -36,7 +36,7 @@ namespace Server.Custom.Ascensions
                     return
                     "The Assassin is an expert in ending lifes prematurely. In combat, they employ poisons to great effect to hinder and annihilate their foes.<br>"+
                     "In order to activate this Ascension, you need to have 95 base skill in both Poisoning, hiding and Fencing. Every time you level up the class, the requirement also increases by 1.<br>"+
-                    "So a level 20 Crusader cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing.<br>"+
+                    "So a level 20 Assassin cannot activate this ascension unless they have 115 base skill in both Poisoning, hiding and Fencing.<br>"+
                     "Assassins also are required to abandon their morals, and they will not gain experience in this class if they have learned Bushido or knightship, or if they abandon the path of evil.";   
                 case AscensionType.Blackguard:
                     return
@@ -312,7 +312,7 @@ namespace Server.Custom.Ascensions
                 return
                 "<BASEFONT COLOR=#ffffff>"+
                 "Noxious Cloud, level 1.<br>" +
-                "command: [AssassinNoxiousClou<br>" +
+                "command: [AssassinNoxiousCloudAbility<br>" +
                 "The assassin creates a cloud of foul vapors at target location that poisons all enemies caught in its area.<br>" +
                 "The cloud inflicts greater poison on all affected enemies. This ability costs 30 mana and 30 stamina to activate.<br>" + 
                 "This ability has a 1 minute cooldown. The are of the cloud is equal to 1 + 1 per 6 levels.<br>" +

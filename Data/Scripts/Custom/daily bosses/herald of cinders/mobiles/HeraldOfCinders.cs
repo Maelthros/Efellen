@@ -306,21 +306,6 @@ namespace Server.Mobiles
 			return occupied;
 		}
 
-		public static bool IsImmuneToMagma( Mobile m )
-		{
-			if ( m == null )
-				return false;
-
-			Type mType = m.GetType();
-			foreach ( Type immuneType in ImmuneToMagmaTypes )
-			{
-				if ( mType == immuneType )
-					return true;
-			}
-
-			return false;
-		}
-
 		private int GetMaxSummons()
 		{
 			switch( m_Rage )
