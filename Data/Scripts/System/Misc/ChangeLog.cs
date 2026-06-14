@@ -38,15 +38,19 @@ namespace Server.Misc
 		+"  • Added the [HuntersMark command, which allows for skilled trackers to gain a damage bonus against their prey based on their skill level.<BR>"
 		+"  • When Hunter's Mark is active on a target, the tracker can raise its tracking skill by hitting it. Hunter's mark has a 1 minute cooldown between uses, and can also be triggered by regular use of the tracking skill.<BR>"
 		+"• Various spells from unlockable classes (mystic, death knight, holy priest, shinobi) have been buffed and rebalanced.<BR>"
+		+"• Slayer spellbooks and ranged weapons now add 70% base damage (down from 100%).<br>"
+		+"• Added missing special attacks to Khumash Gor.<br>"
 		+" <BR>"
-		+"  * Items:<BR>"
+		+"  * Items and crafting:<BR>"
 		+"• Added various new artifacts as boss reward and global drops / sage quest rewards.<BR>"
+		+"• Carpenters can now craft lockpicking training boxes.<br>"
 		+" <BR>"
 		+"  * Quality of Life:<BR>"
 		+"• spellbooks for mages, necromancer and elementalists and songbooks now have a 'setup' context menu entry which will auto-collect missing scrolls from the player's inventory and add them to the book.<BR>"
 		+" <BR>"
 
 		+ sepLine()
+
 		+"Lolth's Gift - 6th of June of 2026<BR>"
 		+" <BR>"
 		+"  * New Bosses were added to various regions of the game:<BR>"
