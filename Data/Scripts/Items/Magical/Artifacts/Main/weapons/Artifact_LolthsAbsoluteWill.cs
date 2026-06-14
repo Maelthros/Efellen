@@ -51,10 +51,13 @@ namespace Server.Items
 				return;
 
 			double slayChance = 1.0;
+			double karma = attacker.Karma;
+			if ( karma < 0 )
+				karma = -karma;
 
 			if (attacker.Karma < 0)
 			{
-				double karmaBonus = Math.Min(2.5, (Math.Abs(attacker.Karma) / 15000.0) * 2.5);
+				double karmaBonus = Math.Min(2.5, (karma / 15000.0) * 2.5);
 				slayChance += karmaBonus;
 			}
 
@@ -64,7 +67,7 @@ namespace Server.Items
 
 			if (Utility.RandomDouble() * 100.0 < slayChance)
 			{
-				defender.Kill();
+				AOS.Damage( defender, attacker, defender.Hits + 5000, 100, 0, 0, 0, 0 );
 
 				defender.FixedParticles(0x374A, 10, 30, 5052, EffectLayer.Waist);
 				defender.PlaySound(0x1FB);
