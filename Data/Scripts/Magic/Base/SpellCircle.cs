@@ -4,7 +4,7 @@ namespace Server.Spells
 {
 	public enum SpellCircle
 	{
-		First = 1,
+		First,
 		Second,
 		Third,
 		Fourth,
