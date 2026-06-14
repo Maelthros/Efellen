@@ -8008,7 +8008,8 @@ namespace Server.Mobiles
 						if ( deathpack != null )
 						{
 							Item dtcoins = this.Backpack.FindItemByType( typeof( Gold ) );
-							dtcoins.Delete();
+							if ( dtcoins != null )
+								dtcoins.Delete();
 							deathknight.SendMessage( "A soul has been claimed." );
 							Effects.SendLocationParticles( EffectItem.Create( deathknight.Location, deathknight.Map, EffectItem.DefaultDuration ), 0x376A, 9, 32, 5008 );
 							Effects.PlaySound( deathknight.Location, deathknight.Map, 0x1ED );
@@ -8078,10 +8079,13 @@ namespace Server.Mobiles
 						if ( deathpack != null )
 						{
 							Item dtcoins = this.Backpack.FindItemByType( typeof( Gold ) );
-							dtcoins.Delete();
-							cleric.SendMessage( "Evil has been banished." );
-							cleric.FixedParticles( 0x373A, 10, 15, 5018, EffectLayer.Waist );
-							cleric.PlaySound( 0x1EA );
+							if ( dtcoins != null )
+							{
+								dtcoins.Delete();
+								cleric.SendMessage( "Evil has been banished." );
+								cleric.FixedParticles( 0x373A, 10, 15, 5018, EffectLayer.Waist );
+								cleric.PlaySound( 0x1EA );
+							}
 						}
 					}
 				}
@@ -8705,28 +8709,29 @@ namespace Server.Mobiles
                 }
             }
 
+			if ( !Summoned && !NoKillAwards && !m_HasGeneratedLoot )
+			{
+				m_HasGeneratedLoot = true;
+				GenerateLoot( false );
+			}
+
 			///////////////////////////////////////////////////////////////
 			/// 		ethereal scrolls and ascendance scrolls
             ///////////////////////////////////////////////////////////////
-			if ( this.Fame >= 5000 )
+			if ( Fame >= 5000 )
 			{
-				if ( Utility.RandomDouble() < 0.005 )
-				{
-					PackItem( new EtherealPowerScroll() );
-				}
-			}
+			    double roll = Utility.RandomDouble();
 
-			if ( this.Fame >= 7500 )
-			{
-				if ( Utility.RandomDouble() < 0.0025 )
-				{
-					Item scroll = AscensionScrollFactory.CreateRandom();
+			    if ( roll < 0.005 )
+			        PackItem( new EtherealPowerScroll() );
 
-					if ( scroll != null )
-					{
-						PackItem( scroll );
-					}
-				}
+			    if ( Fame >= 7500 && Utility.RandomDouble() < 0.0025 )
+			    {
+			        Item scroll = AscensionScrollFactory.CreateRandom();
+
+			        if ( scroll != null )
+			            PackItem( scroll );
+			    }
 			}
 			///////////////////////////////////////////////////////////////
 			/// 		vampire blood
@@ -8819,12 +8824,6 @@ namespace Server.Mobiles
 				{
 					PackItem( new TreasureMap( treasureLevel, this.Map, this.Location, this.X, this.Y ) );
 				}
-			}
-
-			if ( !Summoned && !NoKillAwards && !m_HasGeneratedLoot )
-			{
-				m_HasGeneratedLoot = true;
-				GenerateLoot( false );
 			}
 
 			if ( IsAnimatedDead )
@@ -9586,6 +9585,7 @@ namespace Server.Mobiles
 					else
 						SendMessage( "{0} {1} cannot be harmed.", target.Name, target.Title );
 				}
+				
 
 				return false;
 			}
