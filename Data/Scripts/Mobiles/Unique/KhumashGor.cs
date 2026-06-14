@@ -2,6 +2,7 @@ using System;
 using Server;
 using Server.Items;
 using Server.Misc;
+using Server.Custom.DailyBosses.System;
 
 namespace Server.Mobiles
 {
@@ -23,7 +24,7 @@ namespace Server.Mobiles
 
 			SetHits( 658, 711 );
 
-			SetDamage( 29, 35 );
+			SetDamage( 25, 31 );
 
 			SetDamageType( ResistanceType.Physical, 75 );
 			SetDamageType( ResistanceType.Poison, 25 );
@@ -44,6 +45,59 @@ namespace Server.Mobiles
 			VirtualArmor = 70;
 			AddItem( new LighterSource() );
 		}
+
+		public override void OnDamage( int amount, Mobile from, bool willKill )
+		{
+			if ( DateTime.UtcNow >= m_NextSpecialAttack )
+			{
+				PerformRageAttack( from );
+				m_NextSpecialAttack = DateTime.UtcNow + TimeSpan.FromSeconds( 30 );
+			}
+			
+			base.OnDamage( amount, from, willKill );
+		}
+
+		private void PerformRageAttack( Mobile target )
+		{
+			if ( target == null || target.Deleted || !target.Alive )
+				return;
+
+			int attackChoice = Utility.RandomMinMax( 1, 2 );
+            Map map = this.Map;
+
+			switch ( attackChoice  )
+			{
+				case 1: // energy burst
+				{
+					BossSpecialAttack.PerformTargettedAoE(
+						this,
+						target,
+						3,
+						"The secrets of the elements are mine alone to bear!",
+						0x779,  // hue
+						0,     // physical
+						25,   // fire
+						25,     // cold
+						25,     // poison
+						25      // energy
+					);
+					break;
+				}
+				case 2: // energy nova
+				{
+					BossSpecialAttack.SummonHonorGuard(
+                        boss: this,
+                        target: target,
+                        warcry: "Come, sages of my house! Aid thy Lord!",
+                        amount: 4,
+                        creatureType: typeof(AncientLich),
+                        hue: 0x779
+                    );
+                    break;
+			    }
+			}
+		}
+
 
 		public override void OnDeath( Container c )
 		{
