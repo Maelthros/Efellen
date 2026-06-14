@@ -32,7 +32,7 @@ namespace Server.Custom.DefenderOfTheRealm
 
         public static RewardInfo[] DefenderRewards = new RewardInfo[]
         {
-            new RewardInfo(typeof(PotionOfMight),                           20,   0x2827, "Potion of Might",                  false, 0xB9E),
+            new RewardInfo(typeof(PotionOfMight),                           20,   0x2827, "Potion of Might",                   false, 0xB9E),
             new RewardInfo(typeof(ChargerOfTheFallen),                      500,  0x0499, "Charger of the Fallen",             true,  0),
             new RewardInfo(typeof(Artifact_DefenderOfTheRealmArms),         1000, 0x1410, "Defender's Arms",                   true,  0),
             new RewardInfo(typeof(Artifact_DefenderOfTheRealmChestpiece),   1000, 0x1415, "Defender's Chest",                  true,  0),
@@ -43,22 +43,28 @@ namespace Server.Custom.DefenderOfTheRealm
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Berserker Ascension Scroll",        false, 0x0F1, AscensionType.Berserker),
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Archmage Ascension Scroll",         false, 0x213, AscensionType.Archmage),
             new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Crusader Ascension Scroll",         false, 0x0F8, AscensionType.Crusader),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Kensai Ascension Scroll",           false, 0x448, AscensionType.Kensai),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Skald Ascension Scroll",            false, 0x445, AscensionType.Skald),
         };
 
         public static RewardInfo[] ScourgeRewards = new RewardInfo[]
         {
             new RewardInfo(typeof(PotionOfMight),                           20,   0x2827, "Potion of Might",                  false, 0xB9E),
-            new RewardInfo(typeof(ChargerOfTheFallen),                      500,  0x0499, "Charger of the Fallen",             true,  0),
+            new RewardInfo(typeof(ChargerOfTheFallen),                      500,  0x0499, "Charger of the Fallen",            true,  0),
             new RewardInfo(typeof(Artifact_ScourgeOfTheRealmArms),         1000,  0x1410, "Scourge's Arms",                   true,  0),
             new RewardInfo(typeof(Artifact_ScourgeOfTheRealmChestpiece),   1000,  0x1415, "Scourge's Chest",                  true,  0),
             new RewardInfo(typeof(Artifact_ScourgeOfTheRealmGloves),       1000,  0x1414, "Scourge's Gloves",                 true,  0),
             new RewardInfo(typeof(Artifact_ScourgeOfTheRealmGorget),       1000,  0x1413, "Scourge's Gorget",                 true,  0),
             new RewardInfo(typeof(Artifact_ScourgeOfTheRealmHelmet),       1000,  0x1412, "Scourge's Helmet",                 true,  0),
             new RewardInfo(typeof(Artifact_ScourgeOfTheRealmLeggings),     1000,  0x46AA, "Scourge's Leggings",               true,  0),
-            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Berserker Ascension Scroll",        false, 0x0F1, AscensionType.Berserker),
-            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Palemaster Ascension Scroll",       false, 0xB97, AscensionType.Palemaster),
-            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Assassin Ascension Scroll",         false, 0x233, AscensionType.Assassin),
-            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Blackguard Ascension Scroll",         false, 0x47E, AscensionType.Blackguard),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Berserker Ascension Scroll",       false, 0x0F1, AscensionType.Berserker),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Palemaster Ascension Scroll",      false, 0xB97, AscensionType.Palemaster),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Assassin Ascension Scroll",        false, 0x233, AscensionType.Assassin),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Blackguard Ascension Scroll",      false, 0x47E, AscensionType.Blackguard),
+            new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Kensai Ascension Scroll",          false, 0x448, AscensionType.Kensai),
+        new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Reaver Ascension Scroll",              false, 0x0F8, AscensionType.Reaver),
+                    new RewardInfo(typeof(AscensionScroll),                         300,  0x2D9E, "Skald Ascension Scroll",   false, 0x445, AscensionType.Skald),
+
         };
 
         public static RewardInfo[] ShadowbrokerRewards = new RewardInfo[]
@@ -97,6 +103,7 @@ namespace Server.Custom.DefenderOfTheRealm
             new RewardInfo(typeof(Artifact_CoifOfDevotion),                1000,  0x1DB9, "Coif of Devotion",                 true,  0),
             new RewardInfo(typeof(Artifact_LeggingsOfDevotion),            1000,  0x13D2, "Leggings of Devotion",             true,  0),
             new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Crusader Ascension Scroll",        false, 0x0F8, AscensionType.Crusader),
+            new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Hierophant Ascension Scroll",      false, 0x439, AscensionType.Hierophant),
         };
 
         public static RewardInfo[] WeaveRewards = new RewardInfo[]
@@ -110,6 +117,7 @@ namespace Server.Custom.DefenderOfTheRealm
             new RewardInfo(typeof(Artifact_ArcaneGorget),                  1000,  0x13C7, "Arcane Gorget",                    true,  0),
             new RewardInfo(typeof(Artifact_ArcaneLeggings),                1000,  0x13CB, "Arcane Leggings",                  true,  0),
             new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Archmage Ascension Scroll",        false, 0x213, AscensionType.Archmage),
+            new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Arcane Archer Ascension Scroll",   false, 0x48F, AscensionType.ArcaneArcher),
         };
     }
 }
