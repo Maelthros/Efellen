@@ -3386,6 +3386,7 @@ namespace Server
 			new ItemSalesInfo( typeof(	RoyalShirt	),	21	,	15	,	0	,	false	,	false	,	World.None	,	Category.None	,	Material.Cloth	,	Market.Tailor	),
 			new ItemSalesInfo( typeof(	RoyalSkirt	),	11	,	15	,	0	,	false	,	false	,	World.None	,	Category.None	,	Material.Cloth	,	Market.Tailor	),
 			new ItemSalesInfo( typeof(	RoyalsLegs	),	218	,	15	,	0	,	false	,	false	,	World.None	,	Category.Armor	,	Material.Metal	,	Market.Smith	),
+			new ItemSalesInfo( typeof(	RoyalSword	),	55	,	15	,	0	,	false	,	false	,	World.None	,	Category.Weapon	,	Material.Metal	,	Market.Smith	),
 			new ItemSalesInfo( typeof(	RoyalVest	),	12	,	15	,	0	,	false	,	false	,	World.None	,	Category.None	,	Material.Cloth	,	Market.Tailor	),
 			new ItemSalesInfo( typeof(	DDRelicRugAddonDeed	),	1	,	0	,	200	,	false	,	false	,	World.None	,	Category.None	,	Material.None	,	Market.Art	),
 			new ItemSalesInfo( typeof(	RuinedTapestry	),	135	,	3	,	0	,	false	,	false	,	World.None	,	Category.None	,	Material.None	,	Market.Home	),
