@@ -8705,7 +8705,34 @@ namespace Server.Mobiles
                 }
             }
 
+			///////////////////////////////////////////////////////////////
+			/// 		ethereal scrolls and ascendance scrolls
             ///////////////////////////////////////////////////////////////
+			if ( this.Fame >= 5000 )
+			{
+				if ( Utility.RandomDouble() < 0.005 )
+				{
+					PackItem( new EtherealPowerScroll() );
+				}
+			}
+
+			if ( this.Fame >= 7500 )
+			{
+				if ( Utility.RandomDouble() < 0.0025 )
+				{
+					Item scroll = AscensionScrollFactory.CreateRandom();
+
+					if ( scroll != null )
+					{
+						PackItem( scroll );
+					}
+				}
+			}
+			///////////////////////////////////////////////////////////////
+			/// 		vampire blood
+            ///////////////////////////////////////////////////////////////
+
+
 			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
 			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
 			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );
