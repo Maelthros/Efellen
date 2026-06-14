@@ -330,7 +330,7 @@ namespace Server.Custom.Ascensions
                 "command: [AssassinToxicSurge<br>" +
                 "For the next 30 seconds, the assassin causes + 10% damage bonus with weapon strikes against poisoned creatures.<br>" + 
                 "This ability costs 40 mana and 40 stamina to activate and has a 2 minutes cooldown.<br>" +
-                "- Level 16: When activated, there's a 1% chance per level of setting the cooldown on Noxious Cloud to zero.<br>" + 
+                "- Level 16: When activated, there's a 1% chance per level of setting the cooldown on Noxious Cloud to zero.<br><br>" + 
 
                 "Cleansing Annihilation, level 18.<br>" +
                 "command: [AssassinCleansingAnnihilation<br>" +
