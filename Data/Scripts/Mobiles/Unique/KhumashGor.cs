@@ -9,6 +9,7 @@ namespace Server.Mobiles
 	[CorpseName( "a skeletal corpse" )]
 	public class KhumashGor : BaseCreature
 	{
+		private DateTime m_NextSpecialAttack = DateTime.MinValue;
 		[Constructable]
 		public KhumashGor () : base( AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
@@ -123,13 +124,18 @@ namespace Server.Mobiles
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
-			writer.Write( (int) 0 );
+			writer.Write( (int) 1 );
+			writer.Write( m_NextSpecialAttack );
 		}
 
 		public override void Deserialize( GenericReader reader )
 		{
 			base.Deserialize( reader );
 			int version = reader.ReadInt();
+			if ( version >= 1 )
+			{
+				m_NextSpecialAttack = reader.ReadDateTime();
+			}
 		}
 	}
 }
