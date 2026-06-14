@@ -137,7 +137,7 @@ namespace Server.Items
                         double resChance = skillAvg / 200.0;
                         if (Utility.RandomDouble() <= resChance)
                         {
-                            if (from.CanSee(pet) && from.InLOS(pet) && pet.Map != null && pet.Map.CanFit(pet.Location, 16, false, false))
+                            if (pet.Map != null && pet.Map.CanFit(pet.Location, 16, false, false))
                             {
                                 pet.ResurrectPet();
                                 pet.FixedEffect(0x376A, 10, 16);
@@ -148,7 +148,7 @@ namespace Server.Items
                         }
                     }
 
-                    if (pet.Alive && from.InRange(pet.Location, 4))
+                    if (pet.Alive)
                     {
                         int healed = 0;
 
