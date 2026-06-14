@@ -34,7 +34,7 @@ namespace Server.Items
         public override void AddNameProperties(ObjectPropertyList list)
 		{
             base.AddNameProperties(list);
-			list.Add( 1070722, "Helps One To Launch or Dock Ships");
+			list.Add( 1070722, "Helps One To Launch or Dock Ships from their homes. Secure it near water to drydock your boats.");
         }
 
 		public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
