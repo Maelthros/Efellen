@@ -97,11 +97,11 @@ namespace Server.Custom.DefenderOfTheRealm
         {
             new RewardInfo(typeof(PotionOfWisdom),                          20,   0x2827, "Potion of Wisdom",                 false, 0xB9E),
             new RewardInfo(typeof(EtherealUnicorn),                         500,  0x25CE, "Ethereal Unicorn",                 true,  0),
-            new RewardInfo(typeof(Artifact_ArmsOfDevotion),                1000,  0x13CD, "Arms of Devotion",                 true,  0),
-            new RewardInfo(typeof(Artifact_TunicOfDevotion),               1000,  0x13CC, "Tunic of Devotion",                true,  0),
-            new RewardInfo(typeof(Artifact_GauntletsOfDevotion),           1000,  0x13C6, "Gauntlets of Devotion",            true,  0),
-            new RewardInfo(typeof(Artifact_CoifOfDevotion),                1000,  0x1DB9, "Coif of Devotion",                 true,  0),
-            new RewardInfo(typeof(Artifact_LeggingsOfDevotion),            1000,  0x13D2, "Leggings of Devotion",             true,  0),
+            new RewardInfo(typeof(Artifact_ArmsOfDevotion),                1000,  0x13ee, "Arms of Devotion",                 true,  0),
+            new RewardInfo(typeof(Artifact_TunicOfDevotion),               1000,  0x13ec, "Tunic of Devotion",                true,  0),
+            new RewardInfo(typeof(Artifact_GauntletsOfDevotion),           1000,  0x13eb, "Gauntlets of Devotion",            true,  0),
+            new RewardInfo(typeof(Artifact_CoifOfDevotion),                1000,  0x13BB, "Coif of Devotion",                 true,  0),
+            new RewardInfo(typeof(Artifact_LeggingsOfDevotion),            1000,  0x13f0, "Leggings of Devotion",             true,  0),
             new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Crusader Ascension Scroll",        false, 0x0F8, AscensionType.Crusader),
             new RewardInfo(typeof(AscensionScroll),                         250,  0x2D9E, "Hierophant Ascension Scroll",      false, 0x439, AscensionType.Hierophant),
         };
