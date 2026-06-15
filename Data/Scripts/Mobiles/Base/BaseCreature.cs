@@ -8723,14 +8723,14 @@ namespace Server.Mobiles
 			///////////////////////////////////////////////////////////////
 			/// 		ethereal scrolls and ascendance scrolls
             ///////////////////////////////////////////////////////////////
-			if ( Fame >= 5000 )
+			if ( Fame >= 4000 )
 			{
 			    double roll = Utility.RandomDouble();
 
-			    if ( roll < 0.005 )
+			    if ( roll < 0.009 )
 			        PackItem( new EtherealPowerScroll() );
 
-			    if ( Fame >= 7500 && Utility.RandomDouble() < 0.0025 )
+			    if ( Fame >= 5500 && Utility.RandomDouble() < 0.0032 )
 			    {
 			        Item scroll = AscensionScrollFactory.CreateRandom();
 
