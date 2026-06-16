@@ -44,7 +44,7 @@ namespace Server.Items
 			InfoData = "This wand can cast the " + SpellItems.GetName( Enchanted ) + " spell. " + SpellItems.GetData( Enchanted ) + " Wands must be equipped to cast spells, where mana is usually required. If your wand runs out of charges, try visiting a wizard to see if they will recharge it for you.";
 			InfoText2 = SpellItems.GetCircle( Enchanted );
 			Name = "Magic Wand of " + SpellItems.GetNameUpper( Enchanted );
-			CoinPrice = level * 100;
+			CoinPrice = level * 80;
 		}
 
 		public override void CastEnchantment( Mobile from )
