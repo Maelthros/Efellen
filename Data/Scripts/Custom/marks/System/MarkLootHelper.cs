@@ -15,30 +15,23 @@ namespace Server.Custom.DefenderOfTheRealm
             if (bc.Controlled || bc.Summoned || bc.Player)
                 return;
 
-            if (bc.Fame < 10000)
-                return;
-            
-            if (Utility.RandomDouble() > 0.25)
+            if (bc.Fame < 3000)
                 return;
 
+            if (Utility.RandomDouble() > 0.05)
+                return;
+
+            int fameMod = bc.Fame / 1000;
             int baseMin = 1;
-            int baseMax = 9;
+            int baseMax = bc.Fame/750 > 25 ? 25 : bc.Fame;
 
-            int luck = killer.Luck;
-            if (luck < 0) luck = 0;
-            if (luck > 2000) luck = 2000;
+            int amount = Utility.RandomMinMax(baseMin, baseMax);
 
-            int bonus = (luck * 2 / 2000);
-            int amount = Utility.RandomMinMax(baseMin, baseMax + bonus);
-
-            if (amount <= 0)
-                return;
-
-            if ( killer.Karma < 0)
+            if (killer.Karma < 0)
             {
                 c.DropItem(new MarksOfTheScourge(amount));
             }
-            else if ( killer.Karma >= 0)
+            else if (killer.Karma >= 0)
             {
                 c.DropItem(new MarksOfHonor(amount));
             }
@@ -109,7 +102,7 @@ namespace Server.Custom.DefenderOfTheRealm
                     recipient.SendMessage("Your marks of the " + str + " have been placed at your feet.");
                 }
             }
-            catch (Exception){}
+            catch (Exception) { }
         }
     }
 
