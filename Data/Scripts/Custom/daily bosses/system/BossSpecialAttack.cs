@@ -269,6 +269,14 @@ namespace Server.Custom.DailyBosses.System
 
                     if (target != null && target.Alive && target.Map == map)
                         monster.Combatant = target;
+
+                    Timer.DelayCall(TimeSpan.FromMinutes(2), delegate()
+                    {
+                        if (monster != null && (!monster.Deleted || monster.Alive))
+                        {
+                            monster.Delete();
+                        }
+                    });
                 }
             });
         }
