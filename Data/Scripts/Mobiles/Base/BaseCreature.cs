@@ -1926,6 +1926,7 @@ namespace Server.Mobiles
 				Animate( 18, 5, 1, true, false, 0 );
 
 			Loyalty -= 3;
+			InvalidateProperties();
 			return false;
 		}
 
@@ -5607,6 +5608,7 @@ namespace Server.Mobiles
 							}
 						}
 
+						InvalidateProperties();
 						dropped.Delete();
 						return true;
 					}
