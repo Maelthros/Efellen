@@ -23,7 +23,7 @@ namespace Server.Custom.DefenderOfTheRealm
 
             int fameMod = bc.Fame / 750;
             int baseMin = 1;
-            int baseMax = fameMod > 25 ? 25 : fameMod;
+            int baseMax = bc.Fame/750 > 25 ? 25 : bc.Fame/750;
 
             int amount = Utility.RandomMinMax(baseMin, baseMax);
 
