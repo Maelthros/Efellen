@@ -115,7 +115,7 @@ namespace Server.Items
             new ArtifactEntry( "Artifact_MagiciansIllusion",          "Magician's Illusion",               ArtifactCategory.TwoHandedWeapons ),
             new ArtifactEntry( "Artifact_EdgeOfDawn",                 "Edge of Dawn",                      ArtifactCategory.TwoHandedWeapons ),
             new ArtifactEntry( "Artifact_EdgeOfDusk",                 "Edge of Dusk",                      ArtifactCategory.TwoHandedWeapons ),
-            new ArtifactEntry( "Artifact_JestersVow",                 "Edge of Dusk",                      ArtifactCategory.TwoHandedWeapons ),
+            new ArtifactEntry( "Artifact_JestersVow",                 "Jester's Vow",                      ArtifactCategory.TwoHandedWeapons ),
 
             // ----- Ranged Weapons & quivers -----
 			new ArtifactEntry( "Artifact_WidowsWhistle",              "Widow's Whistle",                   ArtifactCategory.RangedWeapons ),
