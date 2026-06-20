@@ -303,12 +303,6 @@ namespace Server.Mobiles
 				Effects.SendLocationParticles( EffectItem.Create( this.Location, this.Map, EffectItem.DefaultDuration ), 0x3728, 10, 10, 2023 );
 				this.PlaySound( 0x1FE );
 				PublicOverheadMessage( MessageType.Regular, 0x21, false, "The gods...will forgive you." );
-                Mobile killer = this.LastKiller;
-				if (killer != null && killer.Player && killer.Karma < 0)
-            	{
-            	    int marks = Utility.RandomMinMax(40, 75);
-            	    Server.Custom.DefenderOfTheRealm.MarkLootHelper.AwardMarks(killer, 0, marks);
-            	}
 			}
 			
 			return base.OnBeforeDeath();
@@ -325,6 +319,14 @@ namespace Server.Mobiles
 			BossLootSystem.AwardBossSpecial(this,BossDrops, 45);
 			c.DropItem( new EtherealPowerScroll() );
 			c.DropItem( AscensionScrollFactory.CreateRandom());
+
+			Mobile killer = this.LastKiller;
+			if (killer != null && killer.Player && killer.Karma < 0)
+			{
+				int marks = Utility.RandomMinMax(40, 75);
+				Server.Custom.DefenderOfTheRealm.MarkLootHelper.AwardMarks(killer, 0, marks);
+			}
+
 			// gold explosion
 		    RichesSystem.SpawnRiches( m_LastTarget, 1 );
 		}
