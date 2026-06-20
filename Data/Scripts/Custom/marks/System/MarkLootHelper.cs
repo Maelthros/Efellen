@@ -21,9 +21,9 @@ namespace Server.Custom.DefenderOfTheRealm
             if (Utility.RandomDouble() > 0.05)
                 return;
 
-            int fameMod = bc.Fame / 1000;
+            int fameMod = bc.Fame / 750;
             int baseMin = 1;
-            int baseMax = bc.Fame/750 > 25 ? 25 : bc.Fame;
+            int baseMax = fameMod > 25 ? 25 : fameMod;
 
             int amount = Utility.RandomMinMax(baseMin, baseMax);
 
