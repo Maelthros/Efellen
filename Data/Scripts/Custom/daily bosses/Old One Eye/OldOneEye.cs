@@ -15,6 +15,7 @@ using Server.EffectsUtil;
 using Server.Custom;
 using Server.Custom.DailyBosses.System;
 using Server.Custom.Ascensions;
+
 namespace Server.Mobiles
 {
 	[CorpseName( "Old One Eye's Corpse" )]
@@ -35,7 +36,11 @@ namespace Server.Mobiles
 		private DateTime m_NextTailSwipe = DateTime.MinValue;
 		private bool m_IsStunned = false;
 		private DateTime m_StunEndTime = DateTime.MinValue;
-		
+
+		private bool m_Rage1Applied = false;
+		private bool m_Rage2Applied = false;
+		private bool m_Rage3Applied = false;
+
 		[Constructable]
 		public OldOneEye () : base( AIType.AI_Melee, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
@@ -51,7 +56,7 @@ namespace Server.Mobiles
 			SetDex( 265, 325 );
 			SetInt( 106, 205 );
 
-			SetHits( 11000 );
+			SetHits( 33000 );
 			SetDamage( 11, 15 );
 
 			SetDamageType( ResistanceType.Physical, 100 );
@@ -70,7 +75,6 @@ namespace Server.Mobiles
 			Karma = -30000;
 
 			VirtualArmor = 50;
-
 		}
 
 		public override void GenerateLoot()
@@ -89,7 +93,8 @@ namespace Server.Mobiles
 		public override void OnDamage( int amount, Mobile from, bool willKill )
 		{
 			m_LastTarget = from;
-			if (Utility.RandomDouble() < 0.75 )
+
+			if (Utility.RandomDouble() < 0.75)
 				Server.Misc.IntelligentAction.LeapToAttacker( this, from );
 			
 			if ( !m_IsStunned && DateTime.UtcNow >= m_NextSpecialAttack )
@@ -97,7 +102,65 @@ namespace Server.Mobiles
 				PerformRageAttack( from );
 				m_NextSpecialAttack = DateTime.UtcNow + TimeSpan.FromSeconds( 20 - (m_Rage * 2) );
 			}
+
 			base.OnDamage( amount, from, willKill );
+
+			CheckRageThresholds();
+		}
+
+		private void CheckRageThresholds()
+		{
+			if (this.HitsMax <= 0)
+				return;
+
+			double hpPercent = (double)this.Hits / (double)this.HitsMax;
+
+			if (!m_Rage1Applied && hpPercent <= 0.75)
+			{
+				m_Rage1Applied = true;
+				m_Rage = 1;
+				ApplyRage1();
+			}
+			else if (!m_Rage2Applied && hpPercent <= 0.50)
+			{
+				m_Rage2Applied = true;
+				m_Rage = 2;
+				ApplyRage2();
+			}
+			else if (!m_Rage3Applied && hpPercent <= 0.25)
+			{
+				m_Rage3Applied = true;
+				m_Rage = 3;
+				ApplyRage3();
+			}
+		}
+
+		private void ApplyRage1()
+		{
+			PublicOverheadMessage( MessageType.Regular, 0x21, false, "*Screeches defiantly*" );
+			this.FixedParticles( 0x376A, 9, 32, 5030, EffectLayer.Waist );
+			this.PlaySound( 0x63F );
+			SetStr( Str + 30 );
+			SetDamage( 16, 20 );
+			VirtualArmor += 5;
+		}
+
+		private void ApplyRage2()
+		{
+			PublicOverheadMessage( MessageType.Regular, 0x21, false, "*Screeches in Pain*" );
+			this.FixedParticles( 0x376A, 9, 32, 5030, EffectLayer.Waist );
+			this.PlaySound( 0x63F );
+			SetDamage( 21, 25 );
+			VirtualArmor += 10;
+		}
+
+		private void ApplyRage3()
+		{
+			PublicOverheadMessage( MessageType.Regular, 0x21, false, "*Roars terrifyingly*" );
+			this.FixedParticles( 0x376A, 9, 32, 5030, EffectLayer.Waist );
+			this.PlaySound( 0x63F );
+			SetDamage( 25, 30 );
+			VirtualArmor += 10;
 		}
 
       	private void PerformRageAttack( Mobile target )
@@ -105,23 +168,22 @@ namespace Server.Mobiles
 			if ( target == null || target.Deleted || !target.Alive )
 				return;
 
-			
 			int attackChoice = Utility.RandomMinMax( 1, 3 );
 
-			switch ( attackChoice  )
+			switch ( attackChoice )
 			{
-				case 1: // terrifying roar
+				case 1:
 				{
 					BossSpecialAttack.PerformFear(
 				      boss: this,
 				      warcry: "*The Old One Eye unleashes a soul-freezing roar!*",
 				      range: 6,
 				      rage: m_Rage+1,
-				      terror: 110  // Knightship 110+ saves from fear
+				      terror: 110
 				  );
 				  break;
 				}
-				case 2: // ground stomp (knockback + stagger)
+				case 2:
 				{
 					BossSpecialAttack.PerformSlam(
                     	boss: this,
@@ -133,7 +195,7 @@ namespace Server.Mobiles
               		);
                 	break;
 				}
-                case 3: // rampage - multi charge
+                case 3:
 				{
                     BossSpecialAttack.PerformRampage(
                        boss: this,
@@ -173,13 +235,14 @@ namespace Server.Mobiles
 		public override void OnGotMeleeAttack( Mobile attacker )
 		{
 			base.OnGotMeleeAttack(attacker);
-			if (Utility.RandomDouble() < 0.5 )
+
+			if (Utility.RandomDouble() < 0.5)
 				Server.Misc.IntelligentAction.LeapToAttacker( this, attacker );
 
 			if (Utility.Random(100) < 15 && DateTime.UtcNow >= m_NextTailSwipe)
 			{
 				PerformTailSwipe();
-				m_NextTailSwipe = DateTime.UtcNow + TimeSpan.FromSeconds(30  - (m_Rage * 2));
+				m_NextTailSwipe = DateTime.UtcNow + TimeSpan.FromSeconds(30 - (m_Rage * 2));
 			}
 		}
 
@@ -209,7 +272,6 @@ namespace Server.Mobiles
 					m.FixedParticles(0x3728, 10, 15, 9955, EffectLayer.Waist);
 					Server.Mobiles.EtherealMount.EthyDismount(m);
 					mount.Rider = null;
-					// Prevent remounting for 10 seconds
 					BaseMount.SetMountPrevention(m, BlockMountType.Dazed, TimeSpan.FromSeconds(10.0));
 				}
 				int damage;
@@ -231,66 +293,21 @@ namespace Server.Mobiles
 
 		public override bool OnBeforeDeath()
 		{
-			if ( m_Rage == 0 )
-			{
-				PublicOverheadMessage( MessageType.Regular, 0x21, false, "*Screeches defiantly*" );
-				this.Hits = this.HitsMax;
-				this.FixedParticles( 0x376A, 9, 32, 5030, EffectLayer.Waist );
-				this.PlaySound( 0x63F );
-				SetStr( Str + 30 );
-				SetDamage( 16, 20 );
-				VirtualArmor += 5;
-				m_Rage = 1;
-				return false;
-			}
-			else if ( m_Rage == 1 )
-			{
-				PublicOverheadMessage( MessageType.Regular, 0x21, false, "*Screeches in Pain*" );
-				this.Hits = this.HitsMax;
-				this.FixedParticles( 0x376A, 9, 32, 5030, EffectLayer.Waist );
-				this.PlaySound( 0x63F );
-				SetDamage( 21, 25 );
-				VirtualArmor += 10;
-				m_Rage = 2;
-				return false;
-			}
-			else if ( m_Rage == 2 )
-			{
-				PublicOverheadMessage( MessageType.Regular, 0x21, false, "*Roars terrifyingly*" );
-				this.Hits = this.HitsMax;
-				this.FixedParticles( 0x376A, 9, 32, 5030, EffectLayer.Waist );
-				this.PlaySound( 0x63F );
-				SetDamage( 25, 30 );
-				VirtualArmor += 10;
-				m_Rage = 3;
-				return false;
-			}
-			else 
-			{
-				Effects.SendLocationParticles( EffectItem.Create( this.Location, this.Map, EffectItem.DefaultDuration ), 0x3728, 10, 10, 2023 );
-				this.PlaySound( 0x63F );
-				PublicOverheadMessage( MessageType.Regular, 0x21, false, "*Screeches one last time*" );
-				Mobile killer = this.LastKiller;
-				if (killer != null && killer.Player && killer.Karma > 0)
-            	{
-            	    int marks = Utility.RandomMinMax(156, 223);
-            	    Server.Custom.DefenderOfTheRealm.MarkLootHelper.AwardMarks(killer, 1, marks);
-            	}
-			}
+			BossLootSystem.AwardBossMarks(this, this.LastKiller, 156, 223, "*Screeches one last time*");
 			return base.OnBeforeDeath();
 		}
+
 		public override void OnDeath( Container c )
 		{
 			base.OnDeath( c );
 
-			BossLootSystem.AwardBossSpecial(this,BossDrops, 45);
+			BossLootSystem.AwardBossSpecial(this, BossDrops, 30);
 			for ( int i = 0; i < 4; i++ )
 			{
 				c.DropItem( Loot.RandomArty() );
 				c.DropItem( new EtherealPowerScroll() );
 				c.DropItem( AscensionScrollFactory.CreateRandom());
 			}
-			// gold explosion
 			RichesSystem.SpawnRiches( m_LastTarget, 4 );
 		}
 
@@ -300,7 +317,6 @@ namespace Server.Mobiles
 			LeechImmune = true;
 		}
 
-
 		public OldOneEye( Serial serial ) : base( serial )
 		{
 		}
@@ -308,11 +324,14 @@ namespace Server.Mobiles
 		public override void Serialize( GenericWriter writer )
 		{
 			base.Serialize( writer );
-			writer.Write( (int) 1 ); // version
+			writer.Write( (int) 2 );
 
 			writer.Write( m_Rage );
 			writer.Write( m_NextSpecialAttack );
 			writer.Write( m_NextTailSwipe );
+			writer.Write( m_Rage1Applied );
+			writer.Write( m_Rage2Applied );
+			writer.Write( m_Rage3Applied );
 		}
 
 		public override void Deserialize( GenericReader reader )
@@ -325,6 +344,19 @@ namespace Server.Mobiles
 				m_Rage = reader.ReadInt();
 				m_NextSpecialAttack = reader.ReadDateTime();
 				m_NextTailSwipe = reader.ReadDateTime();
+			}
+
+			if ( version >= 2 )
+			{
+				m_Rage1Applied = reader.ReadBool();
+				m_Rage2Applied = reader.ReadBool();
+				m_Rage3Applied = reader.ReadBool();
+			}
+			else
+			{
+				m_Rage1Applied = m_Rage >= 1;
+				m_Rage2Applied = m_Rage >= 2;
+				m_Rage3Applied = m_Rage >= 3;
 			}
 
 			LeechImmune = true;
