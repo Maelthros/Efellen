@@ -155,7 +155,7 @@ namespace Server.Items
                         }
                     }
 
-                    if (pet.Alive)
+                    if (!pet.IsDeadPet)
                     {
                         int healed = 0;
 
