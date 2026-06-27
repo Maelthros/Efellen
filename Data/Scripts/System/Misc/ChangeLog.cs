@@ -40,14 +40,20 @@ namespace Server.Misc
 		+"• Various spells from unlockable classes (mystic, death knight, holy priest, shinobi) have been buffed and rebalanced.<BR>"
 		+"• Slayer spellbooks and ranged weapons now add 70% base damage (down from 100%).<br>"
 		+"• Added missing special attacks to Khumash Gor.<br>"
+		+"• Bosses will no longer flee from battle when on low health.<BR>"
+		+"• Bosses now have a single healthbar and enrage as they are damaged, as opposed to multiple healthbars.<BR>"
 		+" <BR>"
 		+"  * Items and crafting:<BR>"
 		+"• Added various new artifacts as boss reward and global drops / sage quest rewards.<BR>"
 		+"• Carpenters can now craft lockpicking training boxes.<br>"
 		+" <BR>"
-		+"  * Quality of Life:<BR>"
+		+"  * Quality of Life and bugfixes:<BR>"
 		+"• spellbooks for mages, necromancer and elementalists and songbooks now have a 'setup' context menu entry which will auto-collect missing scrolls from the player's inventory and add them to the book.<BR>"
+		+"• Various improvements have been made to veterinary supplies, whose behavior is not more closely aligned with that of bandages.<BR>"
+		+"• The game now properly recognizes when a tamed creature killed a powerful monster, and now tamers and summoners can find treasure hoards.<BR>"
 		+" <BR>"
+		+"  * Locations:<BR>"
+		+"• The dungeon of Doom has been greatly expanded and has new bosses and challenges to be conquered.<BR>"
 
 		+ sepLine()
 
