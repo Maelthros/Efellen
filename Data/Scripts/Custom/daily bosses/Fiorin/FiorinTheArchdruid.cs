@@ -109,7 +109,7 @@ namespace Server.Mobiles
 			Karma = 15000;
 
 			VirtualArmor = 30;
-
+			IsBoss = true;
 			AddItem(new Scimitar { Hue = 267 });
 			AddItem(new LeatherArms { Hue = 267 });
 			AddItem(new LeatherChest { Hue = 267 });
