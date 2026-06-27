@@ -29,66 +29,66 @@ namespace Server.Mobiles
 	///
 	public enum FightMode
 	{
-		None,			// Never focus on others
-		Aggressor,		// Only attack aggressors
-		Strongest,		// Attack the strongest
-		Weakest,		// Attack the weakest
-		Closest, 		// Attack the closest
-		Evil,			// Only attack aggressor -or- negative karma
-		Good,			// Only attack aggressor -or- positive karma
+		None,           // Never focus on others
+		Aggressor,      // Only attack aggressors
+		Strongest,      // Attack the strongest
+		Weakest,        // Attack the weakest
+		Closest,        // Attack the closest
+		Evil,           // Only attack aggressor -or- negative karma
+		Good,           // Only attack aggressor -or- positive karma
 		CharmMonster,
 		CharmAnimal
 	}
 
 	public enum OrderType
 	{
-		None,			//When no order, let's roam
-		Come,			//"(All/Name) come"  Summons all or one pet to your location.
-		Drop,			//"(Name) drop"  Drops its loot to the ground (if it carries any).
-		Follow,			//"(Name) follow"  Follows targeted being.
+		None,           //When no order, let's roam
+		Come,           //"(All/Name) come"  Summons all or one pet to your location.
+		Drop,           //"(Name) drop"  Drops its loot to the ground (if it carries any).
+		Follow,         //"(Name) follow"  Follows targeted being.
 						//"(All/Name) follow me"  Makes all or one pet follow you.
-		Friend,			//"(Name) friend"  Allows targeted player to confirm resurrection.
-		Unfriend,		// Remove a friend
-		Guard,			//"(Name) guard"  Makes the specified pet guard you. Pets can only guard their owner.
+		Friend,         //"(Name) friend"  Allows targeted player to confirm resurrection.
+		Unfriend,       // Remove a friend
+		Guard,          //"(Name) guard"  Makes the specified pet guard you. Pets can only guard their owner.
 						//"(All/Name) guard me"  Makes all or one pet guard you.
-		Attack,			//"(All/Name) kill",
+		Attack,         //"(All/Name) kill",
 						//"(All/Name) attack"  All or the specified pet(s) currently under your control attack the target.
-		Patrol,			//"(Name) patrol"  Roves between two or more guarded targets.
-		Release,		//"(Name) release"  Releases pet back into the wild (removes "tame" status).
-		Stay,			//"(All/Name) stay" All or the specified pet(s) will stop and stay in current spot.
-		Stop,			//"(All/Name) stop Cancels any current orders to attack, guard or follow.
-		Transfer		//"(Name) transfer" Transfers complete ownership to targeted player.
+		Patrol,         //"(Name) patrol"  Roves between two or more guarded targets.
+		Release,        //"(Name) release"  Releases pet back into the wild (removes "tame" status).
+		Stay,           //"(All/Name) stay" All or the specified pet(s) will stop and stay in current spot.
+		Stop,           //"(All/Name) stop Cancels any current orders to attack, guard or follow.
+		Transfer        //"(Name) transfer" Transfers complete ownership to targeted player.
 	}
 
 	[Flags]
 	public enum FoodType
 	{
-		None			= 0x0000,
-		Meat			= 0x0001,
-		FruitsAndVegies	= 0x0002,
-		GrainsAndHay	= 0x0004,
-		Fish			= 0x0008,
-		Eggs			= 0x0010,
-		Gold			= 0x0020,
-		Fire			= 0x0040,
-		Gems			= 0x0080,
-		Nox				= 0x0100,
-		Sea				= 0x0200,
-		Moon			= 0x0400
+		None = 0x0000,
+		Meat = 0x0001,
+		FruitsAndVegies = 0x0002,
+		GrainsAndHay = 0x0004,
+		Fish = 0x0008,
+		Eggs = 0x0010,
+		Gold = 0x0020,
+		Fire = 0x0040,
+		Gems = 0x0080,
+		Nox = 0x0100,
+		Sea = 0x0200,
+		Moon = 0x0400
 	}
 
 	[Flags]
 	public enum PackInstinct
 	{
-		None			= 0x0000,
-		Canine			= 0x0001,
-		Ostard			= 0x0002,
-		Feline			= 0x0004,
-		Arachnid		= 0x0008,
-		Daemon			= 0x0010,
-		Bear			= 0x0020,
-		Equine			= 0x0040,
-		Bull			= 0x0080
+		None = 0x0000,
+		Canine = 0x0001,
+		Ostard = 0x0002,
+		Feline = 0x0004,
+		Arachnid = 0x0008,
+		Daemon = 0x0010,
+		Bear = 0x0020,
+		Equine = 0x0040,
+		Bull = 0x0080
 	}
 
 	public enum MeatType
@@ -288,13 +288,13 @@ namespace Server.Mobiles
 		public int m_Damage;
 		public bool m_HasRight;
 
-		public DamageStore( Mobile m, int damage )
+		public DamageStore(Mobile m, int damage)
 		{
 			m_Mobile = m;
 			m_Damage = damage;
 		}
 
-		public int CompareTo( object obj )
+		public int CompareTo(object obj)
 		{
 			DamageStore ds = (DamageStore)obj;
 
@@ -302,7 +302,7 @@ namespace Server.Mobiles
 		}
 	}
 
-	[AttributeUsage( AttributeTargets.Class )]
+	[AttributeUsage(AttributeTargets.Class)]
 	public class FriendlyNameAttribute : Attribute
 	{
 		//future use: Talisman 'Protection/Bonus vs. Specific Creature
@@ -316,18 +316,18 @@ namespace Server.Mobiles
 			}
 		}
 
-		public FriendlyNameAttribute( TextDefinition friendlyName )
+		public FriendlyNameAttribute(TextDefinition friendlyName)
 		{
 			m_FriendlyName = friendlyName;
 		}
 
-		public static TextDefinition GetFriendlyNameFor( Type t )
+		public static TextDefinition GetFriendlyNameFor(Type t)
 		{
-			if( t.IsDefined( typeof( FriendlyNameAttribute ), false ) )
+			if (t.IsDefined(typeof(FriendlyNameAttribute), false))
 			{
-				object[] objs = t.GetCustomAttributes( typeof( FriendlyNameAttribute ), false );
+				object[] objs = t.GetCustomAttributes(typeof(FriendlyNameAttribute), false);
 
-				if( objs != null && objs.Length > 0 )
+				if (objs != null && objs.Length > 0)
 				{
 					FriendlyNameAttribute friendly = objs[0] as FriendlyNameAttribute;
 
@@ -344,93 +344,109 @@ namespace Server.Mobiles
 		public const int MaxLoyalty = 100;
 
 		#region Var declarations
-		private BaseAI	m_AI;					// THE AI
+		private BaseAI m_AI;                    // THE AI
 
-		private AIType	m_CurrentAI;			// The current AI
-		private AIType	m_DefaultAI;			// The default AI
+		private AIType m_CurrentAI;         // The current AI
+		private AIType m_DefaultAI;         // The default AI
 
-		private Mobile	m_FocusMob;				// Use focus mob instead of combatant, maybe we don't whan to fight
-		private FightMode m_FightMode;			// The style the mob uses
+		private Mobile m_FocusMob;              // Use focus mob instead of combatant, maybe we don't whan to fight
+		private FightMode m_FightMode;          // The style the mob uses
 
-		private int		m_iRangePerception;		// The view area
-		private int		m_iRangeFight;			// The fight distance
+		private int m_iRangePerception;     // The view area
+		private int m_iRangeFight;          // The fight distance
 
-		private bool	m_bDebugAI;				// Show debug AI messages
+		private bool m_bDebugAI;                // Show debug AI messages
 
-		private int		m_iTeam;				// Monster Team
+		private int m_iTeam;                // Monster Team
 
-		private double	m_dActiveSpeed;			// Timer speed when active
-		private double	m_dPassiveSpeed;		// Timer speed when not active
-		private double	m_dCurrentSpeed;		// The current speed, lets say it could be changed by something;
+		private double m_dActiveSpeed;          // Timer speed when active
+		private double m_dPassiveSpeed;     // Timer speed when not active
+		private double m_dCurrentSpeed;     // The current speed, lets say it could be changed by something;
 
-		private Point3D m_pHome;				// The home position of the creature, used by some AI
-		private int		m_iRangeHome = 10;		// The home range of the creature
+		private Point3D m_pHome;                // The home position of the creature, used by some AI
+		private int m_iRangeHome = 10;      // The home range of the creature
 
-		List<Type>		m_arSpellAttack;		// List of attack spell/power
-		List<Type>		m_arSpellDefense;		// List of defensive spell/power
+		List<Type> m_arSpellAttack;     // List of attack spell/power
+		List<Type> m_arSpellDefense;        // List of defensive spell/power
 
-		private bool		m_bControlled;		// Is controlled
-		private Mobile		m_ControlMaster;	// My master
-		private Mobile		m_ControlTarget;	// My target mobile
-		private Point3D		m_ControlDest;		// My target destination (patrol)
-		private OrderType	m_ControlOrder;		// My order
+		private bool m_bControlled;     // Is controlled
+		private Mobile m_ControlMaster; // My master
+		private Mobile m_ControlTarget; // My target mobile
+		private Point3D m_ControlDest;      // My target destination (patrol)
+		private OrderType m_ControlOrder;       // My order
 
-		private int			m_Loyalty;
+		private int m_Loyalty;
 
-		private double		m_dMinTameSkill;
-		private bool		m_bTamable;
+		private double m_dMinTameSkill;
+		private bool m_bTamable;
 
-		private bool		m_bSummoned = false;
-		private DateTime	m_SummonEnd;
-		private int			m_iControlSlots = 1;
+		private bool m_bSummoned = false;
+		private DateTime m_SummonEnd;
+		private int m_iControlSlots = 1;
 
-		private bool		m_bBardProvoked = false;
-		private bool		m_bBardPacified = false;
-		private Mobile		m_bBardMaster = null;
-		private Mobile		m_bBardTarget = null;
-		private DateTime	m_timeBardEnd;
-		private WayPoint	m_CurrentWayPoint = null;
-		private IPoint2D	m_TargetLocation = null;
+		private bool m_bBardProvoked = false;
+		private bool m_bBardPacified = false;
+		private Mobile m_bBardMaster = null;
+		private Mobile m_bBardTarget = null;
+		private DateTime m_timeBardEnd;
+		private WayPoint m_CurrentWayPoint = null;
+		private IPoint2D m_TargetLocation = null;
 
-		private Mobile		m_SummonMaster;
+		private Mobile m_SummonMaster;
 
-		private int			m_HitsMax = -1;
-		private	int			m_StamMax = -1;
-		private int			m_ManaMax = -1;
-		private int			m_DamageMin = -1;
-		private int			m_DamageMax = -1;
+		private int m_HitsMax = -1;
+		private int m_StamMax = -1;
+		private int m_ManaMax = -1;
+		private int m_DamageMin = -1;
+		private int m_DamageMax = -1;
 
-		private int			m_PhysicalResistance, m_PhysicalDamage = 100;
-		private int			m_FireResistance, m_FireDamage;
-		private int			m_ColdResistance, m_ColdDamage;
-		private int			m_PoisonResistance, m_PoisonDamage;
-		private int			m_EnergyResistance, m_EnergyDamage;
-		private int			m_ChaosDamage;
-		private int			m_DirectDamage;
+		private int m_PhysicalResistance, m_PhysicalDamage = 100;
+		private int m_FireResistance, m_FireDamage;
+		private int m_ColdResistance, m_ColdDamage;
+		private int m_PoisonResistance, m_PoisonDamage;
+		private int m_EnergyResistance, m_EnergyDamage;
+		private int m_ChaosDamage;
+		private int m_DirectDamage;
 
 		private List<Mobile> m_Owners;
 		private List<Mobile> m_Friends;
 
-		private bool		m_IsStabled;
+		private bool m_IsStabled;
 
-		private bool		m_HasGeneratedLoot; // have we generated our loot yet?
+		private bool m_HasGeneratedLoot; // have we generated our loot yet?
 
 		private bool		m_Paragon;
 		private bool		m_Boss;
 
-		private bool		m_IsTempEnemy;
+		private bool m_IsTempEnemy;
 
-		private int			m_Coins;
-		private string		m_CoinType;
-		private int 		m_SpawnerID;
-		private bool		m_Swimmer;
-		private bool		m_NoWalker;
+		private int m_Coins;
+		private string m_CoinType;
+		private int m_SpawnerID;
+		private bool m_Swimmer;
+		private bool m_NoWalker;
 
-		private int			m_HitsBeforeMod;
+		private int m_HitsBeforeMod;
+
+		#region slayer-caching
 
 		private SlayerName m_Slayer;
 		private SlayerName m_Slayer2;
 
+		private static readonly SlayerEntry m_SilverSlayer = SlayerGroup.GetEntryByName(SlayerName.Silver);
+
+		private static readonly SlayerEntry m_ExorcismSlayer = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
+
+		private static readonly SlayerEntry m_AnimalHunter = SlayerGroup.GetEntryByName(SlayerName.AnimalHunter);
+
+		private static readonly SlayerEntry m_AvianHunter = SlayerGroup.GetEntryByName(SlayerName.AvianHunter);
+
+		private static readonly SlayerEntry m_RepondHunter = SlayerGroup.GetEntryByName(SlayerName.Repond);
+
+		private static readonly SlayerEntry m_GiantHunter = SlayerGroup.GetEntryByName(SlayerName.GiantKiller);
+
+		private static readonly SlayerEntry m_WizardHunter = SlayerGroup.GetEntryByName(SlayerName.WizardSlayer);
+		#endregion
 		#endregion
 
 		private CraftResource m_Resource;
@@ -438,83 +454,83 @@ namespace Server.Mobiles
 		[CommandProperty(AccessLevel.Owner)]
 		public CraftResource Resource { get { return m_Resource; } set { m_Resource = value; InvalidateProperties(); } }
 
-		public virtual InhumanSpeech SpeechType{ get{ return null; } }
-		public virtual string TalkGumpTitle{ get{ return null; } }
-		public virtual string TalkGumpSubject{ get{ return null; } }
+		public virtual InhumanSpeech SpeechType { get { return null; } }
+		public virtual string TalkGumpTitle { get { return null; } }
+		public virtual string TalkGumpSubject { get { return null; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public SlayerName Slayer
 		{
-			get{ return m_Slayer; }
-			set{ m_Slayer = value; InvalidateProperties(); }
+			get { return m_Slayer; }
+			set { m_Slayer = value; InvalidateProperties(); }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public SlayerName Slayer2
 		{
 			get { return m_Slayer2; }
 			set { m_Slayer2 = value; InvalidateProperties(); }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster, AccessLevel.Administrator )]
+		[CommandProperty(AccessLevel.GameMaster, AccessLevel.Administrator)]
 		public bool IsStabled
 		{
-			get{ return m_IsStabled; }
+			get { return m_IsStabled; }
 			set
 			{
 				m_IsStabled = value;
-				if ( m_IsStabled )
+				if (m_IsStabled)
 					StopDeleteTimer();
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool IsTempEnemy
 		{
-			get{ return m_IsTempEnemy; }
-			set{ m_IsTempEnemy = value; }
+			get { return m_IsTempEnemy; }
+			set { m_IsTempEnemy = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int HitsBeforeMod
 		{
-			get{ return m_HitsBeforeMod; }
-			set{ m_HitsBeforeMod = value; }
+			get { return m_HitsBeforeMod; }
+			set { m_HitsBeforeMod = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int Coins
 		{
-			get{ return m_Coins; }
-			set{ m_Coins = value; }
+			get { return m_Coins; }
+			set { m_Coins = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public string CoinType
 		{
-			get{ return m_CoinType; }
-			set{ m_CoinType = value; }
+			get { return m_CoinType; }
+			set { m_CoinType = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int SpawnerID
 		{
-			get{ return m_SpawnerID; }
-			set{ m_SpawnerID = value; }
+			get { return m_SpawnerID; }
+			set { m_SpawnerID = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool Swimmer
 		{
-			get{ return m_Swimmer; }
-			set{ m_Swimmer = value; }
+			get { return m_Swimmer; }
+			set { m_Swimmer = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool NoWalker
 		{
-			get{ return m_NoWalker; }
-			set{ m_NoWalker = value; }
+			get { return m_NoWalker; }
+			set { m_NoWalker = value; }
 		}
 
 		protected DateTime SummonEnd
@@ -523,83 +539,83 @@ namespace Server.Mobiles
 			set { m_SummonEnd = value; }
 		}
 
-		private bool m_LeechImmune; 
+		private bool m_LeechImmune;
 		public bool LeechImmune
 		{
-		    get { return m_LeechImmune; }
-		    set { m_LeechImmune = value; }
+			get { return m_LeechImmune; }
+			set { m_LeechImmune = value; }
 		}
 
 
 		#region Bonding
 		public const bool BondingEnabled = true;
 
-		public virtual bool IsNecromancer { get { return ( Skills[ SkillName.Necromancy ].Value > 50 ); } }
+		public virtual bool IsNecromancer { get { return (Skills[SkillName.Necromancy].Value > 50); } }
 
-		public virtual bool IsBondable{ get{ return ( BondingEnabled && !Summoned ); } }
-		public virtual TimeSpan BondingDelay{ get{ return TimeSpan.FromDays( MyServerSettings.BondDays() ); } }
-		public virtual TimeSpan BondingAbandonDelay{ get{ return TimeSpan.FromDays( 1.0 ); } }
+		public virtual bool IsBondable { get { return (BondingEnabled && !Summoned); } }
+		public virtual TimeSpan BondingDelay { get { return TimeSpan.FromDays(MyServerSettings.BondDays()); } }
+		public virtual TimeSpan BondingAbandonDelay { get { return TimeSpan.FromDays(1.0); } }
 
-		public override bool CanRegenHits{ get{ return !m_IsDeadPet && base.CanRegenHits; } }
-		public override bool CanRegenStam{ get{ return !m_IsDeadPet && base.CanRegenStam; } }
-		public override bool CanRegenMana{ get{ return !m_IsDeadPet && base.CanRegenMana; } }
+		public override bool CanRegenHits { get { return !m_IsDeadPet && base.CanRegenHits; } }
+		public override bool CanRegenStam { get { return !m_IsDeadPet && base.CanRegenStam; } }
+		public override bool CanRegenMana { get { return !m_IsDeadPet && base.CanRegenMana; } }
 
-		public override bool IsDeadBondedPet{ get{ return m_IsDeadPet; } }
+		public override bool IsDeadBondedPet { get { return m_IsDeadPet; } }
 
 		private bool m_IsBonded;
 		private bool m_IsDeadPet;
 		private DateTime m_BondingBegin;
 		private DateTime m_OwnerAbandonTime;
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Mobile LastOwner
 		{
 			get
 			{
-				if ( m_Owners == null || m_Owners.Count == 0 )
+				if (m_Owners == null || m_Owners.Count == 0)
 					return null;
 
 				return m_Owners[m_Owners.Count - 1];
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool IsBonded
 		{
-			get{ return m_IsBonded; }
-			set{ m_IsBonded = value; InvalidateProperties(); }
+			get { return m_IsBonded; }
+			set { m_IsBonded = value; InvalidateProperties(); }
 		}
 
 		public bool IsDeadPet
 		{
-			get{ return m_IsDeadPet; }
-			set{ m_IsDeadPet = value; }
+			get { return m_IsDeadPet; }
+			set { m_IsDeadPet = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public DateTime BondingBegin
 		{
-			get{ return m_BondingBegin; }
-			set{ m_BondingBegin = value; }
+			get { return m_BondingBegin; }
+			set { m_BondingBegin = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public DateTime OwnerAbandonTime
 		{
-			get{ return m_OwnerAbandonTime; }
-			set{ m_OwnerAbandonTime = value; }
+			get { return m_OwnerAbandonTime; }
+			set { m_OwnerAbandonTime = value; }
 		}
 		#endregion
 
 		#region Delete Previously Tamed Timer
-		private DeleteTimer		m_DeleteTimer;
+		private DeleteTimer m_DeleteTimer;
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public TimeSpan DeleteTimeLeft
 		{
 			get
 			{
-				if ( m_DeleteTimer != null && m_DeleteTimer.Running )
+				if (m_DeleteTimer != null && m_DeleteTimer.Running)
 					return m_DeleteTimer.Next - DateTime.Now;
 
 				return TimeSpan.Zero;
@@ -610,7 +626,7 @@ namespace Server.Mobiles
 		{
 			private Mobile m;
 
-			public DeleteTimer( Mobile creature, TimeSpan delay ) : base( delay )
+			public DeleteTimer(Mobile creature, TimeSpan delay) : base(delay)
 			{
 				m = creature;
 				Priority = TimerPriority.OneMinute;
@@ -624,17 +640,17 @@ namespace Server.Mobiles
 
 		public void BeginDeleteTimer()
 		{
-			if ( !Summoned && !Deleted && !IsStabled )
+			if (!Summoned && !Deleted && !IsStabled)
 			{
 				StopDeleteTimer();
-				m_DeleteTimer = new DeleteTimer( this, TimeSpan.FromDays( 3.0 ) );
+				m_DeleteTimer = new DeleteTimer(this, TimeSpan.FromDays(3.0));
 				m_DeleteTimer.Start();
 			}
 		}
 
 		public void StopDeleteTimer()
 		{
-			if ( m_DeleteTimer != null )
+			if (m_DeleteTimer != null)
 			{
 				m_DeleteTimer.Stop();
 				m_DeleteTimer = null;
@@ -643,7 +659,7 @@ namespace Server.Mobiles
 
 		#endregion
 
-		public virtual double WeaponAbilityChance{ get{ return 0.4; } }
+		public virtual double WeaponAbilityChance { get { return 0.4; } }
 
 		public virtual WeaponAbility GetWeaponAbility()
 		{
@@ -652,62 +668,62 @@ namespace Server.Mobiles
 
 		#region Elemental Resistance/Damage
 
-		public override int BasePhysicalResistance{ get{ return m_PhysicalResistance; } }
-		public override int BaseFireResistance{ get{ return m_FireResistance; } }
-		public override int BaseColdResistance{ get{ return m_ColdResistance; } }
-		public override int BasePoisonResistance{ get{ return m_PoisonResistance; } }
-		public override int BaseEnergyResistance{ get{ return m_EnergyResistance; } }
+		public override int BasePhysicalResistance { get { return m_PhysicalResistance; } }
+		public override int BaseFireResistance { get { return m_FireResistance; } }
+		public override int BaseColdResistance { get { return m_ColdResistance; } }
+		public override int BasePoisonResistance { get { return m_PoisonResistance; } }
+		public override int BaseEnergyResistance { get { return m_EnergyResistance; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int PhysicalResistanceSeed{ get{ return m_PhysicalResistance; } set{ m_PhysicalResistance = value; UpdateResistances(); } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int PhysicalResistanceSeed { get { return m_PhysicalResistance; } set { m_PhysicalResistance = value; UpdateResistances(); } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int FireResistSeed{ get{ return m_FireResistance; } set{ m_FireResistance = value; UpdateResistances(); } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int FireResistSeed { get { return m_FireResistance; } set { m_FireResistance = value; UpdateResistances(); } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int ColdResistSeed{ get{ return m_ColdResistance; } set{ m_ColdResistance = value; UpdateResistances(); } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int ColdResistSeed { get { return m_ColdResistance; } set { m_ColdResistance = value; UpdateResistances(); } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int PoisonResistSeed{ get{ return m_PoisonResistance; } set{ m_PoisonResistance = value; UpdateResistances(); } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int PoisonResistSeed { get { return m_PoisonResistance; } set { m_PoisonResistance = value; UpdateResistances(); } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int EnergyResistSeed{ get{ return m_EnergyResistance; } set{ m_EnergyResistance = value; UpdateResistances(); } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int EnergyResistSeed { get { return m_EnergyResistance; } set { m_EnergyResistance = value; UpdateResistances(); } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int PhysicalDamage{ get{ return m_PhysicalDamage; } set{ m_PhysicalDamage = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int PhysicalDamage { get { return m_PhysicalDamage; } set { m_PhysicalDamage = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int FireDamage{ get{ return m_FireDamage; } set{ m_FireDamage = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int FireDamage { get { return m_FireDamage; } set { m_FireDamage = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int ColdDamage{ get{ return m_ColdDamage; } set{ m_ColdDamage = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int ColdDamage { get { return m_ColdDamage; } set { m_ColdDamage = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int PoisonDamage{ get{ return m_PoisonDamage; } set{ m_PoisonDamage = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int PoisonDamage { get { return m_PoisonDamage; } set { m_PoisonDamage = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int EnergyDamage{ get{ return m_EnergyDamage; } set{ m_EnergyDamage = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int EnergyDamage { get { return m_EnergyDamage; } set { m_EnergyDamage = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int ChaosDamage{ get{ return m_ChaosDamage; } set{ m_ChaosDamage = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int ChaosDamage { get { return m_ChaosDamage; } set { m_ChaosDamage = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int DirectDamage{ get{ return m_DirectDamage; } set{ m_DirectDamage = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public int DirectDamage { get { return m_DirectDamage; } set { m_DirectDamage = value; } }
 
 		#endregion
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool IsParagon
 		{
-			get{ return m_Paragon; }
+			get { return m_Paragon; }
 			set
 			{
-				if ( m_Paragon == value )
+				if (m_Paragon == value)
 					return;
-				else if ( value )
-					Paragon.Convert( this );
+				else if (value)
+					Paragon.Convert(this);
 				else
-					Paragon.UnConvert( this );
+					Paragon.UnConvert(this);
 
 				m_Paragon = value;
 
@@ -723,915 +739,950 @@ namespace Server.Mobiles
 
 		public List<Mobile> Owners { get { return m_Owners; } }
 
-		public virtual bool AllowMaleTamer{ get{ return true; } }
-		public virtual bool AllowFemaleTamer{ get{ return true; } }
-		public virtual bool SubdueBeforeTame{ get{ return false; } }
-		public virtual bool StatLossAfterTame{ get{ return SubdueBeforeTame; } }
-		public virtual bool ReduceSpeedWithDamage{ get{ return true; } }
-		public virtual bool IsSubdued{ get{ return SubdueBeforeTame && ( Hits < ( HitsMax / 10 ) ); } }
+		public virtual bool AllowMaleTamer { get { return true; } }
+		public virtual bool AllowFemaleTamer { get { return true; } }
+		public virtual bool SubdueBeforeTame { get { return false; } }
+		public virtual bool StatLossAfterTame { get { return SubdueBeforeTame; } }
+		public virtual bool ReduceSpeedWithDamage { get { return true; } }
+		public virtual bool IsSubdued { get { return SubdueBeforeTame && (Hits < (HitsMax / 10)); } }
 
-		public virtual bool Commandable{ get{ return true; } }
+		public virtual bool Commandable { get { return true; } }
 
-		public virtual Poison HitPoison{ get{ return null; } }
-		public virtual double HitPoisonChance{ get{ return 0.5; } }
-		public virtual Poison PoisonImmune{ get{ return null; } }
+		public virtual Poison HitPoison { get { return null; } }
+		public virtual double HitPoisonChance { get { return 0.5; } }
+		public virtual Poison PoisonImmune { get { return null; } }
 
-		public virtual bool BardImmune{ get{ return false; } }
-		public virtual bool Unprovokable{ get{ return BardImmune || m_IsDeadPet; } }
-		public virtual bool Uncalmable{ get{ return BardImmune || m_IsDeadPet; } }
+		public virtual bool BardImmune { get { return false; } }
+		public virtual bool Unprovokable { get { return BardImmune || m_IsDeadPet; } }
+		public virtual bool Uncalmable { get { return BardImmune || m_IsDeadPet; } }
 		public virtual bool AreaPeaceImmune { get { return BardImmune || m_IsDeadPet; } }
 
-		public virtual bool BleedImmune{ get{ return false; } }
-		public virtual double BonusPetDamageScalar{ get{ return 1.0; } }
+		public virtual bool BleedImmune { get { return false; } }
+		public virtual double BonusPetDamageScalar { get { return 1.0; } }
 
-		public virtual bool DeathAdderCharmable{ get{ return false; } }
+		public virtual bool DeathAdderCharmable { get { return false; } }
 
 		//TODO: Find the pub 31 tweaks to the DispelDifficulty and apply them of course.
-		public virtual double DispelDifficulty{ get{ return 0.0; } } // at this skill level we dispel 50% chance
-		public virtual double DispelFocus{ get{ return 20.0; } } // at difficulty - focus we have 0%, at difficulty + focus we have 100%
-		public virtual bool DisplayWeight{ get{ return Backpack is StrongBackpack; } }
+		public virtual double DispelDifficulty { get { return 0.0; } } // at this skill level we dispel 50% chance
+		public virtual double DispelFocus { get { return 20.0; } } // at difficulty - focus we have 0%, at difficulty + focus we have 100%
+		public virtual bool DisplayWeight { get { return Backpack is StrongBackpack; } }
 
 		#region Breath abilities
 		private DateTime m_NextBreathTime;
-		
+
 		// Must be overriden in subclass to enable
-		public virtual bool HasBreath{ get{ return false; } }
-		
+		public virtual bool HasBreath { get { return false; } }
+
 		// Base damage given is: CurrentHitPoints * BreathDamageScalar
-		public virtual double BreathDamageScalar{ get{ return 0.20; } }
-		
+		public virtual double BreathDamageScalar { get { return 0.20; } }
+
 		// Min/max seconds until next breath
-		public virtual double BreathMinDelay{ get{ return 10.0; } }
-		public virtual double BreathMaxDelay{ get{ return 13.0; } }
-		
+		public virtual double BreathMinDelay { get { return 10.0; } }
+		public virtual double BreathMaxDelay { get { return 13.0; } }
+
 		// Creature stops moving for 1.0 seconds while breathing
-		public virtual double BreathStallTime{ get{ return 1.0; } }
-		
+		public virtual double BreathStallTime { get { return 1.0; } }
+
 		// Effect is sent 1.3 seconds after BreathAngerSound and BreathAngerAnimation is played
-		public virtual double BreathEffectDelay{ get{ return 1.3; } }
-		
+		public virtual double BreathEffectDelay { get { return 1.3; } }
+
 		// Damage is given 1.0 seconds after effect is sent
-		public virtual double BreathDamageDelay{ get{ return 1.0; } }
-		
-		public virtual int BreathRange{ get{ return RangePerception; } }
-		
+		public virtual double BreathDamageDelay { get { return 1.0; } }
+
+		public virtual int BreathRange { get { return RangePerception; } }
+
 		// Damage types
-		public virtual int BreathPhysicalDamage{ get{ return 0; } }
-		public virtual int BreathFireDamage{ get{ return 100; } }
-		public virtual int BreathColdDamage{ get{ return 0; } }
-		public virtual int BreathPoisonDamage{ get{ return 0; } }
-		public virtual int BreathEnergyDamage{ get{ return 0; } }
-		
+		public virtual int BreathPhysicalDamage { get { return 0; } }
+		public virtual int BreathFireDamage { get { return 100; } }
+		public virtual int BreathColdDamage { get { return 0; } }
+		public virtual int BreathPoisonDamage { get { return 0; } }
+		public virtual int BreathEnergyDamage { get { return 0; } }
+
 		// Is immune to breath damages
-		public virtual bool BreathImmune{ get{ return false; } }
-		
+		public virtual bool BreathImmune { get { return false; } }
+
 		// Effect details and sound
-		public virtual int BreathEffectItemID{ get{ return 0x36D4; } }
-		public virtual int BreathEffectSpeed{ get{ return 5; } }
-		public virtual int BreathEffectDuration{ get{ return 0; } }
-		public virtual bool BreathEffectExplodes{ get{ return false; } }
-		public virtual bool BreathEffectFixedDir{ get{ return false; } }
-		public virtual int BreathEffectHue{ get{ return 0; } }
-		public virtual int BreathEffectRenderMode{ get{ return 0; } }
-		
-		public virtual int BreathEffectSound{ get{ return 0x227; } }
-		
+		public virtual int BreathEffectItemID { get { return 0x36D4; } }
+		public virtual int BreathEffectSpeed { get { return 5; } }
+		public virtual int BreathEffectDuration { get { return 0; } }
+		public virtual bool BreathEffectExplodes { get { return false; } }
+		public virtual bool BreathEffectFixedDir { get { return false; } }
+		public virtual int BreathEffectHue { get { return 0; } }
+		public virtual int BreathEffectRenderMode { get { return 0; } }
+
+		public virtual int BreathEffectSound { get { return 0x227; } }
+
 		// Anger sound/animations
-		public virtual int BreathAngerSound{ get{ return GetAngerSound(); } }
-		public virtual int BreathAngerAnimation{ get{ return 12; } }
-		
+		public virtual int BreathAngerSound { get { return GetAngerSound(); } }
+		public virtual int BreathAngerAnimation { get { return 12; } }
+
 		// Helper class to carry breath context
 		private class BreathContext
 		{
-		    public Point3D TargetLocation { get; set; }
-		    public Map TargetMap { get; set; }
-		    public Mobile OriginalTarget { get; set; }
-		    public int Form { get; set; }
-		
-		    public BreathContext(Mobile target, int form)
-		    {
-		        OriginalTarget = target;
-		        TargetLocation = target.Location;
-		        TargetMap = target.Map;
-		        Form = form;
-		    }
+			public Point3D TargetLocation { get; set; }
+			public Map TargetMap { get; set; }
+			public Mobile OriginalTarget { get; set; }
+			public int Form { get; set; }
+
+			public BreathContext(Mobile target, int form)
+			{
+				OriginalTarget = target;
+				TargetLocation = target.Location;
+				TargetMap = target.Map;
+				Form = form;
+			}
 		}
-		
-		public virtual void BreathStart( Mobile target )
+
+		public virtual void BreathStart(Mobile target)
 		{
-		    BreathStallMovement();
-		    BreathPlayAngerSound();
-		    BreathPlayAngerAnimation();
-		
-		    this.Direction = this.GetDirectionTo( target );
-		
-		    // Store context with location snapshot
-		    int form = GetBreathForm(); // Get the form from creature's breath type
-		    BreathContext context = new BreathContext(target, form);
-		    Timer.DelayCall( TimeSpan.FromSeconds( BreathEffectDelay ), new TimerStateCallback( BreathEffect_Callback ), context );
+			BreathStallMovement();
+			BreathPlayAngerSound();
+			BreathPlayAngerAnimation();
+
+			this.Direction = this.GetDirectionTo(target);
+
+			// Store context with location snapshot
+			int form = GetBreathForm(); // Get the form from creature's breath type
+			BreathContext context = new BreathContext(target, form);
+			Timer.DelayCall(TimeSpan.FromSeconds(BreathEffectDelay), new TimerStateCallback(BreathEffect_Callback), context);
 		}
-		
+
 		// Override this in creature classes to specify which breath form to use
 		// This replaces the form parameter that was previously in BreathDealDamage
 		public virtual int GetBreathForm()
 		{
-		    // Default breath form - determine from damage types
-		    if ( BreathFireDamage > 0 && BreathColdDamage == 0 && BreathPoisonDamage == 0 && BreathEnergyDamage == 0 )
-		        return 9; // LARGE FIRE BREATH
-		    else if ( BreathColdDamage > 0 && BreathFireDamage == 0 )
-		        return 12; // LARGE COLD BREATH
-		    else if ( BreathPoisonDamage > 0 )
-		        return 10; // LARGE POISON BREATH
-		    else if ( BreathEnergyDamage > 0 )
-		        return 13; // LARGE ELECTRICAL BREATH
-		
-		    return 9; // Default to fire
+			// Default breath form - determine from damage types
+			if (BreathFireDamage > 0 && BreathColdDamage == 0 && BreathPoisonDamage == 0 && BreathEnergyDamage == 0)
+				return 9; // LARGE FIRE BREATH
+			else if (BreathColdDamage > 0 && BreathFireDamage == 0)
+				return 12; // LARGE COLD BREATH
+			else if (BreathPoisonDamage > 0)
+				return 10; // LARGE POISON BREATH
+			else if (BreathEnergyDamage > 0)
+				return 13; // LARGE ELECTRICAL BREATH
+
+			return 9; // Default to fire
 		}
-		
+
 		public virtual void BreathStallMovement()
 		{
-		    if ( m_AI != null )
-		        m_AI.NextMove = DateTime.Now + TimeSpan.FromSeconds( BreathStallTime );
+			if (m_AI != null)
+				m_AI.NextMove = DateTime.Now + TimeSpan.FromSeconds(BreathStallTime);
 		}
-		
+
 		public virtual void BreathPlayAngerSound()
 		{
-		    PlaySound( BreathAngerSound );
+			PlaySound(BreathAngerSound);
 		}
-		
+
 		public virtual void BreathPlayAngerAnimation()
 		{
-		    Animate( BreathAngerAnimation, 5, 1, true, false, 0 );
+			Animate(BreathAngerAnimation, 5, 1, true, false, 0);
 		}
-		
-		public virtual void BreathEffect_Callback( object state )
+
+		public virtual void BreathEffect_Callback(object state)
 		{
-		    BreathContext context = (BreathContext)state;
-		
-		    // we always want sounds
-		    BreathPlayEffectSound();
-		
-		    // Play projectile if this breath type uses one
-		    if ( BreathEffectItemID > 0 && ShouldPlayProjectile( context.Form ) )
-		    {
-		        BreathPlayEffect( context.TargetLocation, context.TargetMap );
-		    }
-		
-		    // Play effects
-		    PlayBreathVisuals( context.TargetLocation, context.TargetMap, context.Form );
-		
-		    // blast them
-		    Mobile target = context.OriginalTarget;
-		    if ( target != null && target.Alive && CanBeHarmful( target ) )
-		    {
-		        Timer.DelayCall( TimeSpan.FromSeconds( BreathDamageDelay ), new TimerStateCallback( BreathDamage_Callback ), context );
-		    }
+			BreathContext context = (BreathContext)state;
+
+			// we always want sounds
+			BreathPlayEffectSound();
+
+			// Play projectile if this breath type uses one
+			if (BreathEffectItemID > 0 && ShouldPlayProjectile(context.Form))
+			{
+				BreathPlayEffect(context.TargetLocation, context.TargetMap);
+			}
+
+			// Play effects
+			PlayBreathVisuals(context.TargetLocation, context.TargetMap, context.Form);
+
+			// blast them
+			Mobile target = context.OriginalTarget;
+			if (target != null && target.Alive && CanBeHarmful(target))
+			{
+				Timer.DelayCall(TimeSpan.FromSeconds(BreathDamageDelay), new TimerStateCallback(BreathDamage_Callback), context);
+			}
 		}
-		
-		public virtual bool ShouldPlayProjectile( int form )
+
+		public virtual bool ShouldPlayProjectile(int form)
 		{
-		    // Only certain forms use projectiles (daggers, stars, potions, manticore thorns.)
-		    switch( form )
-		    {
-		        case 2: // POTIONS THROWN
-		        case 3: // DAGGERS OR STARS THROWN
-		        case 5: // MANTICORE
-		            return true;
-		        default:
-		            return false; // Most breath weapons don't use projectiles
-		    }
+			// Only certain forms use projectiles (daggers, stars, potions, manticore thorns.)
+			switch (form)
+			{
+				case 2: // POTIONS THROWN
+				case 3: // DAGGERS OR STARS THROWN
+				case 5: // MANTICORE
+					return true;
+				default:
+					return false; // Most breath weapons don't use projectiles
+			}
 		}
-		
+
 		public virtual void BreathPlayEffectSound()
 		{
-		    PlaySound( BreathEffectSound );
+			PlaySound(BreathEffectSound);
 		}
-		
-		public virtual void BreathPlayEffect( Point3D targetLocation, Map targetMap )
+
+		public virtual void BreathPlayEffect(Point3D targetLocation, Map targetMap)
 		{
-		    if ( targetMap == null )
-		        return;
-		
-		    Effects.SendMovingEffect( this, new Entity(Serial.Zero, targetLocation, targetMap), 
-		        BreathEffectItemID, BreathEffectSpeed, BreathEffectDuration, 
-		        BreathEffectFixedDir, BreathEffectExplodes, BreathEffectHue, BreathEffectRenderMode );
+			if (targetMap == null)
+				return;
+
+			Effects.SendMovingEffect(this, new Entity(Serial.Zero, targetLocation, targetMap),
+				BreathEffectItemID, BreathEffectSpeed, BreathEffectDuration,
+				BreathEffectFixedDir, BreathEffectExplodes, BreathEffectHue, BreathEffectRenderMode);
 		}
-		
-		public virtual void BreathDamage_Callback( object state )
+
+		public virtual void BreathDamage_Callback(object state)
 		{
-		    BreathContext context = (BreathContext)state;
-		    Mobile target = context.OriginalTarget;
-		
-		    if ( target == null || !target.Alive )
-		        return;
-		
-		    if ( target is BaseCreature && ((BaseCreature)target).BreathImmune )
-		        return;
-		
-		    if ( CanBeHarmful( target ) )
-		    {
-		        DoHarmful( target );
-		        BreathDealDamage( target, context.Form );
-		    }
+			BreathContext context = (BreathContext)state;
+			Mobile target = context.OriginalTarget;
+
+			if (target == null || !target.Alive)
+				return;
+
+			if (target is BaseCreature && ((BaseCreature)target).BreathImmune)
+				return;
+
+			if (CanBeHarmful(target))
+			{
+				DoHarmful(target);
+				BreathDealDamage(target, context.Form);
+			}
 		}
-		
-		public virtual void BreathDealDamage( Mobile target, int form )
+
+		public virtual void BreathDealDamage(Mobile target, int form)
 		{
-		    if( Evasion.CheckSpellEvasion( target ) )
-		        return;
-		
-		    DoFinalBreathDamage( target, form, true );
+			if (Evasion.CheckSpellEvasion(target))
+				return;
+
+			DoFinalBreathDamage(target, form, true);
 		}
-		
-		public virtual void PlayBreathVisuals( Point3D targetLoc, Map map, int form )
+
+		public virtual void PlayBreathVisuals(Point3D targetLoc, Map map, int form)
 		{
-		    if ( map == null )
-		        return;
-		
-		    Point3D blast1 = new Point3D( targetLoc.X, targetLoc.Y, targetLoc.Z );
-		    Point3D blast2 = new Point3D( targetLoc.X-1, targetLoc.Y, targetLoc.Z );
-		    Point3D blast3 = new Point3D( targetLoc.X+1, targetLoc.Y, targetLoc.Z );
-		    Point3D blast4 = new Point3D( targetLoc.X, targetLoc.Y-1, targetLoc.Z );
-		    Point3D blast5 = new Point3D( targetLoc.X, targetLoc.Y+1, targetLoc.Z );
-		
-		    Point3D blast1z = new Point3D( targetLoc.X, targetLoc.Y, targetLoc.Z+10 );
-		    Point3D blast2z = new Point3D( targetLoc.X-1, targetLoc.Y, targetLoc.Z+10 );
-		    Point3D blast3z = new Point3D( targetLoc.X+1, targetLoc.Y, targetLoc.Z+10 );
-		    Point3D blast4z = new Point3D( targetLoc.X, targetLoc.Y-1, targetLoc.Z+10 );
-		    Point3D blast5z = new Point3D( targetLoc.X, targetLoc.Y+1, targetLoc.Z+10 );
-		
-		    Point3D blast1w = new Point3D( targetLoc.X, targetLoc.Y, targetLoc.Z );
-		    Point3D blast2w = new Point3D( targetLoc.X-2, targetLoc.Y, targetLoc.Z );
-		    Point3D blast3w = new Point3D( targetLoc.X+2, targetLoc.Y, targetLoc.Z );
-		    Point3D blast4w = new Point3D( targetLoc.X, targetLoc.Y-2, targetLoc.Z );
-		    Point3D blast5w = new Point3D( targetLoc.X, targetLoc.Y+2, targetLoc.Z );
-		
-		    // All the visual form logic extracted from DoFinalBreathAttack
-		    if ( form == 1 ) // CRYSTAL DRAGONS
-		    {
-		        int bColor = Utility.RandomList( 0x48D, 0x48E, 0x48F, 0x490, 0x491 );
-		        Effects.SendLocationEffect( blast1, map, 0x3709, 30, 10, bColor, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x3709, 30, 10, bColor, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x3709, 30, 10, bColor, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x3709, 30, 10, bColor, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x3709, 30, 10, bColor, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x208 );
-		    }
-		    else if ( form == 2 ) // POTIONS THROWN
-		    {
-		        if ( BreathEffectHue == 0x488 )
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x3709, 30, 10 );
-		            Effects.PlaySound( targetLoc, map, 0x208 );
-		            Effects.PlaySound( targetLoc, map, 0x38D );
-		        }
-		        else if ( BreathEffectHue == 0xB92 )
-		        {
-		            Effects.SendLocationParticles( EffectItem.Create( blast1, map, EffectItem.DefaultDuration ), 0x36B0, 1, 14, 63, 7, 9915, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x229 );
-		            Effects.PlaySound( targetLoc, map, 0x38D );
-		        }
-		        else if ( form == 0x5B5 )
-		        {
-		            Point3D vortex = new Point3D( targetLoc.X+1, targetLoc.Y+1, targetLoc.Z );
-		            Effects.SendLocationEffect( vortex, map, 0x37CC, 30, 10, 0x481, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x10B );
-		            Effects.PlaySound( targetLoc, map, 0x38D );
-		        }
-		        else
-		        {
-		            Effects.SendLocationParticles( EffectItem.Create( blast1, map, EffectItem.DefaultDuration ), 0x36BD, 20, 10, 5044, 0, 0, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x307 );
-		        }
-		    }
-		    else if ( form == 3 ) // DAGGERS OR STARS THROWN
-		    {
-		        // Visual effects only
-		        // Blood and crying out handled in ApplyBreathSecondaryEffects
-		    }
-		    else if ( form == 4 ) // DINOSAUR ROAR
-		    {
-		        Effects.PlaySound( targetLoc, map, 0x63F );
-		    }
-		    else if ( form == 5 ) // MANTICORE
-		    {
-		        // Visual projectile already handled by BreathPlayEffect
-		        // Sound and poison handled in ApplyBreathSecondaryEffects
-		    }
-		    else if ( form == 6 ) // SPIDERS
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x10D3, 30, 10, 0, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x62D );
-		    }
-		    else if ( form == 7 ) // GIANT STONES AND LOGS
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x36B0, 30, 10, 0x837, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x664 );
-		    }
-		    else if ( form == 8 ) // LARGE SAND BREATH
-		    {
-		        Effects.SendLocationEffect( blast1w, map, 0x5590, 30, 10, Utility.RandomList( 0xB4D, 0xB4E ), 0 );
-		        Effects.SendLocationEffect( blast2w, map, 0x5590, 30, 10, Utility.RandomList( 0xB4D, 0xB4E ), 0 );
-		        Effects.SendLocationEffect( blast3w, map, 0x5590, 30, 10, Utility.RandomList( 0xB4D, 0xB4E ), 0 );
-		        Effects.SendLocationEffect( blast4w, map, 0x5590, 30, 10, Utility.RandomList( 0xB4D, 0xB4E ), 0 );
-		        Effects.SendLocationEffect( blast5w, map, 0x5590, 30, 10, Utility.RandomList( 0xB4D, 0xB4E ), 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 9 ) // LARGE FIRE BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3709, 30, 10 );
-		        Effects.SendLocationEffect( blast2, map, 0x3709, 30, 10 );
-		        Effects.SendLocationEffect( blast3, map, 0x3709, 30, 10 );
-		        Effects.SendLocationEffect( blast4, map, 0x3709, 30, 10 );
-		        Effects.SendLocationEffect( blast5, map, 0x3709, 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x208 );
-		    }
-		    else if ( form == 10 ) // LARGE POISON BREATH
-		    {
-		        if ( Utility.RandomBool() )
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x3400, 60 );
-		            Effects.SendLocationEffect( blast2, map, 0x3400, 60 );
-		            Effects.SendLocationEffect( blast3, map, 0x3400, 60 );
-		            Effects.SendLocationEffect( blast4, map, 0x3400, 60 );
-		            Effects.SendLocationEffect( blast5, map, 0x3400, 60 );
-		            Effects.PlaySound( targetLoc, map, 0x108 );
-		        }
-		        else
-		        {
-		            Effects.SendLocationParticles( EffectItem.Create( blast1, map, EffectItem.DefaultDuration ), 0x36B0, 1, 14, 63, 7, 9915, 0 );
-		            Effects.SendLocationParticles( EffectItem.Create( blast2, map, EffectItem.DefaultDuration ), 0x36B0, 1, 14, 63, 7, 9915, 0 );
-		            Effects.SendLocationParticles( EffectItem.Create( blast3, map, EffectItem.DefaultDuration ), 0x36B0, 1, 14, 63, 7, 9915, 0 );
-		            Effects.SendLocationParticles( EffectItem.Create( blast4, map, EffectItem.DefaultDuration ), 0x36B0, 1, 14, 63, 7, 9915, 0 );
-		            Effects.SendLocationParticles( EffectItem.Create( blast5, map, EffectItem.DefaultDuration ), 0x36B0, 1, 14, 63, 7, 9915, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x229 );
-		        }
-		    }
-		    else if ( form == 11 ) // LARGE RADIATION
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, 0xB96, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x3400, 60, 0xB96, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x3400, 60, 0xB96, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x3400, 60, 0xB96, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x3400, 60, 0xB96, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x108 );
-		    }
-		    else if ( form == 12 ) // LARGE COLD BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x1A84, 30, 10, 0x9C1, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x1A84, 30, 10, 0x9C1, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x1A84, 30, 10, 0x9C1, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x1A84, 30, 10, 0x9C1, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x1A84, 30, 10, 0x9C1, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 13 ) // LARGE ELECTRICAL BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast2, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast3, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast4, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast5, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x5C3 );
-		    }
-		    else if ( form == 14 ) // TITAN LIGHTNING BOLT
-		    {
-		        Effects.SendLocationEffect( blast1, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast2, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast3, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast4, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.SendLocationEffect( blast5, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x5C3 );
-		    }
-		    else if ( form == 15 ) // SPHINX
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x5590, 30, 10, Utility.RandomList( 0xB4D, 0xB4E ), 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 16 ) // LARGE STEAM BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, 10, 0x9C4, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x3400, 60, 10, 0x9C4, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x3400, 60, 10, 0x9C4, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x3400, 60, 10, 0x9C4, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x3400, 60, 10, 0x9C4, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x108 );
-		    }
-		    else if ( form == 17 ) // SMALL FIRE BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3709, 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x208 );
-		    }
-		    else if ( form == 18 ) // SMALL POISON BREATH
-		    {
-		        if ( Utility.RandomBool() )
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x3400, 60 );
-		            Effects.PlaySound( targetLoc, map, 0x108 );
-		        }
-		        else
-		        {
-		            Effects.SendLocationParticles( EffectItem.Create( blast1, map, EffectItem.DefaultDuration ), 0x36B0, 1, 14, 63, 7, 9915, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x229 );
-		        }
-		    }
-		    else if ( form == 19 ) // SMALL COLD BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x1A84, 30, 10, 0x9C1, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 20 ) // SMALL ENERGY BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x5C3 );
-		    }
-		    else if ( form == 21 ) // SMALL ENERGY WITH BOLT
-		    {
-		        Effects.SendLocationEffect( blast1, map, Utility.RandomList( 0x3967, 0x3979 ), 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x5C3 );
-		    }
-		    else if ( form == 22 ) // MISC ELEMENTAL
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x36B0, 30, 10, 0x840, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x65A );
-		    }
-		    else if ( form == 23 || form == 24 || form == 25 ) // LARGE VOID BREATH
-		    {
-		        int color = 0x496;
-		        if ( form == 24 ) { color = 0x844; }
-		        else if ( form == 25 ) { color = 0x9C1; }
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, color, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x3400, 60, color, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x3400, 60, color, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x3400, 60, color, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x3400, 60, color, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x108 );
-		    }
-		    else if ( form == 26 || form == 27 || form == 28 ) // SMALL VOID BREATH
-		    {
-		        int color = 0x496;
-		        if ( form == 27 ) { color = 0x844; }
-		        else if ( form == 28 ) { color = 0x9C1; }
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, color, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x108 );
-		    }
-		    else if ( form == 29 ) // STONE HANDS FROM THE GROUND
-		    {
-		        Point3D hands = new Point3D( targetLoc.X, targetLoc.Y, targetLoc.Z+5 );
-		        Effects.SendLocationEffect( hands, map, 0x3837, 23, 10, this.Hue, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x65A );
-		    }
-		    else if ( form == 30 ) // WATER SPLASH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x1A84, 30, 10, BreathEffectHue, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x026 );
-		    }
-		    else if ( form == 31 ) // WATER SPLASH (LARGE)
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x1A84, 30, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x23B2, 16, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x23B2, 16, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x23B2, 16, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x23B2, 16, BreathEffectHue, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x026 );
-		    }
-		    else if ( form == 32 ) // SMALL FALLING ICE
-		    {
-		        if ( Utility.RandomBool() )
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x5571, 85, 10, 0, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x5C0 );
-		        }
-		        else
-		        {
-		            Effects.SendLocationEffect( blast1, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x656 );
-		        }
-		    }
-		    else if ( form == 33 ) // BIG FALLING ICE
-		    {
-		        int icy = Utility.RandomMinMax(1,3);
-		        if ( icy == 1 )
-		        {
-		            Effects.SendLocationEffect( blast1, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		            Effects.SendLocationEffect( blast2, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		            Effects.SendLocationEffect( blast3, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		            Effects.SendLocationEffect( blast4, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		            Effects.SendLocationEffect( blast5, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x658 );
-		        }
-		        else if ( icy == 2 )
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x5571, 85, 10, 0, 0 );
-		            Effects.SendLocationEffect( blast2, map, 0x5571, 85, 10, 0, 0 );
-		            Effects.SendLocationEffect( blast3, map, 0x5571, 85, 10, 0, 0 );
-		            Effects.SendLocationEffect( blast4, map, 0x5571, 85, 10, 0, 0 );
-		            Effects.SendLocationEffect( blast5, map, 0x5571, 85, 10, 0, 0 );
-		            Effects.PlaySound( targetLoc, map, 0x5C0 );
-		        }
-		        else
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x55BB, 85, 10, 0, 0 );
-		            Effects.PlaySound( blast1, map, 0x5CE );
-		        }
-		    }
-		    else if ( form == 34 ) // LARGE WEED BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, 0xB97, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x3400, 60, 0xB97, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x3400, 60, 0xB97, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x3400, 60, 0xB97, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x3400, 60, 0xB97, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x64F );
-		    }
-		    else if ( form == 35 ) // SMALL WEED BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, 0xB97, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x64F );
-		    }
-		    else if ( form == 36 ) // ACID SPLASH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x1A84, 30, 10, BreathEffectHue, 1167 );
-		        Effects.SendLocationEffect( blast2, map, 0x23B2, 16, BreathEffectHue, 1167 );
-		        Effects.SendLocationEffect( blast3, map, 0x23B2, 16, BreathEffectHue, 1167 );
-		        Effects.SendLocationEffect( blast4, map, 0x23B2, 16, BreathEffectHue, 1167 );
-		        Effects.SendLocationEffect( blast5, map, 0x23B2, 16, BreathEffectHue, 1167 );
-		        Effects.PlaySound( targetLoc, map, 0x026 );
-		    }
-		    else if ( form == 37 ) // MUMMY WRAP
-		    {
-		        Point3D wrapped = new Point3D( targetLoc.X, targetLoc.Y, targetLoc.Z+2 );
-		        Effects.SendLocationEffect( wrapped, map, 0x23AF, 30, 10, 0, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x5D2 );
-		    }
-		    else if ( form == 38 ) // SMALL STEAM BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, 10, 0x9C4, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x108 );
-		    }
-		    else if ( form == 39 ) // SMALL RADIATION
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3400, 60, 0xB96, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x108 );
-		    }
-		    else if ( form == 40 ) // SMALL SAND BREATH
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x5590, 30, 10, Utility.RandomList( 0xB4D, 0xB4E ), 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 41 ) // TITAN OF EARTH ATTACK
-		    {
-		        Point3D hands = new Point3D( targetLoc.X, targetLoc.Y, targetLoc.Z+5 );
-		        Effects.SendLocationEffect( hands, map, 0x3837, 23, 10, BreathEffectHue, 0 );
-		
-		        Effects.SendLocationEffect( blast1z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast2z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast3z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast4z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast5z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x658 );
-		    }
-		    else if ( form == 42 ) // TITAN OF FIRE ATTACK
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x3709, 30, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast2, map, 0x3709, 30, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast3, map, 0x3709, 30, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast4, map, 0x3709, 30, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast5, map, 0x3709, 30, 10, BreathEffectHue, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x208 );
-		
-		        Effects.SendLocationEffect( blast1z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast2z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast3z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast4z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast5z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x15F );
-		    }
-		    else if ( form == 43 ) // TITAN OF WATER ATTACK
-		    {
-		        Effects.SendLocationEffect( blast1, map, 0x23B2, 16 );
-		        Effects.SendLocationEffect( blast2, map, 0x23B2, 16 );
-		        Effects.SendLocationEffect( blast3, map, 0x23B2, 16 );
-		        Effects.SendLocationEffect( blast4, map, 0x23B2, 16 );
-		        Effects.SendLocationEffect( blast5, map, 0x23B2, 16 );
-		        Effects.PlaySound( targetLoc, map, 0x026 );
-		
-		        Effects.SendLocationEffect( blast1z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast2z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast3z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast4z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		        Effects.SendLocationEffect( blast5z, map, Utility.RandomList( 0x384E, 0x3859 ), 85, 10, BreathEffectHue, 0 );
-		    }
-		    else if ( form == 44 ) // TITAN OF AIR ATTACK
-		    {
-		        Effects.SendLocationEffect( blast1w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast2w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast3w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast4w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast5w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 45 ) // STAR CREATURE ATTACK
-		    {
-		        if ( Utility.RandomBool() )
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x3709, 30, 10 );
-		            Effects.SendLocationEffect( blast2, map, 0x3709, 30, 10 );
-		            Effects.SendLocationEffect( blast3, map, 0x3709, 30, 10 );
-		            Effects.SendLocationEffect( blast4, map, 0x3709, 30, 10 );
-		            Effects.SendLocationEffect( blast5, map, 0x3709, 30, 10 );
-		            Effects.PlaySound( targetLoc, map, 0x208 );
-		        }
-		        else
-		        {
-		            Effects.SendLocationEffect( blast1z, map, 0x2A4E, 30, 10 );
-		            Effects.SendLocationEffect( blast2z, map, 0x2A4E, 30, 10 );
-		            Effects.SendLocationEffect( blast3z, map, 0x2A4E, 30, 10 );
-		            Effects.SendLocationEffect( blast4z, map, 0x2A4E, 30, 10 );
-		            Effects.SendLocationEffect( blast5z, map, 0x2A4E, 30, 10 );
-		            Effects.PlaySound( targetLoc, map, 0x5C3 );
-		        }
-		    }
-		    else if ( form == 46 ) // LARGE STORM ATTACK
-		    {
-		        Effects.SendLocationEffect( blast1w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast2w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast3w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast4w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast5w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		
-		        Effects.SendLocationEffect( blast1z, map, 0x2A4E, 30, 10 );
-		        Effects.SendLocationEffect( blast2z, map, 0x2A4E, 30, 10 );
-		        Effects.SendLocationEffect( blast3z, map, 0x2A4E, 30, 10 );
-		        Effects.SendLocationEffect( blast4z, map, 0x2A4E, 30, 10 );
-		        Effects.SendLocationEffect( blast5z, map, 0x2A4E, 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x5C3 );
-		    }
-		    else if ( form == 47 ) // AIR BLOWING BREATH
-		    {
-		        Effects.SendLocationEffect( blast1w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast2w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast3w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast4w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.SendLocationEffect( blast5w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 48 ) // SMALL AIR BLOWING BREATH
-		    {
-		        Effects.SendLocationEffect( blast1w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 49 ) // SMALL STAR CREATURE ATTACK
-		    {
-		        if ( Utility.RandomBool() )
-		        {
-		            Effects.SendLocationEffect( blast1, map, 0x3709, 30, 10 );
-		            Effects.PlaySound( targetLoc, map, 0x208 );
-		        }
-		        else
-		        {
-		            Effects.SendLocationEffect( blast1w, map, 0x2A4E, 30, 10 );
-		            Effects.PlaySound( targetLoc, map, 0x5C3 );
-		        }
-		    }
-		    else if ( form == 50 ) // SMALL STORM ATTACK
-		    {
-		        Effects.SendLocationEffect( blast1w, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		
-		        Effects.SendLocationEffect( blast1w, map, 0x2A4E, 30, 10 );
-		        Effects.PlaySound( targetLoc, map, 0x5C3 );
-		    }
-		    else if ( form == 51 ) // SMALL AIR ATTACK
-		    {
-		        Effects.SendLocationEffect( targetLoc, map, 0x5590, 30, 10, 0xB24, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x10B );
-		    }
-		    else if ( form == 52 ) // SMALL UNICORN ATTACK
-		    {
-		        Effects.SendLocationEffect( targetLoc, map, 0x3039, 30, 10, 0xB71, 0 );
-		        Effects.PlaySound( targetLoc, map, 0x20B );
-		    }
+			if (map == null)
+				return;
+
+			Point3D blast1 = new Point3D(targetLoc.X, targetLoc.Y, targetLoc.Z);
+			Point3D blast2 = new Point3D(targetLoc.X - 1, targetLoc.Y, targetLoc.Z);
+			Point3D blast3 = new Point3D(targetLoc.X + 1, targetLoc.Y, targetLoc.Z);
+			Point3D blast4 = new Point3D(targetLoc.X, targetLoc.Y - 1, targetLoc.Z);
+			Point3D blast5 = new Point3D(targetLoc.X, targetLoc.Y + 1, targetLoc.Z);
+
+			Point3D blast1z = new Point3D(targetLoc.X, targetLoc.Y, targetLoc.Z + 10);
+			Point3D blast2z = new Point3D(targetLoc.X - 1, targetLoc.Y, targetLoc.Z + 10);
+			Point3D blast3z = new Point3D(targetLoc.X + 1, targetLoc.Y, targetLoc.Z + 10);
+			Point3D blast4z = new Point3D(targetLoc.X, targetLoc.Y - 1, targetLoc.Z + 10);
+			Point3D blast5z = new Point3D(targetLoc.X, targetLoc.Y + 1, targetLoc.Z + 10);
+
+			Point3D blast1w = new Point3D(targetLoc.X, targetLoc.Y, targetLoc.Z);
+			Point3D blast2w = new Point3D(targetLoc.X - 2, targetLoc.Y, targetLoc.Z);
+			Point3D blast3w = new Point3D(targetLoc.X + 2, targetLoc.Y, targetLoc.Z);
+			Point3D blast4w = new Point3D(targetLoc.X, targetLoc.Y - 2, targetLoc.Z);
+			Point3D blast5w = new Point3D(targetLoc.X, targetLoc.Y + 2, targetLoc.Z);
+
+			// All the visual form logic extracted from DoFinalBreathAttack
+			if (form == 1) // CRYSTAL DRAGONS
+			{
+				int bColor = Utility.RandomList(0x48D, 0x48E, 0x48F, 0x490, 0x491);
+				Effects.SendLocationEffect(blast1, map, 0x3709, 30, 10, bColor, 0);
+				Effects.SendLocationEffect(blast2, map, 0x3709, 30, 10, bColor, 0);
+				Effects.SendLocationEffect(blast3, map, 0x3709, 30, 10, bColor, 0);
+				Effects.SendLocationEffect(blast4, map, 0x3709, 30, 10, bColor, 0);
+				Effects.SendLocationEffect(blast5, map, 0x3709, 30, 10, bColor, 0);
+				Effects.PlaySound(targetLoc, map, 0x208);
+			}
+			else if (form == 2) // POTIONS THROWN
+			{
+				if (BreathEffectHue == 0x488)
+				{
+					Effects.SendLocationEffect(blast1, map, 0x3709, 30, 10);
+					Effects.PlaySound(targetLoc, map, 0x208);
+					Effects.PlaySound(targetLoc, map, 0x38D);
+				}
+				else if (BreathEffectHue == 0xB92)
+				{
+					Effects.SendLocationParticles(EffectItem.Create(blast1, map, EffectItem.DefaultDuration), 0x36B0, 1, 14, 63, 7, 9915, 0);
+					Effects.PlaySound(targetLoc, map, 0x229);
+					Effects.PlaySound(targetLoc, map, 0x38D);
+				}
+				else if (form == 0x5B5)
+				{
+					Point3D vortex = new Point3D(targetLoc.X + 1, targetLoc.Y + 1, targetLoc.Z);
+					Effects.SendLocationEffect(vortex, map, 0x37CC, 30, 10, 0x481, 0);
+					Effects.PlaySound(targetLoc, map, 0x10B);
+					Effects.PlaySound(targetLoc, map, 0x38D);
+				}
+				else
+				{
+					Effects.SendLocationParticles(EffectItem.Create(blast1, map, EffectItem.DefaultDuration), 0x36BD, 20, 10, 5044, 0, 0, 0);
+					Effects.PlaySound(targetLoc, map, 0x307);
+				}
+			}
+			else if (form == 3) // DAGGERS OR STARS THROWN
+			{
+				// Visual effects only
+				// Blood and crying out handled in ApplyBreathSecondaryEffects
+			}
+			else if (form == 4) // DINOSAUR ROAR
+			{
+				Effects.PlaySound(targetLoc, map, 0x63F);
+			}
+			else if (form == 5) // MANTICORE
+			{
+				// Visual projectile already handled by BreathPlayEffect
+				// Sound and poison handled in ApplyBreathSecondaryEffects
+			}
+			else if (form == 6) // SPIDERS
+			{
+				Effects.SendLocationEffect(blast1, map, 0x10D3, 30, 10, 0, 0);
+				Effects.PlaySound(targetLoc, map, 0x62D);
+			}
+			else if (form == 7) // GIANT STONES AND LOGS
+			{
+				Effects.SendLocationEffect(blast1, map, 0x36B0, 30, 10, 0x837, 0);
+				Effects.PlaySound(targetLoc, map, 0x664);
+			}
+			else if (form == 8) // LARGE SAND BREATH
+			{
+				Effects.SendLocationEffect(blast1w, map, 0x5590, 30, 10, Utility.RandomList(0xB4D, 0xB4E), 0);
+				Effects.SendLocationEffect(blast2w, map, 0x5590, 30, 10, Utility.RandomList(0xB4D, 0xB4E), 0);
+				Effects.SendLocationEffect(blast3w, map, 0x5590, 30, 10, Utility.RandomList(0xB4D, 0xB4E), 0);
+				Effects.SendLocationEffect(blast4w, map, 0x5590, 30, 10, Utility.RandomList(0xB4D, 0xB4E), 0);
+				Effects.SendLocationEffect(blast5w, map, 0x5590, 30, 10, Utility.RandomList(0xB4D, 0xB4E), 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 9) // LARGE FIRE BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3709, 30, 10);
+				Effects.SendLocationEffect(blast2, map, 0x3709, 30, 10);
+				Effects.SendLocationEffect(blast3, map, 0x3709, 30, 10);
+				Effects.SendLocationEffect(blast4, map, 0x3709, 30, 10);
+				Effects.SendLocationEffect(blast5, map, 0x3709, 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x208);
+			}
+			else if (form == 10) // LARGE POISON BREATH
+			{
+				if (Utility.RandomBool())
+				{
+					Effects.SendLocationEffect(blast1, map, 0x3400, 60);
+					Effects.SendLocationEffect(blast2, map, 0x3400, 60);
+					Effects.SendLocationEffect(blast3, map, 0x3400, 60);
+					Effects.SendLocationEffect(blast4, map, 0x3400, 60);
+					Effects.SendLocationEffect(blast5, map, 0x3400, 60);
+					Effects.PlaySound(targetLoc, map, 0x108);
+				}
+				else
+				{
+					Effects.SendLocationParticles(EffectItem.Create(blast1, map, EffectItem.DefaultDuration), 0x36B0, 1, 14, 63, 7, 9915, 0);
+					Effects.SendLocationParticles(EffectItem.Create(blast2, map, EffectItem.DefaultDuration), 0x36B0, 1, 14, 63, 7, 9915, 0);
+					Effects.SendLocationParticles(EffectItem.Create(blast3, map, EffectItem.DefaultDuration), 0x36B0, 1, 14, 63, 7, 9915, 0);
+					Effects.SendLocationParticles(EffectItem.Create(blast4, map, EffectItem.DefaultDuration), 0x36B0, 1, 14, 63, 7, 9915, 0);
+					Effects.SendLocationParticles(EffectItem.Create(blast5, map, EffectItem.DefaultDuration), 0x36B0, 1, 14, 63, 7, 9915, 0);
+					Effects.PlaySound(targetLoc, map, 0x229);
+				}
+			}
+			else if (form == 11) // LARGE RADIATION
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, 0xB96, 0);
+				Effects.SendLocationEffect(blast2, map, 0x3400, 60, 0xB96, 0);
+				Effects.SendLocationEffect(blast3, map, 0x3400, 60, 0xB96, 0);
+				Effects.SendLocationEffect(blast4, map, 0x3400, 60, 0xB96, 0);
+				Effects.SendLocationEffect(blast5, map, 0x3400, 60, 0xB96, 0);
+				Effects.PlaySound(targetLoc, map, 0x108);
+			}
+			else if (form == 12) // LARGE COLD BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x1A84, 30, 10, 0x9C1, 0);
+				Effects.SendLocationEffect(blast2, map, 0x1A84, 30, 10, 0x9C1, 0);
+				Effects.SendLocationEffect(blast3, map, 0x1A84, 30, 10, 0x9C1, 0);
+				Effects.SendLocationEffect(blast4, map, 0x1A84, 30, 10, 0x9C1, 0);
+				Effects.SendLocationEffect(blast5, map, 0x1A84, 30, 10, 0x9C1, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 13) // LARGE ELECTRICAL BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast2, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast3, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast4, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast5, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x5C3);
+			}
+			else if (form == 14) // TITAN LIGHTNING BOLT
+			{
+				Effects.SendLocationEffect(blast1, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast2, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast3, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast4, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.SendLocationEffect(blast5, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x5C3);
+			}
+			else if (form == 15) // SPHINX
+			{
+				Effects.SendLocationEffect(blast1, map, 0x5590, 30, 10, Utility.RandomList(0xB4D, 0xB4E), 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 16) // LARGE STEAM BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, 10, 0x9C4, 0);
+				Effects.SendLocationEffect(blast2, map, 0x3400, 60, 10, 0x9C4, 0);
+				Effects.SendLocationEffect(blast3, map, 0x3400, 60, 10, 0x9C4, 0);
+				Effects.SendLocationEffect(blast4, map, 0x3400, 60, 10, 0x9C4, 0);
+				Effects.SendLocationEffect(blast5, map, 0x3400, 60, 10, 0x9C4, 0);
+				Effects.PlaySound(targetLoc, map, 0x108);
+			}
+			else if (form == 17) // SMALL FIRE BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3709, 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x208);
+			}
+			else if (form == 18) // SMALL POISON BREATH
+			{
+				if (Utility.RandomBool())
+				{
+					Effects.SendLocationEffect(blast1, map, 0x3400, 60);
+					Effects.PlaySound(targetLoc, map, 0x108);
+				}
+				else
+				{
+					Effects.SendLocationParticles(EffectItem.Create(blast1, map, EffectItem.DefaultDuration), 0x36B0, 1, 14, 63, 7, 9915, 0);
+					Effects.PlaySound(targetLoc, map, 0x229);
+				}
+			}
+			else if (form == 19) // SMALL COLD BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x1A84, 30, 10, 0x9C1, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 20) // SMALL ENERGY BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x5C3);
+			}
+			else if (form == 21) // SMALL ENERGY WITH BOLT
+			{
+				Effects.SendLocationEffect(blast1, map, Utility.RandomList(0x3967, 0x3979), 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x5C3);
+			}
+			else if (form == 22) // MISC ELEMENTAL
+			{
+				Effects.SendLocationEffect(blast1, map, 0x36B0, 30, 10, 0x840, 0);
+				Effects.PlaySound(targetLoc, map, 0x65A);
+			}
+			else if (form == 23 || form == 24 || form == 25) // LARGE VOID BREATH
+			{
+				int color = 0x496;
+				if (form == 24) { color = 0x844; }
+				else if (form == 25) { color = 0x9C1; }
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, color, 0);
+				Effects.SendLocationEffect(blast2, map, 0x3400, 60, color, 0);
+				Effects.SendLocationEffect(blast3, map, 0x3400, 60, color, 0);
+				Effects.SendLocationEffect(blast4, map, 0x3400, 60, color, 0);
+				Effects.SendLocationEffect(blast5, map, 0x3400, 60, color, 0);
+				Effects.PlaySound(targetLoc, map, 0x108);
+			}
+			else if (form == 26 || form == 27 || form == 28) // SMALL VOID BREATH
+			{
+				int color = 0x496;
+				if (form == 27) { color = 0x844; }
+				else if (form == 28) { color = 0x9C1; }
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, color, 0);
+				Effects.PlaySound(targetLoc, map, 0x108);
+			}
+			else if (form == 29) // STONE HANDS FROM THE GROUND
+			{
+				Point3D hands = new Point3D(targetLoc.X, targetLoc.Y, targetLoc.Z + 5);
+				Effects.SendLocationEffect(hands, map, 0x3837, 23, 10, this.Hue, 0);
+				Effects.PlaySound(targetLoc, map, 0x65A);
+			}
+			else if (form == 30) // WATER SPLASH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x1A84, 30, 10, BreathEffectHue, 0);
+				Effects.PlaySound(targetLoc, map, 0x026);
+			}
+			else if (form == 31) // WATER SPLASH (LARGE)
+			{
+				Effects.SendLocationEffect(blast1, map, 0x1A84, 30, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast2, map, 0x23B2, 16, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast3, map, 0x23B2, 16, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast4, map, 0x23B2, 16, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast5, map, 0x23B2, 16, BreathEffectHue, 0);
+				Effects.PlaySound(targetLoc, map, 0x026);
+			}
+			else if (form == 32) // SMALL FALLING ICE
+			{
+				if (Utility.RandomBool())
+				{
+					Effects.SendLocationEffect(blast1, map, 0x5571, 85, 10, 0, 0);
+					Effects.PlaySound(targetLoc, map, 0x5C0);
+				}
+				else
+				{
+					Effects.SendLocationEffect(blast1, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+					Effects.PlaySound(targetLoc, map, 0x656);
+				}
+			}
+			else if (form == 33) // BIG FALLING ICE
+			{
+				int icy = Utility.RandomMinMax(1, 3);
+				if (icy == 1)
+				{
+					Effects.SendLocationEffect(blast1, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+					Effects.SendLocationEffect(blast2, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+					Effects.SendLocationEffect(blast3, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+					Effects.SendLocationEffect(blast4, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+					Effects.SendLocationEffect(blast5, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+					Effects.PlaySound(targetLoc, map, 0x658);
+				}
+				else if (icy == 2)
+				{
+					Effects.SendLocationEffect(blast1, map, 0x5571, 85, 10, 0, 0);
+					Effects.SendLocationEffect(blast2, map, 0x5571, 85, 10, 0, 0);
+					Effects.SendLocationEffect(blast3, map, 0x5571, 85, 10, 0, 0);
+					Effects.SendLocationEffect(blast4, map, 0x5571, 85, 10, 0, 0);
+					Effects.SendLocationEffect(blast5, map, 0x5571, 85, 10, 0, 0);
+					Effects.PlaySound(targetLoc, map, 0x5C0);
+				}
+				else
+				{
+					Effects.SendLocationEffect(blast1, map, 0x55BB, 85, 10, 0, 0);
+					Effects.PlaySound(blast1, map, 0x5CE);
+				}
+			}
+			else if (form == 34) // LARGE WEED BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, 0xB97, 0);
+				Effects.SendLocationEffect(blast2, map, 0x3400, 60, 0xB97, 0);
+				Effects.SendLocationEffect(blast3, map, 0x3400, 60, 0xB97, 0);
+				Effects.SendLocationEffect(blast4, map, 0x3400, 60, 0xB97, 0);
+				Effects.SendLocationEffect(blast5, map, 0x3400, 60, 0xB97, 0);
+				Effects.PlaySound(targetLoc, map, 0x64F);
+			}
+			else if (form == 35) // SMALL WEED BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, 0xB97, 0);
+				Effects.PlaySound(targetLoc, map, 0x64F);
+			}
+			else if (form == 36) // ACID SPLASH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x1A84, 30, 10, BreathEffectHue, 1167);
+				Effects.SendLocationEffect(blast2, map, 0x23B2, 16, BreathEffectHue, 1167);
+				Effects.SendLocationEffect(blast3, map, 0x23B2, 16, BreathEffectHue, 1167);
+				Effects.SendLocationEffect(blast4, map, 0x23B2, 16, BreathEffectHue, 1167);
+				Effects.SendLocationEffect(blast5, map, 0x23B2, 16, BreathEffectHue, 1167);
+				Effects.PlaySound(targetLoc, map, 0x026);
+			}
+			else if (form == 37) // MUMMY WRAP
+			{
+				Point3D wrapped = new Point3D(targetLoc.X, targetLoc.Y, targetLoc.Z + 2);
+				Effects.SendLocationEffect(wrapped, map, 0x23AF, 30, 10, 0, 0);
+				Effects.PlaySound(targetLoc, map, 0x5D2);
+			}
+			else if (form == 38) // SMALL STEAM BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, 10, 0x9C4, 0);
+				Effects.PlaySound(targetLoc, map, 0x108);
+			}
+			else if (form == 39) // SMALL RADIATION
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3400, 60, 0xB96, 0);
+				Effects.PlaySound(targetLoc, map, 0x108);
+			}
+			else if (form == 40) // SMALL SAND BREATH
+			{
+				Effects.SendLocationEffect(blast1, map, 0x5590, 30, 10, Utility.RandomList(0xB4D, 0xB4E), 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 41) // TITAN OF EARTH ATTACK
+			{
+				Point3D hands = new Point3D(targetLoc.X, targetLoc.Y, targetLoc.Z + 5);
+				Effects.SendLocationEffect(hands, map, 0x3837, 23, 10, BreathEffectHue, 0);
+
+				Effects.SendLocationEffect(blast1z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast2z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast3z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast4z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast5z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.PlaySound(targetLoc, map, 0x658);
+			}
+			else if (form == 42) // TITAN OF FIRE ATTACK
+			{
+				Effects.SendLocationEffect(blast1, map, 0x3709, 30, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast2, map, 0x3709, 30, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast3, map, 0x3709, 30, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast4, map, 0x3709, 30, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast5, map, 0x3709, 30, 10, BreathEffectHue, 0);
+				Effects.PlaySound(targetLoc, map, 0x208);
+
+				Effects.SendLocationEffect(blast1z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast2z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast3z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast4z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast5z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.PlaySound(targetLoc, map, 0x15F);
+			}
+			else if (form == 43) // TITAN OF WATER ATTACK
+			{
+				Effects.SendLocationEffect(blast1, map, 0x23B2, 16);
+				Effects.SendLocationEffect(blast2, map, 0x23B2, 16);
+				Effects.SendLocationEffect(blast3, map, 0x23B2, 16);
+				Effects.SendLocationEffect(blast4, map, 0x23B2, 16);
+				Effects.SendLocationEffect(blast5, map, 0x23B2, 16);
+				Effects.PlaySound(targetLoc, map, 0x026);
+
+				Effects.SendLocationEffect(blast1z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast2z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast3z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast4z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+				Effects.SendLocationEffect(blast5z, map, Utility.RandomList(0x384E, 0x3859), 85, 10, BreathEffectHue, 0);
+			}
+			else if (form == 44) // TITAN OF AIR ATTACK
+			{
+				Effects.SendLocationEffect(blast1w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast2w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast3w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast4w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast5w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 45) // STAR CREATURE ATTACK
+			{
+				if (Utility.RandomBool())
+				{
+					Effects.SendLocationEffect(blast1, map, 0x3709, 30, 10);
+					Effects.SendLocationEffect(blast2, map, 0x3709, 30, 10);
+					Effects.SendLocationEffect(blast3, map, 0x3709, 30, 10);
+					Effects.SendLocationEffect(blast4, map, 0x3709, 30, 10);
+					Effects.SendLocationEffect(blast5, map, 0x3709, 30, 10);
+					Effects.PlaySound(targetLoc, map, 0x208);
+				}
+				else
+				{
+					Effects.SendLocationEffect(blast1z, map, 0x2A4E, 30, 10);
+					Effects.SendLocationEffect(blast2z, map, 0x2A4E, 30, 10);
+					Effects.SendLocationEffect(blast3z, map, 0x2A4E, 30, 10);
+					Effects.SendLocationEffect(blast4z, map, 0x2A4E, 30, 10);
+					Effects.SendLocationEffect(blast5z, map, 0x2A4E, 30, 10);
+					Effects.PlaySound(targetLoc, map, 0x5C3);
+				}
+			}
+			else if (form == 46) // LARGE STORM ATTACK
+			{
+				Effects.SendLocationEffect(blast1w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast2w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast3w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast4w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast5w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+
+				Effects.SendLocationEffect(blast1z, map, 0x2A4E, 30, 10);
+				Effects.SendLocationEffect(blast2z, map, 0x2A4E, 30, 10);
+				Effects.SendLocationEffect(blast3z, map, 0x2A4E, 30, 10);
+				Effects.SendLocationEffect(blast4z, map, 0x2A4E, 30, 10);
+				Effects.SendLocationEffect(blast5z, map, 0x2A4E, 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x5C3);
+			}
+			else if (form == 47) // AIR BLOWING BREATH
+			{
+				Effects.SendLocationEffect(blast1w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast2w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast3w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast4w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.SendLocationEffect(blast5w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 48) // SMALL AIR BLOWING BREATH
+			{
+				Effects.SendLocationEffect(blast1w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 49) // SMALL STAR CREATURE ATTACK
+			{
+				if (Utility.RandomBool())
+				{
+					Effects.SendLocationEffect(blast1, map, 0x3709, 30, 10);
+					Effects.PlaySound(targetLoc, map, 0x208);
+				}
+				else
+				{
+					Effects.SendLocationEffect(blast1w, map, 0x2A4E, 30, 10);
+					Effects.PlaySound(targetLoc, map, 0x5C3);
+				}
+			}
+			else if (form == 50) // SMALL STORM ATTACK
+			{
+				Effects.SendLocationEffect(blast1w, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+
+				Effects.SendLocationEffect(blast1w, map, 0x2A4E, 30, 10);
+				Effects.PlaySound(targetLoc, map, 0x5C3);
+			}
+			else if (form == 51) // SMALL AIR ATTACK
+			{
+				Effects.SendLocationEffect(targetLoc, map, 0x5590, 30, 10, 0xB24, 0);
+				Effects.PlaySound(targetLoc, map, 0x10B);
+			}
+			else if (form == 52) // SMALL UNICORN ATTACK
+			{
+				Effects.SendLocationEffect(targetLoc, map, 0x3039, 30, 10, 0xB71, 0);
+				Effects.PlaySound(targetLoc, map, 0x20B);
+			}
 		}
-		
-		public void DoFinalBreathDamage( Mobile target, int form, bool cycle )
+
+		public void DoFinalBreathDamage(Mobile target, int form, bool cycle)
 		{
-		    if ( target == null || !target.Alive )
-		        return;
-		
-		    int physDamage = BreathPhysicalDamage;
-		    int fireDamage = BreathFireDamage;
-		    int coldDamage = BreathColdDamage;
-		    int poisDamage = BreathPoisonDamage;
-		    int nrgyDamage = BreathEnergyDamage;
-		
-		    AOS.Damage( target, this, BreathComputeDamage(), physDamage, fireDamage, coldDamage, poisDamage, nrgyDamage );
-		
-		    ApplyBreathSecondaryEffects( target, form );
-		
-		    if ( cycle )
-		    {
-		        int breathDistance = GetBreathDistance( form );
-		        if ( breathDistance > 0 )
-		        {
-		            ChainBreathDamage( target, form, breathDistance );
-		        }
-		    }
+			if (target == null || !target.Alive)
+				return;
+
+			int physDamage = BreathPhysicalDamage;
+			int fireDamage = BreathFireDamage;
+			int coldDamage = BreathColdDamage;
+			int poisDamage = BreathPoisonDamage;
+			int nrgyDamage = BreathEnergyDamage;
+
+			AOS.Damage(target, this, BreathComputeDamage(), physDamage, fireDamage, coldDamage, poisDamage, nrgyDamage);
+
+			ApplyBreathSecondaryEffects(target, form);
+
+			if (cycle)
+			{
+				int breathDistance = GetBreathDistance(form);
+				if (breathDistance > 0)
+				{
+					ChainBreathDamage(target, form, breathDistance);
+				}
+			}
 		}
-		
-		public virtual void ApplyBreathSecondaryEffects( Mobile target, int form )
+
+		public virtual void ApplyBreathSecondaryEffects(Mobile target, int form)
 		{
-		    if ( target == null || !target.Alive )
-		        return;
-		
-		    if ( form == 2 ) // POTIONS THROWN
-		    {
-		        if ( BreathEffectHue == 0xB92 )
-		        {
-		            if ( !(Server.Items.HiddenTrap.SavingThrow( target, "Poison", false, null )) )
-		            {
-		                switch( Utility.RandomMinMax( 1, 2 ) )
-		                {
-		                    case 1: target.ApplyPoison( target, Poison.Lesser ); break;
-		                    case 2: target.ApplyPoison( target, Poison.Regular ); break;
-		                }
-		            }
-		        }
-		        this.YellHue = Utility.RandomMinMax( 0, 3 );
-		    }
-		    else if ( form == 3 ) // DAGGERS OR STARS THROWN
-		    {
-		        if ( target is PlayerMobile && Server.Items.BaseRace.IsBleeder( target ) )
-		        {
-		            Server.Misc.IntelligentAction.CryOut( target );
-		            Blood blood = new Blood(); blood.MoveToWorld( new Point3D(target.X-1, target.Y, target.Z), target.Map );
-		            blood = new Blood(); blood.MoveToWorld( new Point3D(target.X+1, target.Y, target.Z), target.Map );
-		            blood = new Blood(); blood.MoveToWorld( new Point3D(target.X, target.Y-1, target.Z), target.Map );
-		            blood = new Blood(); blood.MoveToWorld( new Point3D(target.X, target.Y+1, target.Z), target.Map );
-		        }
-		
-		        if ( BreathEffectItemID == 0x406C )
-		        {
-		            if ( !(Server.Items.HiddenTrap.SavingThrow( target, "Poison", false, null )) )
-		            {
-		                switch( Utility.RandomMinMax( 1, 2 ) )
-		                {
-		                    case 1: target.ApplyPoison( target, Poison.Lesser ); break;
-		                    case 2: target.ApplyPoison( target, Poison.Regular ); break;
-		                }
-		            }
-		        }
-		    }
-		    else if ( form == 5 ) // MANTICORE
-		    {
-		        target.SendMessage( "You are hit by a manticore thorn!" );
-		        if ( !(Server.Items.HiddenTrap.SavingThrow( target, "Poison", false, null )) )
-		        {
-		            target.ApplyPoison( target, Poison.Lethal );
-		        }
-		        Server.Misc.IntelligentAction.CryOut( target );
-		    }
-		    else if ( form == 6 ) // SPIDERS
-		    {
-		        target.Paralyze( TimeSpan.FromSeconds( GetParalyzeDuration(target,(double)(this.Fame)) ) );
-		    }
-		    else if ( form == 10 ) // LARGE POISON BREATH
-		    {
-		        if ( !(Server.Items.HiddenTrap.SavingThrow( target, "Poison", false, null )) )
-		        {
-		            switch( Utility.RandomMinMax( 1, 2 ) )
-		            {
-		                case 1: target.ApplyPoison( target, Poison.Greater ); break;
-		                case 2: target.ApplyPoison( target, Poison.Deadly ); break;
-		            }
-		        }
-		    }
-		    else if ( form == 18 ) // SMALL POISON BREATH
-		    {
-		        if ( !(Server.Items.HiddenTrap.SavingThrow( target, "Poison", false, null )) )
-		        {
-		            switch( Utility.RandomMinMax( 1, 2 ) )
-		            {
-		                case 1: target.ApplyPoison( target, Poison.Lesser ); break;
-		                case 2: target.ApplyPoison( target, Poison.Regular ); break;
-		            }
-		        }
-		    }
-		    else if ( form >= 23 && form <= 28 ) // VOID BREATH 
-		    {
-		        int drain = ((int)(this.Fame/500));
-		        target.Mana = Math.Max(0, target.Mana - drain);
-		        target.Stam = Math.Max(0, target.Stam - drain);
-		        target.SendMessage( "You feel your soul draining!" );
-		    }
-		    else if ( form == 34 || form == 35 ) // WEED BREATH
-		    {
-		        target.Paralyze( TimeSpan.FromSeconds( GetParalyzeDuration(target,(double)(this.Fame)) ) );
-		    }
-		    else if ( form == 37 ) // MUMMY WRAP
-		    {
-		        target.Paralyze( TimeSpan.FromSeconds( GetParalyzeDuration(target,(double)(this.Fame)) ) );
-		    }
-		    else if ( form == 44 || form == 47 || form == 48 || form == 51 ) // AIR ATTACKS (dismount)
-		    {
-		        if ( target is PlayerMobile && Utility.RandomBool() )
-		        {
-		            IMount mount = target.Mount;
-		            if ( mount != null )
-		            {
-		                target.SendLocalizedMessage( 1062315 ); // You fall off your mount!
-		                Server.Mobiles.EtherealMount.EthyDismount( target );
-		                mount.Rider = null;
-		            }
-		            target.Animate( 22, 5, 1, true, false, 0 );
-		        }
-		    }
-		    else if ( form == 46 || form == 50 ) // STORM ATTACKS (dismount with lower chance)
-		    {
-		        if ( target is PlayerMobile && Utility.RandomMinMax( 1, 5 ) == 1 )
-		        {
-		            IMount mount = target.Mount;
-		            if ( mount != null )
-		            {
-		                target.SendLocalizedMessage( 1062315 ); // You fall off your mount!
-		                Server.Mobiles.EtherealMount.EthyDismount( target );
-		                mount.Rider = null;
-		            }
-		            target.Animate( 22, 5, 1, true, false, 0 );
-		        }
-		    }
-		
+			if (target == null || !target.Alive)
+				return;
+
+			if (form == 2) // POTIONS THROWN
+			{
+				if (BreathEffectHue == 0xB92)
+				{
+					if (!(Server.Items.HiddenTrap.SavingThrow(target, "Poison", false, null)))
+					{
+						switch (Utility.RandomMinMax(1, 2))
+						{
+							case 1: target.ApplyPoison(target, Poison.Lesser); break;
+							case 2: target.ApplyPoison(target, Poison.Regular); break;
+						}
+					}
+				}
+				this.YellHue = Utility.RandomMinMax(0, 3);
+			}
+			else if (form == 3) // DAGGERS OR STARS THROWN
+			{
+				if (target is PlayerMobile && Server.Items.BaseRace.IsBleeder(target))
+				{
+					Server.Misc.IntelligentAction.CryOut(target);
+					Blood blood = new Blood(); blood.MoveToWorld(new Point3D(target.X - 1, target.Y, target.Z), target.Map);
+					blood = new Blood(); blood.MoveToWorld(new Point3D(target.X + 1, target.Y, target.Z), target.Map);
+					blood = new Blood(); blood.MoveToWorld(new Point3D(target.X, target.Y - 1, target.Z), target.Map);
+					blood = new Blood(); blood.MoveToWorld(new Point3D(target.X, target.Y + 1, target.Z), target.Map);
+				}
+
+				if (BreathEffectItemID == 0x406C)
+				{
+					if (!(Server.Items.HiddenTrap.SavingThrow(target, "Poison", false, null)))
+					{
+						switch (Utility.RandomMinMax(1, 2))
+						{
+							case 1: target.ApplyPoison(target, Poison.Lesser); break;
+							case 2: target.ApplyPoison(target, Poison.Regular); break;
+						}
+					}
+				}
+			}
+			else if (form == 5) // MANTICORE
+			{
+				target.SendMessage("You are hit by a manticore thorn!");
+				if (!(Server.Items.HiddenTrap.SavingThrow(target, "Poison", false, null)))
+				{
+					target.ApplyPoison(target, Poison.Lethal);
+				}
+				Server.Misc.IntelligentAction.CryOut(target);
+			}
+			else if (form == 6) // SPIDERS
+			{
+				target.Paralyze(TimeSpan.FromSeconds(GetParalyzeDuration(target, (double)(this.Fame))));
+			}
+			else if (form == 10) // LARGE POISON BREATH
+			{
+				if (!(Server.Items.HiddenTrap.SavingThrow(target, "Poison", false, null)))
+				{
+					switch (Utility.RandomMinMax(1, 2))
+					{
+						case 1: target.ApplyPoison(target, Poison.Greater); break;
+						case 2: target.ApplyPoison(target, Poison.Deadly); break;
+					}
+				}
+			}
+			else if (form == 18) // SMALL POISON BREATH
+			{
+				if (!(Server.Items.HiddenTrap.SavingThrow(target, "Poison", false, null)))
+				{
+					switch (Utility.RandomMinMax(1, 2))
+					{
+						case 1: target.ApplyPoison(target, Poison.Lesser); break;
+						case 2: target.ApplyPoison(target, Poison.Regular); break;
+					}
+				}
+			}
+			else if (form >= 23 && form <= 28) // VOID BREATH 
+			{
+				int drain = ((int)(this.Fame / 500));
+				target.Mana = Math.Max(0, target.Mana - drain);
+				target.Stam = Math.Max(0, target.Stam - drain);
+				target.SendMessage("You feel your soul draining!");
+			}
+			else if (form == 34 || form == 35) // WEED BREATH
+			{
+				target.Paralyze(TimeSpan.FromSeconds(GetParalyzeDuration(target, (double)(this.Fame))));
+			}
+			else if (form == 37) // MUMMY WRAP
+			{
+				target.Paralyze(TimeSpan.FromSeconds(GetParalyzeDuration(target, (double)(this.Fame))));
+			}
+			else if (form == 44 || form == 47 || form == 48 || form == 51) // AIR ATTACKS (dismount)
+			{
+				if (target is PlayerMobile && Utility.RandomBool())
+				{
+					IMount mount = target.Mount;
+					if (mount != null)
+					{
+						target.SendLocalizedMessage(1062315); // You fall off your mount!
+						Server.Mobiles.EtherealMount.EthyDismount(target);
+						mount.Rider = null;
+					}
+					target.Animate(22, 5, 1, true, false, 0);
+				}
+			}
+			else if (form == 46 || form == 50) // STORM ATTACKS (dismount with lower chance)
+			{
+				if (target is PlayerMobile && Utility.RandomMinMax(1, 5) == 1)
+				{
+					IMount mount = target.Mount;
+					if (mount != null)
+					{
+						target.SendLocalizedMessage(1062315); // You fall off your mount!
+						Server.Mobiles.EtherealMount.EthyDismount(target);
+						mount.Rider = null;
+					}
+					target.Animate(22, 5, 1, true, false, 0);
+				}
+			}
+
 		}
-		
+
 		// NEW: Get breath distance for area effect
-		public virtual int GetBreathDistance( int form )
+		public virtual int GetBreathDistance(int form)
 		{
-		    switch( form )
-		    {
-		        case 1: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: 
-		        case 16: case 23: case 24: case 25: case 34: case 36: case 45: case 46: case 47: case 50:
-		            return 3;
-		        case 4: return 5;
-		        case 7: case 18: case 19: case 20: case 21: case 26: case 27: case 28: case 30: 
-		        case 32: case 38: case 39: case 40: case 48: case 49: case 51: case 52:
-		            return 2;
-		        case 31: return 4;
-		        case 41: case 42: case 43: case 44:
-		            return 6;
-		        default:
-		            return 0;
-		    }
+			switch (form)
+			{
+				case 1:
+				case 8:
+				case 9:
+				case 10:
+				case 11:
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+				case 16:
+				case 23:
+				case 24:
+				case 25:
+				case 34:
+				case 36:
+				case 45:
+				case 46:
+				case 47:
+				case 50:
+					return 3;
+				case 4: return 5;
+				case 7:
+				case 18:
+				case 19:
+				case 20:
+				case 21:
+				case 26:
+				case 27:
+				case 28:
+				case 30:
+				case 32:
+				case 38:
+				case 39:
+				case 40:
+				case 48:
+				case 49:
+				case 51:
+				case 52:
+					return 2;
+				case 31: return 4;
+				case 41:
+				case 42:
+				case 43:
+				case 44:
+					return 6;
+				default:
+					return 0;
+			}
 		}
-		
-		public virtual void ChainBreathDamage( Mobile originalTarget, int form, int range )
+
+		public virtual void ChainBreathDamage(Mobile originalTarget, int form, int range)
 		{
-		    List<Mobile> targets = new List<Mobile>();
-		    Map map = this.Map;
-		
-		    if ( map != null && originalTarget != null )
-		    {
-		        foreach ( Mobile m in originalTarget.GetMobilesInRange( range ) )
-		        {
-		            if ( m != this && m != originalTarget && this.InLOS( m ) && m.Alive && CanBeHarmful( m ) && !m.Blessed )
-		            {
-		                if ( m is PlayerMobile )
-		                {
-		                    targets.Add( m );
-		                }
-		                else if ( m is BaseCreature )
-		                {
-		                    BaseCreature bc = (BaseCreature)m;
-		                    if ( bc.Summoned || bc.Controlled )
-		                        targets.Add( m );
-		                }
-		            }
-		        }
-		
-		        for ( int i = 0; i < targets.Count; ++i )
-		        {
-		            Mobile m = targets[i];
-		            DoFinalBreathDamage( m, form, false ); // Don't cycle again
-		        }
-		    }
+			List<Mobile> targets = new List<Mobile>();
+			Map map = this.Map;
+
+			if (map != null && originalTarget != null)
+			{
+				foreach (Mobile m in originalTarget.GetMobilesInRange(range))
+				{
+					if (m != this && m != originalTarget && this.InLOS(m) && m.Alive && CanBeHarmful(m) && !m.Blessed)
+					{
+						if (m is PlayerMobile)
+						{
+							targets.Add(m);
+						}
+						else if (m is BaseCreature)
+						{
+							BaseCreature bc = (BaseCreature)m;
+							if (bc.Summoned || bc.Controlled)
+								targets.Add(m);
+						}
+					}
+				}
+
+				for (int i = 0; i < targets.Count; ++i)
+				{
+					Mobile m = targets[i];
+					DoFinalBreathDamage(m, form, false); // Don't cycle again
+				}
+			}
 		}
-		
+
 		public virtual int BreathComputeDamage()
 		{
-		    int damage = (int)(Hits * BreathDamageScalar);
-		
-		    if ( IsParagon )
-		        damage = (int)(damage / Paragon.HitsBuff);
-		
-		    if ( damage > 100 )
-		        damage = 100;
-		
-		    if ( damage < DamageMax )
-		        damage = DamageMax;
-		
-		    return damage;
+			int damage = (int)(Hits * BreathDamageScalar);
+
+			if (IsParagon)
+				damage = (int)(damage / Paragon.HitsBuff);
+
+			if (damage > 100)
+				damage = 100;
+
+			if (damage < DamageMax)
+				damage = DamageMax;
+
+			return damage;
 		}
-		
+
 		#endregion
 		// mummies, spiders, plants and some breath weapons have normalized paralyze duration based on a players Magic Resistance or their fame, capped at 8 seconds.
 		private double GetParalyzeDuration(Mobile target, double fame)
@@ -1647,47 +1698,47 @@ namespace Server.Mobiles
 
 		#region Spill Acid
 
-		public void SpillAcid( int Amount )
+		public void SpillAcid(int Amount)
 		{
-			SpillAcid( null, Amount );
+			SpillAcid(null, Amount);
 		}
 
-		public void SpillAcid( Mobile target, int Amount )
+		public void SpillAcid(Mobile target, int Amount)
 		{
-			if ( (target != null && target.Map == null) || this.Map == null )
+			if ((target != null && target.Map == null) || this.Map == null)
 				return;
 
-			for ( int i = 0; i < Amount; ++i )
+			for (int i = 0; i < Amount; ++i)
 			{
 				Point3D loc = this.Location;
 				Map map = this.Map;
 				Item acid = NewHarmfulItem();
 
-				if ( target != null && target.Map != null && Amount == 1 )
+				if (target != null && target.Map != null && Amount == 1)
 				{
 					loc = target.Location;
 					map = target.Map;
-				} 
+				}
 				else
 				{
 					bool validLocation = false;
-					for ( int j = 0; !validLocation && j < 10; ++j )
+					for (int j = 0; !validLocation && j < 10; ++j)
 					{
 						loc = new Point3D(
-							loc.X+(Utility.Random(0,3)-2),
-							loc.Y+(Utility.Random(0,3)-2),
-							loc.Z );
-						loc.Z = map.GetAverageZ( loc.X, loc.Y );
-						validLocation = map.CanFit( loc, 16, false, false ) ;
+							loc.X + (Utility.Random(0, 3) - 2),
+							loc.Y + (Utility.Random(0, 3) - 2),
+							loc.Z);
+						loc.Z = map.GetAverageZ(loc.X, loc.Y);
+						validLocation = map.CanFit(loc, 16, false, false);
 					}
 				}
-				acid.MoveToWorld( loc, map );
+				acid.MoveToWorld(loc, map);
 			}
 		}
 
 		public virtual Item NewHarmfulItem()
 		{
-			return new PoolOfAcid( TimeSpan.FromSeconds(10), 30, 30 );
+			return new PoolOfAcid(TimeSpan.FromSeconds(10), 30, 30);
 		}
 
 		#endregion
@@ -1697,8 +1748,8 @@ namespace Server.Mobiles
 
 		public DateTime EndFleeTime
 		{
-			get{ return m_EndFlee; }
-			set{ m_EndFlee = value; }
+			get { return m_EndFlee; }
+			set { m_EndFlee = value; }
 		}
 
 		public virtual void StopFlee()
@@ -1708,10 +1759,10 @@ namespace Server.Mobiles
 
 		public virtual bool CheckFlee()
 		{
-			if ( m_EndFlee == DateTime.MinValue )
+			if (m_EndFlee == DateTime.MinValue)
 				return false;
 
-			if ( DateTime.Now >= m_EndFlee )
+			if (DateTime.Now >= m_EndFlee)
 			{
 				StopFlee();
 				return false;
@@ -1720,14 +1771,14 @@ namespace Server.Mobiles
 			return true;
 		}
 
-		public virtual void BeginFlee( TimeSpan maxDuration )
+		public virtual void BeginFlee(TimeSpan maxDuration)
 		{
 			m_EndFlee = DateTime.Now + maxDuration;
 		}
 
 		#endregion
 
-		public BaseAI AIObject{ get{ return m_AI; } }
+		public BaseAI AIObject { get { return m_AI; } }
 
 		public const int MaxOwners = 5;
 
@@ -1736,92 +1787,91 @@ namespace Server.Mobiles
 
 		public virtual bool AllowNewPetFriend
 		{
-			get{ return ( m_Friends == null || m_Friends.Count < 5 ); }
+			get { return (m_Friends == null || m_Friends.Count < 5); }
 		}
 
-		public virtual bool IsPetFriend( Mobile m )
+		public virtual bool IsPetFriend(Mobile m)
 		{
-			return ( m_Friends != null && m_Friends.Contains( m ) );
+			return (m_Friends != null && m_Friends.Contains(m));
 		}
 
-		public virtual void AddPetFriend( Mobile m )
+		public virtual void AddPetFriend(Mobile m)
 		{
-			if ( m_Friends == null )
+			if (m_Friends == null)
 				m_Friends = new List<Mobile>();
 
-			m_Friends.Add( m );
+			m_Friends.Add(m);
 		}
 
-		public virtual void RemovePetFriend( Mobile m )
+		public virtual void RemovePetFriend(Mobile m)
 		{
-			if ( m_Friends != null )
-				m_Friends.Remove( m );
+			if (m_Friends != null)
+				m_Friends.Remove(m);
 		}
 
-		public virtual bool IsFriend( Mobile m )
+		public virtual bool IsFriend(Mobile m)
 		{
-			if ( !(m is BaseCreature) )
+			if (!(m is BaseCreature))
 				return false;
 
 			BaseCreature c = (BaseCreature)m;
 
-			return ( m_iTeam == c.m_iTeam && ( (m_bSummoned || m_bControlled) == (c.m_bSummoned || c.m_bControlled) )/* && c.Combatant != this */);
+			return (m_iTeam == c.m_iTeam && ((m_bSummoned || m_bControlled) == (c.m_bSummoned || c.m_bControlled))/* && c.Combatant != this */);
 		}
 
 		#endregion
 
 		public bool IsCitizen()
 		{
-			if ( this is BaseNPC )
+			if (this is BaseNPC)
 				return true;
-			else if ( this is BasePerson )
+			else if (this is BasePerson)
 				return true;
-			else if ( this is BaseVendor )
+			else if (this is BaseVendor)
 				return true;
-			else if ( this is BaseHealer )
+			else if (this is BaseHealer)
 				return true;
-			else if ( AlwaysInvulnerable( this ) )
+			else if (AlwaysInvulnerable(this))
 				return true;
-			else if ( IsPet( this ) )
+			else if (IsPet(this))
 				return true;
-			else if ( this is Citizens )
+			else if (this is Citizens)
 				return true;
 
 			return false;
 		}
 
-		public virtual bool IsEnemy( Mobile m )
+		public virtual bool IsEnemy(Mobile m)
 		{
-			Region reg = Region.Find( this.Location, this.Map );
+			Region reg = Region.Find(this.Location, this.Map);
 
-			if ( m is PlayerMobile )
+			if (m is PlayerMobile)
 			{
-				SlayerEntry undead_creatures = SlayerGroup.GetEntryByName( SlayerName.Silver );
-				if ( undead_creatures.Slays(this) )
+				if (m_SilverSlayer.Slays(this))
 				{
-					Item item = m.FindItemOnLayer( Layer.Helm );
-					if ( item is DeathlyMask )
+					Item item = m.FindItemOnLayer(Layer.Helm);
+					if (item is DeathlyMask)
 					{
 						return false;
 					}
 				}
 			}
 
-			if ( WhisperHue == 999 && Hidden && m is PlayerMobile && !Server.Mobiles.BasePirate.IsSailor( this ) ) // SURFACE FROM WATER AND ATTACK
+			if (WhisperHue == 999 && Hidden && m is PlayerMobile && !Server.Mobiles.BasePirate.IsSailor(this)) // SURFACE FROM WATER AND ATTACK
 			{
 				this.Home = this.Location; // SO THEY KNOW WHERE TO GO BACK TO
 
-				if ( m.Z < 0 ) // JUMP NEAR A BOAT
+				if (m.Z < 0) // JUMP NEAR A BOAT
 				{
-					Point3D loc = Server.Misc.Worlds.GetBoatWater( m.X, m.Y, m.Z, m.Map, 4 );
+					Point3D loc = Server.Misc.Worlds.GetBoatWater(m.X, m.Y, m.Z, m.Map, 4);
 					this.Location = loc;
-					this.PlaySound( 0x026 );
-					Effects.SendLocationEffect( loc, this.Map, 0x23B2, 16 );
+					this.PlaySound(0x026);
+					Effects.SendLocationEffect(loc, this.Map, 0x23B2, 16);
 				}
-				else if ( !(CanOnlyMoveOnSea()) ) // JUMP OUT OF WATER AND WALK TO SHORE
+				else if (!(CanOnlyMoveOnSea())) // JUMP OUT OF WATER AND WALK TO SHORE
 				{
-					this.PlaySound( 0x026 );
-					Effects.SendLocationEffect( this.Location, this.Map, 0x23B2, 16 );
+					this.PlaySound(0x026);
+					Effects.SendLocationEffect(this.Location, this.Map, 0x23B2, 16);
 				}
 				this.Warmode = true;
 				this.Combatant = m;
@@ -1832,9 +1882,7 @@ namespace Server.Mobiles
 			}
 
 			// DRACULA ISLAND SPECIAL REACTIONS
-			SlayerEntry undead = SlayerGroup.GetEntryByName( SlayerName.Silver );
-			SlayerEntry exorcism = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
-			if ( reg.IsPartOf( typeof( NecromancerRegion ) ) && this.ControlSlots != 666 && ( m is BaseVendor || GetPlayerInfo.EvilPlayer( m ) ) && (this is Bat || this is DiseasedRat || this is DarkHound || undead.Slays(this) || exorcism.Slays(this) || this is EvilMage) )
+			if (reg.IsPartOf(typeof(NecromancerRegion)) && this.ControlSlots != 666 && (m is BaseVendor || GetPlayerInfo.EvilPlayer(m)) && (this is Bat || this is DiseasedRat || this is DarkHound || m_SilverSlayer.Slays(this) || m_ExorcismSlayer.Slays(this) || this is EvilMage))
 				return false;
 
 			if (!(m is BaseCreature))
@@ -1842,124 +1890,124 @@ namespace Server.Mobiles
 
 			BaseCreature c = (BaseCreature)m;
 
-			return ( m_iTeam != c.m_iTeam || ( (m_bSummoned || m_bControlled) != (c.m_bSummoned || c.m_bControlled) )/* || c.Combatant == this*/ );
+			return (m_iTeam != c.m_iTeam || ((m_bSummoned || m_bControlled) != (c.m_bSummoned || c.m_bControlled))/* || c.Combatant == this*/ );
 		}
 
-		public static bool AlwaysInvulnerable( Mobile m )
+		public static bool AlwaysInvulnerable(Mobile m)
 		{
-			if ( m is PackBear ){ return true; }
-			else if ( m is PackLobster ){ return true; }
-			else if ( m is PackMule ){ return true; }
-			else if ( m is PackStegosaurus ){ return true; }
-			else if ( m is PackTurtle ){ return true; }
-			else if ( m is HenchmanFamiliar ){ return true; }
-			else if ( m is AerialServant ){ return true; }
-			else if ( m is PackBeast ){ return true; }
-			else if ( m is FrankenPorter ){ return true; }
-			else if ( m is GolemPorter ){ return true; }
-			else if ( m is EtherealDealer ){ return true; }
-			else if ( m is TavernPatronEast ){ return true; }
-			else if ( m is TavernPatronNorth ){ return true; }
-			else if ( m is TavernPatronSouth ){ return true; }
-			else if ( m is TavernPatronWest ){ return true; }
-			else if ( m is AdventurerEast ){ return true; }
-			else if ( m is AdventurerNorth ){ return true; }
-			else if ( m is AdventurerSouth ){ return true; }
-			else if ( m is AdventurerWest ){ return true; }
-			else if ( m is Citizens ){ return true; }
-			else if ( m is EpicPet ){ return true; }
-			else if ( m is EpicCharacter ){ return true; }
-			else if ( m is DeathKnightDemon ){ return true; }
-			else if ( m is ElementalSteed ){ return true; }
-			else if ( m is DraculaBride ){ return true; }
-			else if ( m is GodOfLegends ){ return true; }
-			else if ( m is NecroGreeter ){ return true; }
-			else if ( m is Priest ){ return true; }
-			else if ( m is BaseNPC ){ return true; }
+			if (m is PackBear) { return true; }
+			else if (m is PackLobster) { return true; }
+			else if (m is PackMule) { return true; }
+			else if (m is PackStegosaurus) { return true; }
+			else if (m is PackTurtle) { return true; }
+			else if (m is HenchmanFamiliar) { return true; }
+			else if (m is AerialServant) { return true; }
+			else if (m is PackBeast) { return true; }
+			else if (m is FrankenPorter) { return true; }
+			else if (m is GolemPorter) { return true; }
+			else if (m is EtherealDealer) { return true; }
+			else if (m is TavernPatronEast) { return true; }
+			else if (m is TavernPatronNorth) { return true; }
+			else if (m is TavernPatronSouth) { return true; }
+			else if (m is TavernPatronWest) { return true; }
+			else if (m is AdventurerEast) { return true; }
+			else if (m is AdventurerNorth) { return true; }
+			else if (m is AdventurerSouth) { return true; }
+			else if (m is AdventurerWest) { return true; }
+			else if (m is Citizens) { return true; }
+			else if (m is EpicPet) { return true; }
+			else if (m is EpicCharacter) { return true; }
+			else if (m is DeathKnightDemon) { return true; }
+			else if (m is ElementalSteed) { return true; }
+			else if (m is DraculaBride) { return true; }
+			else if (m is GodOfLegends) { return true; }
+			else if (m is NecroGreeter) { return true; }
+			else if (m is Priest) { return true; }
+			else if (m is BaseNPC) { return true; }
 
 			return false;
 		}
 
 		public bool CanOnlyMoveOnSea()
 		{
-			if ( m_Swimmer && m_NoWalker )
+			if (m_Swimmer && m_NoWalker)
 				return true;
 
 			return false;
 		}
 
-		public static bool IsCitizen( Mobile m )
+		public static bool IsCitizen(Mobile m)
 		{
-			if ( m is BaseFamiliar ){ return true; }
-			else if ( m is BaseGuildmaster ){ return true; }
-			else if ( m is BaseVendor ){ return true; }
-			else if ( m is BaseHealer ){ return true; }
-			else if ( m is BaseNPC ){ return true; }
-			else if ( m is BasePerson ){ return true; }
-			else if ( m is Citizens ){ return true; }
+			if (m is BaseFamiliar) { return true; }
+			else if (m is BaseGuildmaster) { return true; }
+			else if (m is BaseVendor) { return true; }
+			else if (m is BaseHealer) { return true; }
+			else if (m is BaseNPC) { return true; }
+			else if (m is BasePerson) { return true; }
+			else if (m is Citizens) { return true; }
 
 			return false;
 		}
 
-		public override string ApplyNameSuffix( string suffix )
+		public override string ApplyNameSuffix(string suffix)
 		{
-			if ( IsParagon )
+			if (IsParagon)
 			{
-				if ( suffix.Length == 0 )
+				if (suffix.Length == 0)
 					suffix = "(cursed)";
 				else
-					suffix = String.Concat( suffix, " (cursed)" );
+					suffix = String.Concat(suffix, " (cursed)");
 			}
 
-			return base.ApplyNameSuffix( suffix );
+			return base.ApplyNameSuffix(suffix);
 		}
 
-		public virtual bool CheckControlChance( Mobile m )
+		public virtual bool CheckControlChance(Mobile m)
 		{
-			if ( GetControlChance( m ) > Utility.RandomDouble() )
+			if (GetControlChance(m) > Utility.RandomDouble())
 			{
 				Loyalty += 1;
 				return true;
 			}
 
-			PlaySound( GetAngerSound() );
+			PlaySound(GetAngerSound());
 
-			if ( Body.IsAnimal )
-				Animate( 10, 5, 1, true, false, 0 );
-			else if ( Body.IsMonster )
-				Animate( 18, 5, 1, true, false, 0 );
+			if (Body.IsAnimal)
+				Animate(10, 5, 1, true, false, 0);
+			else if (Body.IsMonster)
+				Animate(18, 5, 1, true, false, 0);
 
 			Loyalty -= 3;
 			InvalidateProperties();
 			return false;
 		}
 
-		public virtual bool CanBeControlledBy( Mobile m )
+		public virtual bool CanBeControlledBy(Mobile m)
 		{
-			return ( GetControlChance( m ) > 0.0 );
+			return (GetControlChance(m) > 0.0);
 		}
 
-		public double GetControlChance( Mobile m )
+		public double GetControlChance(Mobile m)
 		{
-			return GetControlChance( m, false );
+			return GetControlChance(m, false);
 		}
 
-		public virtual double GetControlChance( Mobile m, bool useBaseSkill )
+		public virtual double GetControlChance(Mobile m, bool useBaseSkill)
 		{
-			if ( m_dMinTameSkill <= 29.1 || m_bSummoned || m.AccessLevel >= AccessLevel.GameMaster )
+			if (m_dMinTameSkill <= 29.1 || m_bSummoned || m.AccessLevel >= AccessLevel.GameMaster)
 				return 1.0;
 
 			double dMinTameSkill = m_dMinTameSkill;
 
-			if ( dMinTameSkill > -24.9 && Server.SkillHandlers.Taming.CheckMastery( m, this ) )
+			if (dMinTameSkill > -24.9 && Server.SkillHandlers.Taming.CheckMastery(m, this))
 				dMinTameSkill = -24.9;
 
-			int taming = (int)((useBaseSkill ? m.Skills[SkillName.Taming].Base : m.Skills[SkillName.Taming].Value ) * 10);
-			int lore = (int)((useBaseSkill ? m.Skills[SkillName.Taming].Base : m.Skills[SkillName.Taming].Value ) * 10);
-				if ( m.Skills[SkillName.Druidism].Base > m.Skills[SkillName.Taming].Base && useBaseSkill )
-					lore = (int)((useBaseSkill ? m.Skills[SkillName.Druidism].Base : m.Skills[SkillName.Druidism].Value )* 10);
-				else if ( m.Skills[SkillName.Druidism].Value > m.Skills[SkillName.Taming].Value )
-					lore = (int)((useBaseSkill ? m.Skills[SkillName.Druidism].Base : m.Skills[SkillName.Druidism].Value )* 10);
+			int taming = (int)((useBaseSkill ? m.Skills[SkillName.Taming].Base : m.Skills[SkillName.Taming].Value) * 10);
+			int lore = (int)((useBaseSkill ? m.Skills[SkillName.Taming].Base : m.Skills[SkillName.Taming].Value) * 10);
+			if (m.Skills[SkillName.Druidism].Base > m.Skills[SkillName.Taming].Base && useBaseSkill)
+				lore = (int)((useBaseSkill ? m.Skills[SkillName.Druidism].Base : m.Skills[SkillName.Druidism].Value) * 10);
+			else if (m.Skills[SkillName.Druidism].Value > m.Skills[SkillName.Taming].Value)
+				lore = (int)((useBaseSkill ? m.Skills[SkillName.Druidism].Base : m.Skills[SkillName.Druidism].Value) * 10);
 
 			int bonus = 0, chance = 700;
 
@@ -1968,26 +2016,26 @@ namespace Server.Mobiles
 
 			int SkillMod = 6, LoreMod = 6;
 
-			if( SkillBonus < 0 )
+			if (SkillBonus < 0)
 				SkillMod = 28;
-			if( LoreBonus < 0 )
+			if (LoreBonus < 0)
 				LoreMod = 14;
 
 			SkillBonus *= SkillMod;
 			LoreBonus *= LoreMod;
 
-			bonus = (SkillBonus + LoreBonus ) / 2;
+			bonus = (SkillBonus + LoreBonus) / 2;
 
 			chance += bonus;
 
-			if ( chance >= 0 && chance < 200 )
+			if (chance >= 0 && chance < 200)
 				chance = 200;
-			else if ( chance > 990 )
+			else if (chance > 990)
 				chance = 990;
 
 			chance -= (MaxLoyalty - m_Loyalty) * 10;
 
-			return ( (double)chance / 1000 );
+			return ((double)chance / 1000);
 		}
 
 		private static Type[] m_AnimateDeadTypes = new Type[]
@@ -2003,7 +2051,7 @@ namespace Server.Mobiles
 		{
 			get
 			{
-				if ( this is SummonedCorpse )
+				if (this is SummonedCorpse)
 					return true;
 
 				return false;
@@ -2014,50 +2062,50 @@ namespace Server.Mobiles
 		{
 			get
 			{
-				if ( !Summoned )
+				if (!Summoned)
 					return false;
 
-				if ( m_ControlMaster != null && SummonFamiliarSpell.Table.Contains( m_ControlMaster ) )
-					return SummonFamiliarSpell.Table[ m_ControlMaster ] == this;
+				if (m_ControlMaster != null && SummonFamiliarSpell.Table.Contains(m_ControlMaster))
+					return SummonFamiliarSpell.Table[m_ControlMaster] == this;
 
 				return false;
 			}
 		}
 
-		public override void Damage( int amount, Mobile from )
+		public override void Damage(int amount, Mobile from)
 		{
 			int oldHits = this.Hits;
 
-			if ( Core.AOS && !this.Summoned && this.Controlled && 0.2 > Utility.RandomDouble() )
+			if (Core.AOS && !this.Summoned && this.Controlled && 0.2 > Utility.RandomDouble())
 				amount = (int)(amount * BonusPetDamageScalar);
 
-			if ( from is BaseCreature && !((BaseCreature)from).Summoned && !((BaseCreature)from).Controlled && IsPet( this ) && MyServerSettings.DamageToPets() > 1.0 )
+			if (from is BaseCreature && !((BaseCreature)from).Summoned && !((BaseCreature)from).Controlled && IsPet(this) && MyServerSettings.DamageToPets() > 1.0)
 			{
 				amount = (int)(amount * MyServerSettings.DamageToPets());
 			}
 
-			if ( from is BaseCreature && !((BaseCreature)from).Summoned && !((BaseCreature)from).Controlled && IsPet( this ) && MyServerSettings.CriticalToPets() >= Utility.RandomMinMax( 1, 100 ) )
+			if (from is BaseCreature && !((BaseCreature)from).Summoned && !((BaseCreature)from).Controlled && IsPet(this) && MyServerSettings.CriticalToPets() >= Utility.RandomMinMax(1, 100))
 			{
 				amount = amount * 2;
 			}
 
-			if ( Spells.Necromancy.EvilOmenSpell.TryEndEffect( this ) )
+			if (Spells.Necromancy.EvilOmenSpell.TryEndEffect(this))
 				amount = (int)(amount * 1.25);
 
-			Mobile oath = Spells.Necromancy.BloodOathSpell.GetBloodOath( from );
+			Mobile oath = Spells.Necromancy.BloodOathSpell.GetBloodOath(from);
 
-			if ( oath == this )
+			if (oath == this)
 			{
 				amount = (int)(amount * 1.1);
-				from.Damage( amount, from );
+				from.Damage(amount, from);
 			}
 
-			base.Damage( amount, from );
+			base.Damage(amount, from);
 
-			if ( SubdueBeforeTame && !Controlled )
+			if (SubdueBeforeTame && !Controlled)
 			{
-				if ( (oldHits > (this.HitsMax / 10)) && (this.Hits <= (this.HitsMax / 10)) )
-					PublicOverheadMessage( MessageType.Regular, 0x3B2, false, "* The creature has been beaten into subjugation! *" );
+				if ((oldHits > (this.HitsMax / 10)) && (this.Hits <= (this.HitsMax / 10)))
+					PublicOverheadMessage(MessageType.Regular, 0x3B2, false, "* The creature has been beaten into subjugation! *");
 			}
 		}
 
@@ -2069,154 +2117,154 @@ namespace Server.Mobiles
 			}
 		}
 
-		public override void SetLocation( Point3D newLocation, bool isTeleport )
+		public override void SetLocation(Point3D newLocation, bool isTeleport)
 		{
-			base.SetLocation( newLocation, isTeleport );
+			base.SetLocation(newLocation, isTeleport);
 
-			if ( isTeleport && m_AI != null )
+			if (isTeleport && m_AI != null)
 				m_AI.OnTeleported();
 		}
 
-		public override void OnBeforeSpawn( Point3D location, Map m )
+		public override void OnBeforeSpawn(Point3D location, Map m)
 		{
-			if ( ( Paragon.CheckConvert( this, location, m ) ) && ( this.Karma < -999 ) && ( this.EmoteHue != 123 ) && !( this.Region is GargoyleRegion ) && !( this.Region.IsPartOf( "the Castle of the Black Knight" ) ) )
+			if ((Paragon.CheckConvert(this, location, m)) && (this.Karma < -999) && (this.EmoteHue != 123) && !(this.Region is GargoyleRegion) && !(this.Region.IsPartOf("the Castle of the Black Knight")))
 				IsParagon = true;
 
-			base.OnBeforeSpawn( location, m );
+			base.OnBeforeSpawn(location, m);
 		}
 		// wtf is this garbage
 		public void ExtraHP()
 		{
 			double mod = 0;
 
-			if ( mod > 0 && !IsCitizen() )
+			if (mod > 0 && !IsCitizen())
 			{
-				int hits = (int)( HitsMax + ( HitsMax * mod ) );
-				SetHits( hits );
+				int hits = (int)(HitsMax + (HitsMax * mod));
+				SetHits(hits);
 				Hits = HitsMax;
 			}
 		}
 
-		public static void BeefUp( BaseCreature bc, int up )
+		public static void BeefUp(BaseCreature bc, int up)
 		{
-			if ( up >= 0 )
+			if (up >= 0)
 			{
 				double rating = 0.0;
 
-				if ( up == 0 )
+				if (up == 0)
 					rating = (double)MySettings.S_Normal;
-				else if ( up == 1 )
+				else if (up == 1)
 					rating = (double)MySettings.S_Difficult;
-				else if ( up == 2 )
+				else if (up == 2)
 					rating = (double)MySettings.S_Challenging;
-				else if ( up == 3 )
+				else if (up == 3)
 					rating = (double)MySettings.S_Hard;
-				else if ( up > 3 )
+				else if (up > 3)
 					rating = (double)MySettings.S_Deadly;
 
 				// WE DON'T WANT THE VERY POWERFUL CREATURES TO BE IMPOSSIBLE SO WE CAP THEM BASED ON FAME
-				if ( bc.Fame >= 20000 ){ rating = (double)MySettings.S_Normal; }
-				else if ( bc.Fame >= 18000 && up > 1 ){ rating = (double)MySettings.S_Difficult; }
-				else if ( bc.Fame >= 15000 && up > 2 ){ rating = (double)MySettings.S_Challenging; }
-				else if ( bc.Fame >= 10000 && up > 3 ){ rating = (double)MySettings.S_Hard; }
+				if (bc.Fame >= 20000) { rating = (double)MySettings.S_Normal; }
+				else if (bc.Fame >= 18000 && up > 1) { rating = (double)MySettings.S_Difficult; }
+				else if (bc.Fame >= 15000 && up > 2) { rating = (double)MySettings.S_Challenging; }
+				else if (bc.Fame >= 10000 && up > 3) { rating = (double)MySettings.S_Hard; }
 
 				// Buffs
-				double TameBuff   = rating / 200.0;
-				double GoldBuff   = rating / 300.0;
-				double HitsBuff   = rating / 100.0;
-				double StrBuff    = rating / 300.0;
-				double IntBuff    = rating / 100.0;
-				double DexBuff    = rating / 100.0;
+				double TameBuff = rating / 200.0;
+				double GoldBuff = rating / 300.0;
+				double HitsBuff = rating / 100.0;
+				double StrBuff = rating / 300.0;
+				double IntBuff = rating / 100.0;
+				double DexBuff = rating / 100.0;
 				double SkillsBuff = rating / 100.0;
-				double FameBuff   = rating / 300.0;
-				double KarmaBuff  = rating / 300.0;
-				int    DamageBuff = (int)(rating/10.0);
+				double FameBuff = rating / 300.0;
+				double KarmaBuff = rating / 300.0;
+				int DamageBuff = (int)(rating / 10.0);
 
-				if ( bc.IsParagon )
+				if (bc.IsParagon)
 					return;
 
-				if ( rating > 0.0 )
+				if (rating > 0.0)
 				{
-					if ( bc.HitsMaxSeed >= 0.0 )
-						bc.HitsMaxSeed = (int)( bc.HitsMaxSeed + ( bc.HitsMaxSeed * HitsBuff ) );
-					
-					bc.RawStr = (int)( bc.RawStr + ( bc.RawStr * StrBuff ) );
-					bc.RawInt = (int)( bc.RawInt + ( bc.RawInt * IntBuff ) );
-					bc.RawDex = (int)( bc.RawDex + ( bc.RawDex * DexBuff ) );
+					if (bc.HitsMaxSeed >= 0.0)
+						bc.HitsMaxSeed = (int)(bc.HitsMaxSeed + (bc.HitsMaxSeed * HitsBuff));
+
+					bc.RawStr = (int)(bc.RawStr + (bc.RawStr * StrBuff));
+					bc.RawInt = (int)(bc.RawInt + (bc.RawInt * IntBuff));
+					bc.RawDex = (int)(bc.RawDex + (bc.RawDex * DexBuff));
 
 					bc.Hits = bc.HitsMax;
 					bc.Mana = bc.ManaMax;
 					bc.Stam = bc.StamMax;
 
-					for( int i = 0; i < bc.Skills.Length; i++ )
+					for (int i = 0; i < bc.Skills.Length; i++)
 					{
 						Skill skill = (Skill)bc.Skills[i];
 
-						if ( skill.Base > 0.0 )
-							skill.Base = skill.Base + ( skill.Base * SkillsBuff );
+						if (skill.Base > 0.0)
+							skill.Base = skill.Base + (skill.Base * SkillsBuff);
 					}
 
 					bc.DamageMin += DamageBuff;
 					bc.DamageMax += DamageBuff;
 
-					if ( bc.Fame > 0 )
-						bc.Fame = (int)( bc.Fame + ( bc.Fame * FameBuff ) );
+					if (bc.Fame > 0)
+						bc.Fame = (int)(bc.Fame + (bc.Fame * FameBuff));
 
-					if ( bc.Fame > 32000 )
+					if (bc.Fame > 32000)
 						bc.Fame = 32000;
 
-					if ( bc.Karma != 0 )
+					if (bc.Karma != 0)
 					{
-						bc.Karma = (int)( bc.Karma + ( bc.Karma * KarmaBuff ) );
+						bc.Karma = (int)(bc.Karma + (bc.Karma * KarmaBuff));
 
-						if( Math.Abs( bc.Karma ) > 32000 )
-							bc.Karma = 32000 * Math.Sign( bc.Karma );
+						if (Math.Abs(bc.Karma) > 32000)
+							bc.Karma = 32000 * Math.Sign(bc.Karma);
 					}
 
-					if ( bc.Backpack != null )
+					if (bc.Backpack != null)
 					{
-						int BonusGold = bc.Backpack.GetAmount( typeof( Gold ) );
-						if ( BonusGold > 0 )
+						int BonusGold = bc.Backpack.GetAmount(typeof(Gold));
+						if (BonusGold > 0)
 						{
-							BonusGold = (int)( BonusGold * GoldBuff );
-							bc.AddToBackpack( new Gold( BonusGold ) );
+							BonusGold = (int)(BonusGold * GoldBuff);
+							bc.AddToBackpack(new Gold(BonusGold));
 						}
 					}
 
-					if ( bc.Tamable )
+					if (bc.Tamable)
 					{
-						bc.MinTameSkill = bc.MinTameSkill + ( bc.MinTameSkill * TameBuff );
-						if ( bc.MinTameSkill > 120.0 )
+						bc.MinTameSkill = bc.MinTameSkill + (bc.MinTameSkill * TameBuff);
+						if (bc.MinTameSkill > 120.0)
 							bc.MinTameSkill = 120.0;
 					}
 				}
 			}
-			if ( bc.Skills[SkillName.Searching].Value < 10 )
+			if (bc.Skills[SkillName.Searching].Value < 10)
 			{
-				double searching = (double)(Server.Misc.IntelligentAction.GetCreatureLevel( (Mobile)bc ) + 10);
-				bc.SetSkill( SkillName.Searching, searching );
-            }
+				double searching = (double)(Server.Misc.IntelligentAction.GetCreatureLevel((Mobile)bc) + 10);
+				bc.SetSkill(SkillName.Searching, searching);
+			}
 		}
 
-		public static void BeefUpLoot( BaseCreature bc, int up )
+		public static void BeefUpLoot(BaseCreature bc, int up)
 		{
-			if ( bc.IsParagon || up < 1 )
+			if (bc.IsParagon || up < 1)
 				return;
 
-			if ( bc.Backpack != null )
+			if (bc.Backpack != null)
 			{
-				if ( up >= Utility.Random( 7 ) )
+				if (up >= Utility.Random(7))
 				{
-					if ( bc.Fame < 1250 )
-						bc.AddLoot( LootPack.Meager );
-					else if ( bc.Fame < 2500 )
-						bc.AddLoot( LootPack.Average );
-					else if ( bc.Fame < 5000 )
-						bc.AddLoot( LootPack.Rich );
-					else if ( bc.Fame < 10000 )
-						bc.AddLoot( LootPack.FilthyRich );
+					if (bc.Fame < 1250)
+						bc.AddLoot(LootPack.Meager);
+					else if (bc.Fame < 2500)
+						bc.AddLoot(LootPack.Average);
+					else if (bc.Fame < 5000)
+						bc.AddLoot(LootPack.Rich);
+					else if (bc.Fame < 10000)
+						bc.AddLoot(LootPack.FilthyRich);
 					else
-						bc.AddLoot( LootPack.UltraRich );
+						bc.AddLoot(LootPack.UltraRich);
 				}
 			}
 		}
@@ -2226,50 +2274,51 @@ namespace Server.Mobiles
 			m_Swimmer = CanSwim;
 			m_NoWalker = CantWalk;
 
-			if ( !IsCitizen() && WhisperHue != 999 && WhisperHue != 666 && !CanHearGhosts && !Controlled && (this.Region is DungeonRegion || this.Region is DeadRegion || this.Region is CaveRegion || this.Region is BardDungeonRegion || this.Region is OutDoorBadRegion) )
+			if (!IsCitizen() && WhisperHue != 999 && WhisperHue != 666 && !CanHearGhosts && !Controlled && (this.Region is DungeonRegion || this.Region is DeadRegion || this.Region is CaveRegion || this.Region is BardDungeonRegion || this.Region is OutDoorBadRegion))
 			{
 				CanHearGhosts = true;
 				CantWalk = true;
 				Hidden = true;
 			}
 
-			if ( this.CoinPurse == 1234567890 )
-				TavernPatrons.RemoveSomeStuff( this );
+			if (this.CoinPurse == 1234567890)
+				TavernPatrons.RemoveSomeStuff(this);
 
-			int Heat = Server.Difficult.GetDifficulty( this.Location, this.Map );
+			int Heat = Server.Difficult.GetDifficulty(this.Location, this.Map);
 
-			Heat = Server.Misc.SummonQuests.SummonCarriers( this, this, Heat );
+			Heat = Server.Misc.SummonQuests.SummonCarriers(this, this, Heat);
 
-			Region reg = Region.Find( this.Location, this.Map );
+			Region reg = Region.Find(this.Location, this.Map);
 
-			if ( this is Xurtzar || this is Surtaz || this is Vulcrum || this is Arachnar || this is CaddelliteDragon ){ Heat = 4; } // TIME LORD TRIAL CREATURES GET HP BUFF
-			
+			if (this is Xurtzar || this is Surtaz || this is Vulcrum || this is Arachnar || this is CaddelliteDragon) { Heat = 4; } // TIME LORD TRIAL CREATURES GET HP BUFF
+
 			// BARDS TALE TWEAKS
-			if ( reg.IsPartOf( "Mangar's Tower" ) && this.Fame >= 5000 ){ Heat = 1; }
-			else if ( reg.IsPartOf( "Mangar's Chamber" ) && this.Fame >= 5000 ){ Heat = 1; }
-			else if ( reg.IsPartOf( "Kylearan's Tower" ) && this.Fame >= 5000 ){ Heat = 1; }
+			if (reg.IsPartOf("Mangar's Tower") && this.Fame >= 5000) { Heat = 1; }
+			else if (reg.IsPartOf("Mangar's Chamber") && this.Fame >= 5000) { Heat = 1; }
+			else if (reg.IsPartOf("Kylearan's Tower") && this.Fame >= 5000) { Heat = 1; }
 
-			if ( this.Name == "a vampire" ){ this.Title = null; }
-			else if ( this.Name == "a young vampire" ){ this.Title = null; }
-			else if ( this.Name == "a vampire lord" ){ this.Title = null; }
-			else if ( this.Name == "a vampire prince" ){ this.Title = null; }
+			if (this.Name == "a vampire") { this.Title = null; }
+			else if (this.Name == "a young vampire") { this.Title = null; }
+			else if (this.Name == "a vampire lord") { this.Title = null; }
+			else if (this.Name == "a vampire prince") { this.Title = null; }
 
-			if ( this.Map == Map.IslesDread && Utility.RandomMinMax( 1, 4 ) == 1 ) // SOME ANIMALS ARE AGGRESSIVE ON THE ISLES OF DREAD
+			if (this.Map == Map.IslesDread && Utility.RandomMinMax(1, 4) == 1) // SOME ANIMALS ARE AGGRESSIVE ON THE ISLES OF DREAD
 			{
-				if (	this is WhiteTigerRiding || 
-						this is PolarBear || 
-						this is WhiteWolf || 
-						this is SnowLeopard || 
-						this is Mammoth || 
-						this is Jaguar || 
-						this is Cougar || 
-						this is Hyena || 
-						this is Boar || 
-						this is PandaRiding || 
-						this is Bull || 
-						this is Gorilla || 
-						this is Panther || 
-						this is GreyWolf ){
+				if (this is WhiteTigerRiding ||
+						this is PolarBear ||
+						this is WhiteWolf ||
+						this is SnowLeopard ||
+						this is Mammoth ||
+						this is Jaguar ||
+						this is Cougar ||
+						this is Hyena ||
+						this is Boar ||
+						this is PandaRiding ||
+						this is Bull ||
+						this is Gorilla ||
+						this is Panther ||
+						this is GreyWolf)
+				{
 
 					AI = AIType.AI_Melee;
 					FightMode = FightMode.Closest;
@@ -2278,19 +2327,19 @@ namespace Server.Mobiles
 				}
 			}
 
-			if ( reg.IsPartOf( "Castle Griffin Roost" ) && this is GriffonRiding )
+			if (reg.IsPartOf("Castle Griffin Roost") && this is GriffonRiding)
 			{
 				FightMode = FightMode.Evil;
 			}
 
-			if ( reg.IsPartOf( "the Pixie Cave" ) && this is ElderBrownBearRiding )
+			if (reg.IsPartOf("the Pixie Cave") && this is ElderBrownBearRiding)
 			{
 				FightMode = FightMode.Evil;
 			}
 
-			if ( reg.IsPartOf( "the Druid's Glade" ) )
+			if (reg.IsPartOf("the Druid's Glade"))
 			{
-				if ( this is Unicorn || this is Satyr )
+				if (this is Unicorn || this is Satyr)
 				{
 					AI = AIType.AI_Melee;
 					FightMode = FightMode.Aggressor;
@@ -2298,31 +2347,31 @@ namespace Server.Mobiles
 					Fame = 0;
 					Tamable = false;
 				}
-				else if ( this is DruidTree )
+				else if (this is DruidTree)
 				{
 					CantWalk = true;
 					Direction = Direction.South;
 				}
 			}
 
-			if ( reg.IsPartOf( "the Lyceum" ) )
+			if (reg.IsPartOf("the Lyceum"))
 			{
-				if ( this is Alchemist || this is Scribe )
+				if (this is Alchemist || this is Scribe)
 				{
 					CantWalk = true;
 					Direction = Direction.South;
 				}
-				else if ( this is Sage || this is Shepherd )
+				else if (this is Sage || this is Shepherd)
 				{
 					CantWalk = true;
 					Direction = Direction.East;
-					if ( this.FindItemOnLayer( Layer.OneHanded ) != null ){ (this.FindItemOnLayer( Layer.OneHanded )).Delete(); }
-					if ( this.FindItemOnLayer( Layer.FirstValid ) != null ){ (this.FindItemOnLayer( Layer.FirstValid )).Delete(); }
-					if ( this.FindItemOnLayer( Layer.TwoHanded ) != null ){ (this.FindItemOnLayer( Layer.TwoHanded )).Delete(); }
+					if (this.FindItemOnLayer(Layer.OneHanded) != null) { (this.FindItemOnLayer(Layer.OneHanded)).Delete(); }
+					if (this.FindItemOnLayer(Layer.FirstValid) != null) { (this.FindItemOnLayer(Layer.FirstValid)).Delete(); }
+					if (this.FindItemOnLayer(Layer.TwoHanded) != null) { (this.FindItemOnLayer(Layer.TwoHanded)).Delete(); }
 				}
 			}
 
-			if ( this.Map == Map.Lodor && this.Z > 10 && this.X >= 1975 && this.Y >= 2201 && this.X <= 2032 && this.Y <= 2247 ) // ZOO ONLY HAS FRIENDLY ANIMALS
+			if (this.Map == Map.Lodor && this.Z > 10 && this.X >= 1975 && this.Y >= 2201 && this.X <= 2032 && this.Y <= 2247) // ZOO ONLY HAS FRIENDLY ANIMALS
 			{
 				AI = AIType.AI_Melee;
 				FightMode = FightMode.Aggressor;
@@ -2331,47 +2380,47 @@ namespace Server.Mobiles
 				Tamable = false;
 			}
 
-			if ( Region.IsPartOf( typeof( PirateRegion ) ) ) // GHOST PIRATE SHIP ////////////////////////////////////////
+			if (Region.IsPartOf(typeof(PirateRegion))) // GHOST PIRATE SHIP ////////////////////////////////////////
 			{
-				if ( this is SkeletalMage ){ this.Name = "a dead pirate"; }
-				else if ( this is SkeletalKnight ){ this.Name = "a skeletal pirate"; }
-				else if ( this is Ghoul ){ this.Name = "a ghoulish pirate"; }
-				else if ( this is Zombie ){ this.Name = "a rotting pirate"; }
-				else if ( this is Spectre ){ this.Name = "a spectral pirate"; }
-				else if ( this is AncientLich )
+				if (this is SkeletalMage) { this.Name = "a dead pirate"; }
+				else if (this is SkeletalKnight) { this.Name = "a skeletal pirate"; }
+				else if (this is Ghoul) { this.Name = "a ghoulish pirate"; }
+				else if (this is Zombie) { this.Name = "a rotting pirate"; }
+				else if (this is Spectre) { this.Name = "a spectral pirate"; }
+				else if (this is AncientLich)
 				{
-					this.Name = NameList.RandomName( "evil mage" );
+					this.Name = NameList.RandomName("evil mage");
 					this.Title = "the Captain of the Dead";
-					PirateChest MyChest = new PirateChest( 10, null );
+					PirateChest MyChest = new PirateChest(10, null);
 					MyChest.ContainerOwner = "Treasure Chest of " + this.Name + " " + this.Title + "";
 					MyChest.Hue = 0x47E;
-					this.PackItem( MyChest );
+					this.PackItem(MyChest);
 				}
 			}
 
-			if ( Utility.RandomMinMax( 1, 4 ) == 1 && Server.Misc.Worlds.IsMainRegion( Server.Misc.Worlds.GetRegionName( this.Map, this.Location ) ) ) // FOR HORSE RIDERS
+			if (Utility.RandomMinMax(1, 4) == 1 && Server.Misc.Worlds.IsMainRegion(Server.Misc.Worlds.GetRegionName(this.Map, this.Location))) // FOR HORSE RIDERS
 			{
-				if (	this is Adventurers || 
-						this is Berserker || 
-						this is Minstrel || 
-						this is Rogue || 
-						this is EvilMage || 
-						this is EvilMageLord || 
-						this is Brigand || 
-						this is Executioner || 
-						this is Monks || 
-						this is ElfBerserker || 
-						this is ElfMage || 
-						this is ElfRogue || 
-						this is ElfMinstrel || 
-						this is ElfMonks || 
-						this is OrkWarrior || 
-						this is OrkMage || 
-						this is OrkRogue || 
-						this is OrkMonks )
+				if (this is Adventurers ||
+						this is Berserker ||
+						this is Minstrel ||
+						this is Rogue ||
+						this is EvilMage ||
+						this is EvilMageLord ||
+						this is Brigand ||
+						this is Executioner ||
+						this is Monks ||
+						this is ElfBerserker ||
+						this is ElfMage ||
+						this is ElfRogue ||
+						this is ElfMinstrel ||
+						this is ElfMonks ||
+						this is OrkWarrior ||
+						this is OrkMage ||
+						this is OrkRogue ||
+						this is OrkMonks)
 				{
 
-					Citizens.MountCitizens ( this, false );
+					Citizens.MountCitizens(this, false);
 
 					IMount bSteed = this.Mount;
 					BaseMount iSteed = (BaseMount)bSteed;
@@ -2389,178 +2438,178 @@ namespace Server.Mobiles
 			}
 
 			// BARD'S TALE ///////////////////////////////////////////////////////////////////////////////////////
-			if ( reg.IsPartOf( typeof( BardDungeonRegion ) ) )
+			if (reg.IsPartOf(typeof(BardDungeonRegion)))
 			{
-				if ( reg.IsPartOf( "the Sewers" ) )
+				if (reg.IsPartOf("the Sewers"))
 				{
-					if ( this is GiantSpider ){ this.Name = "a spinner"; }
+					if (this is GiantSpider) { this.Name = "a spinner"; }
 				}
-				else if ( reg.IsPartOf( "the Catacombs" ) || reg.IsPartOf( "the Lower Catacombs" ) )
+				else if (reg.IsPartOf("the Catacombs") || reg.IsPartOf("the Lower Catacombs"))
 				{
-					if ( this is Spectre ){ this.Name = "a shadow"; }
-					if ( this is Spirit ){ this.Name = "a ghost"; }
+					if (this is Spectre) { this.Name = "a shadow"; }
+					if (this is Spirit) { this.Name = "a ghost"; }
 				}
-				else if ( reg.IsPartOf( "Harkyn's Castle" ) )
+				else if (reg.IsPartOf("Harkyn's Castle"))
 				{
-					if ( this is Gazer ){ this.Name = "a seeker"; }
-					if ( this is MadDog ){ this.Name = "a wolf"; }
-					if ( this is StoneElemental ){ this.Name = "a stone golem"; }
-					if ( this is FrostGiant ){ this.Title = "the ice giant"; }
+					if (this is Gazer) { this.Name = "a seeker"; }
+					if (this is MadDog) { this.Name = "a wolf"; }
+					if (this is StoneElemental) { this.Name = "a stone golem"; }
+					if (this is FrostGiant) { this.Title = "the ice giant"; }
 				}
-				else if ( reg.IsPartOf( "Kylearan's Tower" ) )
+				else if (reg.IsPartOf("Kylearan's Tower"))
 				{
-					if ( this is Gazer ){ this.Body = 674; this.BaseSoundID = 0x47D; this.Name = NameList.RandomName( "drakkul" ); this.Title = "the beholder"; }
-					if ( this is MadDog ){ this.Name = "a wolf"; }
-					if ( this is StoneElemental ){ this.Name = "a stone elemental"; }
-					if ( this is LowerDemon ){ this.Name = "a demon"; this.Hue = 0x5B5; this.Body = 4; }
+					if (this is Gazer) { this.Body = 674; this.BaseSoundID = 0x47D; this.Name = NameList.RandomName("drakkul"); this.Title = "the beholder"; }
+					if (this is MadDog) { this.Name = "a wolf"; }
+					if (this is StoneElemental) { this.Name = "a stone elemental"; }
+					if (this is LowerDemon) { this.Name = "a demon"; this.Hue = 0x5B5; this.Body = 4; }
 				}
-				else if ( reg.IsPartOf( "Mangar's Tower" ) )
+				else if (reg.IsPartOf("Mangar's Tower"))
 				{
-					if ( this is Gazer ){ this.Name = "an evil eye"; this.Body = 83; }
-					if ( this is LowerDemon ){ this.Name = "a demon lord"; this.Title = ""; this.Body = 102; }
-					if ( this is Demon ){ this.Name = "a greater demon"; this.Title = ""; this.Hue = 0; this.Body = 40; }
-					if ( this is Daemon ){ this.Name = "a balrog"; this.Title = ""; this.Body = 38; }
-					if ( this is StormGiant && Utility.RandomBool() )
+					if (this is Gazer) { this.Name = "an evil eye"; this.Body = 83; }
+					if (this is LowerDemon) { this.Name = "a demon lord"; this.Title = ""; this.Body = 102; }
+					if (this is Demon) { this.Name = "a greater demon"; this.Title = ""; this.Hue = 0; this.Body = 40; }
+					if (this is Daemon) { this.Name = "a balrog"; this.Title = ""; this.Body = 38; }
+					if (this is StormGiant && Utility.RandomBool())
 					{
 						this.Title = "the cloud giant";
-						Item lootchest = this.Backpack.FindItemByType( typeof ( LootChest ) );
-						if ( lootchest != null )
+						Item lootchest = this.Backpack.FindItemByType(typeof(LootChest));
+						if (lootchest != null)
 						{
 							lootchest.Hue = 0x835;
 							lootchest.Name = "silver chest";
 						}
 					}
 				}
-				else if ( this is Orc ){ this.Body = Utility.RandomList( 7, 17, 41 ); }
+				else if (this is Orc) { this.Body = Utility.RandomList(7, 17, 41); }
 			}
 
-			if ( reg.IsPartOf( "the Castle of the Black Knight" ) )
+			if (reg.IsPartOf("the Castle of the Black Knight"))
 			{
-				if ( this is Gargoyle )
+				if (this is Gargoyle)
 				{
 					this.Body = 185;
 				}
-				else if ( this is EvilMage )
+				else if (this is EvilMage)
 				{
 					this.Title = "the dark wizard";
-					MorphingTime.ColorMyClothes( this, 0x497, 0 );
+					MorphingTime.ColorMyClothes(this, 0x497, 0);
 				}
 			}
 
-			if ( reg.IsPartOf( "the Blood Temple" ) )
+			if (reg.IsPartOf("the Blood Temple"))
 			{
-				if ( this is Devil )
+				if (this is Devil)
 				{
-					switch ( Utility.Random( 5 ) )
+					switch (Utility.Random(5))
 					{
-						case 0: this.Title = "the devil of blood"; 			break;
-						case 1: this.Title = "the bleeding devil"; 			break;
-						case 2: this.Title = "the blood devil"; 			break;
-						case 3: this.Title = "the devil of bloody hell"; 	break;
-						case 4: this.Title = "the blood moon devil"; 		break;
+						case 0: this.Title = "the devil of blood"; break;
+						case 1: this.Title = "the bleeding devil"; break;
+						case 2: this.Title = "the blood devil"; break;
+						case 3: this.Title = "the devil of bloody hell"; break;
+						case 4: this.Title = "the blood moon devil"; break;
 					}
-					Hue = Utility.RandomList( 0xB01, 0x870 );
+					Hue = Utility.RandomList(0xB01, 0x870);
 				}
 			}
 
-			if ( reg.IsPartOf( "the Daemon's Crag" ) )
+			if (reg.IsPartOf("the Daemon's Crag"))
 			{
-				if ( this is Daemon )
+				if (this is Daemon)
 				{
-					Name = NameList.RandomName( "demonic" );
+					Name = NameList.RandomName("demonic");
 					Title = "the daemon";
-					Body = Utility.RandomList( 9, 320 );
+					Body = Utility.RandomList(9, 320);
 					Hue = 0;
 					BaseSoundID = 357;
 				}
-				else if ( this is Balron )
+				else if (this is Balron)
 				{
-					Name = NameList.RandomName( "demonic" );
+					Name = NameList.RandomName("demonic");
 					Title = "the daemon lord";
-					Body = Utility.RandomList( 191, 427 );
+					Body = Utility.RandomList(191, 427);
 					Hue = 0;
 					BaseSoundID = 357;
 				}
-				else if ( this is EvilMageLord || this is EvilMage )
+				else if (this is EvilMageLord || this is EvilMage)
 				{
-					MorphingTime.RemoveMyClothes( this );
+					MorphingTime.RemoveMyClothes(this);
 
 					Item robe = new AssassinRobe();
-						robe.Name = "sorcerer robe";
-						robe.Hue = 2411;
-						AddItem( robe );
+					robe.Name = "sorcerer robe";
+					robe.Hue = 2411;
+					AddItem(robe);
 
 					Item boots = new Boots();
-						boots.Name = "boots";
-						boots.Hue = 2411;
-						AddItem( boots );
+					boots.Name = "boots";
+					boots.Hue = 2411;
+					AddItem(boots);
 
 					Item hat = new ClothHood();
-						hat.Name = "sorcerer hood";
-						hat.Hue = 2411;
-						AddItem( hat );
+					hat.Name = "sorcerer hood";
+					hat.Hue = 2411;
+					AddItem(hat);
 
 					Item staff = new BlackStaff();
-						staff.Name = "sorcerer staff";
-						AddItem( staff );
+					staff.Name = "sorcerer staff";
+					AddItem(staff);
 
-					Body = 0x190; 
+					Body = 0x190;
 					Title = "the sorcerer";
 					BaseSoundID = 0x47D;
 
-					if ( this is EvilMageLord )
+					if (this is EvilMageLord)
 					{
 						Name = "Malchir";
 						Title = "the master sorcerer";
 					}
-					else if ( this is EvilMage && Home.X == 6277 && Home.Y == 2099 )
+					else if (this is EvilMage && Home.X == 6277 && Home.Y == 2099)
 					{
-						Body = 0x191; 
+						Body = 0x191;
 						Name = "Bane";
 						Title = "the sorceress";
 						BaseSoundID = 0x4B0;
 					}
-					else if ( this is EvilMage && Home.X == 6398 && Home.Y == 1966 )
+					else if (this is EvilMage && Home.X == 6398 && Home.Y == 1966)
 					{
 						Name = "Vardion";
 					}
-					else if ( this is EvilMage && Home.X == 6398 && Home.Y == 1966 )
+					else if (this is EvilMage && Home.X == 6398 && Home.Y == 1966)
 					{
 						Name = "Beren";
 					}
-					else if ( this is EvilMage && Home.X == 6398 && Home.Y == 1966 )
+					else if (this is EvilMage && Home.X == 6398 && Home.Y == 1966)
 					{
 						Name = "Gorgrond";
 					}
 
-					Utility.AssignRandomHair( this );
+					Utility.AssignRandomHair(this);
 					FacialHairItemID = 0;
 
-					if ( this is EvilMageLord )
+					if (this is EvilMageLord)
 					{
-						SetStr( 216, 305 );
-						SetDex( 96, 115 );
-						SetInt( 966, 1045 );
-						SetHits( 560, 595 );
-						SetDamage( 15, 27 );
+						SetStr(216, 305);
+						SetDex(96, 115);
+						SetInt(966, 1045);
+						SetHits(560, 595);
+						SetDamage(15, 27);
 
-						SetDamageType( ResistanceType.Physical, 20 );
-						SetDamageType( ResistanceType.Cold, 40 );
-						SetDamageType( ResistanceType.Energy, 40 );
+						SetDamageType(ResistanceType.Physical, 20);
+						SetDamageType(ResistanceType.Cold, 40);
+						SetDamageType(ResistanceType.Energy, 40);
 
-						SetResistance( ResistanceType.Physical, 55, 65 );
-						SetResistance( ResistanceType.Fire, 25, 30 );
-						SetResistance( ResistanceType.Cold, 50, 60 );
-						SetResistance( ResistanceType.Poison, 50, 60 );
-						SetResistance( ResistanceType.Energy, 25, 30 );
+						SetResistance(ResistanceType.Physical, 55, 65);
+						SetResistance(ResistanceType.Fire, 25, 30);
+						SetResistance(ResistanceType.Cold, 50, 60);
+						SetResistance(ResistanceType.Poison, 50, 60);
+						SetResistance(ResistanceType.Energy, 25, 30);
 
-						SetSkill( SkillName.Psychology, 120.1, 130.0 );
-						SetSkill( SkillName.Magery, 120.1, 130.0 );
-						SetSkill( SkillName.Meditation, 100.1, 101.0 );
-						SetSkill( SkillName.Poisoning, 100.1, 101.0 );
-						SetSkill( SkillName.MagicResist, 175.2, 200.0 );
-						SetSkill( SkillName.Tactics, 90.1, 100.0 );
-						SetSkill( SkillName.FistFighting, 75.1, 100.0 );
+						SetSkill(SkillName.Psychology, 120.1, 130.0);
+						SetSkill(SkillName.Magery, 120.1, 130.0);
+						SetSkill(SkillName.Meditation, 100.1, 101.0);
+						SetSkill(SkillName.Poisoning, 100.1, 101.0);
+						SetSkill(SkillName.MagicResist, 175.2, 200.0);
+						SetSkill(SkillName.Tactics, 90.1, 100.0);
+						SetSkill(SkillName.FistFighting, 75.1, 100.0);
 
 						Fame = 23000;
 						Karma = -23000;
@@ -2569,32 +2618,32 @@ namespace Server.Mobiles
 					}
 					else
 					{
-						SetStr( 416, 505 );
-						SetDex( 146, 165 );
-						SetInt( 566, 655 );
+						SetStr(416, 505);
+						SetDex(146, 165);
+						SetInt(566, 655);
 
-						SetHits( 250, 303 );
+						SetHits(250, 303);
 
-						SetDamage( 11, 13 );
+						SetDamage(11, 13);
 
-						SetDamageType( ResistanceType.Physical, 0 );
-						SetDamageType( ResistanceType.Cold, 60 );
-						SetDamageType( ResistanceType.Energy, 40 );
+						SetDamageType(ResistanceType.Physical, 0);
+						SetDamageType(ResistanceType.Cold, 60);
+						SetDamageType(ResistanceType.Energy, 40);
 
-						SetResistance( ResistanceType.Physical, 40, 50 );
-						SetResistance( ResistanceType.Fire, 30, 40 );
-						SetResistance( ResistanceType.Cold, 50, 60 );
-						SetResistance( ResistanceType.Poison, 50, 60 );
-						SetResistance( ResistanceType.Energy, 40, 50 );
+						SetResistance(ResistanceType.Physical, 40, 50);
+						SetResistance(ResistanceType.Fire, 30, 40);
+						SetResistance(ResistanceType.Cold, 50, 60);
+						SetResistance(ResistanceType.Poison, 50, 60);
+						SetResistance(ResistanceType.Energy, 40, 50);
 
-						SetSkill( SkillName.Necromancy, 90, 110.0 );
-						SetSkill( SkillName.Spiritualism, 90.0, 110.0 );
+						SetSkill(SkillName.Necromancy, 90, 110.0);
+						SetSkill(SkillName.Spiritualism, 90.0, 110.0);
 
-						SetSkill( SkillName.Psychology, 90.1, 100.0 );
-						SetSkill( SkillName.Magery, 90.1, 100.0 );
-						SetSkill( SkillName.MagicResist, 150.5, 200.0 );
-						SetSkill( SkillName.Tactics, 50.1, 70.0 );
-						SetSkill( SkillName.FistFighting, 60.1, 80.0 );
+						SetSkill(SkillName.Psychology, 90.1, 100.0);
+						SetSkill(SkillName.Magery, 90.1, 100.0);
+						SetSkill(SkillName.MagicResist, 150.5, 200.0);
+						SetSkill(SkillName.Tactics, 50.1, 70.0);
+						SetSkill(SkillName.FistFighting, 60.1, 80.0);
 
 						Fame = 18000;
 						Karma = -18000;
@@ -2604,151 +2653,151 @@ namespace Server.Mobiles
 				}
 			}
 
-			if ( reg.IsPartOf( "the Mines of Morinia" ) )
+			if (reg.IsPartOf("the Mines of Morinia"))
 			{
-				if ( this is PoisonElemental )
+				if (this is PoisonElemental)
 				{
 					this.Body = 16;
 					this.BaseSoundID = 278;
 				}
-				else if ( this is CrystalElemental )
+				else if (this is CrystalElemental)
 				{
-					this.Hue = Utility.RandomList( 0x48D, 0x48E, 0x48F, 0x490, 0x491 );
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Poison, 0 );
-					this.SetDamageType( ResistanceType.Physical, 20 );
-					this.SetDamageType( ResistanceType.Energy, 80 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0x48D, 0x48E, 0x48F, 0x490, 0x491);
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Poison, 0);
+					this.SetDamageType(ResistanceType.Physical, 20);
+					this.SetDamageType(ResistanceType.Energy, 80);
+					this.AddItem(new LightSource());
 				}
 			}
 
-			if ( reg.IsPartOf( "the Fires of Hell" ) )
+			if (reg.IsPartOf("the Fires of Hell"))
 			{
-				if ( this is Gargoyle )
+				if (this is Gargoyle)
 				{
 					this.Name = "an ashen gargoyle";
 					this.Hue = 0xB85;
 				}
-				else if ( this is BoneMagi )
+				else if (this is BoneMagi)
 				{
 					this.Name = "a skeletal fire mage";
-					this.Hue = Utility.RandomList( 0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is SkeletalMage )
+				else if (this is SkeletalMage)
 				{
 					this.Name = "an undead pyromancer";
-					this.Hue = Utility.RandomList( 0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is BoneKnight )
+				else if (this is BoneKnight)
 				{
 					this.Name = "a skeletal guard";
-					this.Hue = Utility.RandomList( 0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986);
+					this.AddItem(new LightSource());
 				}
 			}
 
-			if ( reg.IsPartOf( "the City of Embers" ) )
+			if (reg.IsPartOf("the City of Embers"))
 			{
-				if ( this is DreadSpider )
+				if (this is DreadSpider)
 				{
 					this.Name = "a vulrachnid";
 					this.Hue = 0xB73;
 					this.Body = 99;
-					this.AddItem( new LightSource() );
+					this.AddItem(new LightSource());
 				}
-				else if ( this is BoneMagi )
+				else if (this is BoneMagi)
 				{
 					this.Name = "an undead flamecaster";
-					this.Hue = Utility.RandomList( 0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is SkeletalMage )
+				else if (this is SkeletalMage)
 				{
 					this.Name = "a skeletal pyromancer";
-					this.Hue = Utility.RandomList( 0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is BoneKnight )
+				else if (this is BoneKnight)
 				{
 					this.Name = "a firebone warrior";
-					this.Hue = Utility.RandomList( 0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0xB73, 0xB71, 0xB17, 0xAFA, 0xAC8, 0x986);
+					this.AddItem(new LightSource());
 				}
 			}
 
-			if ( reg.IsPartOf( "Dungeon Hythloth" ) )
+			if (reg.IsPartOf("Dungeon Hythloth"))
 			{
-				if ( this is LichLord )
+				if (this is LichLord)
 				{
 					this.Title = "the high pharaoh";
 					this.Hue = 0x9C4;
 					this.Body = 125;
 				}
-				else if ( this is Lich )
+				else if (this is Lich)
 				{
 					this.Title = "the pharaoh";
 					this.Hue = 0x9DF;
 					this.Body = 125;
 				}
-				else if ( this is Gazer )
+				else if (this is Gazer)
 				{
 					this.Name = "a watcher";
 					this.Hue = 0x96D;
 				}
-				else if ( this is ElderGazer )
+				else if (this is ElderGazer)
 				{
 					this.Name = "a tomb watcher";
 					this.Hue = 0x9D1;
 					this.Body = 674;
 				}
-				else if ( this is Gargoyle )
+				else if (this is Gargoyle)
 				{
 					this.Name = "a sand gargoyle";
 					this.Hue = 0x96D;
-					this.PackItem( new Sand( Utility.RandomMinMax( 1, 2 ) ) );
+					this.PackItem(new Sand(Utility.RandomMinMax(1, 2)));
 				}
 			}
 
-			if ( reg.IsPartOf( "the Ruins of the Black Blade" ) )
+			if (reg.IsPartOf("the Ruins of the Black Blade"))
 			{
-				if ( this is Gazer ){ this.Name = "a seeker"; }
-				if ( this is StoneElemental ){ this.Name = "a stone golem"; }
+				if (this is Gazer) { this.Name = "a seeker"; }
+				if (this is StoneElemental) { this.Name = "a stone golem"; }
 			}
 
-			if ( Server.Misc.Worlds.IsMainRegion( Server.Misc.Worlds.GetRegionName( this.Map, this.Location ) ) && Server.Misc.Worlds.GetRegionName( this.Map, this.Location ) == "the Savaged Empire" )
+			if (Server.Misc.Worlds.IsMainRegion(Server.Misc.Worlds.GetRegionName(this.Map, this.Location)) && Server.Misc.Worlds.GetRegionName(this.Map, this.Location) == "the Savaged Empire")
 			{
-				if ( this is HugeLizard )
+				if (this is HugeLizard)
 				{
 					this.Body = 456;
-					this.Hue = Utility.RandomList( 0x7D1, 0x7D2, 0x7D3, 0x7D4, 0x7D5, 0x7D6 );
+					this.Hue = Utility.RandomList(0x7D1, 0x7D2, 0x7D3, 0x7D4, 0x7D5, 0x7D6);
 					this.Name = "a gator";
-					BeefUp( this, 3 );
+					BeefUp(this, 3);
 				}
-				if ( this is MountainGoat )
+				if (this is MountainGoat)
 				{
 					this.Body = 936;
 					this.Name = "a ram";
-					BeefUp( this, 3 );
+					BeefUp(this, 3);
 				}
 			}
 
-			if ( Server.Misc.Worlds.IsMainRegion( Server.Misc.Worlds.GetRegionName( this.Map, this.Location ) ) )
+			if (Server.Misc.Worlds.IsMainRegion(Server.Misc.Worlds.GetRegionName(this.Map, this.Location)))
 			{
-				if ( this is AntaurSoldier )
+				if (this is AntaurSoldier)
 				{
 					this.Body = 458;
 					this.Name = "an antaur";
 				}
 			}
 
-			if ( reg.IsPartOf( "the Forgotten Halls" ) )
+			if (reg.IsPartOf("the Forgotten Halls"))
 			{
-				if ( this is Daemon && Server.Misc.SummonQuests.IsInLocation( this.Home.X, this.Home.Y, this.Map, 409, 3670, Map.SavagedEmpire ) )
+				if (this is Daemon && Server.Misc.SummonQuests.IsInLocation(this.Home.X, this.Home.Y, this.Map, 409, 3670, Map.SavagedEmpire))
 				{
-					switch ( Utility.Random( 5 ) )
+					switch (Utility.Random(5))
 					{
 						case 0: this.Title = "the daemon of filth"; break;
 						case 1: this.Title = "the daemon of crud"; break;
@@ -2757,144 +2806,144 @@ namespace Server.Mobiles
 						case 4: this.Title = "the daemon of the putrid"; break;
 					}
 				}
-				if ( this is ToxicElemental ){ this.Name = "a sewage elemental"; this.Hue = Hue = 0xB97; }
-				if ( this is ForestGiant ){ this.Hue = Hue = 0xB97; this.Title = "the sludge giant"; }
-				if ( this is AncientLich )
+				if (this is ToxicElemental) { this.Name = "a sewage elemental"; this.Hue = Hue = 0xB97; }
+				if (this is ForestGiant) { this.Hue = Hue = 0xB97; this.Title = "the sludge giant"; }
+				if (this is AncientLich)
 				{
 					this.Hue = 0x967;
 					this.Title = "the shadow lich";
 					BaseArmor armor = null;
 
-					if ( Utility.Random( 3 ) == 1 )
+					if (Utility.Random(3) == 1)
 					{
-						switch ( Utility.Random( 5 ) )
+						switch (Utility.Random(5))
 						{
-							case 0: armor = new BoneArms();		break;
-							case 1: armor = new BoneChest();	break;
-							case 2: armor = new BoneGloves();	break;
-							case 3: armor = new BoneLegs();		break;
-							case 4: armor = new BoneHelm();		break;
+							case 0: armor = new BoneArms(); break;
+							case 1: armor = new BoneChest(); break;
+							case 2: armor = new BoneGloves(); break;
+							case 3: armor = new BoneLegs(); break;
+							case 4: armor = new BoneHelm(); break;
 						}
-						if ( armor != null )
+						if (armor != null)
 						{
 							armor.Resource = CraftResource.LichSkeletal;
-							BaseRunicTool.ApplyAttributesTo( armor, false, 1000, Utility.RandomMinMax( 4, 8 ), 50, 125 );
-							this.PackItem( armor );
+							BaseRunicTool.ApplyAttributesTo(armor, false, 1000, Utility.RandomMinMax(4, 8), 50, 125);
+							this.PackItem(armor);
 						}
 					}
 				}
-				if ( this is SkeletalKnight )
+				if (this is SkeletalKnight)
 				{
 					this.Name = "a rotting skeleton";
 					this.Hue = 0xB97;
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Physical, 60 );
-					this.SetDamageType( ResistanceType.Energy, 0 );
-					this.SetDamageType( ResistanceType.Poison, 40 );
-					this.Body = Utility.RandomList( 57, 50, 56 );
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Physical, 60);
+					this.SetDamageType(ResistanceType.Energy, 0);
+					this.SetDamageType(ResistanceType.Poison, 40);
+					this.Body = Utility.RandomList(57, 50, 56);
 
 					List<Item> belongings = new List<Item>();
-					foreach( Item i in this.Backpack.Items )
+					foreach (Item i in this.Backpack.Items)
 					{
 						belongings.Add(i);
 					}
-					foreach ( Item stuff in belongings )
+					foreach (Item stuff in belongings)
 					{
 						stuff.Delete();
 					}
 
-					GenerateLoot( true );
+					GenerateLoot(true);
 
-					if ( Utility.Random( 4 ) == 1 )
+					if (Utility.Random(4) == 1)
 					{
 						BaseArmor armor = null;
 
-						switch ( Utility.Random( 5 ) )
+						switch (Utility.Random(5))
 						{
-							case 0: armor = new BoneArms();		break;
-							case 1: armor = new BoneChest();	break;
-							case 2: armor = new BoneGloves();	break;
-							case 3: armor = new BoneLegs();		break;
-							case 4: armor = new BoneHelm();		break;
+							case 0: armor = new BoneArms(); break;
+							case 1: armor = new BoneChest(); break;
+							case 2: armor = new BoneGloves(); break;
+							case 3: armor = new BoneLegs(); break;
+							case 4: armor = new BoneHelm(); break;
 						}
-						if ( armor != null )
+						if (armor != null)
 						{
 							armor.Hue = 0xB97;
 							armor.PoisonBonus = 10;
-							this.PackItem( armor );
+							this.PackItem(armor);
 						}
 					}
 
-					if ( this.Body == 56 || this.Body == 168 ){ BattleAxe radaxe = new BattleAxe(); radaxe.Name = "rusty battle axe"; radaxe.Hue = 0xB97; radaxe.AosElementDamages.Poison=50; this.PackItem( radaxe ); }
-					if ( this.Body == 57 ){ Scimitar radsim = new Scimitar(); radsim.Name = "rusty scimitar"; radsim.Hue = 0xB97;	radsim.AosElementDamages.Poison=50; this.PackItem( radsim ); }
-					if ( this.Body == 170 || this.Body == 327 ){ Longsword radswd = new Longsword(); radswd.Name = "rusty longsword"; radswd.Hue = 0xB97;	radswd.AosElementDamages.Poison=50; this.PackItem( radswd ); }
-					if ( this.Body == 57 || this.Body == 168 || this.Body == 170 ){ WoodenShield radshield = new WoodenShield(); radshield.Name = "rotting shield"; radshield.Hue = 0xB97; radshield.PoisonBonus = 5; this.PackItem( radshield ); }
+					if (this.Body == 56 || this.Body == 168) { BattleAxe radaxe = new BattleAxe(); radaxe.Name = "rusty battle axe"; radaxe.Hue = 0xB97; radaxe.AosElementDamages.Poison = 50; this.PackItem(radaxe); }
+					if (this.Body == 57) { Scimitar radsim = new Scimitar(); radsim.Name = "rusty scimitar"; radsim.Hue = 0xB97; radsim.AosElementDamages.Poison = 50; this.PackItem(radsim); }
+					if (this.Body == 170 || this.Body == 327) { Longsword radswd = new Longsword(); radswd.Name = "rusty longsword"; radswd.Hue = 0xB97; radswd.AosElementDamages.Poison = 50; this.PackItem(radswd); }
+					if (this.Body == 57 || this.Body == 168 || this.Body == 170) { WoodenShield radshield = new WoodenShield(); radshield.Name = "rotting shield"; radshield.Hue = 0xB97; radshield.PoisonBonus = 5; this.PackItem(radshield); }
 				}
 			}
 
-			if ( reg.IsPartOf( "the Tomb of Kazibal" ) )
+			if (reg.IsPartOf("the Tomb of Kazibal"))
 			{
-				if ( this is AncientLich )
+				if (this is AncientLich)
 				{
 					this.Hue = Hue = 0x83B;
 					this.Name = "Kazibal";
 					this.Title = "the unearthed";
 
-					if ( Utility.Random( 3 ) == 1 )
+					if (Utility.Random(3) == 1)
 					{
 						BaseArmor armor = null;
 
-						switch ( Utility.Random( 5 ) )
+						switch (Utility.Random(5))
 						{
-							case 0: armor = new BoneArms();		break;
-							case 1: armor = new BoneChest();	break;
-							case 2: armor = new BoneGloves();	break;
-							case 3: armor = new BoneLegs();		break;
-							case 4: armor = new BoneHelm();		break;
+							case 0: armor = new BoneArms(); break;
+							case 1: armor = new BoneChest(); break;
+							case 2: armor = new BoneGloves(); break;
+							case 3: armor = new BoneLegs(); break;
+							case 4: armor = new BoneHelm(); break;
 						}
-						if ( armor != null )
+						if (armor != null)
 						{
 							armor.Resource = CraftResource.LichSkeletal;
-							BaseRunicTool.ApplyAttributesTo( armor, false, 1000, Utility.RandomMinMax( 4, 8 ), 50, 125 );
+							BaseRunicTool.ApplyAttributesTo(armor, false, 1000, Utility.RandomMinMax(4, 8), 50, 125);
 							armor.InfoText5 = "Kazibal the Unearthed";
-							this.PackItem( armor );
+							this.PackItem(armor);
 						}
 					}
 				}
 			}
 
-			if ( reg.IsPartOf( "the Stygian Abyss" ) )
+			if (reg.IsPartOf("the Stygian Abyss"))
 			{
-				if ( this is SerpynSorceress )
+				if (this is SerpynSorceress)
 				{
 					this.Hue = 0xB79;
 					this.Body = 306;
 					this.BaseSoundID = 639;
-					this.Name = NameList.RandomName( "lizardman" );
+					this.Name = NameList.RandomName("lizardman");
 					this.Title = "the silisk sorcerer";
 				}
-				else if ( this is Sleestax )
+				else if (this is Sleestax)
 				{
 					this.Title = "the silisk";
 				}
-				else if ( this is Grathek )
+				else if (this is Grathek)
 				{
 					this.Title = "the silisk guard";
 				}
 			}
 
-			if ( reg.IsPartOf( "the Sanctum of Saltmarsh" ) )
+			if (reg.IsPartOf("the Sanctum of Saltmarsh"))
 			{
-				if ( this is Tyranasaur )
+				if (this is Tyranasaur)
 				{
 					this.Hue = 0xB51;
 				}
-				else if ( this is RaptorRiding )
+				else if (this is RaptorRiding)
 				{
 					this.Hue = 0xB51;
 				}
-				else if ( this is Stegosaurus )
+				else if (this is Stegosaurus)
 				{
 					this.Name = "a scalosaur";
 					this.Hue = 0xB18;
@@ -2904,17 +2953,17 @@ namespace Server.Mobiles
 				}
 			}
 
-			if ( reg.IsPartOf( "the Hall of the Mountain King" ) )
+			if (reg.IsPartOf("the Hall of the Mountain King"))
 			{
-				if ( this is StygianGargoyleLord )
+				if (this is StygianGargoyleLord)
 				{
 					this.Name = "a gargoyle";
 				}
-				else if ( this is Sleestax )
+				else if (this is Sleestax)
 				{
 					this.Title = "the silisk";
 				}
-				else if ( this is MountainGiant && this.X >= 5158 && this.Y >= 2705 && this.X <= 5243 && this.Y <= 2813 )
+				else if (this is MountainGiant && this.X >= 5158 && this.Y >= 2705 && this.X <= 5243 && this.Y <= 2813)
 				{
 					this.Hue = 0;
 					this.Name = "a stone guard";
@@ -2924,38 +2973,38 @@ namespace Server.Mobiles
 				}
 			}
 
-			if ( reg.IsPartOf( "Argentrock Castle" ) )
+			if (reg.IsPartOf("Argentrock Castle"))
 			{
-				if ( this is ElderTitan )
+				if (this is ElderTitan)
 				{
 					this.Title = "the ancient titan";
 				}
-				else if ( this is StygianGargoyleLord )
+				else if (this is StygianGargoyleLord)
 				{
 					this.Name = "an elder gargoyle";
 				}
-				else if ( this is StygianGargoyle )
+				else if (this is StygianGargoyle)
 				{
 					this.Name = "a gargoyle";
 				}
-				else if ( this is HarpyElder )
+				else if (this is HarpyElder)
 				{
 					this.Name = "a harpy";
 				}
-				else if ( this is GriffonRiding )
+				else if (this is GriffonRiding)
 				{
 					AI = AIType.AI_Melee;
 					FightMode = FightMode.Closest;
 					Karma = 0 - Fame;
 					Tamable = false;
 				}
-				else if ( this is AnyStatue )
+				else if (this is AnyStatue)
 				{
 					Body = 303;
 				}
 			}
 
-			if ( reg.IsPartOf( "the Undersea Castle" ) )
+			if (reg.IsPartOf("the Undersea Castle"))
 			{
 				CantWalk = false; // SOME OF THESE SETTINGS KEEP SWIMMERS ON THE STONE AND OFF THE WATER IN THESE DUNGEONS
 				CanSwim = false;
@@ -2963,26 +3012,26 @@ namespace Server.Mobiles
 				Location = Home;
 			}
 
-			if ( reg.IsPartOf( "the Depths of Carthax Lake" ) )
+			if (reg.IsPartOf("the Depths of Carthax Lake"))
 			{
 				CantWalk = false; // SOME OF THESE SETTINGS KEEP SWIMMERS ON THE STONE AND OFF THE WATER IN THESE DUNGEONS
 				CanSwim = false;
 
-				if ( this is WaterBeetleRiding )
+				if (this is WaterBeetleRiding)
 				{
 					this.Body = 0xF4;
 					this.Hue = 0xB48;
 				}
-				else if ( this is Sleestax )
+				else if (this is Sleestax)
 				{
 					this.Title = "the silisk";
 				}
-				else if ( this is GiantEel )
+				else if (this is GiantEel)
 				{
 					this.Body = 21;
 					this.Hue = 0xB9D;
 				}
-				else if ( this is GiantSquid )
+				else if (this is GiantSquid)
 				{
 					this.Title = "squid tentacles";
 					this.Hue = 0xB75;
@@ -2991,322 +3040,322 @@ namespace Server.Mobiles
 				Location = Home;
 			}
 
-			if ( reg.IsPartOf( "the Dragon's Maw" ) )
+			if (reg.IsPartOf("the Dragon's Maw"))
 			{
-				if ( this is BoneKnight )
+				if (this is BoneKnight)
 				{
 					this.Name = "a skeleton";
 					this.Hue = 0x48F;
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Physical, 20 );
-					this.SetDamageType( ResistanceType.Energy, 40 );
-					this.SetDamageType( ResistanceType.Poison, 40 );
-					this.Body = Utility.RandomList( 57, 50, 56 );
-					this.AddItem( new LightSource() );
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Physical, 20);
+					this.SetDamageType(ResistanceType.Energy, 40);
+					this.SetDamageType(ResistanceType.Poison, 40);
+					this.Body = Utility.RandomList(57, 50, 56);
+					this.AddItem(new LightSource());
 
 					List<Item> belongings = new List<Item>();
-					foreach( Item i in this.Backpack.Items )
+					foreach (Item i in this.Backpack.Items)
 					{
 						belongings.Add(i);
 					}
-					foreach ( Item stuff in belongings )
+					foreach (Item stuff in belongings)
 					{
 						stuff.Delete();
 					}
 
-					GenerateLoot( true );
+					GenerateLoot(true);
 
-					if ( Utility.Random( 4 ) == 1 )
+					if (Utility.Random(4) == 1)
 					{
 						BaseArmor armor = null;
 
-						switch ( Utility.Random( 5 ) )
+						switch (Utility.Random(5))
 						{
-							case 0: armor = new BoneArms();		break;
-							case 1: armor = new BoneChest();	break;
-							case 2: armor = new BoneGloves();	break;
-							case 3: armor = new BoneLegs();		break;
-							case 4: armor = new BoneHelm();		break;
+							case 0: armor = new BoneArms(); break;
+							case 1: armor = new BoneChest(); break;
+							case 2: armor = new BoneGloves(); break;
+							case 3: armor = new BoneLegs(); break;
+							case 4: armor = new BoneHelm(); break;
 						}
-						if ( armor != null )
+						if (armor != null)
 						{
 							armor.Name = "irradiated " + armor.Name;
 							armor.Hue = 0x48F;
 							armor.PoisonBonus = 10;
-							this.PackItem( armor );
+							this.PackItem(armor);
 						}
 					}
 
-					if ( this.Body == 56 || this.Body == 168 ){ BattleAxe radaxe = new BattleAxe(); radaxe.Name = "irradiated battle axe"; radaxe.Hue = 0x48F; radaxe.AosElementDamages.Poison=50; this.PackItem( radaxe ); }
-					if ( this.Body == 57 ){ Scimitar radsim = new Scimitar(); radsim.Name = "irradiated scimitar"; radsim.Hue = 0x48F;	radsim.AosElementDamages.Poison=50; this.PackItem( radsim ); }
-					if ( this.Body == 170 || this.Body == 327 ){ Longsword radswd = new Longsword(); radswd.Name = "irradiated longsword"; radswd.Hue = 0x48F;	radswd.AosElementDamages.Poison=50; this.PackItem( radswd ); }
-					if ( this.Body == 57 || this.Body == 168 || this.Body == 170 ){ WoodenShield radshield = new WoodenShield(); radshield.Name = "irradiated shield"; radshield.Hue = 0x48F; radshield.PoisonBonus = 5; this.PackItem( radshield ); }
+					if (this.Body == 56 || this.Body == 168) { BattleAxe radaxe = new BattleAxe(); radaxe.Name = "irradiated battle axe"; radaxe.Hue = 0x48F; radaxe.AosElementDamages.Poison = 50; this.PackItem(radaxe); }
+					if (this.Body == 57) { Scimitar radsim = new Scimitar(); radsim.Name = "irradiated scimitar"; radsim.Hue = 0x48F; radsim.AosElementDamages.Poison = 50; this.PackItem(radsim); }
+					if (this.Body == 170 || this.Body == 327) { Longsword radswd = new Longsword(); radswd.Name = "irradiated longsword"; radswd.Hue = 0x48F; radswd.AosElementDamages.Poison = 50; this.PackItem(radswd); }
+					if (this.Body == 57 || this.Body == 168 || this.Body == 170) { WoodenShield radshield = new WoodenShield(); radshield.Name = "irradiated shield"; radshield.Hue = 0x48F; radshield.PoisonBonus = 5; this.PackItem(radshield); }
 				}
-				else if ( this is CrystalElemental )
+				else if (this is CrystalElemental)
 				{
-					this.Hue = Utility.RandomList( 0x48D, 0x48E, 0x48F, 0x490, 0x491 );
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Poison, 0 );
-					this.SetDamageType( ResistanceType.Physical, 20 );
-					this.SetDamageType( ResistanceType.Energy, 80 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0x48D, 0x48E, 0x48F, 0x490, 0x491);
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Poison, 0);
+					this.SetDamageType(ResistanceType.Physical, 20);
+					this.SetDamageType(ResistanceType.Energy, 80);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is FloatingEye )
+				else if (this is FloatingEye)
 				{
 					this.Hue = 0x494;
 					this.Name = "an eye of the void";
 				}
 			}
 
-			if ( reg.IsPartOf( "the Catacombs of Azerok" ) )
+			if (reg.IsPartOf("the Catacombs of Azerok"))
 			{
-				if ( this is BoneKnight )
+				if (this is BoneKnight)
 				{
 					this.Name = "a rotting skeleton";
 					this.Hue = 0xB97;
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Physical, 60 );
-					this.SetDamageType( ResistanceType.Energy, 0 );
-					this.SetDamageType( ResistanceType.Poison, 40 );
-					this.Body = Utility.RandomList( 57, 50, 56 );
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Physical, 60);
+					this.SetDamageType(ResistanceType.Energy, 0);
+					this.SetDamageType(ResistanceType.Poison, 40);
+					this.Body = Utility.RandomList(57, 50, 56);
 
 					List<Item> belongings = new List<Item>();
-					foreach( Item i in this.Backpack.Items )
+					foreach (Item i in this.Backpack.Items)
 					{
 						belongings.Add(i);
 					}
-					foreach ( Item stuff in belongings )
+					foreach (Item stuff in belongings)
 					{
 						stuff.Delete();
 					}
 
-					GenerateLoot( true );
+					GenerateLoot(true);
 
-					if ( Utility.Random( 4 ) == 1 )
+					if (Utility.Random(4) == 1)
 					{
 						BaseArmor armor = null;
 
-						switch ( Utility.Random( 5 ) )
+						switch (Utility.Random(5))
 						{
-							case 0: armor = new BoneArms();		break;
-							case 1: armor = new BoneChest();	break;
-							case 2: armor = new BoneGloves();	break;
-							case 3: armor = new BoneLegs();		break;
-							case 4: armor = new BoneHelm();		break;
+							case 0: armor = new BoneArms(); break;
+							case 1: armor = new BoneChest(); break;
+							case 2: armor = new BoneGloves(); break;
+							case 3: armor = new BoneLegs(); break;
+							case 4: armor = new BoneHelm(); break;
 						}
-						if ( armor != null )
+						if (armor != null)
 						{
 							armor.Name = "rotting " + armor.Name;
 							armor.Hue = 0xB97;
 							armor.PoisonBonus = 10;
-							this.PackItem( armor );
+							this.PackItem(armor);
 						}
 					}
 
-					if ( this.Body == 56 || this.Body == 168 ){ BattleAxe radaxe = new BattleAxe(); radaxe.Name = "rusty battle axe"; radaxe.Hue = 0xB97; radaxe.AosElementDamages.Poison=50; this.PackItem( radaxe ); }
-					if ( this.Body == 57 ){ Scimitar radsim = new Scimitar(); radsim.Name = "rusty scimitar"; radsim.Hue = 0xB97;	radsim.AosElementDamages.Poison=50; this.PackItem( radsim ); }
-					if ( this.Body == 170 || this.Body == 327 ){ Longsword radswd = new Longsword(); radswd.Name = "rusty longsword"; radswd.Hue = 0xB97;	radswd.AosElementDamages.Poison=50; this.PackItem( radswd ); }
-					if ( this.Body == 57 || this.Body == 168 || this.Body == 170 ){ WoodenShield radshield = new WoodenShield(); radshield.Name = "rotting shield"; radshield.Hue = 0xB97; radshield.PoisonBonus = 5; this.PackItem( radshield ); }
+					if (this.Body == 56 || this.Body == 168) { BattleAxe radaxe = new BattleAxe(); radaxe.Name = "rusty battle axe"; radaxe.Hue = 0xB97; radaxe.AosElementDamages.Poison = 50; this.PackItem(radaxe); }
+					if (this.Body == 57) { Scimitar radsim = new Scimitar(); radsim.Name = "rusty scimitar"; radsim.Hue = 0xB97; radsim.AosElementDamages.Poison = 50; this.PackItem(radsim); }
+					if (this.Body == 170 || this.Body == 327) { Longsword radswd = new Longsword(); radswd.Name = "rusty longsword"; radswd.Hue = 0xB97; radswd.AosElementDamages.Poison = 50; this.PackItem(radswd); }
+					if (this.Body == 57 || this.Body == 168 || this.Body == 170) { WoodenShield radshield = new WoodenShield(); radshield.Name = "rotting shield"; radshield.Hue = 0xB97; radshield.PoisonBonus = 5; this.PackItem(radshield); }
 				}
 			}
 
-			if ( reg.IsPartOf( "the Tower of Brass" ) )
+			if (reg.IsPartOf("the Tower of Brass"))
 			{
-				if ( this is BloodDemon )
+				if (this is BloodDemon)
 				{
 					this.Hue = 0x480;
 					this.Body = 9;
-					switch ( Utility.RandomMinMax( 0, 5 ) )
+					switch (Utility.RandomMinMax(0, 5))
 					{
-						case 0: this.Title = "the ice daemon";			break;
-						case 1: this.Title = "the daemon of ice";		break;
-						case 2: this.Title = "of the icy veil";			break;
-						case 3: this.Title = "of the frozen void";		break;
-						case 4: this.Title = "of the frozen wastes";	break;
-						case 5: this.Title = "of the icy depths";		break;
+						case 0: this.Title = "the ice daemon"; break;
+						case 1: this.Title = "the daemon of ice"; break;
+						case 2: this.Title = "of the icy veil"; break;
+						case 3: this.Title = "of the frozen void"; break;
+						case 4: this.Title = "of the frozen wastes"; break;
+						case 5: this.Title = "of the icy depths"; break;
 					}
 				}
-				else if ( this is CrystalElemental )
+				else if (this is CrystalElemental)
 				{
-					this.Hue = Utility.RandomList( 0x54B, 0x54C, 0x54D, 0x54E, 0x54F, 0x550 );
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 50 );
-					this.SetDamageType( ResistanceType.Poison, 0 );
-					this.SetDamageType( ResistanceType.Physical, 50 );
-					this.SetDamageType( ResistanceType.Energy, 0 );
-					this.AddItem( new LightSource() );
+					this.Hue = Utility.RandomList(0x54B, 0x54C, 0x54D, 0x54E, 0x54F, 0x550);
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 50);
+					this.SetDamageType(ResistanceType.Poison, 0);
+					this.SetDamageType(ResistanceType.Physical, 50);
+					this.SetDamageType(ResistanceType.Energy, 0);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is Brigand )
+				else if (this is Brigand)
 				{
-					for ( int i = 0; i < this.Items.Count; ++i )
+					for (int i = 0; i < this.Items.Count; ++i)
 					{
 						Item item = this.Items[i];
 
-						if ( item is Hair || item is Beard )
+						if (item is Hair || item is Beard)
 						{
 							item.Hue = 0x455;
 						}
-						else if ( ( item is BasePants ) || ( item is BaseOuterLegs ) )
+						else if ((item is BasePants) || (item is BaseOuterLegs))
 						{
 							item.Delete();
-							AddItem( new Kilt(Utility.RandomYellowHue()) );
+							AddItem(new Kilt(Utility.RandomYellowHue()));
 						}
-						else if ( item is BaseClothing || item is BaseWeapon || item is BaseArmor || item is BaseTool )
+						else if (item is BaseClothing || item is BaseWeapon || item is BaseArmor || item is BaseTool)
 						{
 							item.Hue = Utility.RandomYellowHue();
 						}
 					}
 
-					if ( this.FindItemOnLayer( Layer.OneHanded ) != null ) { this.FindItemOnLayer( Layer.OneHanded ).Delete(); }
-					if ( this.FindItemOnLayer( Layer.TwoHanded ) != null ) { this.FindItemOnLayer( Layer.TwoHanded ).Delete(); }
+					if (this.FindItemOnLayer(Layer.OneHanded) != null) { this.FindItemOnLayer(Layer.OneHanded).Delete(); }
+					if (this.FindItemOnLayer(Layer.TwoHanded) != null) { this.FindItemOnLayer(Layer.TwoHanded).Delete(); }
 
-					this.AddItem( new Pickaxe() );
-					this.PackItem ( new BrassIngot( Utility.RandomMinMax( 1, 3 ) ) );
+					this.AddItem(new Pickaxe());
+					this.PackItem(new BrassIngot(Utility.RandomMinMax(1, 3)));
 					this.HairHue = 0x455;
 					this.FacialHairHue = 0x455;
 					this.Title = "the miner";
 				}
-				else if ( this is IronCobra )
+				else if (this is IronCobra)
 				{
 					this.Name = "a brass serpent";
 					this.Resource = CraftResource.Brass;
-					this.Hue = CraftResources.GetHue( this.Resource );
+					this.Hue = CraftResources.GetHue(this.Resource);
 				}
 
-				if ( this.Backpack != null && !(this is Brigand) && !(this is GhostWarrior) && !(this is GhostWizard) )
+				if (this.Backpack != null && !(this is Brigand) && !(this is GhostWarrior) && !(this is GhostWizard))
 				{
-					for ( int i = 0; i < this.Items.Count; ++i )
+					for (int i = 0; i < this.Items.Count; ++i)
 					{
 						Item item = this.Items[i];
 
-						if ( item is BaseWeapon )
+						if (item is BaseWeapon)
 						{
 							BaseWeapon iweapon = (BaseWeapon)item;
-							if ( CraftResources.GetType( ResourceMods.SearchResource(item) ) == CraftResourceType.Metal && Utility.RandomMinMax( 1, 20 ) == 1 ){ iweapon.Resource = CraftResource.Brass; }
+							if (CraftResources.GetType(ResourceMods.SearchResource(item)) == CraftResourceType.Metal && Utility.RandomMinMax(1, 20) == 1) { iweapon.Resource = CraftResource.Brass; }
 							else { item.Hue = Utility.RandomYellowHue(); }
 						}
-						else if ( item is BaseArmor )
+						else if (item is BaseArmor)
 						{
 							BaseArmor iarmor = (BaseArmor)item;
-							if ( CraftResources.GetType( ResourceMods.SearchResource(item) ) == CraftResourceType.Metal && Utility.RandomMinMax( 1, 20 ) == 1 ){ iarmor.Resource = CraftResource.Brass; }
+							if (CraftResources.GetType(ResourceMods.SearchResource(item)) == CraftResourceType.Metal && Utility.RandomMinMax(1, 20) == 1) { iarmor.Resource = CraftResource.Brass; }
 							else { item.Hue = Utility.RandomYellowHue(); }
 						}
-						else if ( ( item is BasePants ) || ( item is BaseOuterLegs ) )
+						else if ((item is BasePants) || (item is BaseOuterLegs))
 						{
 							item.Delete();
-							AddItem( new Kilt(Utility.RandomYellowHue()) );
+							AddItem(new Kilt(Utility.RandomYellowHue()));
 						}
-						else if ( item is BaseClothing || item is BaseTool )
+						else if (item is BaseClothing || item is BaseTool)
 						{
 							item.Hue = Utility.RandomYellowHue();
 						}
 					}
 
 					List<Item> brasses = new List<Item>();
-					foreach( Item i in this.Backpack.Items )
+					foreach (Item i in this.Backpack.Items)
 					{
-						if ( i is BaseWeapon && Utility.RandomMinMax( 1, 20 ) == 1 )
+						if (i is BaseWeapon && Utility.RandomMinMax(1, 20) == 1)
 						{
 							BaseWeapon iweapon = (BaseWeapon)i;
-							if ( CraftResources.GetType( ResourceMods.SearchResource(i) ) == CraftResourceType.Metal ){ iweapon.Resource = CraftResource.Brass; }
+							if (CraftResources.GetType(ResourceMods.SearchResource(i)) == CraftResourceType.Metal) { iweapon.Resource = CraftResource.Brass; }
 						}
-						else if ( i is BaseArmor && Utility.RandomMinMax( 1, 20 ) == 1 )
+						else if (i is BaseArmor && Utility.RandomMinMax(1, 20) == 1)
 						{
 							BaseArmor iarmor = (BaseArmor)i;
-							if ( CraftResources.GetType( ResourceMods.SearchResource(i) ) == CraftResourceType.Metal ){ iarmor.Resource = CraftResource.Brass; }
+							if (CraftResources.GetType(ResourceMods.SearchResource(i)) == CraftResourceType.Metal) { iarmor.Resource = CraftResource.Brass; }
 						}
-						else if ( i is IronIngot )
+						else if (i is IronIngot)
 						{
 							brasses.Add(i);
 						}
 					}
-					foreach ( Item brs in brasses )
+					foreach (Item brs in brasses)
 					{
-						this.PackItem ( new BrassIngot( brs.Amount ) );
+						this.PackItem(new BrassIngot(brs.Amount));
 						brs.Delete();
 					}
 				}
 			}
-			if ( reg.IsPartOf( "the Castle of Dracula" ) )
+			if (reg.IsPartOf("the Castle of Dracula"))
 			{
-				if ( this is OrcCaptain )
+				if (this is OrcCaptain)
 				{
 					this.Title = "the orc miner";
 					this.Body = 17;
 
 					List<Item> belongings = new List<Item>();
-					foreach( Item i in this.Backpack.Items )
+					foreach (Item i in this.Backpack.Items)
 					{
 						belongings.Add(i);
 					}
-					foreach ( Item stuff in belongings )
+					foreach (Item stuff in belongings)
 					{
 						stuff.Delete();
 					}
 
-					switch ( Utility.RandomMinMax( 0, 1 ) )
+					switch (Utility.RandomMinMax(0, 1))
 					{
-						case 0: this.PackItem( new Pickaxe() ); break;
-						case 1: this.PackItem( new Spade() ); break;
+						case 0: this.PackItem(new Pickaxe()); break;
+						case 1: this.PackItem(new Spade()); break;
 					}
 
-					this.PackItem ( new IronOre( Utility.RandomMinMax( 1, 3 ) ) );
+					this.PackItem(new IronOre(Utility.RandomMinMax(1, 3)));
 
-					if ( Utility.RandomMinMax( 1, 10 ) > 3 )
+					if (Utility.RandomMinMax(1, 10) > 3)
 					{
-						switch ( Utility.RandomMinMax( 0, 5 ) )
+						switch (Utility.RandomMinMax(0, 5))
 						{
-							case 0: this.PackItem( new BreadLoaf( Utility.RandomMinMax( 1, 3 ) ) ); break;
-							case 1: this.PackItem( new CheeseWheel( Utility.RandomMinMax( 1, 3 ) ) ); break;
-							case 2: this.PackItem( new Ribs( Utility.RandomMinMax( 1, 3 ) ) ); break;
-							case 3: this.PackItem( new Apple( Utility.RandomMinMax( 1, 3 ) ) ); break;
-							case 4: this.PackItem( new CookedBird( Utility.RandomMinMax( 1, 3 ) ) ); break;
-							case 5: this.PackItem( new LambLeg( Utility.RandomMinMax( 1, 3 ) ) ); break;
+							case 0: this.PackItem(new BreadLoaf(Utility.RandomMinMax(1, 3))); break;
+							case 1: this.PackItem(new CheeseWheel(Utility.RandomMinMax(1, 3))); break;
+							case 2: this.PackItem(new Ribs(Utility.RandomMinMax(1, 3))); break;
+							case 3: this.PackItem(new Apple(Utility.RandomMinMax(1, 3))); break;
+							case 4: this.PackItem(new CookedBird(Utility.RandomMinMax(1, 3))); break;
+							case 5: this.PackItem(new LambLeg(Utility.RandomMinMax(1, 3))); break;
 						}
 					}
-					if ( Utility.RandomMinMax( 1, 10 ) > 3 )
+					if (Utility.RandomMinMax(1, 10) > 3)
 					{
-						switch ( Utility.RandomMinMax( 0, 4 ) )
+						switch (Utility.RandomMinMax(0, 4))
 						{
-							case 0: this.PackItem( new BeverageBottle( BeverageType.Ale ) ); break;
-							case 1: this.PackItem( new BeverageBottle( BeverageType.Wine ) ); break;
-							case 2: this.PackItem( new BeverageBottle( BeverageType.Liquor ) ); break;
-							case 3: this.PackItem( new Jug( BeverageType.Cider ) ); break;
-							case 4: this.PackItem( new Pitcher( BeverageType.Water ) ); break;
+							case 0: this.PackItem(new BeverageBottle(BeverageType.Ale)); break;
+							case 1: this.PackItem(new BeverageBottle(BeverageType.Wine)); break;
+							case 2: this.PackItem(new BeverageBottle(BeverageType.Liquor)); break;
+							case 3: this.PackItem(new Jug(BeverageType.Cider)); break;
+							case 4: this.PackItem(new Pitcher(BeverageType.Water)); break;
 						}
 					}
-					if ( Utility.RandomMinMax( 1, 10 ) > 3 )
+					if (Utility.RandomMinMax(1, 10) > 3)
 					{
-						switch ( Utility.RandomMinMax( 0, 2 ) )
+						switch (Utility.RandomMinMax(0, 2))
 						{
-							case 0: this.PackItem( new Torch() ); break;
-							case 1: this.PackItem( new Candle() ); break;
-							case 2: this.PackItem( new Lantern() ); break;
+							case 0: this.PackItem(new Torch()); break;
+							case 1: this.PackItem(new Candle()); break;
+							case 2: this.PackItem(new Lantern()); break;
 						}
 					}
 				}
-				else if ( this is BoneKnight && this.X >= 6978 && this.Y >= 1670 && this.X <= 6998 && this.Y <= 1697 )
+				else if (this is BoneKnight && this.X >= 6978 && this.Y >= 1670 && this.X <= 6998 && this.Y <= 1697)
 				{
 					this.Name = "a skeletal jailor";
 				}
-				else if ( this is LivingStoneStatue )
+				else if (this is LivingStoneStatue)
 				{
 					this.Name = "a giant statue";
 					this.Body = 325;
 					this.Hue = 0x847;
-					BeefUp( this, 3 );
+					BeefUp(this, 3);
 				}
-				else if ( this is LivingIronStatue )
+				else if (this is LivingIronStatue)
 				{
 					this.Hue = 0x6DF;
 				}
 			}
-			if ( reg.IsPartOf( "Stonegate Castle" ) )
+			if (reg.IsPartOf("Stonegate Castle"))
 			{
-				if ( this is Daemon && this.X >= 6512 && this.X <= 6551 && this.Y >= 2782 && this.Y <= 2836 )
+				if (this is Daemon && this.X >= 6512 && this.X <= 6551 && this.Y >= 2782 && this.Y <= 2836)
 				{
 					this.Name = "Balinor";
 					this.Title = "the Guardian of Stonegate";
@@ -3314,219 +3363,219 @@ namespace Server.Mobiles
 					this.Body = 40;
 					this.BaseSoundID = 357;
 				}
-				else if ( this is Daemon && this.X >= 6756 && this.X <= 6878 && this.Y>= 2464 && this.Y<= 2544 )
+				else if (this is Daemon && this.X >= 6756 && this.X <= 6878 && this.Y >= 2464 && this.Y <= 2544)
 				{
-					if ( Utility.RandomMinMax( 1, 4 ) == 1 )
+					if (Utility.RandomMinMax(1, 4) == 1)
 					{
 						BaseArmor armor = null;
 
-						switch ( Utility.Random( 5 ) )
+						switch (Utility.Random(5))
 						{
-							case 0: armor = new BoneArms();		break;
-							case 1: armor = new BoneChest();	break;
-							case 2: armor = new BoneGloves();	break;
-							case 3: armor = new BoneLegs();		break;
-							case 4: armor = new BoneHelm();		break;
+							case 0: armor = new BoneArms(); break;
+							case 1: armor = new BoneChest(); break;
+							case 2: armor = new BoneGloves(); break;
+							case 3: armor = new BoneLegs(); break;
+							case 4: armor = new BoneHelm(); break;
 						}
-						if ( armor != null )
+						if (armor != null)
 						{
 							armor.Resource = CraftResource.DevilSkeletal;
-							BaseRunicTool.ApplyAttributesTo( armor, false, 1000, Utility.RandomMinMax( 4, 8 ), 50, 125 );
-							this.PackItem( armor );
+							BaseRunicTool.ApplyAttributesTo(armor, false, 1000, Utility.RandomMinMax(4, 8), 50, 125);
+							this.PackItem(armor);
 						}
 					}
 				}
-				else if ( this is CrystalElemental )
+				else if (this is CrystalElemental)
 				{
 					this.Name = "a gem elemental";
-					this.AddLoot( LootPack.Gems, Utility.RandomMinMax( 7, 12 ) );
-					this.Hue = Utility.RandomList( 0x48D, 0x48E, 0x48F, 0x490, 0x491 );
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Poison, 0 );
-					this.SetDamageType( ResistanceType.Physical, 20 );
-					this.SetDamageType( ResistanceType.Energy, 80 );
-					this.AddItem( new LightSource() );
+					this.AddLoot(LootPack.Gems, Utility.RandomMinMax(7, 12));
+					this.Hue = Utility.RandomList(0x48D, 0x48E, 0x48F, 0x490, 0x491);
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Poison, 0);
+					this.SetDamageType(ResistanceType.Physical, 20);
+					this.SetDamageType(ResistanceType.Energy, 80);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is MonstrousSpider )
+				else if (this is MonstrousSpider)
 				{
 					this.Name = "an ash crawler";
 					this.Hue = 0x774;
 				}
-				else if ( this is CaveLizard )
+				else if (this is CaveLizard)
 				{
 					this.Name = "a stone lizard";
 				}
-				else if ( this is MinotaurScout )
+				else if (this is MinotaurScout)
 				{
 					this.Name = "a minotaur berserker";
 				}
-				else if ( this is SeaTroll )
+				else if (this is SeaTroll)
 				{
 					this.Name = "a deep water troll";
 				}
-				else if ( this is OrcishLord )
+				else if (this is OrcishLord)
 				{
 					this.Title = "an orc barbarian";
 				}
-				else if ( this is BoneKnight )
+				else if (this is BoneKnight)
 				{
 					this.Name = "a burnt skeleton";
 					this.Hue = 0xA78;
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 60 );
-					this.SetDamageType( ResistanceType.Physical, 40 );
-					this.SetDamageType( ResistanceType.Energy, 0 );
-					this.SetDamageType( ResistanceType.Poison, 0 );
-					this.Body = Utility.RandomList( 57, 50, 56 );
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 60);
+					this.SetDamageType(ResistanceType.Physical, 40);
+					this.SetDamageType(ResistanceType.Energy, 0);
+					this.SetDamageType(ResistanceType.Poison, 0);
+					this.Body = Utility.RandomList(57, 50, 56);
 
 					List<Item> belongings = new List<Item>();
-					foreach( Item i in this.Backpack.Items )
+					foreach (Item i in this.Backpack.Items)
 					{
 						belongings.Add(i);
 					}
-					foreach ( Item stuff in belongings )
+					foreach (Item stuff in belongings)
 					{
 						stuff.Delete();
 					}
 
-					GenerateLoot( true );
+					GenerateLoot(true);
 
-					if ( this.Body == 50 || this.Body == 57 || ( this.Body == 56 && Utility.Random( 4 ) == 1 ) )
+					if (this.Body == 50 || this.Body == 57 || (this.Body == 56 && Utility.Random(4) == 1))
 					{
 						BaseArmor armor = null;
 
-						switch ( Utility.Random( 5 ) )
+						switch (Utility.Random(5))
 						{
-							case 0: armor = new BoneArms();		break;
-							case 1: armor = new BoneChest();	break;
-							case 2: armor = new BoneGloves();	break;
-							case 3: armor = new BoneLegs();		break;
-							case 4: armor = new BoneHelm();		break;
+							case 0: armor = new BoneArms(); break;
+							case 1: armor = new BoneChest(); break;
+							case 2: armor = new BoneGloves(); break;
+							case 3: armor = new BoneLegs(); break;
+							case 4: armor = new BoneHelm(); break;
 						}
-						if ( armor != null )
+						if (armor != null)
 						{
 							armor.Name = "burnt " + armor.Name;
 							armor.Hue = 0xA78;
-							armor.FireBonus = 10; 
-							this.PackItem( armor );
+							armor.FireBonus = 10;
+							this.PackItem(armor);
 						}
 					}
 
-					if ( this.Body == 56 || this.Body == 168 ){ BattleAxe radaxe = new BattleAxe(); radaxe.Name = "burnt battle axe"; radaxe.Hue = 0xA78; radaxe.AosElementDamages.Fire=50; this.PackItem( radaxe ); }
-					if ( this.Body == 57 ){ Scimitar radsim = new Scimitar(); radsim.Name = "burnt scimitar"; radsim.Hue = 0xA78;	radsim.AosElementDamages.Fire=50; this.PackItem( radsim ); }
-					if ( this.Body == 170 || this.Body == 327 ){ Longsword radswd = new Longsword(); radswd.Name = "burnt longsword"; radswd.Hue = 0xA78;	radswd.AosElementDamages.Fire=50; this.PackItem( radswd ); }
-					if ( this.Body == 57 || this.Body == 168 || this.Body == 170 ){ WoodenShield radshield = new WoodenShield(); radshield.Name = "burnt shield"; radshield.Hue = 0xA78; radshield.FireBonus = 5; this.PackItem( radshield ); }
+					if (this.Body == 56 || this.Body == 168) { BattleAxe radaxe = new BattleAxe(); radaxe.Name = "burnt battle axe"; radaxe.Hue = 0xA78; radaxe.AosElementDamages.Fire = 50; this.PackItem(radaxe); }
+					if (this.Body == 57) { Scimitar radsim = new Scimitar(); radsim.Name = "burnt scimitar"; radsim.Hue = 0xA78; radsim.AosElementDamages.Fire = 50; this.PackItem(radsim); }
+					if (this.Body == 170 || this.Body == 327) { Longsword radswd = new Longsword(); radswd.Name = "burnt longsword"; radswd.Hue = 0xA78; radswd.AosElementDamages.Fire = 50; this.PackItem(radswd); }
+					if (this.Body == 57 || this.Body == 168 || this.Body == 170) { WoodenShield radshield = new WoodenShield(); radshield.Name = "burnt shield"; radshield.Hue = 0xA78; radshield.FireBonus = 5; this.PackItem(radshield); }
 				}
 			}
-			if ( reg.IsPartOf( "the Ancient Elven Mine" ) || reg.IsPartOf( "the Undersea Pass" ) )
+			if (reg.IsPartOf("the Ancient Elven Mine") || reg.IsPartOf("the Undersea Pass"))
 			{
-				if ( this is ShamanicCyclops )
+				if (this is ShamanicCyclops)
 				{
-					this.Name = NameList.RandomName( "giant" );
+					this.Name = NameList.RandomName("giant");
 					this.Title = "the warlord";
 				}
-				if ( this is Urk )
+				if (this is Urk)
 				{
 					this.Hue = 0x8A4;
 
-					MorphingTime.RemoveMyClothes( this );
+					MorphingTime.RemoveMyClothes(this);
 
 					Item helm = new WornHumanDeco();
-						helm.Name = "orcish face";
-						helm.ItemID = 0x141B;
-						helm.Hue = 0x8A4;
-						helm.Layer = Layer.Helm;
-						AddItem( helm );
+					helm.Name = "orcish face";
+					helm.ItemID = 0x141B;
+					helm.Hue = 0x8A4;
+					helm.Layer = Layer.Helm;
+					AddItem(helm);
 
 					Item boots = new Boots();
-						boots.Name = "orcish boots";
-						boots.Hue = 0x97D;
-						AddItem( boots );
+					boots.Name = "orcish boots";
+					boots.Hue = 0x97D;
+					AddItem(boots);
 
-					int DressUpAs = Utility.RandomMinMax( 1, 4 );
+					int DressUpAs = Utility.RandomMinMax(1, 4);
 
-					if ( DressUpAs == 1 )
+					if (DressUpAs == 1)
 					{
 						LeatherArms drowarms = new LeatherArms();
-							drowarms.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ drowarms.LootType = LootType.Blessed; }
-							drowarms.Hue = 0x966;
-							AddItem( drowarms );
+						drowarms.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { drowarms.LootType = LootType.Blessed; }
+						drowarms.Hue = 0x966;
+						AddItem(drowarms);
 
 						LeatherChest drowchest = new LeatherChest();
-							drowchest.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ drowchest.LootType = LootType.Blessed; }
-							drowchest.Hue = 0x966;
-							AddItem( drowchest );
+						drowchest.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { drowchest.LootType = LootType.Blessed; }
+						drowchest.Hue = 0x966;
+						AddItem(drowchest);
 
 						LeatherGloves drowgloves = new LeatherGloves();
-							drowgloves.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ drowgloves.LootType = LootType.Blessed; }
-							drowgloves.Hue = 0x966;
-							AddItem( drowgloves );
+						drowgloves.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { drowgloves.LootType = LootType.Blessed; }
+						drowgloves.Hue = 0x966;
+						AddItem(drowgloves);
 
 						LeatherGorget drowgorget = new LeatherGorget();
-							drowgorget.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ drowgorget.LootType = LootType.Blessed; }
-							drowgorget.Hue = 0x966;
-							AddItem( drowgorget );
+						drowgorget.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { drowgorget.LootType = LootType.Blessed; }
+						drowgorget.Hue = 0x966;
+						AddItem(drowgorget);
 
 						LeatherLegs drowlegs = new LeatherLegs();
-							drowlegs.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ drowlegs.LootType = LootType.Blessed; }
-							drowlegs.Hue = 0x966;
-							AddItem( drowlegs );
+						drowlegs.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { drowlegs.LootType = LootType.Blessed; }
+						drowlegs.Hue = 0x966;
+						AddItem(drowlegs);
 					}
-					else if ( DressUpAs == 2 )
+					else if (DressUpAs == 2)
 					{
 						BoneChest bonechest = new BoneChest();
-							bonechest.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ bonechest.LootType = LootType.Blessed; }
-							bonechest.Hue = 0x966;
-							AddItem( bonechest );
+						bonechest.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { bonechest.LootType = LootType.Blessed; }
+						bonechest.Hue = 0x966;
+						AddItem(bonechest);
 
 						BoneArms bonearms = new BoneArms();
-							bonearms.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ bonearms.LootType = LootType.Blessed; }
-							bonearms.Hue = 0x966;
-							AddItem( bonearms );
+						bonearms.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { bonearms.LootType = LootType.Blessed; }
+						bonearms.Hue = 0x966;
+						AddItem(bonearms);
 
 						BoneLegs bonelegs = new BoneLegs();
-							bonelegs.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ bonelegs.LootType = LootType.Blessed; }
-							bonelegs.Hue = 0x966;
-							AddItem( bonelegs );
+						bonelegs.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { bonelegs.LootType = LootType.Blessed; }
+						bonelegs.Hue = 0x966;
+						AddItem(bonelegs);
 
 						BoneGloves bonegloves = new BoneGloves();
-							bonegloves.Resource = CraftResource.DrowSkeletal;
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ bonegloves.LootType = LootType.Blessed; }
-							bonegloves.Hue = 0x966;
-							AddItem( bonegloves );
+						bonegloves.Resource = CraftResource.DrowSkeletal;
+						if (Utility.RandomMinMax(1, 10) > 1) { bonegloves.LootType = LootType.Blessed; }
+						bonegloves.Hue = 0x966;
+						AddItem(bonegloves);
 					}
 					else // MINER
 					{
 						LeatherGloves minegloves = new LeatherGloves();
-							minegloves.Name = "miner gloves";
-							minegloves.SkillBonuses.SetValues( 0, SkillName.Mining, 5 );
-							if ( Utility.RandomMinMax( 1, 10 ) > 1 ){ minegloves.LootType = LootType.Blessed; }
-							minegloves.Hue = 0x97D;
-							AddItem( minegloves );
+						minegloves.Name = "miner gloves";
+						minegloves.SkillBonuses.SetValues(0, SkillName.Mining, 5);
+						if (Utility.RandomMinMax(1, 10) > 1) { minegloves.LootType = LootType.Blessed; }
+						minegloves.Hue = 0x97D;
+						AddItem(minegloves);
 
 						Item cloth5 = new LoinCloth();
-							cloth5.Hue = 0x97D;
-							cloth5.Name = "orcish loin cloth";
-							AddItem( cloth5 );
+						cloth5.Hue = 0x97D;
+						cloth5.Name = "orcish loin cloth";
+						AddItem(cloth5);
 
-						AddItem( new Pickaxe() );
+						AddItem(new Pickaxe());
 						this.Title = "the orc miner";
 					}
 
-					if ( DressUpAs < 3 )
+					if (DressUpAs < 3)
 					{
 						BaseWeapon weapon = new BattleAxe();
 
-						switch ( Utility.Random( 28 ))
+						switch (Utility.Random(28))
 						{
 							case 0: weapon = new BattleAxe(); weapon.Name = "battle axe"; break;
 							case 1: weapon = new VikingSword(); weapon.Name = "great sword"; break;
@@ -3562,9 +3611,9 @@ namespace Server.Mobiles
 						weapon.Hue = 0x97D;
 						weapon.MinDamage = weapon.MinDamage + 3;
 						weapon.MaxDamage = weapon.MaxDamage + 5;
-						AddItem( weapon );
+						AddItem(weapon);
 
-						switch ( Utility.RandomMinMax( 0, 5 ) )
+						switch (Utility.RandomMinMax(0, 5))
 						{
 							case 0: this.Title = "the orc warrior"; break;
 							case 1: this.Title = "the orc savage"; break;
@@ -3576,166 +3625,166 @@ namespace Server.Mobiles
 					}
 				}
 			}
-			if ( reg.IsPartOf( "the Caverns of Poseidon" ) )
+			if (reg.IsPartOf("the Caverns of Poseidon"))
 			{
-				if ( this is DeepSeaSerpent )
+				if (this is DeepSeaSerpent)
 				{
 					this.Name = "a great serpent";
 					this.Hue = 0x67;
 					this.Body = 21;
-					switch ( Utility.RandomMinMax( 0, 5 ) )
+					switch (Utility.RandomMinMax(0, 5))
 					{
-						case 0: this.Title = "from the frozen deep";		break;
-						case 1: this.Title = "of the darkest sea";			break;
-						case 2: this.Title = "from the deepest depths";		break;
-						case 3: this.Title = "of the cold sea";				break;
-						case 4: this.Title = "of the icy waves";			break;
-						case 5: this.Title = "of the icy sea";				break;
+						case 0: this.Title = "from the frozen deep"; break;
+						case 1: this.Title = "of the darkest sea"; break;
+						case 2: this.Title = "from the deepest depths"; break;
+						case 3: this.Title = "of the cold sea"; break;
+						case 4: this.Title = "of the icy waves"; break;
+						case 5: this.Title = "of the icy sea"; break;
 					}
-					this.AddItem( new LightSource() );
+					this.AddItem(new LightSource());
 				}
-				else if ( this is JadeSerpent )
+				else if (this is JadeSerpent)
 				{
 					this.Name = "a coldwater serpent";
 					this.Hue = 0x48D;
-					this.SetDamageType( ResistanceType.Cold, 50 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Poison, 0 );
-					this.SetDamageType( ResistanceType.Physical, 50 );
-					this.SetDamageType( ResistanceType.Energy, 0 );
-					this.AddItem( new LightSource() );
+					this.SetDamageType(ResistanceType.Cold, 50);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Poison, 0);
+					this.SetDamageType(ResistanceType.Physical, 50);
+					this.SetDamageType(ResistanceType.Energy, 0);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is PirateLand || this is PirateCaptain )
+				else if (this is PirateLand || this is PirateCaptain)
 				{
-					for ( int i = 0; i < this.Items.Count; ++i )
+					for (int i = 0; i < this.Items.Count; ++i)
 					{
 						Item item = this.Items[i];
 
-						if ( item is BaseClothing || item is BaseArmor )
+						if (item is BaseClothing || item is BaseArmor)
 						{
 							item.Hue = Utility.RandomBlueHue();
 						}
 					}
 				}
-				else if ( this is SeaGiant )
+				else if (this is SeaGiant)
 				{
-					this.Name = NameList.RandomName( "drakkul" );
+					this.Name = NameList.RandomName("drakkul");
 					this.Title = "the gate keeper";
 				}
-				else if ( this is SwampTentacle )
+				else if (this is SwampTentacle)
 				{
 					this.Name = "a kelp fiend";
 				}
-				else if ( this is BloodSnake )
+				else if (this is BloodSnake)
 				{
 					this.Name = "a sea viper";
 					this.Hue = 0x555;
 				}
-				else if ( this is LichLord )
+				else if (this is LichLord)
 				{
 					this.Title = "the lich of the deep";
 					this.Hue = 0x48D;
-					this.AddItem( new LightSource() );
+					this.AddItem(new LightSource());
 				}
-				else if ( this is CrystalElemental )
+				else if (this is CrystalElemental)
 				{
 					this.Name = "a nox elemental";
 					this.Hue = 0x48F;
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Poison, 50 );
-					this.SetDamageType( ResistanceType.Physical, 50 );
-					this.SetDamageType( ResistanceType.Energy, 0 );
-					this.AddItem( new LightSource() );
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Poison, 50);
+					this.SetDamageType(ResistanceType.Physical, 50);
+					this.SetDamageType(ResistanceType.Energy, 0);
+					this.AddItem(new LightSource());
 				}
-				else if ( this is Devil )
+				else if (this is Devil)
 				{
 					this.Hue = 0x48F;
-					this.AddItem( new LightSource() );
-					this.SetDamageType( ResistanceType.Cold, 0 );
-					this.SetDamageType( ResistanceType.Fire, 0 );
-					this.SetDamageType( ResistanceType.Poison, 60 );
-					this.SetDamageType( ResistanceType.Physical, 40 );
-					this.SetDamageType( ResistanceType.Energy, 0 );
-					switch ( Utility.RandomMinMax( 0, 5 ) )
+					this.AddItem(new LightSource());
+					this.SetDamageType(ResistanceType.Cold, 0);
+					this.SetDamageType(ResistanceType.Fire, 0);
+					this.SetDamageType(ResistanceType.Poison, 60);
+					this.SetDamageType(ResistanceType.Physical, 40);
+					this.SetDamageType(ResistanceType.Energy, 0);
+					switch (Utility.RandomMinMax(0, 5))
 					{
-						case 0: this.Title = "the nox devil";			break;
-						case 1: this.Title = "the shard devil";			break;
-						case 2: this.Title = "of the poison veil";		break;
-						case 3: this.Title = "of the venomous void";	break;
-						case 4: this.Title = "of the foul wastes";		break;
-						case 5: this.Title = "of the crystal depths";	break;
+						case 0: this.Title = "the nox devil"; break;
+						case 1: this.Title = "the shard devil"; break;
+						case 2: this.Title = "of the poison veil"; break;
+						case 3: this.Title = "of the venomous void"; break;
+						case 4: this.Title = "of the foul wastes"; break;
+						case 5: this.Title = "of the crystal depths"; break;
 					}
 				}
-				else if ( this is BoneKnight )
+				else if (this is BoneKnight)
 				{
 					this.Name = "a skeletal pirate";
 				}
-				else if ( this is AquaticGhoul )
+				else if (this is AquaticGhoul)
 				{
 					this.Name = "a ghoulish pirate";
 				}
 			}
 
-			if ( reg.IsPartOf( "the Vault of the Black Knight" ) )
+			if (reg.IsPartOf("the Vault of the Black Knight"))
 			{
-				if ( this is LivingShadowIronStatue ){ this.Body = 485; }
-				if ( this is LivingGoldStatue ){ this.Body = 485; }
-				if ( this is LivingBronzeStatue ){ this.Body = 485; }
+				if (this is LivingShadowIronStatue) { this.Body = 485; }
+				if (this is LivingGoldStatue) { this.Body = 485; }
+				if (this is LivingBronzeStatue) { this.Body = 485; }
 			}
 
-			if ( this is BasePerson || this is BaseVendor || m_bSummoned || m_bControlled )
+			if (this is BasePerson || this is BaseVendor || m_bSummoned || m_bControlled)
 			{
 				Heat = 0;
 			}
 
-			if ( reg.IsPartOf( "the Barge of the Dead" ) && !(this is BaseVendor) ) // NO STOWAWAYS //////////////
+			if (reg.IsPartOf("the Barge of the Dead") && !(this is BaseVendor)) // NO STOWAWAYS //////////////
 			{
 				this.Delete();
 			}
 
-			if ( Heat >= 0 && !IsParagon )
+			if (Heat >= 0 && !IsParagon)
 			{
-				BeefUp( this, Heat );
+				BeefUp(this, Heat);
 			}
 
 			ExtraHP();
 
-			LootPackChange.MakeCoins( this.Backpack, this );
+			LootPackChange.MakeCoins(this.Backpack, this);
 
-			if ( this.Body != 400 && this.Body != 401 ){ this.TithingPoints = this.Body; } // STORE THE BODY VALUE IN AN UNUSED VARIABLE FOR NECRO ANIMATE
+			if (this.Body != 400 && this.Body != 401) { this.TithingPoints = this.Body; } // STORE THE BODY VALUE IN AN UNUSED VARIABLE FOR NECRO ANIMATE
 
 			NameColor();
 			ProcessClothing();
 		}
 
-		public override ApplyPoisonResult ApplyPoison( Mobile from, Poison poison )
+		public override ApplyPoisonResult ApplyPoison(Mobile from, Poison poison)
 		{
-			if ( !Alive || IsDeadPet )
+			if (!Alive || IsDeadPet)
 				return ApplyPoisonResult.Immune;
 
-			if ( Spells.Necromancy.EvilOmenSpell.TryEndEffect( this ) )
-				poison = PoisonImpl.IncreaseLevel( poison );
+			if (Spells.Necromancy.EvilOmenSpell.TryEndEffect(this))
+				poison = PoisonImpl.IncreaseLevel(poison);
 
-			ApplyPoisonResult result = base.ApplyPoison( from, poison );
+			ApplyPoisonResult result = base.ApplyPoison(from, poison);
 
-			if ( from != null && result == ApplyPoisonResult.Poisoned && PoisonTimer is PoisonImpl.PoisonTimer )
+			if (from != null && result == ApplyPoisonResult.Poisoned && PoisonTimer is PoisonImpl.PoisonTimer)
 				(PoisonTimer as PoisonImpl.PoisonTimer).From = from;
 
 			return result;
 		}
 
-		public override bool CheckPoisonImmunity( Mobile from, Poison poison )
+		public override bool CheckPoisonImmunity(Mobile from, Poison poison)
 		{
-			if ( base.CheckPoisonImmunity( from, poison ) )
+			if (base.CheckPoisonImmunity(from, poison))
 				return true;
 
 			Poison p = this.PoisonImmune;
 
-			return ( p != null && p.Level >= poison.Level );
+			return (p != null && p.Level >= poison.Level);
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int Loyalty
 		{
 			get
@@ -3744,11 +3793,11 @@ namespace Server.Mobiles
 			}
 			set
 			{
-				m_Loyalty = Math.Min( Math.Max( value, 0 ), MaxLoyalty );
+				m_Loyalty = Math.Min(Math.Max(value, 0), MaxLoyalty);
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public WayPoint CurrentWayPoint
 		{
 			get
@@ -3761,7 +3810,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public IPoint2D TargetLocation
 		{
 			get
@@ -3774,7 +3823,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		public virtual Mobile ConstantFocus{ get{ return null; } }
+		public virtual Mobile ConstantFocus { get { return null; } }
 
 		public virtual bool DisallowAllMoves
 		{
@@ -3808,23 +3857,24 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public virtual int DamageMin{ get{ return m_DamageMin; } set{ m_DamageMin = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public virtual int DamageMin { get { return m_DamageMin; } set { m_DamageMin = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public virtual int DamageMax{ get{ return m_DamageMax; } set{ m_DamageMax = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public virtual int DamageMax { get { return m_DamageMax; } set { m_DamageMax = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public override int HitsMax
 		{
 			get
 			{
-				if ( m_HitsMax > 0 ) {
-					int value = m_HitsMax + GetStatOffset( StatType.Str );
+				if (m_HitsMax > 0)
+				{
+					int value = m_HitsMax + GetStatOffset(StatType.Str);
 
-					if( value < 1 )
+					if (value < 1)
 						value = 1;
-					else if( value > 65000 )
+					else if (value > 65000)
 						value = 65000;
 
 					return value;
@@ -3834,24 +3884,25 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int HitsMaxSeed
 		{
-			get{ return m_HitsMax; }
-			set{ m_HitsMax = value; }
+			get { return m_HitsMax; }
+			set { m_HitsMax = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public override int StamMax
 		{
 			get
 			{
-				if ( m_StamMax > 0 ) {
-					int value = m_StamMax + GetStatOffset( StatType.Dex );
+				if (m_StamMax > 0)
+				{
+					int value = m_StamMax + GetStatOffset(StatType.Dex);
 
-					if( value < 1 )
+					if (value < 1)
 						value = 1;
-					else if( value > 65000 )
+					else if (value > 65000)
 						value = 65000;
 
 					return value;
@@ -3861,24 +3912,25 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int StamMaxSeed
 		{
-			get{ return m_StamMax; }
-			set{ m_StamMax = value; }
+			get { return m_StamMax; }
+			set { m_StamMax = value; }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public override int ManaMax
 		{
 			get
 			{
-				if ( m_ManaMax > 0 ) {
-					int value = m_ManaMax + GetStatOffset( StatType.Int );
+				if (m_ManaMax > 0)
+				{
+					int value = m_ManaMax + GetStatOffset(StatType.Int);
 
-					if( value < 1 )
+					if (value < 1)
 						value = 1;
-					else if( value > 65000 )
+					else if (value > 65000)
 						value = 65000;
 
 					return value;
@@ -3888,11 +3940,11 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int ManaMaxSeed
 		{
-			get{ return m_ManaMax; }
-			set{ m_ManaMax = value; }
+			get { return m_ManaMax; }
+			set { m_ManaMax = value; }
 		}
 
 		public virtual bool CanOpenDoors
@@ -3926,30 +3978,29 @@ namespace Server.Mobiles
 			BardPacified = false;
 		}
 
-		public override void OnDamage( int amount, Mobile from, bool willKill )
+		public override void OnDamage(int amount, Mobile from, bool willKill)
 		{
-			SlayerEntry undead_creatures = SlayerGroup.GetEntryByName( SlayerName.Silver );
-			if ( undead_creatures.Slays(this) && from is PlayerMobile )
+			if (m_SilverSlayer.Slays(this) && from is PlayerMobile)
 			{
-				Item item = from.FindItemOnLayer( Layer.Helm );
-				if ( item is DeathlyMask )
+				Item item = from.FindItemOnLayer(Layer.Helm);
+				if (item is DeathlyMask)
 				{
 					item.Delete();
 					from.LocalOverheadMessage(Network.MessageType.Emote, 0x3B2, false, "The mask of death has vanished.");
-					from.PlaySound( 0x1F0 );
+					from.PlaySound(0x1F0);
 				}
 			}
 
-			if ( BardPacified && (HitsMax - Hits) * 0.001 > Utility.RandomDouble() )
+			if (BardPacified && (HitsMax - Hits) * 0.001 > Utility.RandomDouble())
 				Unpacify();
 
 			// OCEAN MONSTERS SHOULD NOT GET ARROWS JUST HITTING THEM BECAUSE THEY CANNOT NAVIGATE THE SHORE
 			// SO THEY WILL LEAP AT AN ATTACKER ON SHORE IF THEY GET HURT FROM THEM
-			if ( !(CanOnlyMoveOnSea()) && this.WhisperHue == 999 && this.Z < -2 && from.Z >=0 && from is PlayerMobile && from.InRange( this.Location, 15 ) && from.Alive && from.Map == this.Map && CanSee( from ) && !Server.Mobiles.BasePirate.IsSailor( this ) )
+			if (!(CanOnlyMoveOnSea()) && this.WhisperHue == 999 && this.Z < -2 && from.Z >= 0 && from is PlayerMobile && from.InRange(this.Location, 15) && from.Alive && from.Map == this.Map && CanSee(from) && !Server.Mobiles.BasePirate.IsSailor(this))
 			{
 				this.Home = this.Location; // SO THEY KNOW WHERE TO GO BACK TO
-				from.PlaySound( 0x026 );
-				Effects.SendLocationEffect( from.Location, from.Map, 0x23B2, 16 );
+				from.PlaySound(0x026);
+				Effects.SendLocationEffect(from.Location, from.Map, 0x23B2, 16);
 				this.Location = from.Location;
 				this.Warmode = true;
 				this.Combatant = from;
@@ -3960,56 +4011,56 @@ namespace Server.Mobiles
 
 			int disruptThreshold;
 			//NPCs can use bandages too!
-			if( !Core.AOS )
+			if (!Core.AOS)
 				disruptThreshold = 0;
-			else if( from != null && from.Player )
+			else if (from != null && from.Player)
 				disruptThreshold = 18;
 			else
 				disruptThreshold = 25;
 
-			if( amount > disruptThreshold )
+			if (amount > disruptThreshold)
 			{
-				BandageContext c = BandageContext.GetContext( this );
+				BandageContext c = BandageContext.GetContext(this);
 
-				if( c != null )
+				if (c != null)
 					c.Slip();
 			}
 
-			if( Confidence.IsRegenerating( this ) )
-				Confidence.StopRegenerating( this );
+			if (Confidence.IsRegenerating(this))
+				Confidence.StopRegenerating(this);
 
-			WeightOverloading.FatigueOnDamage( this, amount );
+			WeightOverloading.FatigueOnDamage(this, amount);
 
 			InhumanSpeech speechType = this.SpeechType;
 
-			if ( speechType != null && !willKill )
-				speechType.OnDamage( this, amount );
+			if (speechType != null && !willKill)
+				speechType.OnDamage(this, amount);
 
-			if ( !Summoned && willKill )
+			if (!Summoned && willKill)
 			{
 				Mobile leveler = from;
 
-				if ( leveler is BaseCreature )
+				if (leveler is BaseCreature)
 					leveler = ((BaseCreature)leveler).GetMaster();
 
-				if ( leveler is PlayerMobile )
+				if (leveler is PlayerMobile)
 				{
-					LevelItemManager.CheckItems( leveler, this );
+					LevelItemManager.CheckItems(leveler, this);
 				}
 			}
 
-			if ( willKill && from is PlayerMobile )
-				Timer.DelayCall( TimeSpan.FromSeconds( 10 ), new TimerCallback( ((PlayerMobile) from).RecoverAmmo ) );
+			if (willKill && from is PlayerMobile)
+				Timer.DelayCall(TimeSpan.FromSeconds(10), new TimerCallback(((PlayerMobile)from).RecoverAmmo));
 
-			if ( from != null && from is PlayerMobile && from.Skills.Tracking.Value > 8.33 )
+			if (from != null && from is PlayerMobile && from.Skills.Tracking.Value > 8.33)
 			{
-				double bonus = HunterMarkSystem.GetDamageBonus( from, this );
+				double bonus = HunterMarkSystem.GetDamageBonus(from, this);
 
-				if ( bonus > 1.0 )
+				if (bonus > 1.0)
 				{
-					amount = (int)( amount * bonus );
+					amount = (int)(amount * bonus);
 
-					if ( Utility.RandomDouble() < 0.10 )
+					if (Utility.RandomDouble() < 0.10)
 					{
 						from.CheckSkill(
 							SkillName.Tracking,
@@ -4021,102 +4072,101 @@ namespace Server.Mobiles
 			}
 
 
-			base.OnDamage( amount, from, willKill );
-			
+			base.OnDamage(amount, from, willKill);
+
 			#region KoperPets
 			// KOPERPETS CHANGE: Trigger skill gain
-    		PlayerMobile owner = this.ControlMaster as PlayerMobile;
-			
-    		if (this.Controlled && owner != null)
-    		{
-        		// Call the skill gain system, passing the pet (this) and the attacker
-        		Server.Custom.KoperPets.PetTamingSkillGain.TryTamingGain(this, from);
-    		}
+			PlayerMobile owner = this.ControlMaster as PlayerMobile;
+
+			if (this.Controlled && owner != null)
+			{
+				// Call the skill gain system, passing the pet (this) and the attacker
+				Server.Custom.KoperPets.PetTamingSkillGain.TryTamingGain(this, from);
+			}
 			#endregion
 
 		}
 
-		public virtual void OnDamagedBySpell( Mobile from )
+		public virtual void OnDamagedBySpell(Mobile from)
 		{
-			SlayerEntry undead_creatures = SlayerGroup.GetEntryByName( SlayerName.Silver );
-			if ( undead_creatures.Slays(this) && from is PlayerMobile )
+			if (m_SilverSlayer.Slays(this) && from is PlayerMobile)
 			{
-				Item item = from.FindItemOnLayer( Layer.Helm );
-				if ( item is DeathlyMask )
+				Item item = from.FindItemOnLayer(Layer.Helm);
+				if (item is DeathlyMask)
 				{
 					item.Delete();
 					from.LocalOverheadMessage(Network.MessageType.Emote, 0x3B2, false, "The mask of death has vanished.");
-					from.PlaySound( 0x1F0 );
+					from.PlaySound(0x1F0);
 				}
 			}
 		}
 
-		public virtual void OnHarmfulSpell( Mobile from )
+		public virtual void OnHarmfulSpell(Mobile from)
 		{
 		}
 
 		#region Alter[...]Damage From/To
 
-		public virtual void AlterDamageScalarFrom( Mobile caster, ref double scalar )
+		public virtual void AlterDamageScalarFrom(Mobile caster, ref double scalar)
 		{
 		}
 
-		public virtual void AlterDamageScalarTo( Mobile target, ref double scalar )
+		public virtual void AlterDamageScalarTo(Mobile target, ref double scalar)
 		{
 		}
 
-		public virtual void AlterSpellDamageFrom( Mobile from, ref int damage )
+		public virtual void AlterSpellDamageFrom(Mobile from, ref int damage)
 		{
 		}
 
-		public virtual void AlterSpellDamageTo( Mobile to, ref int damage )
+		public virtual void AlterSpellDamageTo(Mobile to, ref int damage)
 		{
 		}
 
-		public virtual void AlterMeleeDamageFrom( Mobile from, ref int damage )
+		public virtual void AlterMeleeDamageFrom(Mobile from, ref int damage)
 		{
 		}
 
-		public virtual void AlterMeleeDamageTo( Mobile to, ref int damage )
+		public virtual void AlterMeleeDamageTo(Mobile to, ref int damage)
 		{
 		}
 
 		#endregion
 
-		public virtual void CheckReflect( Mobile caster, ref bool reflect )
-        {
+		public virtual void CheckReflect(Mobile caster, ref bool reflect)
+		{
 			// Conan's artifacts increase spell reflection chance
-            int count = ConanSetCount(this);
+			int count = ConanSetCount(this);
 			if (count > 0)
-		    {
-		        int chance = count * 10;
-		  
-		        if (Utility.Random(100) < chance)
-		            reflect = true;
-		    }
-        }
+			{
+				int chance = count * 10;
+
+				if (Utility.Random(100) < chance)
+					reflect = true;
+			}
+		}
 
 		//artifact helpers
 		public static int ConanSetCount(Mobile m)
 		{
-		    int count = 0;
-		
-		    Item helm = m.FindItemOnLayer(Layer.Helm);
-		    Item sword = m.FindItemOnLayer(Layer.TwoHanded) ?? m.FindItemOnLayer(Layer.OneHanded);
-		    Item cloth = m.FindItemOnLayer(Layer.Pants);
-		
-		    if (helm is Artifact_ConansHelm) count++;
-		    if (sword is Artifact_ConansSword) count++;
-		    if (cloth is Artifact_ConansLoinCloth) count++;
-		
-		    return count;
+			int count = 0;
+
+			Item helm = m.FindItemOnLayer(Layer.Helm);
+			Item sword = m.FindItemOnLayer(Layer.TwoHanded) ?? m.FindItemOnLayer(Layer.OneHanded);
+			Item cloth = m.FindItemOnLayer(Layer.Pants);
+
+			if (helm is Artifact_ConansHelm) count++;
+			if (sword is Artifact_ConansSword) count++;
+			if (cloth is Artifact_ConansLoinCloth) count++;
+
+			return count;
 		}
 
 		public ScaleType ResourceScales()
 		{
 			ScaleType scales = ScaleType.Red;
 
-			switch ( Resource )
+			switch (Resource)
 			{
 				case CraftResource.RedScales: scales = ScaleType.Red; break;
 				case CraftResource.YellowScales: scales = ScaleType.Yellow; break;
@@ -4140,7 +4190,7 @@ namespace Server.Mobiles
 		{
 			SkeletalType skeletal = SkeletalType.Brittle;
 
-			switch ( Resource )
+			switch (Resource)
 			{
 				case CraftResource.BrittleSkeletal: skeletal = SkeletalType.Brittle; break;
 				case CraftResource.DrowSkeletal: skeletal = SkeletalType.Drow; break;
@@ -4168,7 +4218,7 @@ namespace Server.Mobiles
 		{
 			WoodType wood = WoodType.Regular;
 
-			switch ( Resource )
+			switch (Resource)
 			{
 				case CraftResource.RegularWood: wood = WoodType.Regular; break;
 				case CraftResource.AshTree: wood = WoodType.Ash; break;
@@ -4194,7 +4244,7 @@ namespace Server.Mobiles
 		{
 			RockType rocks = RockType.Iron;
 
-			switch ( Resource )
+			switch (Resource)
 			{
 				case CraftResource.Iron: rocks = RockType.Iron; break;
 				case CraftResource.DullCopper: rocks = RockType.DullCopper; break;
@@ -4236,7 +4286,7 @@ namespace Server.Mobiles
 		{
 			MetalType metal = MetalType.Iron;
 
-			switch ( Resource )
+			switch (Resource)
 			{
 				case CraftResource.Iron: metal = MetalType.Iron; break;
 				case CraftResource.DullCopper: metal = MetalType.DullCopper; break;
@@ -4263,7 +4313,7 @@ namespace Server.Mobiles
 		{
 			GraniteType granite = GraniteType.Iron;
 
-			switch ( Resource )
+			switch (Resource)
 			{
 				case CraftResource.Iron: granite = GraniteType.Iron; break;
 				case CraftResource.DullCopper: granite = GraniteType.DullCopper; break;
@@ -4286,15 +4336,15 @@ namespace Server.Mobiles
 			return granite;
 		}
 
-		private bool RareItem( string item )
+		private bool RareItem(string item)
 		{
 			bool rare = false;
 
-			if ( item == "skins" )
+			if (item == "skins")
 				rare = true;
-			else if ( item == "rocks" )
+			else if (item == "rocks")
 			{
-				switch ( RockType )
+				switch (RockType)
 				{
 					case RockType.Amethyst: rare = true; break;
 					case RockType.Emerald: rare = true; break;
@@ -4313,28 +4363,28 @@ namespace Server.Mobiles
 					case RockType.Caddellite: rare = true; break;
 				}
 			}
-			else if ( item == "scales" )
+			else if (item == "scales")
 				rare = true;
 
 			return rare;
 		}
 
-		public static bool CanCarve( Corpse corpse )
+		public static bool CanCarve(Corpse corpse)
 		{
 			Mobile m = corpse.m_Owner;
 
-			if ( m is BaseCreature )
+			if (m is BaseCreature)
 			{
 				BaseCreature bc = (BaseCreature)m;
 
-				if ( ( bc.Feathers + bc.Wool + bc.Meat + bc.Hides + bc.Scales + bc.Cloths + bc.Rocks + bc.Skeletal + bc.Skin + bc.Granite + bc.Metal + bc.Wood ) > 0 )
+				if ((bc.Feathers + bc.Wool + bc.Meat + bc.Hides + bc.Scales + bc.Cloths + bc.Rocks + bc.Skeletal + bc.Skin + bc.Granite + bc.Metal + bc.Wood) > 0)
 					return true;
 			}
 
 			return false;
 		}
 
-		public virtual void OnCarve( Mobile from, Corpse corpse, Item with )
+		public virtual void OnCarve(Mobile from, Corpse corpse, Item with)
 		{
 			int feathers = Feathers;
 			int wool = Wool;
@@ -4349,14 +4399,13 @@ namespace Server.Mobiles
 			int metal = Metal;
 			int wood = Wood;
 
-			SlayerEntry giant = SlayerGroup.GetEntryByName( SlayerName.GiantKiller );
 			Mobile frank = corpse.m_Owner;
 
-			if ( from.Backpack.FindItemByType( typeof ( FrankenJournal ) ) != null && !(corpse.VisitedByTaxidermist) && from.Skills[SkillName.Forensics].Value >= Utility.RandomMinMax( 30, 250 ) && giant.Slays(frank) )
+			if (from.Backpack.FindItemByType(typeof(FrankenJournal)) != null && !(corpse.VisitedByTaxidermist) && from.Skills[SkillName.Forensics].Value >= Utility.RandomMinMax(30, 250) && m_GiantHunter.Slays(frank))
 			{
 				Item piece = new FrankenLegLeft(); piece.Delete();
 
-				switch ( Utility.Random( 7 ) )
+				switch (Utility.Random(7))
 				{
 					case 0: piece = new FrankenLegLeft(); from.SendMessage("You sever off the giant's left leg."); break;
 					case 1: piece = new FrankenLegRight(); from.SendMessage("You sever off the giant's right leg."); break;
@@ -4367,462 +4416,462 @@ namespace Server.Mobiles
 					case 6: piece = new FrankenBrain(); from.SendMessage("You remove the giant's fresh brain."); break;
 				}
 
-				if ( piece is FrankenBrain )
+				if (piece is FrankenBrain)
 				{
 					FrankenBrain brain = (FrankenBrain)piece;
 
 					string brainName = frank.Name;
-						if ( frank.Title != "" ){ brainName = brainName + " " + frank.Title; }
+					if (frank.Title != "") { brainName = brainName + " " + frank.Title; }
 
 					brain.BrainSource = brainName;
-					brain.BrainLevel = ( IntelligentAction.GetCreatureLevel( frank ) + 5 ); // TITAN LICHES SEEM TO HAVE LEVEL 96 BRAINS
-						if ( brain.BrainLevel > 100 ){ brain.BrainLevel = 100; }
+					brain.BrainLevel = (IntelligentAction.GetCreatureLevel(frank) + 5); // TITAN LICHES SEEM TO HAVE LEVEL 96 BRAINS
+					if (brain.BrainLevel > 100) { brain.BrainLevel = 100; }
 				}
 
-				from.AddToBackpack( piece );
+				from.AddToBackpack(piece);
 			}
 
-			if ( (feathers == 0 && wool == 0 && rocks == 0 && meat == 0 && skins == 0 && granite == 0 && metal == 0 && wood == 0 && hides == 0 && scales == 0 && skeletal == 0 && cloth == 0) || Summoned || IsBonded || corpse.Animated )
+			if ((feathers == 0 && wool == 0 && rocks == 0 && meat == 0 && skins == 0 && granite == 0 && metal == 0 && wood == 0 && hides == 0 && scales == 0 && skeletal == 0 && cloth == 0) || Summoned || IsBonded || corpse.Animated)
 			{
-				if ( corpse.Animated ) 
-					corpse.SendLocalizedMessageTo( from, 500464 );	// Use this on corpses to carve away meat and hide
+				if (corpse.Animated)
+					corpse.SendLocalizedMessageTo(from, 500464);    // Use this on corpses to carve away meat and hide
 				else
-					from.SendLocalizedMessage( 500485 ); // You see nothing useful to carve from the corpse.
+					from.SendLocalizedMessage(500485); // You see nothing useful to carve from the corpse.
 			}
 			else
 			{
-				int resource = 2 * ( MyServerSettings.Resources() - 1 );
+				int resource = 2 * (MyServerSettings.Resources() - 1);
 
-				if ( feathers > 0 && !RareItem( "feathers" ) ){ feathers += resource; }
-				if ( hides > 0 && !RareItem( "hides" ) ){ hides += resource; }
-				if ( meat > 0 && !RareItem( "meat" ) ){ meat += resource; }
-				if ( scales > 0 && !RareItem( "scales" ) ){ scales += resource; }
-				if ( cloth > 0 && !RareItem( "cloth" ) ){ cloth += resource; }
-				if ( rocks > 0 && !RareItem( "rocks" ) ){ rocks += resource; }
-				if ( skeletal > 0 && !RareItem( "skeletal" ) ){ skeletal += resource; }
-				if ( skins > 0 && !RareItem( "skins" ) ){ skins += resource; }
-				if ( granite > 0 && !RareItem( "granite" ) ){ granite += resource; }
-				if ( metal > 0 && !RareItem( "metal" ) ){ metal += resource; }
-				if ( wood > 0 && !RareItem( "wood" ) ){ wood += resource; }
+				if (feathers > 0 && !RareItem("feathers")) { feathers += resource; }
+				if (hides > 0 && !RareItem("hides")) { hides += resource; }
+				if (meat > 0 && !RareItem("meat")) { meat += resource; }
+				if (scales > 0 && !RareItem("scales")) { scales += resource; }
+				if (cloth > 0 && !RareItem("cloth")) { cloth += resource; }
+				if (rocks > 0 && !RareItem("rocks")) { rocks += resource; }
+				if (skeletal > 0 && !RareItem("skeletal")) { skeletal += resource; }
+				if (skins > 0 && !RareItem("skins")) { skins += resource; }
+				if (granite > 0 && !RareItem("granite")) { granite += resource; }
+				if (metal > 0 && !RareItem("metal")) { metal += resource; }
+				if (wood > 0 && !RareItem("wood")) { wood += resource; }
 
-				if ( from.Land == Land.IslesDread )
+				if (from.Land == Land.IslesDread)
 				{
-					if ( feathers > 0 ){ feathers = feathers + (int)(feathers/2) + Utility.RandomMinMax(1,5); }
-					if ( wool > 0 ){ wool = wool + (int)(wool/2) + Utility.RandomMinMax(1,5); }
-					if ( hides > 0 ){ hides = hides + (int)(hides/2) + Utility.RandomMinMax(1,5); }
-					if ( meat > 0 ){ meat = meat + (int)(meat/2) + Utility.RandomMinMax(1,5); }
-					if ( scales > 0 ){ scales = scales + (int)(scales/2) + Utility.RandomMinMax(1,5); }
-					if ( cloth > 0 ){ cloth = cloth + (int)(cloth/2) + Utility.RandomMinMax(1,5); }
-					if ( rocks > 0 ){ rocks = rocks + (int)(rocks/2) + Utility.RandomMinMax(1,5); }
-					if ( skeletal > 0 ){ skeletal = skeletal + (int)(skeletal/2) + Utility.RandomMinMax(1,5); }
-					if ( skins > 0 ){ skins = skins + (int)(skins/2) + Utility.RandomMinMax(1,5); }
-					if ( granite > 0 ){ granite = granite + (int)(granite/2) + Utility.RandomMinMax(1,5); }
-					if ( metal > 0 ){ metal = metal + (int)(metal/2) + Utility.RandomMinMax(1,5); }
-					if ( wood > 0 ){ wood = wood + (int)(wood/2) + Utility.RandomMinMax(1,5); }
+					if (feathers > 0) { feathers = feathers + (int)(feathers / 2) + Utility.RandomMinMax(1, 5); }
+					if (wool > 0) { wool = wool + (int)(wool / 2) + Utility.RandomMinMax(1, 5); }
+					if (hides > 0) { hides = hides + (int)(hides / 2) + Utility.RandomMinMax(1, 5); }
+					if (meat > 0) { meat = meat + (int)(meat / 2) + Utility.RandomMinMax(1, 5); }
+					if (scales > 0) { scales = scales + (int)(scales / 2) + Utility.RandomMinMax(1, 5); }
+					if (cloth > 0) { cloth = cloth + (int)(cloth / 2) + Utility.RandomMinMax(1, 5); }
+					if (rocks > 0) { rocks = rocks + (int)(rocks / 2) + Utility.RandomMinMax(1, 5); }
+					if (skeletal > 0) { skeletal = skeletal + (int)(skeletal / 2) + Utility.RandomMinMax(1, 5); }
+					if (skins > 0) { skins = skins + (int)(skins / 2) + Utility.RandomMinMax(1, 5); }
+					if (granite > 0) { granite = granite + (int)(granite / 2) + Utility.RandomMinMax(1, 5); }
+					if (metal > 0) { metal = metal + (int)(metal / 2) + Utility.RandomMinMax(1, 5); }
+					if (wood > 0) { wood = wood + (int)(wood / 2) + Utility.RandomMinMax(1, 5); }
 				}
 
-				if ( ( from.CheckSkill( SkillName.Forensics, 0, 100 ) ) && ( from.Skills[SkillName.Forensics].Base >= 5.0 ) )
+				if ((from.CheckSkill(SkillName.Forensics, 0, 100)) && (from.Skills[SkillName.Forensics].Base >= 5.0))
 				{
-					if (feathers > 0){ feathers = feathers + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Bowcraft].Value/25); }
-					if (wool > 0){ wool = wool + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Tailoring].Value/25); }
-					if (hides > 0){ hides = hides + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Tailoring].Value/25); }
-					if (meat > 0){ meat = meat + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Cooking].Value/25); }
-					if (scales > 0){ scales = scales + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Blacksmith].Value/25); }
-					if (cloth > 0){ cloth = cloth + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Tailoring].Value/25); }
-					if (rocks > 0){ rocks = rocks + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Mining].Value/25); }
-					if (skeletal > 0){ skeletal = skeletal + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Tailoring].Value/25); }
-					if (skins > 0){ skins = skins + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Tailoring].Value/25); }
-					if (granite > 0){ granite = granite + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Mining].Value/25); }
-					if (metal > 0){ metal = metal + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Blacksmith].Value/25); }
-					if (wood > 0){ wood = wood + (int)(from.Skills[SkillName.Forensics].Value/25) + (int)(from.Skills[SkillName.Carpentry].Value/25); }
+					if (feathers > 0) { feathers = feathers + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Bowcraft].Value / 25); }
+					if (wool > 0) { wool = wool + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Tailoring].Value / 25); }
+					if (hides > 0) { hides = hides + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Tailoring].Value / 25); }
+					if (meat > 0) { meat = meat + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Cooking].Value / 25); }
+					if (scales > 0) { scales = scales + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Blacksmith].Value / 25); }
+					if (cloth > 0) { cloth = cloth + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Tailoring].Value / 25); }
+					if (rocks > 0) { rocks = rocks + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Mining].Value / 25); }
+					if (skeletal > 0) { skeletal = skeletal + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Tailoring].Value / 25); }
+					if (skins > 0) { skins = skins + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Tailoring].Value / 25); }
+					if (granite > 0) { granite = granite + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Mining].Value / 25); }
+					if (metal > 0) { metal = metal + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Blacksmith].Value / 25); }
+					if (wood > 0) { wood = wood + (int)(from.Skills[SkillName.Forensics].Value / 25) + (int)(from.Skills[SkillName.Carpentry].Value / 25); }
 				}
 
-				if ( feathers > 0 && RareItem( "feathers" ) && Utility.RandomBool() ){ feathers = 0; }
-				if ( hides > 0 && RareItem( "hides" ) && Utility.RandomBool() ){ hides = 0; }
-				if ( meat > 0 && RareItem( "meat" ) && Utility.RandomBool() ){ meat = 0; }
-				if ( scales > 0 && RareItem( "scales" ) && Utility.RandomBool() ){ scales = 0; }
-				if ( cloth > 0 && RareItem( "cloth" ) && Utility.RandomBool() ){ cloth = 0; }
-				if ( rocks > 0 && RareItem( "rocks" ) && Utility.RandomBool() ){ rocks = 0; }
-				if ( skeletal > 0 && RareItem( "skeletal" ) && Utility.RandomBool() ){ skeletal = 0; }
-				if ( skins > 0 && RareItem( "skins" ) && Utility.RandomBool() ){ skins = 0; }
-				if ( granite > 0 && RareItem( "granite" ) && Utility.RandomBool() ){ granite = 0; }
-				if ( metal > 0 && RareItem( "metal" ) && Utility.RandomBool() ){ metal = 0; }
-				if ( wood > 0 && RareItem( "wood" ) && Utility.RandomBool() ){ wood = 0; }
+				if (feathers > 0 && RareItem("feathers") && Utility.RandomBool()) { feathers = 0; }
+				if (hides > 0 && RareItem("hides") && Utility.RandomBool()) { hides = 0; }
+				if (meat > 0 && RareItem("meat") && Utility.RandomBool()) { meat = 0; }
+				if (scales > 0 && RareItem("scales") && Utility.RandomBool()) { scales = 0; }
+				if (cloth > 0 && RareItem("cloth") && Utility.RandomBool()) { cloth = 0; }
+				if (rocks > 0 && RareItem("rocks") && Utility.RandomBool()) { rocks = 0; }
+				if (skeletal > 0 && RareItem("skeletal") && Utility.RandomBool()) { skeletal = 0; }
+				if (skins > 0 && RareItem("skins") && Utility.RandomBool()) { skins = 0; }
+				if (granite > 0 && RareItem("granite") && Utility.RandomBool()) { granite = 0; }
+				if (metal > 0 && RareItem("metal") && Utility.RandomBool()) { metal = 0; }
+				if (wood > 0 && RareItem("wood") && Utility.RandomBool()) { wood = 0; }
 
 				//new Blood( 0x122D ).MoveToWorld( corpse.Location, corpse.Map );
 
-				if ( feathers != 0 )
+				if (feathers != 0)
 				{
-					corpse.AddCarvedItem( new Feather( feathers ), from );
-					from.SendLocalizedMessage( 500479 ); // You pluck the bird. The feathers are now on the corpse.
+					corpse.AddCarvedItem(new Feather(feathers), from);
+					from.SendLocalizedMessage(500479); // You pluck the bird. The feathers are now on the corpse.
 				}
 
-				if ( wool != 0 )
+				if (wool != 0)
 				{
-					corpse.AddCarvedItem( new TaintedWool( wool ), from );
-					from.SendLocalizedMessage( 500483 ); // You shear it, and the wool is now on the corpse.
+					corpse.AddCarvedItem(new TaintedWool(wool), from);
+					from.SendLocalizedMessage(500483); // You shear it, and the wool is now on the corpse.
 				}
 
-				if ( meat != 0 )
+				if (meat != 0)
 				{
-					if ( MeatType == MeatType.Ribs )
-						corpse.AddCarvedItem( new RawRibs( meat ), from );
-					else if ( MeatType == MeatType.Bird )
-						corpse.AddCarvedItem( new RawBird( meat ), from );
-					else if ( MeatType == MeatType.LambLeg )
-						corpse.AddCarvedItem( new RawLambLeg( meat ), from );
-					else if ( MeatType == MeatType.Fish )
-						corpse.AddCarvedItem( new RawFishSteak( meat ), from );
-					else if ( MeatType == MeatType.Pigs )
-						corpse.AddCarvedItem( new RawPig( meat ), from );
+					if (MeatType == MeatType.Ribs)
+						corpse.AddCarvedItem(new RawRibs(meat), from);
+					else if (MeatType == MeatType.Bird)
+						corpse.AddCarvedItem(new RawBird(meat), from);
+					else if (MeatType == MeatType.LambLeg)
+						corpse.AddCarvedItem(new RawLambLeg(meat), from);
+					else if (MeatType == MeatType.Fish)
+						corpse.AddCarvedItem(new RawFishSteak(meat), from);
+					else if (MeatType == MeatType.Pigs)
+						corpse.AddCarvedItem(new RawPig(meat), from);
 
-					from.SendLocalizedMessage( 500467 ); // You carve some meat, which remains on the corpse.
+					from.SendLocalizedMessage(500467); // You carve some meat, which remains on the corpse.
 				}
 
-				if ( cloth != 0 )
+				if (cloth != 0)
 				{
 					ClothType fr = this.ClothType;
-						if ( from.HarvestOrdinary )
-							fr = ClothType.Fabric;
+					if (from.HarvestOrdinary)
+						fr = ClothType.Fabric;
 
-					switch ( fr )
+					switch (fr)
 					{
-						case ClothType.Fabric:	     	corpse.AddCarvedItem( new Fabric( cloth ), from ); break;
-						case ClothType.Furry:     		corpse.AddCarvedItem( new FurryFabric( cloth ), from ); break;
-						case ClothType.Wooly:     		corpse.AddCarvedItem( new WoolyFabric( cloth ), from ); break;
-						case ClothType.Silk:     		corpse.AddCarvedItem( new SilkFabric( cloth ), from ); break;
-						case ClothType.Haunted:     	corpse.AddCarvedItem( new HauntedFabric( cloth ), from ); break;
-						case ClothType.Arctic:     		corpse.AddCarvedItem( new ArcticFabric( cloth ), from ); break;
-						case ClothType.Pyre:     		corpse.AddCarvedItem( new PyreFabric( cloth ), from ); break;
-						case ClothType.Venomous:     	corpse.AddCarvedItem( new VenomousFabric( cloth ), from ); break;
-						case ClothType.Mysterious:     	corpse.AddCarvedItem( new MysteriousFabric( cloth ), from ); break;
-						case ClothType.Vile:     		corpse.AddCarvedItem( new VileFabric( cloth ), from ); break;
-						case ClothType.Divine:     		corpse.AddCarvedItem( new DivineFabric( cloth ), from ); break;
-						case ClothType.Fiendish:     	corpse.AddCarvedItem( new FiendishFabric( cloth ), from ); break;
+						case ClothType.Fabric: corpse.AddCarvedItem(new Fabric(cloth), from); break;
+						case ClothType.Furry: corpse.AddCarvedItem(new FurryFabric(cloth), from); break;
+						case ClothType.Wooly: corpse.AddCarvedItem(new WoolyFabric(cloth), from); break;
+						case ClothType.Silk: corpse.AddCarvedItem(new SilkFabric(cloth), from); break;
+						case ClothType.Haunted: corpse.AddCarvedItem(new HauntedFabric(cloth), from); break;
+						case ClothType.Arctic: corpse.AddCarvedItem(new ArcticFabric(cloth), from); break;
+						case ClothType.Pyre: corpse.AddCarvedItem(new PyreFabric(cloth), from); break;
+						case ClothType.Venomous: corpse.AddCarvedItem(new VenomousFabric(cloth), from); break;
+						case ClothType.Mysterious: corpse.AddCarvedItem(new MysteriousFabric(cloth), from); break;
+						case ClothType.Vile: corpse.AddCarvedItem(new VileFabric(cloth), from); break;
+						case ClothType.Divine: corpse.AddCarvedItem(new DivineFabric(cloth), from); break;
+						case ClothType.Fiendish: corpse.AddCarvedItem(new FiendishFabric(cloth), from); break;
 					}
 
-					from.SendMessage( "You cut away some furs and they are on the corpse." );
+					from.SendMessage("You cut away some furs and they are on the corpse.");
 				}
 
-				if ( hides != 0 )
+				if (hides != 0)
 				{
 					HideType hd = this.HideType;
-						if ( from.HarvestOrdinary )
-							hd = HideType.Regular;
+					if (from.HarvestOrdinary)
+						hd = HideType.Regular;
 
-					switch ( hd )
+					switch (hd)
 					{
-						case HideType.Regular:     	corpse.AddCarvedItem( new Leather( hides ), from ); break;
-						case HideType.Spined:     	corpse.AddCarvedItem( new SpinedLeather( hides ), from ); break;
-						case HideType.Horned:     	corpse.AddCarvedItem( new HornedLeather( hides ), from ); break;
-						case HideType.Barbed:     	corpse.AddCarvedItem( new BarbedLeather( hides ), from ); break;
-						case HideType.Necrotic:     corpse.AddCarvedItem( new NecroticLeather( hides ), from ); break;
-						case HideType.Volcanic:     corpse.AddCarvedItem( new VolcanicLeather( hides ), from ); break;
-						case HideType.Frozen:     	corpse.AddCarvedItem( new FrozenLeather( hides ), from ); break;
-						case HideType.Goliath:     	corpse.AddCarvedItem( new GoliathLeather( hides ), from ); break;
-						case HideType.Draconic:     corpse.AddCarvedItem( new DraconicLeather( hides ), from ); break;
-						case HideType.Hellish:     	corpse.AddCarvedItem( new HellishLeather( hides ), from ); break;
-						case HideType.Dinosaur:     corpse.AddCarvedItem( new DinosaurLeather( hides ), from ); break;
+						case HideType.Regular: corpse.AddCarvedItem(new Leather(hides), from); break;
+						case HideType.Spined: corpse.AddCarvedItem(new SpinedLeather(hides), from); break;
+						case HideType.Horned: corpse.AddCarvedItem(new HornedLeather(hides), from); break;
+						case HideType.Barbed: corpse.AddCarvedItem(new BarbedLeather(hides), from); break;
+						case HideType.Necrotic: corpse.AddCarvedItem(new NecroticLeather(hides), from); break;
+						case HideType.Volcanic: corpse.AddCarvedItem(new VolcanicLeather(hides), from); break;
+						case HideType.Frozen: corpse.AddCarvedItem(new FrozenLeather(hides), from); break;
+						case HideType.Goliath: corpse.AddCarvedItem(new GoliathLeather(hides), from); break;
+						case HideType.Draconic: corpse.AddCarvedItem(new DraconicLeather(hides), from); break;
+						case HideType.Hellish: corpse.AddCarvedItem(new HellishLeather(hides), from); break;
+						case HideType.Dinosaur: corpse.AddCarvedItem(new DinosaurLeather(hides), from); break;
 					}
 
-					from.SendMessage( "You cut away some leather and they are on the corpse." );
+					from.SendMessage("You cut away some leather and they are on the corpse.");
 				}
 
-				if ( wood != 0 )
+				if (wood != 0)
 				{
 					WoodType wd = this.WoodType;
-						if ( from.HarvestOrdinary )
-							wd = WoodType.Regular;
+					if (from.HarvestOrdinary)
+						wd = WoodType.Regular;
 
-					switch ( wd )
+					switch (wd)
 					{
-						case WoodType.Regular:     	corpse.AddCarvedItem( new Log( wood ), from ); break;
-						case WoodType.Ash:     		corpse.AddCarvedItem( new AshLog( wood ), from ); break;
-						case WoodType.Cherry:     	corpse.AddCarvedItem( new CherryLog( wood ), from ); break;
-						case WoodType.Ebony:     	corpse.AddCarvedItem( new EbonyLog( wood ), from ); break;
-						case WoodType.GoldenOak:    corpse.AddCarvedItem( new GoldenOakLog( wood ), from ); break;
-						case WoodType.Hickory:     	corpse.AddCarvedItem( new HickoryLog( wood ), from ); break;
-						case WoodType.Mahogany:     corpse.AddCarvedItem( new MahoganyLog( wood ), from ); break;
-						case WoodType.Oak:     		corpse.AddCarvedItem( new OakLog( wood ), from ); break;
-						case WoodType.Pine:     	corpse.AddCarvedItem( new PineLog( wood ), from ); break;
-						case WoodType.Ghost:     	corpse.AddCarvedItem( new GhostLog( wood ), from ); break;
-						case WoodType.Rosewood:     corpse.AddCarvedItem( new RosewoodLog( wood ), from ); break;
-						case WoodType.Walnut:     	corpse.AddCarvedItem( new WalnutLog( wood ), from ); break;
-						case WoodType.Petrified:    corpse.AddCarvedItem( new PetrifiedLog( wood ), from ); break;
-						case WoodType.Driftwood:    corpse.AddCarvedItem( new DriftwoodLog( wood ), from ); break;
-						case WoodType.Elven:     	corpse.AddCarvedItem( new ElvenLog( wood ), from ); break;
+						case WoodType.Regular: corpse.AddCarvedItem(new Log(wood), from); break;
+						case WoodType.Ash: corpse.AddCarvedItem(new AshLog(wood), from); break;
+						case WoodType.Cherry: corpse.AddCarvedItem(new CherryLog(wood), from); break;
+						case WoodType.Ebony: corpse.AddCarvedItem(new EbonyLog(wood), from); break;
+						case WoodType.GoldenOak: corpse.AddCarvedItem(new GoldenOakLog(wood), from); break;
+						case WoodType.Hickory: corpse.AddCarvedItem(new HickoryLog(wood), from); break;
+						case WoodType.Mahogany: corpse.AddCarvedItem(new MahoganyLog(wood), from); break;
+						case WoodType.Oak: corpse.AddCarvedItem(new OakLog(wood), from); break;
+						case WoodType.Pine: corpse.AddCarvedItem(new PineLog(wood), from); break;
+						case WoodType.Ghost: corpse.AddCarvedItem(new GhostLog(wood), from); break;
+						case WoodType.Rosewood: corpse.AddCarvedItem(new RosewoodLog(wood), from); break;
+						case WoodType.Walnut: corpse.AddCarvedItem(new WalnutLog(wood), from); break;
+						case WoodType.Petrified: corpse.AddCarvedItem(new PetrifiedLog(wood), from); break;
+						case WoodType.Driftwood: corpse.AddCarvedItem(new DriftwoodLog(wood), from); break;
+						case WoodType.Elven: corpse.AddCarvedItem(new ElvenLog(wood), from); break;
 					}
 
-					from.SendMessage( "You cut away some leather and they are on the corpse." );
+					from.SendMessage("You cut away some leather and they are on the corpse.");
 				}
 
-				if ( granite != 0 )
+				if (granite != 0)
 				{
 					GraniteType gt = this.GraniteType;
-						if ( from.HarvestOrdinary )
-							gt = GraniteType.Iron;
+					if (from.HarvestOrdinary)
+						gt = GraniteType.Iron;
 
-					switch ( gt )
+					switch (gt)
 					{
-						case GraniteType.Iron:	     	corpse.AddCarvedItem( new Granite( granite ), from ); break;
-						case GraniteType.DullCopper:   	corpse.AddCarvedItem( new DullCopperGranite( granite ), from ); break;
-						case GraniteType.ShadowIron:    corpse.AddCarvedItem( new ShadowIronGranite( granite ), from ); break;
-						case GraniteType.Copper:     	corpse.AddCarvedItem( new CopperGranite( granite ), from ); break;
-						case GraniteType.Bronze:     	corpse.AddCarvedItem( new BronzeGranite( granite ), from ); break;
-						case GraniteType.Gold:     		corpse.AddCarvedItem( new GoldGranite( granite ), from ); break;
-						case GraniteType.Agapite:     	corpse.AddCarvedItem( new AgapiteGranite( granite ), from ); break;
-						case GraniteType.Verite:     	corpse.AddCarvedItem( new VeriteGranite( granite ), from ); break;
-						case GraniteType.Valorite:     	corpse.AddCarvedItem( new ValoriteGranite( granite ), from ); break;
-						case GraniteType.Nepturite:     corpse.AddCarvedItem( new NepturiteGranite( granite ), from ); break;
-						case GraniteType.Obsidian:     	corpse.AddCarvedItem( new ObsidianGranite( granite ), from ); break;
-						case GraniteType.Mithril:     	corpse.AddCarvedItem( new MithrilGranite( granite ), from ); break;
-						case GraniteType.Xormite:     	corpse.AddCarvedItem( new XormiteGranite( granite ), from ); break;
-						case GraniteType.Dwarven:     	corpse.AddCarvedItem( new DwarvenGranite( granite ), from ); break;
-						case GraniteType.Steel:     	corpse.AddCarvedItem( new SteelGranite( granite ), from ); break;
-						case GraniteType.Brass:     	corpse.AddCarvedItem( new BrassGranite( granite ), from ); break;
+						case GraniteType.Iron: corpse.AddCarvedItem(new Granite(granite), from); break;
+						case GraniteType.DullCopper: corpse.AddCarvedItem(new DullCopperGranite(granite), from); break;
+						case GraniteType.ShadowIron: corpse.AddCarvedItem(new ShadowIronGranite(granite), from); break;
+						case GraniteType.Copper: corpse.AddCarvedItem(new CopperGranite(granite), from); break;
+						case GraniteType.Bronze: corpse.AddCarvedItem(new BronzeGranite(granite), from); break;
+						case GraniteType.Gold: corpse.AddCarvedItem(new GoldGranite(granite), from); break;
+						case GraniteType.Agapite: corpse.AddCarvedItem(new AgapiteGranite(granite), from); break;
+						case GraniteType.Verite: corpse.AddCarvedItem(new VeriteGranite(granite), from); break;
+						case GraniteType.Valorite: corpse.AddCarvedItem(new ValoriteGranite(granite), from); break;
+						case GraniteType.Nepturite: corpse.AddCarvedItem(new NepturiteGranite(granite), from); break;
+						case GraniteType.Obsidian: corpse.AddCarvedItem(new ObsidianGranite(granite), from); break;
+						case GraniteType.Mithril: corpse.AddCarvedItem(new MithrilGranite(granite), from); break;
+						case GraniteType.Xormite: corpse.AddCarvedItem(new XormiteGranite(granite), from); break;
+						case GraniteType.Dwarven: corpse.AddCarvedItem(new DwarvenGranite(granite), from); break;
+						case GraniteType.Steel: corpse.AddCarvedItem(new SteelGranite(granite), from); break;
+						case GraniteType.Brass: corpse.AddCarvedItem(new BrassGranite(granite), from); break;
 					}
-					from.SendMessage( "You chisel away some granite and it is on the corpse." );
+					from.SendMessage("You chisel away some granite and it is on the corpse.");
 				}
 
-				if ( skins != 0 )
+				if (skins != 0)
 				{
 					SkinType sk = this.SkinType;
 
-					switch ( sk )
+					switch (sk)
 					{
-						case SkinType.Demon:     	corpse.AddCarvedItem( new DemonSkins( skins ), from ); break;
-						case SkinType.Dragon:     	corpse.AddCarvedItem( new DragonSkins( skins ), from ); break;
-						case SkinType.Nightmare:    corpse.AddCarvedItem( new NightmareSkins( skins ), from ); break;
-						case SkinType.Snake:     	corpse.AddCarvedItem( new SnakeSkins( skins ), from ); break;
-						case SkinType.Troll:     	corpse.AddCarvedItem( new TrollSkins( skins ), from ); break;
-						case SkinType.Unicorn:     	corpse.AddCarvedItem( new UnicornSkins( skins ), from ); break;
-						case SkinType.Icy:     		corpse.AddCarvedItem( new IcySkins( skins ), from ); break;
-						case SkinType.Lava:     	corpse.AddCarvedItem( new LavaSkins( skins ), from ); break;
-						case SkinType.Seaweed:     	corpse.AddCarvedItem( new Seaweeds( skins ), from ); break;
-						case SkinType.Dead:     	corpse.AddCarvedItem( new DeadSkins( skins ), from ); break;
+						case SkinType.Demon: corpse.AddCarvedItem(new DemonSkins(skins), from); break;
+						case SkinType.Dragon: corpse.AddCarvedItem(new DragonSkins(skins), from); break;
+						case SkinType.Nightmare: corpse.AddCarvedItem(new NightmareSkins(skins), from); break;
+						case SkinType.Snake: corpse.AddCarvedItem(new SnakeSkins(skins), from); break;
+						case SkinType.Troll: corpse.AddCarvedItem(new TrollSkins(skins), from); break;
+						case SkinType.Unicorn: corpse.AddCarvedItem(new UnicornSkins(skins), from); break;
+						case SkinType.Icy: corpse.AddCarvedItem(new IcySkins(skins), from); break;
+						case SkinType.Lava: corpse.AddCarvedItem(new LavaSkins(skins), from); break;
+						case SkinType.Seaweed: corpse.AddCarvedItem(new Seaweeds(skins), from); break;
+						case SkinType.Dead: corpse.AddCarvedItem(new DeadSkins(skins), from); break;
 					}
 
-					from.SendMessage( "You cut away some skins and they are on the corpse." );
+					from.SendMessage("You cut away some skins and they are on the corpse.");
 				}
 
-				if ( rocks != 0 )
+				if (rocks != 0)
 				{
 					RockType rk = this.RockType;
-						if ( from.HarvestOrdinary )
-							rk = RockType.Iron;
+					if (from.HarvestOrdinary)
+						rk = RockType.Iron;
 
-					switch ( rk )
+					switch (rk)
 					{
-						case RockType.Iron:     	corpse.AddCarvedItem( new IronOre( rocks ), from ); break;
-						case RockType.DullCopper:   corpse.AddCarvedItem( new DullCopperOre( rocks ), from ); break;
-						case RockType.ShadowIron:   corpse.AddCarvedItem( new ShadowIronOre( rocks ), from ); break;
-						case RockType.Copper:     	corpse.AddCarvedItem( new CopperOre( rocks ), from ); break;
-						case RockType.Bronze:     	corpse.AddCarvedItem( new BronzeOre( rocks ), from ); break;
-						case RockType.Gold:     	corpse.AddCarvedItem( new GoldOre( rocks ), from ); break;
-						case RockType.Agapite:     	corpse.AddCarvedItem( new AgapiteOre( rocks ), from ); break;
-						case RockType.Verite:     	corpse.AddCarvedItem( new VeriteOre( rocks ), from ); break;
-						case RockType.Valorite:     corpse.AddCarvedItem( new ValoriteOre( rocks ), from ); break;
-						case RockType.Nepturite:   	corpse.AddCarvedItem( new NepturiteOre( rocks ), from ); break;
-						case RockType.Obsidian:     corpse.AddCarvedItem( new ObsidianOre( rocks ), from ); break;
-						case RockType.Steel:     	corpse.AddCarvedItem( new SteelIngot( rocks ), from ); break;
-						case RockType.Brass:     	corpse.AddCarvedItem( new BrassIngot( rocks ), from ); break;
-						case RockType.Mithril:     	corpse.AddCarvedItem( new MithrilOre( rocks ), from ); break;
-						case RockType.Xormite:     	corpse.AddCarvedItem( new XormiteOre( rocks ), from ); break;
-						case RockType.Dwarven:     	corpse.AddCarvedItem( new DwarvenOre( rocks ), from ); break;
-						case RockType.Amethyst:     corpse.AddCarvedItem( new AmethystStone( rocks ), from ); break;
-						case RockType.Emerald:     	corpse.AddCarvedItem( new EmeraldStone( rocks ), from ); break;
-						case RockType.Garnet:     	corpse.AddCarvedItem( new GarnetStone( rocks ), from ); break;
-						case RockType.Ice:     		corpse.AddCarvedItem( new IceStone( rocks ), from ); break;
-						case RockType.Jade:     	corpse.AddCarvedItem( new JadeStone( rocks ), from ); break;
-						case RockType.Marble:     	corpse.AddCarvedItem( new MarbleStone( rocks ), from ); break;
-						case RockType.Onyx:     	corpse.AddCarvedItem( new OnyxStone( rocks ), from ); break;
-						case RockType.Quartz:     	corpse.AddCarvedItem( new QuartzStone( rocks ), from ); break;
-						case RockType.Ruby:     	corpse.AddCarvedItem( new RubyStone( rocks ), from ); break;
-						case RockType.Sapphire:     corpse.AddCarvedItem( new SapphireStone( rocks ), from ); break;
-						case RockType.Silver:     	corpse.AddCarvedItem( new SilverStone( rocks ), from ); break;
-						case RockType.Spinel:     	corpse.AddCarvedItem( new SpinelStone( rocks ), from ); break;
-						case RockType.StarRuby:    	corpse.AddCarvedItem( new StarRubyStone( rocks ), from ); break;
-						case RockType.Topaz:     	corpse.AddCarvedItem( new TopazStone( rocks ), from ); break;
-						case RockType.Caddellite:   corpse.AddCarvedItem( new CaddelliteStone( rocks ), from ); break;
+						case RockType.Iron: corpse.AddCarvedItem(new IronOre(rocks), from); break;
+						case RockType.DullCopper: corpse.AddCarvedItem(new DullCopperOre(rocks), from); break;
+						case RockType.ShadowIron: corpse.AddCarvedItem(new ShadowIronOre(rocks), from); break;
+						case RockType.Copper: corpse.AddCarvedItem(new CopperOre(rocks), from); break;
+						case RockType.Bronze: corpse.AddCarvedItem(new BronzeOre(rocks), from); break;
+						case RockType.Gold: corpse.AddCarvedItem(new GoldOre(rocks), from); break;
+						case RockType.Agapite: corpse.AddCarvedItem(new AgapiteOre(rocks), from); break;
+						case RockType.Verite: corpse.AddCarvedItem(new VeriteOre(rocks), from); break;
+						case RockType.Valorite: corpse.AddCarvedItem(new ValoriteOre(rocks), from); break;
+						case RockType.Nepturite: corpse.AddCarvedItem(new NepturiteOre(rocks), from); break;
+						case RockType.Obsidian: corpse.AddCarvedItem(new ObsidianOre(rocks), from); break;
+						case RockType.Steel: corpse.AddCarvedItem(new SteelIngot(rocks), from); break;
+						case RockType.Brass: corpse.AddCarvedItem(new BrassIngot(rocks), from); break;
+						case RockType.Mithril: corpse.AddCarvedItem(new MithrilOre(rocks), from); break;
+						case RockType.Xormite: corpse.AddCarvedItem(new XormiteOre(rocks), from); break;
+						case RockType.Dwarven: corpse.AddCarvedItem(new DwarvenOre(rocks), from); break;
+						case RockType.Amethyst: corpse.AddCarvedItem(new AmethystStone(rocks), from); break;
+						case RockType.Emerald: corpse.AddCarvedItem(new EmeraldStone(rocks), from); break;
+						case RockType.Garnet: corpse.AddCarvedItem(new GarnetStone(rocks), from); break;
+						case RockType.Ice: corpse.AddCarvedItem(new IceStone(rocks), from); break;
+						case RockType.Jade: corpse.AddCarvedItem(new JadeStone(rocks), from); break;
+						case RockType.Marble: corpse.AddCarvedItem(new MarbleStone(rocks), from); break;
+						case RockType.Onyx: corpse.AddCarvedItem(new OnyxStone(rocks), from); break;
+						case RockType.Quartz: corpse.AddCarvedItem(new QuartzStone(rocks), from); break;
+						case RockType.Ruby: corpse.AddCarvedItem(new RubyStone(rocks), from); break;
+						case RockType.Sapphire: corpse.AddCarvedItem(new SapphireStone(rocks), from); break;
+						case RockType.Silver: corpse.AddCarvedItem(new SilverStone(rocks), from); break;
+						case RockType.Spinel: corpse.AddCarvedItem(new SpinelStone(rocks), from); break;
+						case RockType.StarRuby: corpse.AddCarvedItem(new StarRubyStone(rocks), from); break;
+						case RockType.Topaz: corpse.AddCarvedItem(new TopazStone(rocks), from); break;
+						case RockType.Caddellite: corpse.AddCarvedItem(new CaddelliteStone(rocks), from); break;
 						case RockType.Stones:
-						{
-							int rkcy = rocks;
-							while ( rkcy > 0 )
 							{
-								rkcy--;
-
-								switch ( Utility.RandomMinMax( 1, 16 ) )
+								int rkcy = rocks;
+								while (rkcy > 0)
 								{
-									case 1: corpse.AddCarvedItem( new IronOre( 1 ), from ); break;
-									case 2: corpse.AddCarvedItem( new DullCopperOre( 1 ), from ); break;
-									case 3: corpse.AddCarvedItem( new ShadowIronOre( 1 ), from ); break;
-									case 4: corpse.AddCarvedItem( new CopperOre( 1 ), from ); break;
-									case 5: corpse.AddCarvedItem( new BronzeOre( 1 ), from ); break;
-									case 6: corpse.AddCarvedItem( new GoldOre( 1 ), from ); break;
-									case 7: corpse.AddCarvedItem( new AgapiteOre( 1 ), from ); break;
-									case 8: corpse.AddCarvedItem( new VeriteOre( 1 ), from ); break;
-									case 9: corpse.AddCarvedItem( new ValoriteOre( 1 ), from ); break;
-									case 10: corpse.AddCarvedItem( new NepturiteOre( 1 ), from ); break;
-									case 11: corpse.AddCarvedItem( new ObsidianOre( 1 ), from ); break;
-									case 12: corpse.AddCarvedItem( new SteelIngot( 1 ), from ); break;
-									case 13: corpse.AddCarvedItem( new BrassIngot( 1 ), from ); break;
-									case 14: corpse.AddCarvedItem( new MithrilOre( 1 ), from ); break;
-									case 15: corpse.AddCarvedItem( new XormiteOre( 1 ), from ); break;
-									case 16: corpse.AddCarvedItem( new DwarvenOre( 1 ), from ); break;
+									rkcy--;
+
+									switch (Utility.RandomMinMax(1, 16))
+									{
+										case 1: corpse.AddCarvedItem(new IronOre(1), from); break;
+										case 2: corpse.AddCarvedItem(new DullCopperOre(1), from); break;
+										case 3: corpse.AddCarvedItem(new ShadowIronOre(1), from); break;
+										case 4: corpse.AddCarvedItem(new CopperOre(1), from); break;
+										case 5: corpse.AddCarvedItem(new BronzeOre(1), from); break;
+										case 6: corpse.AddCarvedItem(new GoldOre(1), from); break;
+										case 7: corpse.AddCarvedItem(new AgapiteOre(1), from); break;
+										case 8: corpse.AddCarvedItem(new VeriteOre(1), from); break;
+										case 9: corpse.AddCarvedItem(new ValoriteOre(1), from); break;
+										case 10: corpse.AddCarvedItem(new NepturiteOre(1), from); break;
+										case 11: corpse.AddCarvedItem(new ObsidianOre(1), from); break;
+										case 12: corpse.AddCarvedItem(new SteelIngot(1), from); break;
+										case 13: corpse.AddCarvedItem(new BrassIngot(1), from); break;
+										case 14: corpse.AddCarvedItem(new MithrilOre(1), from); break;
+										case 15: corpse.AddCarvedItem(new XormiteOre(1), from); break;
+										case 16: corpse.AddCarvedItem(new DwarvenOre(1), from); break;
+									}
 								}
+								break;
 							}
-							break;
-						}
 						case RockType.Crystals:
-						{
-							int crcy = rocks;
-							while ( crcy > 0 )
 							{
-								crcy--;
-
-								switch ( Utility.RandomMinMax( 1, 15 ) )
+								int crcy = rocks;
+								while (crcy > 0)
 								{
-									case 1: corpse.AddCarvedItem( new AmethystStone( 1 ), from ); break;
-									case 2: corpse.AddCarvedItem( new EmeraldStone( 1 ), from ); break;
-									case 3: corpse.AddCarvedItem( new GarnetStone( 1 ), from ); break;
-									case 4: corpse.AddCarvedItem( new IceStone( 1 ), from ); break;
-									case 5: corpse.AddCarvedItem( new JadeStone( 1 ), from ); break;
-									case 6: corpse.AddCarvedItem( new MarbleStone( 1 ), from ); break;
-									case 7: corpse.AddCarvedItem( new OnyxStone( 1 ), from ); break;
-									case 8: corpse.AddCarvedItem( new QuartzStone( 1 ), from ); break;
-									case 9: corpse.AddCarvedItem( new RubyStone( 1 ), from ); break;
-									case 10: corpse.AddCarvedItem( new SapphireStone( 1 ), from ); break;
-									case 11: corpse.AddCarvedItem( new SilverStone( 1 ), from ); break;
-									case 12: corpse.AddCarvedItem( new SpinelStone( 1 ), from ); break;
-									case 13: corpse.AddCarvedItem( new StarRubyStone( 1 ), from ); break;
-									case 14: corpse.AddCarvedItem( new TopazStone( 1 ), from ); break;
-									case 15: corpse.AddCarvedItem( new CaddelliteStone( 1 ), from ); break;
+									crcy--;
+
+									switch (Utility.RandomMinMax(1, 15))
+									{
+										case 1: corpse.AddCarvedItem(new AmethystStone(1), from); break;
+										case 2: corpse.AddCarvedItem(new EmeraldStone(1), from); break;
+										case 3: corpse.AddCarvedItem(new GarnetStone(1), from); break;
+										case 4: corpse.AddCarvedItem(new IceStone(1), from); break;
+										case 5: corpse.AddCarvedItem(new JadeStone(1), from); break;
+										case 6: corpse.AddCarvedItem(new MarbleStone(1), from); break;
+										case 7: corpse.AddCarvedItem(new OnyxStone(1), from); break;
+										case 8: corpse.AddCarvedItem(new QuartzStone(1), from); break;
+										case 9: corpse.AddCarvedItem(new RubyStone(1), from); break;
+										case 10: corpse.AddCarvedItem(new SapphireStone(1), from); break;
+										case 11: corpse.AddCarvedItem(new SilverStone(1), from); break;
+										case 12: corpse.AddCarvedItem(new SpinelStone(1), from); break;
+										case 13: corpse.AddCarvedItem(new StarRubyStone(1), from); break;
+										case 14: corpse.AddCarvedItem(new TopazStone(1), from); break;
+										case 15: corpse.AddCarvedItem(new CaddelliteStone(1), from); break;
+									}
 								}
+								break;
 							}
-							break;
-						}
 					}
 
-					from.SendMessage( "You chip away some stones and they are on the corpse." );
+					from.SendMessage("You chip away some stones and they are on the corpse.");
 				}
 
-				if ( metal != 0 )
+				if (metal != 0)
 				{
 					MetalType mm = this.MetalType;
-						if ( from.HarvestOrdinary )
-							mm = MetalType.Iron;
+					if (from.HarvestOrdinary)
+						mm = MetalType.Iron;
 
-					switch ( mm )
+					switch (mm)
 					{
-						case MetalType.Iron:     	corpse.AddCarvedItem( new IronIngot( metal ), from ); break;
-						case MetalType.DullCopper:  corpse.AddCarvedItem( new DullCopperIngot( metal ), from ); break;
-						case MetalType.ShadowIron:  corpse.AddCarvedItem( new ShadowIronIngot( metal ), from ); break;
-						case MetalType.Copper:     	corpse.AddCarvedItem( new CopperIngot( metal ), from ); break;
-						case MetalType.Bronze:     	corpse.AddCarvedItem( new BronzeIngot( metal ), from ); break;
-						case MetalType.Gold:     	corpse.AddCarvedItem( new GoldIngot( metal ), from ); break;
-						case MetalType.Agapite:     corpse.AddCarvedItem( new AgapiteIngot( metal ), from ); break;
-						case MetalType.Verite:     	corpse.AddCarvedItem( new VeriteIngot( metal ), from ); break;
-						case MetalType.Valorite:    corpse.AddCarvedItem( new ValoriteIngot( metal ), from ); break;
-						case MetalType.Nepturite:   corpse.AddCarvedItem( new NepturiteIngot( metal ), from ); break;
-						case MetalType.Obsidian:    corpse.AddCarvedItem( new ObsidianIngot( metal ), from ); break;
-						case MetalType.Steel:     	corpse.AddCarvedItem( new SteelIngot( metal ), from ); break;
-						case MetalType.Brass:     	corpse.AddCarvedItem( new BrassIngot( metal ), from ); break;
-						case MetalType.Mithril:     corpse.AddCarvedItem( new MithrilIngot( metal ), from ); break;
-						case MetalType.Xormite:     corpse.AddCarvedItem( new XormiteIngot( metal ), from ); break;
-						case MetalType.Dwarven:     corpse.AddCarvedItem( new DwarvenIngot( metal ), from ); break;
+						case MetalType.Iron: corpse.AddCarvedItem(new IronIngot(metal), from); break;
+						case MetalType.DullCopper: corpse.AddCarvedItem(new DullCopperIngot(metal), from); break;
+						case MetalType.ShadowIron: corpse.AddCarvedItem(new ShadowIronIngot(metal), from); break;
+						case MetalType.Copper: corpse.AddCarvedItem(new CopperIngot(metal), from); break;
+						case MetalType.Bronze: corpse.AddCarvedItem(new BronzeIngot(metal), from); break;
+						case MetalType.Gold: corpse.AddCarvedItem(new GoldIngot(metal), from); break;
+						case MetalType.Agapite: corpse.AddCarvedItem(new AgapiteIngot(metal), from); break;
+						case MetalType.Verite: corpse.AddCarvedItem(new VeriteIngot(metal), from); break;
+						case MetalType.Valorite: corpse.AddCarvedItem(new ValoriteIngot(metal), from); break;
+						case MetalType.Nepturite: corpse.AddCarvedItem(new NepturiteIngot(metal), from); break;
+						case MetalType.Obsidian: corpse.AddCarvedItem(new ObsidianIngot(metal), from); break;
+						case MetalType.Steel: corpse.AddCarvedItem(new SteelIngot(metal), from); break;
+						case MetalType.Brass: corpse.AddCarvedItem(new BrassIngot(metal), from); break;
+						case MetalType.Mithril: corpse.AddCarvedItem(new MithrilIngot(metal), from); break;
+						case MetalType.Xormite: corpse.AddCarvedItem(new XormiteIngot(metal), from); break;
+						case MetalType.Dwarven: corpse.AddCarvedItem(new DwarvenIngot(metal), from); break;
 					}
 
-					from.SendMessage( "You chip away some metal and it is on the corpse." );
+					from.SendMessage("You chip away some metal and it is on the corpse.");
 				}
 
-				if ( scales != 0 )
+				if (scales != 0)
 				{
 					ScaleType sc = this.ScaleType;
 
-					switch ( sc )
+					switch (sc)
 					{
-						case ScaleType.Red:     	corpse.AddCarvedItem( new RedScales( scales ), from ); break;
-						case ScaleType.Yellow: 	 	corpse.AddCarvedItem( new YellowScales( scales ), from ); break;
-						case ScaleType.Black:  	 	corpse.AddCarvedItem( new BlackScales( scales ), from ); break;
-						case ScaleType.Green:   	corpse.AddCarvedItem( new GreenScales( scales ), from ); break;
-						case ScaleType.White:   	corpse.AddCarvedItem( new WhiteScales( scales ), from ); break;
-						case ScaleType.Blue:    	corpse.AddCarvedItem( new BlueScales( scales ), from ); break;
-						case ScaleType.Dinosaur:    corpse.AddCarvedItem( new DinosaurScales( scales ), from ); break;
-						case ScaleType.Metallic:	corpse.AddCarvedItem( new MetallicScales( scales ), from ); break;
-						case ScaleType.Brazen:		corpse.AddCarvedItem( new BrazenScales( scales ), from ); break;
-						case ScaleType.Umber:		corpse.AddCarvedItem( new UmberScales( scales ), from ); break;
-						case ScaleType.Violet:		corpse.AddCarvedItem( new VioletScales( scales ), from ); break;
-						case ScaleType.Platinum:	corpse.AddCarvedItem( new PlatinumScales( scales ), from ); break;
-						case ScaleType.Cadalyte:	corpse.AddCarvedItem( new CadalyteScales( scales ), from ); break;
+						case ScaleType.Red: corpse.AddCarvedItem(new RedScales(scales), from); break;
+						case ScaleType.Yellow: corpse.AddCarvedItem(new YellowScales(scales), from); break;
+						case ScaleType.Black: corpse.AddCarvedItem(new BlackScales(scales), from); break;
+						case ScaleType.Green: corpse.AddCarvedItem(new GreenScales(scales), from); break;
+						case ScaleType.White: corpse.AddCarvedItem(new WhiteScales(scales), from); break;
+						case ScaleType.Blue: corpse.AddCarvedItem(new BlueScales(scales), from); break;
+						case ScaleType.Dinosaur: corpse.AddCarvedItem(new DinosaurScales(scales), from); break;
+						case ScaleType.Metallic: corpse.AddCarvedItem(new MetallicScales(scales), from); break;
+						case ScaleType.Brazen: corpse.AddCarvedItem(new BrazenScales(scales), from); break;
+						case ScaleType.Umber: corpse.AddCarvedItem(new UmberScales(scales), from); break;
+						case ScaleType.Violet: corpse.AddCarvedItem(new VioletScales(scales), from); break;
+						case ScaleType.Platinum: corpse.AddCarvedItem(new PlatinumScales(scales), from); break;
+						case ScaleType.Cadalyte: corpse.AddCarvedItem(new CadalyteScales(scales), from); break;
 					}
 
-					from.SendMessage( "You cut away some scales and they are on the corpse." );
+					from.SendMessage("You cut away some scales and they are on the corpse.");
 				}
 
-				if ( skeletal != 0 )
+				if (skeletal != 0)
 				{
 					SkeletalType bn = this.SkeletalType;
-						if ( from.HarvestOrdinary )
-							bn = SkeletalType.Brittle;
+					if (from.HarvestOrdinary)
+						bn = SkeletalType.Brittle;
 
-					switch ( bn )
+					switch (bn)
 					{
-						case SkeletalType.Brittle:	corpse.AddCarvedItem( new BrittleSkeletal( skeletal ), from ); break;
-						case SkeletalType.Drow:		corpse.AddCarvedItem( new DrowSkeletal( skeletal ), from ); break;
-						case SkeletalType.Orc:		corpse.AddCarvedItem( new OrcSkeletal( skeletal ), from ); break;
-						case SkeletalType.Reptile:	corpse.AddCarvedItem( new ReptileSkeletal( skeletal ), from ); break;
-						case SkeletalType.Ogre:		corpse.AddCarvedItem( new OgreSkeletal( skeletal ), from ); break;
-						case SkeletalType.Troll:	corpse.AddCarvedItem( new TrollSkeletal( skeletal ), from ); break;
-						case SkeletalType.Gargoyle:	corpse.AddCarvedItem( new GargoyleSkeletal( skeletal ), from ); break;
-						case SkeletalType.Minotaur:	corpse.AddCarvedItem( new MinotaurSkeletal( skeletal ), from ); break;
-						case SkeletalType.Lycan:	corpse.AddCarvedItem( new LycanSkeletal( skeletal ), from ); break;
-						case SkeletalType.Shark:	corpse.AddCarvedItem( new SharkSkeletal( skeletal ), from ); break;
-						case SkeletalType.Colossal:	corpse.AddCarvedItem( new ColossalSkeletal( skeletal ), from ); break;
-						case SkeletalType.Mystical:	corpse.AddCarvedItem( new MysticalSkeletal( skeletal ), from ); break;
-						case SkeletalType.Vampire:	corpse.AddCarvedItem( new VampireSkeletal( skeletal ), from ); break;
-						case SkeletalType.Lich:		corpse.AddCarvedItem( new LichSkeletal( skeletal ), from ); break;
-						case SkeletalType.Sphinx:	corpse.AddCarvedItem( new SphinxSkeletal( skeletal ), from ); break;
-						case SkeletalType.Devil:	corpse.AddCarvedItem( new DevilSkeletal( skeletal ), from ); break;
-						case SkeletalType.Draco:	corpse.AddCarvedItem( new DracoSkeletal( skeletal ), from ); break;
+						case SkeletalType.Brittle: corpse.AddCarvedItem(new BrittleSkeletal(skeletal), from); break;
+						case SkeletalType.Drow: corpse.AddCarvedItem(new DrowSkeletal(skeletal), from); break;
+						case SkeletalType.Orc: corpse.AddCarvedItem(new OrcSkeletal(skeletal), from); break;
+						case SkeletalType.Reptile: corpse.AddCarvedItem(new ReptileSkeletal(skeletal), from); break;
+						case SkeletalType.Ogre: corpse.AddCarvedItem(new OgreSkeletal(skeletal), from); break;
+						case SkeletalType.Troll: corpse.AddCarvedItem(new TrollSkeletal(skeletal), from); break;
+						case SkeletalType.Gargoyle: corpse.AddCarvedItem(new GargoyleSkeletal(skeletal), from); break;
+						case SkeletalType.Minotaur: corpse.AddCarvedItem(new MinotaurSkeletal(skeletal), from); break;
+						case SkeletalType.Lycan: corpse.AddCarvedItem(new LycanSkeletal(skeletal), from); break;
+						case SkeletalType.Shark: corpse.AddCarvedItem(new SharkSkeletal(skeletal), from); break;
+						case SkeletalType.Colossal: corpse.AddCarvedItem(new ColossalSkeletal(skeletal), from); break;
+						case SkeletalType.Mystical: corpse.AddCarvedItem(new MysticalSkeletal(skeletal), from); break;
+						case SkeletalType.Vampire: corpse.AddCarvedItem(new VampireSkeletal(skeletal), from); break;
+						case SkeletalType.Lich: corpse.AddCarvedItem(new LichSkeletal(skeletal), from); break;
+						case SkeletalType.Sphinx: corpse.AddCarvedItem(new SphinxSkeletal(skeletal), from); break;
+						case SkeletalType.Devil: corpse.AddCarvedItem(new DevilSkeletal(skeletal), from); break;
+						case SkeletalType.Draco: corpse.AddCarvedItem(new DracoSkeletal(skeletal), from); break;
 						case SkeletalType.All:
-						{
-							int skcy = skeletal;
-							while ( skcy > 0 )
 							{
-								skcy--;
-
-								switch ( Utility.RandomMinMax( 1, 17 ) )
+								int skcy = skeletal;
+								while (skcy > 0)
 								{
-									case 1: corpse.AddCarvedItem( new BrittleSkeletal( 1 ), from ); break;
-									case 2: corpse.AddCarvedItem( new DrowSkeletal( 1 ), from ); break;
-									case 3: corpse.AddCarvedItem( new OrcSkeletal( 1 ), from ); break;
-									case 4: corpse.AddCarvedItem( new ReptileSkeletal( 1 ), from ); break;
-									case 5: corpse.AddCarvedItem( new OgreSkeletal( 1 ), from ); break;
-									case 6: corpse.AddCarvedItem( new TrollSkeletal( 1 ), from ); break;
-									case 7: corpse.AddCarvedItem( new GargoyleSkeletal( 1 ), from ); break;
-									case 8: corpse.AddCarvedItem( new MinotaurSkeletal( 1 ), from ); break;
-									case 9: corpse.AddCarvedItem( new LycanSkeletal( 1 ), from ); break;
-									case 10: corpse.AddCarvedItem( new SharkSkeletal( 1 ), from ); break;
-									case 11: corpse.AddCarvedItem( new ColossalSkeletal( 1 ), from ); break;
-									case 12: corpse.AddCarvedItem( new MysticalSkeletal( 1 ), from ); break;
-									case 13: corpse.AddCarvedItem( new VampireSkeletal( 1 ), from ); break;
-									case 14: corpse.AddCarvedItem( new LichSkeletal( 1 ), from ); break;
-									case 15: corpse.AddCarvedItem( new SphinxSkeletal( 1 ), from ); break;
-									case 16: corpse.AddCarvedItem( new DevilSkeletal( 1 ), from ); break;
-									case 17: corpse.AddCarvedItem( new DracoSkeletal( 1 ), from ); break;
+									skcy--;
+
+									switch (Utility.RandomMinMax(1, 17))
+									{
+										case 1: corpse.AddCarvedItem(new BrittleSkeletal(1), from); break;
+										case 2: corpse.AddCarvedItem(new DrowSkeletal(1), from); break;
+										case 3: corpse.AddCarvedItem(new OrcSkeletal(1), from); break;
+										case 4: corpse.AddCarvedItem(new ReptileSkeletal(1), from); break;
+										case 5: corpse.AddCarvedItem(new OgreSkeletal(1), from); break;
+										case 6: corpse.AddCarvedItem(new TrollSkeletal(1), from); break;
+										case 7: corpse.AddCarvedItem(new GargoyleSkeletal(1), from); break;
+										case 8: corpse.AddCarvedItem(new MinotaurSkeletal(1), from); break;
+										case 9: corpse.AddCarvedItem(new LycanSkeletal(1), from); break;
+										case 10: corpse.AddCarvedItem(new SharkSkeletal(1), from); break;
+										case 11: corpse.AddCarvedItem(new ColossalSkeletal(1), from); break;
+										case 12: corpse.AddCarvedItem(new MysticalSkeletal(1), from); break;
+										case 13: corpse.AddCarvedItem(new VampireSkeletal(1), from); break;
+										case 14: corpse.AddCarvedItem(new LichSkeletal(1), from); break;
+										case 15: corpse.AddCarvedItem(new SphinxSkeletal(1), from); break;
+										case 16: corpse.AddCarvedItem(new DevilSkeletal(1), from); break;
+										case 17: corpse.AddCarvedItem(new DracoSkeletal(1), from); break;
+									}
 								}
+								break;
 							}
-							break;
-						}
 					}
 
-					from.SendMessage( "You cut away some bones and they are on the corpse." );
+					from.SendMessage("You cut away some bones and they are on the corpse.");
 				}
 
 				corpse.Carved = true;
 
-				if ( corpse.IsCriminalAction( from ) )
-					from.CriminalAction( true );
+				if (corpse.IsCriminalAction(from))
+					from.CriminalAction(true);
 			}
 		}
 
@@ -4836,7 +4885,7 @@ namespace Server.Mobiles
 			double dActiveSpeed,
 			double dPassiveSpeed)
 		{
-			if ( iRangePerception == OldRangePerception )
+			if (iRangePerception == OldRangePerception)
 				iRangePerception = DefaultRangePerception;
 
 			m_Loyalty = MaxLoyalty; // Wonderfully Happy
@@ -4851,7 +4900,7 @@ namespace Server.Mobiles
 
 			m_iTeam = 0;
 
-			SpeedInfo.GetSpeeds( this, ref dActiveSpeed, ref dPassiveSpeed );
+			SpeedInfo.GetSpeeds(this, ref dActiveSpeed, ref dPassiveSpeed);
 
 			m_dActiveSpeed = dActiveSpeed;
 			m_dPassiveSpeed = dPassiveSpeed;
@@ -4877,15 +4926,15 @@ namespace Server.Mobiles
 
 			InhumanSpeech speechType = this.SpeechType;
 
-			if ( speechType != null )
-				speechType.OnConstruct( this );
+			if (speechType != null)
+				speechType.OnConstruct(this);
 
-			GenerateLoot( true );
+			GenerateLoot(true);
 
 			BankBox box = this.BankBox;
 		}
 
-		public BaseCreature( Serial serial ) : base( serial )
+		public BaseCreature(Serial serial) : base(serial)
 		{
 			m_arSpellAttack = new List<Type>();
 			m_arSpellDefense = new List<Type>();
@@ -4893,143 +4942,143 @@ namespace Server.Mobiles
 			m_bDebugAI = false;
 		}
 
-		public override void Serialize( GenericWriter writer )
+		public override void Serialize(GenericWriter writer)
 		{
-			base.Serialize( writer );
+			base.Serialize(writer);
 
 			writer.Write( (int) 23 ); // version
 
 			writer.Write( (bool) m_Boss );
 
-			writer.Write( (int) m_Slayer );
-			writer.Write( (int) m_Slayer2 );
+			writer.Write((int)m_Slayer);
+			writer.Write((int)m_Slayer2);
 
-			writer.Write( (bool) m_IsTempEnemy );
+			writer.Write((bool)m_IsTempEnemy);
 
-			writer.WriteEncodedInt( (int) m_Resource );
+			writer.WriteEncodedInt((int)m_Resource);
 
-			writer.Write( (int)m_HitsBeforeMod );
+			writer.Write((int)m_HitsBeforeMod);
 
-			writer.Write( (int)m_Coins );
-			writer.Write( m_CoinType );
-			writer.Write( (int)m_SpawnerID );
-			writer.Write( (bool) m_Swimmer );
-			writer.Write( (bool) m_NoWalker );
+			writer.Write((int)m_Coins);
+			writer.Write(m_CoinType);
+			writer.Write((int)m_SpawnerID);
+			writer.Write((bool)m_Swimmer);
+			writer.Write((bool)m_NoWalker);
 
-			writer.Write( (int)m_CurrentAI );
-			writer.Write( (int)m_DefaultAI );
+			writer.Write((int)m_CurrentAI);
+			writer.Write((int)m_DefaultAI);
 
-			writer.Write( (int)m_iRangePerception );
-			writer.Write( (int)m_iRangeFight );
+			writer.Write((int)m_iRangePerception);
+			writer.Write((int)m_iRangeFight);
 
-			writer.Write( (int)m_iTeam );
+			writer.Write((int)m_iTeam);
 
-			writer.Write( (double)m_dActiveSpeed );
-			writer.Write( (double)m_dPassiveSpeed );
-			writer.Write( (double)m_dCurrentSpeed );
+			writer.Write((double)m_dActiveSpeed);
+			writer.Write((double)m_dPassiveSpeed);
+			writer.Write((double)m_dCurrentSpeed);
 
-			writer.Write( (int) m_pHome.X );
-			writer.Write( (int) m_pHome.Y );
-			writer.Write( (int) m_pHome.Z );
+			writer.Write((int)m_pHome.X);
+			writer.Write((int)m_pHome.Y);
+			writer.Write((int)m_pHome.Z);
 
 			// Version 1
-			writer.Write( (int) m_iRangeHome );
+			writer.Write((int)m_iRangeHome);
 
-			int i=0;
+			int i = 0;
 
-			writer.Write( (int) m_arSpellAttack.Count );
-			for ( i=0; i< m_arSpellAttack.Count; i++ )
+			writer.Write((int)m_arSpellAttack.Count);
+			for (i = 0; i < m_arSpellAttack.Count; i++)
 			{
-				writer.Write( m_arSpellAttack[i].ToString() );
+				writer.Write(m_arSpellAttack[i].ToString());
 			}
 
-			writer.Write( (int) m_arSpellDefense.Count );
-			for ( i=0; i< m_arSpellDefense.Count; i++ )
+			writer.Write((int)m_arSpellDefense.Count);
+			for (i = 0; i < m_arSpellDefense.Count; i++)
 			{
-				writer.Write( m_arSpellDefense[i].ToString() );
+				writer.Write(m_arSpellDefense[i].ToString());
 			}
 
 			// Version 2
-			writer.Write( (int) m_FightMode );
+			writer.Write((int)m_FightMode);
 
-			writer.Write( (bool) m_bControlled );
-			writer.Write( (Mobile) m_ControlMaster );
-			writer.Write( (Mobile) m_ControlTarget );
-			writer.Write( (Point3D) m_ControlDest );
-			writer.Write( (int) m_ControlOrder );
-			writer.Write( (double) m_dMinTameSkill );
+			writer.Write((bool)m_bControlled);
+			writer.Write((Mobile)m_ControlMaster);
+			writer.Write((Mobile)m_ControlTarget);
+			writer.Write((Point3D)m_ControlDest);
+			writer.Write((int)m_ControlOrder);
+			writer.Write((double)m_dMinTameSkill);
 			// Removed in version 9
 			//writer.Write( (double) m_dMaxTameSkill );
-			writer.Write( (bool) m_bTamable );
-			writer.Write( (bool) m_bSummoned );
+			writer.Write((bool)m_bTamable);
+			writer.Write((bool)m_bSummoned);
 
-			if ( m_bSummoned )
-				writer.WriteDeltaTime( m_SummonEnd );
+			if (m_bSummoned)
+				writer.WriteDeltaTime(m_SummonEnd);
 
-			writer.Write( (int) m_iControlSlots );
+			writer.Write((int)m_iControlSlots);
 
 			// Version 3
-			writer.Write( (int)m_Loyalty );
+			writer.Write((int)m_Loyalty);
 
 			// Version 4
-			writer.Write( m_CurrentWayPoint );
+			writer.Write(m_CurrentWayPoint);
 
 			// Verison 5
-			writer.Write( m_SummonMaster );
+			writer.Write(m_SummonMaster);
 
 			// Version 6
-			writer.Write( (int) m_HitsMax );
-			writer.Write( (int) m_StamMax );
-			writer.Write( (int) m_ManaMax );
-			writer.Write( (int) m_DamageMin );
-			writer.Write( (int) m_DamageMax );
+			writer.Write((int)m_HitsMax);
+			writer.Write((int)m_StamMax);
+			writer.Write((int)m_ManaMax);
+			writer.Write((int)m_DamageMin);
+			writer.Write((int)m_DamageMax);
 
 			// Version 7
-			writer.Write( (int) m_PhysicalResistance );
-			writer.Write( (int) m_PhysicalDamage );
+			writer.Write((int)m_PhysicalResistance);
+			writer.Write((int)m_PhysicalDamage);
 
-			writer.Write( (int) m_FireResistance );
-			writer.Write( (int) m_FireDamage );
+			writer.Write((int)m_FireResistance);
+			writer.Write((int)m_FireDamage);
 
-			writer.Write( (int) m_ColdResistance );
-			writer.Write( (int) m_ColdDamage );
+			writer.Write((int)m_ColdResistance);
+			writer.Write((int)m_ColdDamage);
 
-			writer.Write( (int) m_PoisonResistance );
-			writer.Write( (int) m_PoisonDamage );
+			writer.Write((int)m_PoisonResistance);
+			writer.Write((int)m_PoisonDamage);
 
-			writer.Write( (int) m_EnergyResistance );
-			writer.Write( (int) m_EnergyDamage );
+			writer.Write((int)m_EnergyResistance);
+			writer.Write((int)m_EnergyDamage);
 
 			// Version 8
-			writer.Write( m_Owners, true );
+			writer.Write(m_Owners, true);
 
 			// Version 10
-			writer.Write( (bool) m_IsDeadPet );
-			writer.Write( (bool) m_IsBonded );
-			writer.Write( (DateTime) m_BondingBegin );
-			writer.Write( (DateTime) m_OwnerAbandonTime );
+			writer.Write((bool)m_IsDeadPet);
+			writer.Write((bool)m_IsBonded);
+			writer.Write((DateTime)m_BondingBegin);
+			writer.Write((DateTime)m_OwnerAbandonTime);
 
 			// Version 11
-			writer.Write( (bool) m_HasGeneratedLoot );
+			writer.Write((bool)m_HasGeneratedLoot);
 
 			// Version 12
-			writer.Write( (bool) m_Paragon );
+			writer.Write((bool)m_Paragon);
 
 			// Version 13
-			writer.Write( (bool) ( m_Friends != null && m_Friends.Count > 0 ) );
+			writer.Write((bool)(m_Friends != null && m_Friends.Count > 0));
 
-			if ( m_Friends != null && m_Friends.Count > 0 )
-				writer.Write( m_Friends, true );
+			if (m_Friends != null && m_Friends.Count > 0)
+				writer.Write(m_Friends, true);
 
 			// Version 14
-			writer.Write( (bool)m_RemoveIfUntamed );
-			writer.Write( (int)m_RemoveStep );
+			writer.Write((bool)m_RemoveIfUntamed);
+			writer.Write((int)m_RemoveStep);
 
 			// Version 17
-			if ( IsStabled || ( Controlled && ControlMaster != null ) )
-				writer.Write( TimeSpan.Zero );
+			if (IsStabled || (Controlled && ControlMaster != null))
+				writer.Write(TimeSpan.Zero);
 			else
-				writer.Write( DeleteTimeLeft );
+				writer.Write(DeleteTimeLeft);
 		}
 
 		private static double[] m_StandardActiveSpeeds = new double[]
@@ -5042,9 +5091,9 @@ namespace Server.Mobiles
 				0.350, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0, 1.2, 1.6, 2.0
 			};
 
-		public override void Deserialize( GenericReader reader )
+		public override void Deserialize(GenericReader reader)
 		{
-			base.Deserialize( reader );
+			base.Deserialize(reader);
 
 			int version = reader.ReadInt();
 
@@ -5057,16 +5106,16 @@ namespace Server.Mobiles
 				m_Slayer2 = (SlayerName)reader.ReadInt();
 			}
 
-			if ( version >= 21 )
+			if (version >= 21)
 				m_IsTempEnemy = reader.ReadBool();
 
-			if ( version >= 20 )
+			if (version >= 20)
 				m_Resource = (CraftResource)reader.ReadEncodedInt();
 
-			if ( version >= 19 )
+			if (version >= 19)
 				m_HitsBeforeMod = reader.ReadInt();
 
-			if ( version >= 18 )
+			if (version >= 18)
 			{
 				m_Coins = reader.ReadInt();
 				m_CoinType = reader.ReadString();
@@ -5087,40 +5136,40 @@ namespace Server.Mobiles
 			m_dPassiveSpeed = reader.ReadDouble();
 			m_dCurrentSpeed = reader.ReadDouble();
 
-			if ( m_iRangePerception == OldRangePerception )
+			if (m_iRangePerception == OldRangePerception)
 				m_iRangePerception = DefaultRangePerception;
 
 			m_pHome.X = reader.ReadInt();
 			m_pHome.Y = reader.ReadInt();
 			m_pHome.Z = reader.ReadInt();
 
-			if ( version >= 1 )
+			if (version >= 1)
 			{
 				m_iRangeHome = reader.ReadInt();
 
 				int i, iCount;
 
 				iCount = reader.ReadInt();
-				for ( i=0; i< iCount; i++ )
+				for (i = 0; i < iCount; i++)
 				{
 					string str = reader.ReadString();
-					Type type = Type.GetType( str );
+					Type type = Type.GetType(str);
 
-					if ( type != null )
+					if (type != null)
 					{
-						m_arSpellAttack.Add( type );
+						m_arSpellAttack.Add(type);
 					}
 				}
 
 				iCount = reader.ReadInt();
-				for ( i=0; i< iCount; i++ )
+				for (i = 0; i < iCount; i++)
 				{
 					string str = reader.ReadString();
-					Type type = Type.GetType( str );
+					Type type = Type.GetType(str);
 
-					if ( type != null )
+					if (type != null)
 					{
-						m_arSpellDefense.Add( type );
+						m_arSpellDefense.Add(type);
 					}
 				}
 			}
@@ -5129,28 +5178,28 @@ namespace Server.Mobiles
 				m_iRangeHome = 0;
 			}
 
-			if ( version >= 2 )
+			if (version >= 2)
 			{
-				m_FightMode = ( FightMode )reader.ReadInt();
+				m_FightMode = (FightMode)reader.ReadInt();
 
 				m_bControlled = reader.ReadBool();
 				m_ControlMaster = reader.ReadMobile();
 				m_ControlTarget = reader.ReadMobile();
 				m_ControlDest = reader.ReadPoint3D();
-				m_ControlOrder = (OrderType) reader.ReadInt();
+				m_ControlOrder = (OrderType)reader.ReadInt();
 
 				m_dMinTameSkill = reader.ReadDouble();
 
-				if ( version < 9 )
+				if (version < 9)
 					reader.ReadDouble();
 
 				m_bTamable = reader.ReadBool();
 				m_bSummoned = reader.ReadBool();
 
-				if ( m_bSummoned )
+				if (m_bSummoned)
 				{
 					m_SummonEnd = reader.ReadDeltaTime();
-					new UnsummonTimer( m_ControlMaster, this, m_SummonEnd - DateTime.Now ).Start();
+					new UnsummonTimer(m_ControlMaster, this, m_SummonEnd - DateTime.Now).Start();
 				}
 
 				m_iControlSlots = reader.ReadInt();
@@ -5165,18 +5214,18 @@ namespace Server.Mobiles
 				m_ControlOrder = OrderType.None;
 			}
 
-			if ( version >= 3 )
+			if (version >= 3)
 				m_Loyalty = reader.ReadInt();
 			else
 				m_Loyalty = MaxLoyalty; // Wonderfully Happy
 
-			if ( version >= 4 )
+			if (version >= 4)
 				m_CurrentWayPoint = reader.ReadItem() as WayPoint;
 
-			if ( version >= 5 )
+			if (version >= 5)
 				m_SummonMaster = reader.ReadMobile();
 
-			if ( version >= 6 )
+			if (version >= 6)
 			{
 				m_HitsMax = reader.ReadInt();
 				m_StamMax = reader.ReadInt();
@@ -5185,7 +5234,7 @@ namespace Server.Mobiles
 				m_DamageMax = reader.ReadInt();
 			}
 
-			if ( version >= 7 )
+			if (version >= 7)
 			{
 				m_PhysicalResistance = reader.ReadInt();
 				m_PhysicalDamage = reader.ReadInt();
@@ -5203,12 +5252,12 @@ namespace Server.Mobiles
 				m_EnergyDamage = reader.ReadInt();
 			}
 
-			if ( version >= 8 )
+			if (version >= 8)
 				m_Owners = reader.ReadStrongMobileList();
 			else
 				m_Owners = new List<Mobile>();
 
-			if ( version >= 10 )
+			if (version >= 10)
 			{
 				m_IsDeadPet = reader.ReadBool();
 				m_IsBonded = reader.ReadBool();
@@ -5216,49 +5265,49 @@ namespace Server.Mobiles
 				m_OwnerAbandonTime = reader.ReadDateTime();
 			}
 
-			if ( version >= 11 )
+			if (version >= 11)
 				m_HasGeneratedLoot = reader.ReadBool();
 			else
 				m_HasGeneratedLoot = true;
 
-			if ( version >= 12 )
+			if (version >= 12)
 				m_Paragon = reader.ReadBool();
 			else
 				m_Paragon = false;
 
-			if ( version >= 13 && reader.ReadBool() )
+			if (version >= 13 && reader.ReadBool())
 				m_Friends = reader.ReadStrongMobileList();
-			else if ( version < 13 && m_ControlOrder >= OrderType.Unfriend )
+			else if (version < 13 && m_ControlOrder >= OrderType.Unfriend)
 				++m_ControlOrder;
 
-			if ( version < 16 && Loyalty != MaxLoyalty )
+			if (version < 16 && Loyalty != MaxLoyalty)
 				Loyalty *= 10;
 
 			double activeSpeed = m_dActiveSpeed;
 			double passiveSpeed = m_dPassiveSpeed;
 
-			SpeedInfo.GetSpeeds( this, ref activeSpeed, ref passiveSpeed );
+			SpeedInfo.GetSpeeds(this, ref activeSpeed, ref passiveSpeed);
 
 			bool isStandardActive = false;
-			for ( int i = 0; !isStandardActive && i < m_StandardActiveSpeeds.Length; ++i )
-				isStandardActive = ( m_dActiveSpeed == m_StandardActiveSpeeds[i] );
+			for (int i = 0; !isStandardActive && i < m_StandardActiveSpeeds.Length; ++i)
+				isStandardActive = (m_dActiveSpeed == m_StandardActiveSpeeds[i]);
 
 			bool isStandardPassive = false;
-			for ( int i = 0; !isStandardPassive && i < m_StandardPassiveSpeeds.Length; ++i )
-				isStandardPassive = ( m_dPassiveSpeed == m_StandardPassiveSpeeds[i] );
+			for (int i = 0; !isStandardPassive && i < m_StandardPassiveSpeeds.Length; ++i)
+				isStandardPassive = (m_dPassiveSpeed == m_StandardPassiveSpeeds[i]);
 
-			if ( isStandardActive && m_dCurrentSpeed == m_dActiveSpeed )
+			if (isStandardActive && m_dCurrentSpeed == m_dActiveSpeed)
 				m_dCurrentSpeed = activeSpeed;
-			else if ( isStandardPassive && m_dCurrentSpeed == m_dPassiveSpeed )
+			else if (isStandardPassive && m_dCurrentSpeed == m_dPassiveSpeed)
 				m_dCurrentSpeed = passiveSpeed;
 
-			if ( isStandardActive && !m_Paragon )
+			if (isStandardActive && !m_Paragon)
 				m_dActiveSpeed = activeSpeed;
 
-			if ( isStandardPassive && !m_Paragon )
+			if (isStandardPassive && !m_Paragon)
 				m_dPassiveSpeed = passiveSpeed;
 
-			if ( version >= 14 )
+			if (version >= 14)
 			{
 				m_RemoveIfUntamed = reader.ReadBool();
 				m_RemoveStep = reader.ReadInt();
@@ -5266,19 +5315,19 @@ namespace Server.Mobiles
 
 			TimeSpan deleteTime = TimeSpan.Zero;
 
-			if ( version >= 17 )
+			if (version >= 17)
 				deleteTime = reader.ReadTimeSpan();
 
-			if ( deleteTime > TimeSpan.Zero || LastOwner != null && !Controlled && !IsStabled )
+			if (deleteTime > TimeSpan.Zero || LastOwner != null && !Controlled && !IsStabled)
 			{
-				if ( deleteTime == TimeSpan.Zero )
-					deleteTime = TimeSpan.FromDays( 3.0 );
+				if (deleteTime == TimeSpan.Zero)
+					deleteTime = TimeSpan.FromDays(3.0);
 
-				m_DeleteTimer = new DeleteTimer( this, deleteTime );
+				m_DeleteTimer = new DeleteTimer(this, deleteTime);
 				m_DeleteTimer.Start();
 			}
 
-			if( version <= 14 && m_Paragon && Hue == 0x31 )
+			if (version <= 14 && m_Paragon && Hue == 0x31)
 			{
 				Hue = Paragon.Hue; //Paragon hue fixed, should now be 0x501.
 			}
@@ -5292,19 +5341,19 @@ namespace Server.Mobiles
 			//if ( IsAnimatedDead )
 			//	Spells.Necromancy.AnimateDeadSpell.Register( m_SummonMaster, this );
 
-			if ( FightMode == FightMode.CharmMonster ){ FightMode = FightMode.Closest; }
-			else if ( FightMode == FightMode.CharmAnimal ){ FightMode = FightMode.Aggressor; }
+			if (FightMode == FightMode.CharmMonster) { FightMode = FightMode.Closest; }
+			else if (FightMode == FightMode.CharmAnimal) { FightMode = FightMode.Aggressor; }
 
-			if ( FollowersMax > 5 ){ FollowersMax = 5; }
+			if (FollowersMax > 5) { FollowersMax = 5; }
 
-			if ( !IsCitizen() && WhisperHue != 999 && WhisperHue != 666 && !CanHearGhosts && !Controlled && (this.Region is DungeonRegion || this.Region is DeadRegion || this.Region is CaveRegion || this.Region is BardDungeonRegion || this.Region is OutDoorBadRegion) )
+			if (!IsCitizen() && WhisperHue != 999 && WhisperHue != 666 && !CanHearGhosts && !Controlled && (this.Region is DungeonRegion || this.Region is DeadRegion || this.Region is CaveRegion || this.Region is BardDungeonRegion || this.Region is OutDoorBadRegion))
 			{
 				CanHearGhosts = true;
 				CantWalk = true;
 				Hidden = true;
 			}
 
-			if ( RaceID > 0 && BodyMod == 0 )
+			if (RaceID > 0 && BodyMod == 0)
 			{
 				BodyMod = RaceID;
 				HueMod = RaceSection;
@@ -5316,21 +5365,21 @@ namespace Server.Mobiles
 			return false;
 		}
 
-		public virtual bool CheckGold( Mobile from, Item dropped )
+		public virtual bool CheckGold(Mobile from, Item dropped)
 		{
-			if ( dropped is Gold )
-				return OnGoldGiven( from, (Gold)dropped );
+			if (dropped is Gold)
+				return OnGoldGiven(from, (Gold)dropped);
 
 			return false;
 		}
 
-		public virtual bool OnGoldGiven( Mobile from, Gold dropped )
+		public virtual bool OnGoldGiven(Mobile from, Gold dropped)
 		{
-			if ( CheckTeachingMatch( from ) )
+			if (CheckTeachingMatch(from))
 			{
-				if ( Teach( m_Teaching, from, dropped.Amount, true ) )
+				if (Teach(m_Teaching, from, dropped.Amount, true))
 				{
-					if ( this is BaseVendor )
+					if (this is BaseVendor)
 						this.CoinPurse += dropped.Amount;
 
 					this.InvalidateProperties();
@@ -5339,26 +5388,26 @@ namespace Server.Mobiles
 					return true;
 				}
 			}
-			else if ( IsHumanInTown() )
+			else if (IsHumanInTown())
 			{
-				Direction = GetDirectionTo( from );
+				Direction = GetDirectionTo(from);
 
 				int oldSpeechHue = this.SpeechHue;
 
 				this.SpeechHue = 0x23F;
-				SayTo( from, "Thou art giving me gold?" );
+				SayTo(from, "Thou art giving me gold?");
 
-				if ( dropped.Amount >= 400 )
-					SayTo( from, "'Tis a noble gift." );
+				if (dropped.Amount >= 400)
+					SayTo(from, "'Tis a noble gift.");
 				else
-					SayTo( from, "Money is always welcome." );
+					SayTo(from, "Money is always welcome.");
 
 				this.SpeechHue = 0x3B2;
-				SayTo( from, 501548 ); // I thank thee.
+				SayTo(from, 501548); // I thank thee.
 
 				this.SpeechHue = oldSpeechHue;
 
-				if ( this is BaseVendor )
+				if (this is BaseVendor)
 					this.CoinPurse += dropped.Amount;
 
 				this.InvalidateProperties();
@@ -5370,7 +5419,7 @@ namespace Server.Mobiles
 			return false;
 		}
 
-		public override bool ShouldCheckStatTimers{ get{ return false; } }
+		public override bool ShouldCheckStatTimers { get { return false; } }
 
 		#region Food
 		private static Type[] m_Eggs = new Type[]
@@ -5409,9 +5458,9 @@ namespace Server.Mobiles
 				typeof( HoneydewMelon ), typeof( YellowGourd ), typeof( GreenGourd ),
 				typeof( Banana ), typeof( Bananas ), typeof( Lemon ), typeof( Lime ),
 				typeof( Dates ), typeof( Grapes ), typeof( Peach ), typeof( Pear ),
-				typeof( Apple ), typeof( Watermelon ), typeof( Squash ), typeof ( SmallWatermelon ), 
-				typeof( Cantaloupe ), typeof( Carrot ), typeof( Cabbage ), typeof ( FoodImpBerry ), 
-				typeof( Onion ), typeof( Lettuce ), typeof( Pumpkin ), typeof( FoodToadStool ), 
+				typeof( Apple ), typeof( Watermelon ), typeof( Squash ), typeof ( SmallWatermelon ),
+				typeof( Cantaloupe ), typeof( Carrot ), typeof( Cabbage ), typeof ( FoodImpBerry ),
+				typeof( Onion ), typeof( Lettuce ), typeof( Pumpkin ), typeof( FoodToadStool ),
 				typeof( Tomato ), typeof( FoodPotato ), typeof( Corn ), typeof( Acorn ), typeof( CubedFruit )
 			};
 
@@ -5447,71 +5496,71 @@ namespace Server.Mobiles
 				typeof( MoonCrystal )
 			};
 
-		public virtual bool CheckFoodPreference( Item f )
+		public virtual bool CheckFoodPreference(Item f)
 		{
-			if ( CheckFoodPreference( f, FoodType.Eggs, m_Eggs ) )
+			if (CheckFoodPreference(f, FoodType.Eggs, m_Eggs))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Fish, m_Fish ) )
+			if (CheckFoodPreference(f, FoodType.Fish, m_Fish))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.GrainsAndHay, m_GrainsAndHay ) )
+			if (CheckFoodPreference(f, FoodType.GrainsAndHay, m_GrainsAndHay))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Meat, m_Meat ) )
+			if (CheckFoodPreference(f, FoodType.Meat, m_Meat))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.FruitsAndVegies, m_FruitsAndVegies ) )
+			if (CheckFoodPreference(f, FoodType.FruitsAndVegies, m_FruitsAndVegies))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Gold, m_Gold ) )
+			if (CheckFoodPreference(f, FoodType.Gold, m_Gold))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Fire, m_Fire ) )
+			if (CheckFoodPreference(f, FoodType.Fire, m_Fire))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Gems, m_Gems ) )
+			if (CheckFoodPreference(f, FoodType.Gems, m_Gems))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Nox, m_Nox ) )
+			if (CheckFoodPreference(f, FoodType.Nox, m_Nox))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Sea, m_Sea ) )
+			if (CheckFoodPreference(f, FoodType.Sea, m_Sea))
 				return true;
 
-			if ( CheckFoodPreference( f, FoodType.Moon, m_Moon ) )
+			if (CheckFoodPreference(f, FoodType.Moon, m_Moon))
 				return true;
 
 			return false;
 		}
 
-		public virtual bool CheckFoodPreference( Item fed, FoodType type, Type[] types )
+		public virtual bool CheckFoodPreference(Item fed, FoodType type, Type[] types)
 		{
-			if ( (FavoriteFood & type) == 0 )
+			if ((FavoriteFood & type) == 0)
 				return false;
 
 			Type fedType = fed.GetType();
 			bool contains = false;
 
-			for ( int i = 0; !contains && i < types.Length; ++i )
-				contains = ( fedType == types[i] );
+			for (int i = 0; !contains && i < types.Length; ++i)
+				contains = (fedType == types[i]);
 
 			return contains;
 		}
 
-		public static bool IsPet( Mobile m )
+		public static bool IsPet(Mobile m)
 		{
-			if ( m is PlayerMobile )
+			if (m is PlayerMobile)
 				return false;
 
-			if ( m is BaseCreature )
+			if (m is BaseCreature)
 			{
-				if ( m is FrankenFighter || m is GolemFighter || m is HenchmanMonster || m is HenchmanWizard || m is HenchmanArcher || m is HenchmanFighter )
+				if (m is FrankenFighter || m is GolemFighter || m is HenchmanMonster || m is HenchmanWizard || m is HenchmanArcher || m is HenchmanFighter)
 					return false;
 
 				BaseCreature bc = (BaseCreature)m;
 
-				if ( bc.Summoned || bc.Controlled )
+				if (bc.Summoned || bc.Controlled)
 				{
 					bc.SpawnerID = 0;
 					return true;
@@ -5521,98 +5570,98 @@ namespace Server.Mobiles
 			return false;
 		}
 
-		public static bool IsHenchman( Mobile m )
+		public static bool IsHenchman(Mobile m)
 		{
-			if ( m is FrankenFighter || m is HenchmanMonster || m is HenchmanWizard || m is HenchmanArcher || m is HenchmanFighter )
+			if (m is FrankenFighter || m is HenchmanMonster || m is HenchmanWizard || m is HenchmanArcher || m is HenchmanFighter)
 				return false;
 
 			return false;
 		}
 
-		public virtual bool CheckFeed( Mobile from, Item dropped )
+		public virtual bool CheckFeed(Mobile from, Item dropped)
 		{
-			if ( 	!IsDeadPet && 
-					!( this is FrankenPorter ) && 
-					!( this is FrankenFighter ) && 
-					!( this is GolemPorter ) && 
-					!( this is AerialServant ) && 
-					!( this is PackBeast ) && 
-					!( this is HenchmanFamiliar ) && 
-					!( this is HenchmanFighter ) && 
-					!( this is HenchmanMonster ) && 
-					!( this is HenchmanWizard ) && 
-					!( this is HenchmanArcher ) && 
-					Controlled && 
-					( ControlMaster == from || IsPetFriend( from ) )
+			if (!IsDeadPet &&
+					!(this is FrankenPorter) &&
+					!(this is FrankenFighter) &&
+					!(this is GolemPorter) &&
+					!(this is AerialServant) &&
+					!(this is PackBeast) &&
+					!(this is HenchmanFamiliar) &&
+					!(this is HenchmanFighter) &&
+					!(this is HenchmanMonster) &&
+					!(this is HenchmanWizard) &&
+					!(this is HenchmanArcher) &&
+					Controlled &&
+					(ControlMaster == from || IsPetFriend(from))
 				)
 			{
 				Item f = dropped;
 
-				if ( CheckFoodPreference( f ) )
+				if (CheckFoodPreference(f))
 				{
 					int amount = f.Amount;
 
-					if ( amount > 0 )
+					if (amount > 0)
 					{
 						int stamGain;
 
-						if ( f is Gold )
+						if (f is Gold)
 							stamGain = amount - 50;
 						else
 							stamGain = (amount * 15) - 50;
 
-						if ( stamGain > 0 )
+						if (stamGain > 0)
 							Stam += stamGain;
 
-						if ( Core.SE )
+						if (Core.SE)
 						{
-							if ( m_Loyalty < MaxLoyalty )
+							if (m_Loyalty < MaxLoyalty)
 							{
 								m_Loyalty = MaxLoyalty;
 							}
 						}
 						else
 						{
-							for ( int i = 0; i < amount; ++i )
+							for (int i = 0; i < amount; ++i)
 							{
-								if ( m_Loyalty < MaxLoyalty  && 0.5 >= Utility.RandomDouble() )
+								if (m_Loyalty < MaxLoyalty && 0.5 >= Utility.RandomDouble())
 								{
 									m_Loyalty += 10;
 								}
 							}
 						}
 
-						/* if ( happier )*/	// looks like in OSI pets say they are happier even if they are at maximum loyalty
-							SayTo( from, 502060 ); // Your pet looks happier.
+						/* if ( happier )*/    // looks like in OSI pets say they are happier even if they are at maximum loyalty
+						SayTo(from, 502060); // Your pet looks happier.
 
-						if ( Body.IsAnimal )
-							Animate( 3, 5, 1, true, false, 0 );
-						else if ( Body.IsMonster )
-							Animate( 17, 5, 1, true, false, 0 );
+						if (Body.IsAnimal)
+							Animate(3, 5, 1, true, false, 0);
+						else if (Body.IsMonster)
+							Animate(17, 5, 1, true, false, 0);
 
-						if ( IsBondable && !IsBonded )
+						if (IsBondable && !IsBonded)
 						{
 							Mobile master = m_ControlMaster;
 
-							if ( master != null && master == from )	//So friends can't start the bonding process
+							if (master != null && master == from)   //So friends can't start the bonding process
 							{
-								if ( m_dMinTameSkill <= 29.1 || master.Skills[SkillName.Taming].Base >= m_dMinTameSkill || OverrideBondingReqs() || (Core.ML && master.Skills[SkillName.Taming].Value >= m_dMinTameSkill) )
+								if (m_dMinTameSkill <= 29.1 || master.Skills[SkillName.Taming].Base >= m_dMinTameSkill || OverrideBondingReqs() || (Core.ML && master.Skills[SkillName.Taming].Value >= m_dMinTameSkill))
 								{
-									if ( BondingBegin == DateTime.MinValue )
+									if (BondingBegin == DateTime.MinValue)
 									{
 										BondingBegin = DateTime.Now;
 									}
 
-									if ( ( MyServerSettings.BondDays() < 1 ) || ( (BondingBegin + BondingDelay) <= DateTime.Now ) )
+									if ((MyServerSettings.BondDays() < 1) || ((BondingBegin + BondingDelay) <= DateTime.Now))
 									{
 										IsBonded = true;
 										BondingBegin = DateTime.MinValue;
-										from.SendLocalizedMessage( 1049666 ); // Your pet has bonded with you!
+										from.SendLocalizedMessage(1049666); // Your pet has bonded with you!
 									}
 								}
-								else if( Core.ML )
+								else if (Core.ML)
 								{
-									from.SendLocalizedMessage( 1075268 ); // Your pet cannot form a bond with you until your taming ability has risen.
+									from.SendLocalizedMessage(1075268); // Your pet cannot form a bond with you until your taming ability has risen.
 								}
 							}
 						}
@@ -5634,7 +5683,7 @@ namespace Server.Mobiles
 			return false;
 		}
 
-		public virtual bool CanAngerOnTame{ get{ return false; } }
+		public virtual bool CanAngerOnTame { get { return false; } }
 
 		#region OnAction[...]
 
@@ -5664,24 +5713,24 @@ namespace Server.Mobiles
 
 		#endregion
 
-		public override bool OnDragDrop( Mobile from, Item dropped )
+		public override bool OnDragDrop(Mobile from, Item dropped)
 		{
-			if ( CheckFeed( from, dropped ) )
+			if (CheckFeed(from, dropped))
 				return true;
-			else if ( CheckGold( from, dropped ) )
+			else if (CheckGold(from, dropped))
 				return true;
 
-			return base.OnDragDrop( from, dropped );
+			return base.OnDragDrop(from, dropped);
 		}
 
 		protected virtual BaseAI ForcedAI { get { return null; } }
 
-		public  void ChangeAIType( AIType NewAI )
+		public void ChangeAIType(AIType NewAI)
 		{
-			if ( m_AI != null )
+			if (m_AI != null)
 				m_AI.m_Timer.Stop();
 
-			if( ForcedAI != null )
+			if (ForcedAI != null)
 			{
 				m_AI = ForcedAI;
 				return;
@@ -5689,7 +5738,7 @@ namespace Server.Mobiles
 
 			m_AI = null;
 
-			switch ( NewAI )
+			switch (NewAI)
 			{
 				case AIType.AI_Melee:
 					m_AI = new MeleeAI(this);
@@ -5727,7 +5776,7 @@ namespace Server.Mobiles
 			ChangeAIType(m_DefaultAI);
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public AIType AI
 		{
 			get
@@ -5747,7 +5796,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.Administrator )]
+		[CommandProperty(AccessLevel.Administrator)]
 		public bool Debug
 		{
 			get
@@ -5760,7 +5809,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int Team
 		{
 			get
@@ -5779,7 +5828,7 @@ namespace Server.Mobiles
 		{
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Mobile FocusMob
 		{
 			get
@@ -5792,7 +5841,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public FightMode FightMode
 		{
 			get
@@ -5805,7 +5854,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int RangePerception
 		{
 			get
@@ -5818,7 +5867,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int RangeFight
 		{
 			get
@@ -5831,7 +5880,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int RangeHome
 		{
 			get
@@ -5844,7 +5893,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public double ActiveSpeed
 		{
 			get
@@ -5857,7 +5906,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public double PassiveSpeed
 		{
 			get
@@ -5870,19 +5919,19 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public double CurrentSpeed
 		{
 			get
 			{
-				if ( m_TargetLocation != null )
+				if (m_TargetLocation != null)
 					return 0.3;
 
 				return m_dCurrentSpeed;
 			}
 			set
 			{
-				if ( m_dCurrentSpeed != value )
+				if (m_dCurrentSpeed != value)
 				{
 					m_dCurrentSpeed = value;
 
@@ -5892,7 +5941,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Point3D Home
 		{
 			get
@@ -5905,7 +5954,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool Controlled
 		{
 			get
@@ -5914,11 +5963,11 @@ namespace Server.Mobiles
 			}
 			set
 			{
-				if ( m_bControlled == value )
+				if (m_bControlled == value)
 					return;
 
 				m_bControlled = value;
-				Delta( MobileDelta.Noto );
+				Delta(MobileDelta.Noto);
 
 				InvalidateProperties();
 			}
@@ -5926,82 +5975,82 @@ namespace Server.Mobiles
 
 		public override void RevealingAction()
 		{
-			if ( MyServerSettings.LineOfSight( this, true ) )
+			if (MyServerSettings.LineOfSight(this, true))
 			{
 				this.CantWalk = m_NoWalker;
 				this.Hidden = false;
 			}
-			else if ( WhisperHue == 999 && Hidden && CantWalk && !CanSwim && !Server.Mobiles.BasePirate.IsSailor( this ) )
+			else if (WhisperHue == 999 && Hidden && CantWalk && !CanSwim && !Server.Mobiles.BasePirate.IsSailor(this))
 			{
-				this.PlaySound( 0x026 );
-				Effects.SendLocationEffect( this.Location, this.Map, 0x23B2, 16 );
+				this.PlaySound(0x026);
+				Effects.SendLocationEffect(this.Location, this.Map, 0x23B2, 16);
 				this.CantWalk = m_NoWalker;
 				this.CanSwim = m_Swimmer;
 				this.Hidden = false;
 			}
-			else if ( WhisperHue == 666 && Hidden && CantWalk && !IsTempEnemy )
+			else if (WhisperHue == 666 && Hidden && CantWalk && !IsTempEnemy)
 			{
-				Server.Items.DemonGate.MakeDemonGate( this );
+				Server.Items.DemonGate.MakeDemonGate(this);
 				this.CantWalk = m_NoWalker;
 				this.Hidden = false;
 			}
 
 			this.CantWalk = m_NoWalker;
 
-			Spells.Sixth.InvisibilitySpell.RemoveTimer( this );
+			Spells.Sixth.InvisibilitySpell.RemoveTimer(this);
 
 			base.RevealingAction();
 		}
 
 		public void RemoveFollowers()
 		{
-			if ( m_ControlMaster != null )
+			if (m_ControlMaster != null)
 			{
 				m_ControlMaster.Followers -= ControlSlots;
-				if( m_ControlMaster is PlayerMobile )
+				if (m_ControlMaster is PlayerMobile)
 				{
-					((PlayerMobile)m_ControlMaster).AllFollowers.Remove( this );
-					if( ((PlayerMobile)m_ControlMaster).AutoStabled.Contains( this ) )
-						((PlayerMobile)m_ControlMaster).AutoStabled.Remove( this );
+					((PlayerMobile)m_ControlMaster).AllFollowers.Remove(this);
+					if (((PlayerMobile)m_ControlMaster).AutoStabled.Contains(this))
+						((PlayerMobile)m_ControlMaster).AutoStabled.Remove(this);
 				}
 			}
-			else if ( m_SummonMaster != null )
+			else if (m_SummonMaster != null)
 			{
 				m_SummonMaster.Followers -= ControlSlots;
-				if( m_SummonMaster is PlayerMobile )
+				if (m_SummonMaster is PlayerMobile)
 				{
-					((PlayerMobile)m_SummonMaster).AllFollowers.Remove( this );
+					((PlayerMobile)m_SummonMaster).AllFollowers.Remove(this);
 				}
 			}
 
-			if ( m_ControlMaster != null && m_ControlMaster.Followers < 0 )
+			if (m_ControlMaster != null && m_ControlMaster.Followers < 0)
 				m_ControlMaster.Followers = 0;
 
-			if ( m_SummonMaster != null && m_SummonMaster.Followers < 0 )
+			if (m_SummonMaster != null && m_SummonMaster.Followers < 0)
 				m_SummonMaster.Followers = 0;
 		}
 
 		public void AddFollowers()
 		{
-			if ( m_ControlMaster != null )
+			if (m_ControlMaster != null)
 			{
 				m_ControlMaster.Followers += ControlSlots;
-				if( m_ControlMaster is PlayerMobile )
+				if (m_ControlMaster is PlayerMobile)
 				{
-					((PlayerMobile)m_ControlMaster).AllFollowers.Add( this );
+					((PlayerMobile)m_ControlMaster).AllFollowers.Add(this);
 				}
 			}
-			else if ( m_SummonMaster != null )
+			else if (m_SummonMaster != null)
 			{
 				m_SummonMaster.Followers += ControlSlots;
-				if( m_SummonMaster is PlayerMobile )
+				if (m_SummonMaster is PlayerMobile)
 				{
-					((PlayerMobile)m_SummonMaster).AllFollowers.Add( this );
+					((PlayerMobile)m_SummonMaster).AllFollowers.Add(this);
 				}
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Mobile ControlMaster
 		{
 			get
@@ -6010,20 +6059,20 @@ namespace Server.Mobiles
 			}
 			set
 			{
-				if ( m_ControlMaster == value || this == value )
+				if (m_ControlMaster == value || this == value)
 					return;
 
 				RemoveFollowers();
 				m_ControlMaster = value;
 				AddFollowers();
-				if ( m_ControlMaster != null )
+				if (m_ControlMaster != null)
 					StopDeleteTimer();
 
-				Delta( MobileDelta.Noto );
+				Delta(MobileDelta.Noto);
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Mobile SummonMaster
 		{
 			get
@@ -6032,18 +6081,18 @@ namespace Server.Mobiles
 			}
 			set
 			{
-				if ( m_SummonMaster == value || this == value )
+				if (m_SummonMaster == value || this == value)
 					return;
 
 				RemoveFollowers();
 				m_SummonMaster = value;
 				AddFollowers();
 
-				Delta( MobileDelta.Noto );
+				Delta(MobileDelta.Noto);
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Mobile ControlTarget
 		{
 			get
@@ -6056,7 +6105,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Point3D ControlDest
 		{
 			get
@@ -6069,7 +6118,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public OrderType ControlOrder
 		{
 			get
@@ -6080,28 +6129,28 @@ namespace Server.Mobiles
 			{
 				m_ControlOrder = value;
 
-				if ( m_AI != null )
+				if (m_AI != null)
 					m_AI.OnCurrentOrderChanged();
 
 				InvalidateProperties();
 
-				if ( m_ControlMaster != null )
+				if (m_ControlMaster != null)
 					m_ControlMaster.InvalidateProperties();
 
 				#region KoperPets
 				//KOPERPETS If the AI state is changed to a valid pet command, try to gain Herding skill
-        		if (ControlMaster != null && Controlled)
-        		{
-            		if (value == OrderType.Come || value == OrderType.Guard || value == OrderType.Follow || value == OrderType.Stay)
-            		{
-                		Server.Custom.KoperPets.KoperHerdingGain.TryGainHerdingSkill(ControlMaster);
-            		}
-        		}
+				if (ControlMaster != null && Controlled)
+				{
+					if (value == OrderType.Come || value == OrderType.Guard || value == OrderType.Follow || value == OrderType.Stay)
+					{
+						Server.Custom.KoperPets.KoperHerdingGain.TryGainHerdingSkill(ControlMaster);
+					}
+				}
 				#endregion
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool BardProvoked
 		{
 			get
@@ -6114,7 +6163,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool BardPacified
 		{
 			get
@@ -6127,7 +6176,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Mobile BardMaster
 		{
 			get
@@ -6140,7 +6189,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Mobile BardTarget
 		{
 			get
@@ -6153,7 +6202,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public DateTime BardEndTime
 		{
 			get
@@ -6166,7 +6215,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public double MinTameSkill
 		{
 			get
@@ -6179,7 +6228,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public bool Tamable
 		{
 			get
@@ -6192,7 +6241,7 @@ namespace Server.Mobiles
 			}
 		}
 
-		[CommandProperty( AccessLevel.Administrator )]
+		[CommandProperty(AccessLevel.Administrator)]
 		public bool Summoned
 		{
 			get
@@ -6201,19 +6250,19 @@ namespace Server.Mobiles
 			}
 			set
 			{
-				if ( m_bSummoned == value )
+				if (m_bSummoned == value)
 					return;
 
 				m_NextReacquireTime = DateTime.Now;
 
 				m_bSummoned = value;
-				Delta( MobileDelta.Noto );
+				Delta(MobileDelta.Noto);
 
 				InvalidateProperties();
 			}
 		}
 
-		[CommandProperty( AccessLevel.Administrator )]
+		[CommandProperty(AccessLevel.Administrator)]
 		public int ControlSlots
 		{
 			get
@@ -6226,106 +6275,106 @@ namespace Server.Mobiles
 			}
 		}
 
-		public virtual bool NoHouseRestrictions{ get{ return false; } }
-		public virtual bool IsHouseSummonable{ get{ return false; } }
+		public virtual bool NoHouseRestrictions { get { return false; } }
+		public virtual bool IsHouseSummonable { get { return false; } }
 
 		#region Corpse Resources
-		public virtual int Feathers{ get{ return 0; } }
-		public virtual int Wool{ get{ return 0; } }
+		public virtual int Feathers { get { return 0; } }
+		public virtual int Wool { get { return 0; } }
 
-		public virtual MeatType MeatType{ get{ return MeatType.Ribs; } }
-		public virtual int Meat{ get{ return 0; } }
+		public virtual MeatType MeatType { get { return MeatType.Ribs; } }
+		public virtual int Meat { get { return 0; } }
 
-		public virtual ClothType ClothType{ get{ return ClothType.Fabric; } }
-		public virtual int Cloths{ get{ return 0; } }
+		public virtual ClothType ClothType { get { return ClothType.Fabric; } }
+		public virtual int Cloths { get { return 0; } }
 
-		public virtual int Hides{ get{ return 0; } }
-		public virtual HideType HideType{ get{ return HideType.Regular; } }
+		public virtual int Hides { get { return 0; } }
+		public virtual HideType HideType { get { return HideType.Regular; } }
 
-		public virtual int Scales{ get{ return 0; } }
-		public virtual ScaleType ScaleType{ get{ return ScaleType.Red; } }
+		public virtual int Scales { get { return 0; } }
+		public virtual ScaleType ScaleType { get { return ScaleType.Red; } }
 
-		public virtual int Rocks{ get{ return 0; } }
-		public virtual RockType RockType{ get{ return RockType.Iron; } }
+		public virtual int Rocks { get { return 0; } }
+		public virtual RockType RockType { get { return RockType.Iron; } }
 
-		public virtual int Skeletal{ get{ return 0; } }
-		public virtual SkeletalType SkeletalType{ get{ return SkeletalType.Brittle; } }
+		public virtual int Skeletal { get { return 0; } }
+		public virtual SkeletalType SkeletalType { get { return SkeletalType.Brittle; } }
 
-		public virtual int Skin{ get{ return 0; } }
-		public virtual SkinType SkinType{ get{ return SkinType.Demon; } }
+		public virtual int Skin { get { return 0; } }
+		public virtual SkinType SkinType { get { return SkinType.Demon; } }
 
-		public virtual int Granite{ get{ return 0; } }
-		public virtual GraniteType GraniteType{ get{ return GraniteType.Iron; } }
+		public virtual int Granite { get { return 0; } }
+		public virtual GraniteType GraniteType { get { return GraniteType.Iron; } }
 
-		public virtual int Metal{ get{ return 0; } }
-		public virtual MetalType MetalType{ get{ return MetalType.Iron; } }
+		public virtual int Metal { get { return 0; } }
+		public virtual MetalType MetalType { get { return MetalType.Iron; } }
 
-		public virtual int Wood{ get{ return 0; } }
-		public virtual WoodType WoodType{ get{ return WoodType.Regular; } }
+		public virtual int Wood { get { return 0; } }
+		public virtual WoodType WoodType { get { return WoodType.Regular; } }
 
 		#endregion
 
-		public virtual bool AutoDispel{ get{ return false; } }
+		public virtual bool AutoDispel { get { return false; } }
 		public virtual double AutoDispelChance
 		{
 			get
 			{
-				if ( this.Skills[SkillName.Magery].Value < 53 && this.Skills[SkillName.Necromancy].Value < 80 )
+				if (this.Skills[SkillName.Magery].Value < 53 && this.Skills[SkillName.Necromancy].Value < 80)
 					return 0.0;
 
 				return (double)(Server.Misc.IntelligentAction.GetCreatureLevel(this));
 			}
 		}
 
-		public virtual bool IsScaryToPets{ get{ return false; } }
-		public virtual bool IsScaredOfScaryThings{ get{ return true; } }
+		public virtual bool IsScaryToPets { get { return false; } }
+		public virtual bool IsScaredOfScaryThings { get { return true; } }
 
-		public virtual bool CanRummageCorpses{ get{ return false; } }
+		public virtual bool CanRummageCorpses { get { return false; } }
 
-		public static bool CanDispel( BaseCreature attacker, Mobile defender )
+		public static bool CanDispel(BaseCreature attacker, Mobile defender)
 		{
-			if ( defender is BaseCreature )
+			if (defender is BaseCreature)
 			{
 				BaseCreature bc = (BaseCreature)defender;
-				if ( bc.IsDispellable && ( Utility.RandomMinMax(0,50) + attacker.AutoDispelChance ) > bc.DispelDifficulty )
+				if (bc.IsDispellable && (Utility.RandomMinMax(0, 50) + attacker.AutoDispelChance) > bc.DispelDifficulty)
 					return true;
 			}
 			return false;
 		}
 
-		public virtual void OnGotMeleeAttack( Mobile attacker )
+		public virtual void OnGotMeleeAttack(Mobile attacker)
 		{
-			if ( attacker is PlayerMobile && attacker.RaceID > 0 && attacker.RaceMakeSounds && attacker.RaceAttackSound > 0 && Utility.RandomBool() )
-				attacker.PlaySound( attacker.RaceAttackSound );
-			
-			if ( CanDispel( this, attacker ) )
-				Dispel( attacker );
+			if (attacker is PlayerMobile && attacker.RaceID > 0 && attacker.RaceMakeSounds && attacker.RaceAttackSound > 0 && Utility.RandomBool())
+				attacker.PlaySound(attacker.RaceAttackSound);
 
-			int stealing = Utility.RandomMinMax( 1, (int)(attacker.Skills[SkillName.Stealing].Value) ) + 10;
+			if (CanDispel(this, attacker))
+				Dispel(attacker);
+
+			int stealing = Utility.RandomMinMax(1, (int)(attacker.Skills[SkillName.Stealing].Value)) + 10;
 			double snooping = attacker.Skills[SkillName.Snooping].Value;
-			int level = IntelligentAction.GetCreatureLevel( this );
+			int level = IntelligentAction.GetCreatureLevel(this);
 
-			int x = System.Math.Abs( this.X - attacker.X );
-			int y = System.Math.Abs( this.Y - attacker.Y );
+			int x = System.Math.Abs(this.X - attacker.X);
+			int y = System.Math.Abs(this.Y - attacker.Y);
 
-			if ( m_Coins > 0 && x < 2 && y < 2 && attacker is PlayerMobile && ((PlayerMobile)attacker).NpcGuild == NpcGuild.ThievesGuild 
-				&& stealing >= 50.0 && level < stealing && snooping > Utility.RandomMinMax(20, 126) )
+			if (m_Coins > 0 && x < 2 && y < 2 && attacker is PlayerMobile && ((PlayerMobile)attacker).NpcGuild == NpcGuild.ThievesGuild
+				&& stealing >= 50.0 && level < stealing && snooping > Utility.RandomMinMax(20, 126))
 			{
-				int coins = m_Coins * ( 1 - ( level / stealing ) );
-				if ( coins < 1 )
+				int coins = m_Coins * (1 - (level / stealing));
+				if (coins < 1)
 					coins = 1;
 
-				coins = Utility.RandomMinMax( 1, coins );
+				coins = Utility.RandomMinMax(1, coins);
 
 				m_Coins = m_Coins - coins;
 
-				if ( m_Coins < 0 )
+				if (m_Coins < 0)
 					m_Coins = 0;
-				
-				attacker.AddToBackpack( new MarksOfTheShadowbroker( coins ) );	
-				
+
+				attacker.AddToBackpack(new MarksOfTheShadowbroker(coins));
+
 				string stole = "stolen";
-				switch ( Utility.RandomMinMax( 0, 7 ) ) 
+				switch (Utility.RandomMinMax(0, 7))
 				{
 					case 1: stole = "swiped"; break;
 					case 2: stole = "grabbed"; break;
@@ -6336,112 +6385,113 @@ namespace Server.Mobiles
 					case 7: stole = "snatched"; break;
 				}
 
-				attacker.SendMessage( "You " + stole + " " + coins + " " + "Marks of the Shadow Broker!" );
+				attacker.SendMessage("You " + stole + " " + coins + " " + "Marks of the Shadow Broker!");
 
-				if ( this.Karma > 0 )
-					Titles.AwardKarma( attacker, -coins, false );
+				if (this.Karma > 0)
+					Titles.AwardKarma(attacker, -coins, false);
 
-				if ( ( ( stealing - level ) < 50 ) && Utility.RandomBool() )
-					attacker.CheckSkill( SkillName.Stealing, 0, 125 );
+				if (((stealing - level) < 50) && Utility.RandomBool())
+					attacker.CheckSkill(SkillName.Stealing, 0, 125);
 			}
 		}
 
-		public bool DispelChecks( Mobile m )
+		public bool DispelChecks(Mobile m)
 		{
 			double DispelChance = 0.25; // 25% chance to dispel at gm magery
 
 			bool willDispel = true;
 			int nope = 10;
-			double magery = this.Skills[ SkillName.Magery ].Value * DispelChance * 0.01;
+			double magery = this.Skills[SkillName.Magery].Value * DispelChance * 0.01;
 
-			if ( !( magery > Utility.RandomDouble() ) )
+			if (!(magery > Utility.RandomDouble()))
 				willDispel = false;
-			else if ( this.Mana < 40 || ( this.Skills[SkillName.Magery].Value < 54 && this.Skills[SkillName.Necromancy].Value < 81 ) )
+			else if (this.Mana < 40 || (this.Skills[SkillName.Magery].Value < 54 && this.Skills[SkillName.Necromancy].Value < 81))
 				willDispel = false;
-			
-			if ( m != null && m is BaseCreature )
+
+			if (m != null && m is BaseCreature)
 			{
 				BaseCreature bc = (BaseCreature)m;
 
-				if ( bc.Slayer != SlayerName.None && (SlayerGroup.GetEntryByName( bc.Slayer )).Slays( this ))
+				if (bc.Slayer != SlayerName.None && (SlayerGroup.GetEntryByName(bc.Slayer)).Slays(this))
 					nope += 50;
-				else if ( bc.Slayer2 != SlayerName.None && (SlayerGroup.GetEntryByName( bc.Slayer2 )).Slays( this ))
+				else if (bc.Slayer2 != SlayerName.None && (SlayerGroup.GetEntryByName(bc.Slayer2)).Slays(this))
 					nope += 50;
 			}
 
-			if ( nope > 99 )
+			if (nope > 99)
 				nope = 99;
 
-			if ( nope >= Utility.RandomMinMax( 1, 100 ) )
+			if (nope >= Utility.RandomMinMax(1, 100))
 				willDispel = false;
 
 			return willDispel;
 		}
 
-		public virtual void Dispel( Mobile m )
+		public virtual void Dispel(Mobile m)
 		{
-			if ( DispelChecks( m ) )
+			if (DispelChecks(m))
 			{
-				Effects.SendLocationParticles( EffectItem.Create( m.Location, m.Map, EffectItem.DefaultDuration ), 0x3728, 8, 20, 5042 );
-				Effects.PlaySound( m, m.Map, 0x201 );
+				Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 5042);
+				Effects.PlaySound(m, m.Map, 0x201);
 				m.Delete();
 			}
 		}
 
-		public virtual bool DeleteOnRelease{ get{ return m_bSummoned; } }
+		public virtual bool DeleteOnRelease { get { return m_bSummoned; } }
 
-		public virtual void OnGaveMeleeAttack( Mobile defender )
+		public virtual void OnGaveMeleeAttack(Mobile defender)
 		{
-			if ( defender is PlayerMobile && defender.RaceID > 0 && defender.RaceMakeSounds && defender.RaceHurtSound > 0 && Utility.RandomBool() )
-				defender.PlaySound( defender.RaceHurtSound );
+			if (defender is PlayerMobile && defender.RaceID > 0 && defender.RaceMakeSounds && defender.RaceHurtSound > 0 && Utility.RandomBool())
+				defender.PlaySound(defender.RaceHurtSound);
 
 			Poison p = HitPoison;
 
-			if ( m_Paragon )
-				p = PoisonImpl.IncreaseLevel( p );
+			if (m_Paragon)
+				p = PoisonImpl.IncreaseLevel(p);
 
-			if ( p != null && HitPoisonChance >= Utility.RandomDouble() ) {
-				defender.ApplyPoison( this, p );
-				if ( this.Controlled )
+			if (p != null && HitPoisonChance >= Utility.RandomDouble())
+			{
+				defender.ApplyPoison(this, p);
+				if (this.Controlled)
 					this.CheckSkill(SkillName.Poisoning, 0, this.Skills[SkillName.Poisoning].Cap);
 			}
 
-			if ( CanDispel( this, defender ) )
-				Dispel( defender );
+			if (CanDispel(this, defender))
+				Dispel(defender);
 
-			Server.Misc.IntelligentAction.SaySomethingWhenAttacking( this, defender );
+			Server.Misc.IntelligentAction.SaySomethingWhenAttacking(this, defender);
 
-			if ( AI == AIType.AI_Archer )
+			if (AI == AIType.AI_Archer)
 			{
 				int sound = 0;
 
-				if ( FindItemOnLayer( Layer.OneHanded ) is BaseMeleeWeapon ) { sound = ( ( BaseMeleeWeapon )( FindItemOnLayer( Layer.OneHanded ) ) ).DefHitSound; }
-				else if ( FindItemOnLayer( Layer.TwoHanded ) is BaseMeleeWeapon ) { sound = ( ( BaseMeleeWeapon )( FindItemOnLayer( Layer.TwoHanded ) ) ).DefHitSound; }
+				if (FindItemOnLayer(Layer.OneHanded) is BaseMeleeWeapon) { sound = ((BaseMeleeWeapon)(FindItemOnLayer(Layer.OneHanded))).DefHitSound; }
+				else if (FindItemOnLayer(Layer.TwoHanded) is BaseMeleeWeapon) { sound = ((BaseMeleeWeapon)(FindItemOnLayer(Layer.TwoHanded))).DefHitSound; }
 
-				if ( sound > 0 ){ PlaySound( sound ); }
+				if (sound > 0) { PlaySound(sound); }
 			}
-			else if ( AI == AIType.AI_Mage )
+			else if (AI == AIType.AI_Mage)
 			{
 				int sound = 0;
 
-				if ( FindItemOnLayer( Layer.OneHanded ) is BaseWizardStaff ) { sound = ( ( BaseMeleeWeapon )( FindItemOnLayer( Layer.OneHanded ) ) ).DefHitSound; }
-				else if ( FindItemOnLayer( Layer.TwoHanded ) is BaseWizardStaff ) { sound = ( ( BaseMeleeWeapon )( FindItemOnLayer( Layer.TwoHanded ) ) ).DefHitSound; }
+				if (FindItemOnLayer(Layer.OneHanded) is BaseWizardStaff) { sound = ((BaseMeleeWeapon)(FindItemOnLayer(Layer.OneHanded))).DefHitSound; }
+				else if (FindItemOnLayer(Layer.TwoHanded) is BaseWizardStaff) { sound = ((BaseMeleeWeapon)(FindItemOnLayer(Layer.TwoHanded))).DefHitSound; }
 
-				if ( sound > 0 ){ PlaySound( sound ); }
+				if (sound > 0) { PlaySound(sound); }
 			}
 		}
 
 		public override void OnAfterDelete()
 		{
-			if ( m_AI != null )
+			if (m_AI != null)
 			{
-				if ( m_AI.m_Timer != null )
+				if (m_AI.m_Timer != null)
 					m_AI.m_Timer.Stop();
 
 				m_AI = null;
 			}
 
-			if ( m_DeleteTimer != null )
+			if (m_DeleteTimer != null)
 			{
 				m_DeleteTimer.Stop();
 				m_DeleteTimer = null;
@@ -6455,16 +6505,16 @@ namespace Server.Mobiles
 			base.OnAfterDelete();
 		}
 
-		public void DebugSay( string text )
+		public void DebugSay(string text)
 		{
-			if ( m_bDebugAI )
-				this.PublicOverheadMessage( MessageType.Regular, 41, false, text );
+			if (m_bDebugAI)
+				this.PublicOverheadMessage(MessageType.Regular, 41, false, text);
 		}
 
-		public void DebugSay( string format, params object[] args )
+		public void DebugSay(string format, params object[] args)
 		{
-			if ( m_bDebugAI )
-				this.PublicOverheadMessage( MessageType.Regular, 41, false, String.Format( format, args ) );
+			if (m_bDebugAI)
+				this.PublicOverheadMessage(MessageType.Regular, 41, false, String.Format(format, args));
 		}
 
 		/*
@@ -6474,20 +6524,20 @@ namespace Server.Mobiles
 		 *
 		 */
 
-		public virtual double GetFightModeRanking( Mobile m, FightMode acqType, bool bPlayerOnly )
+		public virtual double GetFightModeRanking(Mobile m, FightMode acqType, bool bPlayerOnly)
 		{
-			if ( ( bPlayerOnly && m.Player ) ||  !bPlayerOnly )
+			if ((bPlayerOnly && m.Player) || !bPlayerOnly)
 			{
-				switch( acqType )
+				switch (acqType)
 				{
-					case FightMode.Strongest :
+					case FightMode.Strongest:
 						return (m.Skills[SkillName.Tactics].Value + m.Str); //returns strongest mobile
 
-					case FightMode.Weakest :
+					case FightMode.Weakest:
 						return -m.Hits; // returns weakest mobile
 
-					default :
-						return -GetDistanceToSqrt( m ); // returns closest mobile
+					default:
+						return -GetDistanceToSqrt(m); // returns closest mobile
 				}
 			}
 			else
@@ -6509,34 +6559,34 @@ namespace Server.Mobiles
 		{
 			int v = (int)Direction;
 
-			SetDirection( (Direction)((((v & 0x7) + iTurnSteps) & 0x7) | (v & 0x80)) );
+			SetDirection((Direction)((((v & 0x7) + iTurnSteps) & 0x7) | (v & 0x80)));
 		}
 
 		public bool IsHurt()
 		{
-			return ( Hits != HitsMax );
+			return (Hits != HitsMax);
 		}
 
 		public double GetHomeDistance()
 		{
-			return GetDistanceToSqrt( m_pHome );
+			return GetDistanceToSqrt(m_pHome);
 		}
 
 		public virtual int GetTeamSize(int iRange)
 		{
 			int iCount = 0;
 
-			foreach ( Mobile m in this.GetMobilesInRange( iRange ) )
+			foreach (Mobile m in this.GetMobilesInRange(iRange))
 			{
 				if (m is BaseCreature)
 				{
-					if ( ((BaseCreature)m).Team == Team )
+					if (((BaseCreature)m).Team == Team)
 					{
-						if ( !m.Deleted )
+						if (!m.Deleted)
 						{
-							if ( m != this )
+							if (m != this)
 							{
-								if ( CanSee( m ) )
+								if (CanSee(m))
 								{
 									iCount++;
 								}
@@ -6553,23 +6603,23 @@ namespace Server.Mobiles
 		{
 			private BaseCreature m_Mobile;
 
-			public TameEntry( Mobile from, BaseCreature creature ) : base( 6130, 6 )
+			public TameEntry(Mobile from, BaseCreature creature) : base(6130, 6)
 			{
 				m_Mobile = creature;
 
-				Enabled = Enabled && ( from.Female ? creature.AllowFemaleTamer : creature.AllowMaleTamer );
+				Enabled = Enabled && (from.Female ? creature.AllowFemaleTamer : creature.AllowMaleTamer);
 			}
 
 			public override void OnClick()
 			{
-				if ( !Owner.From.CheckAlive() )
+				if (!Owner.From.CheckAlive())
 					return;
 
 				Owner.From.TargetLocked = true;
 				SkillHandlers.Taming.DisableMessage = true;
 
-				if ( Owner.From.UseSkill( SkillName.Taming ) )
-					Owner.From.Target.Invoke( Owner.From, m_Mobile );
+				if (Owner.From.UseSkill(SkillName.Taming))
+					Owner.From.Target.Invoke(Owner.From, m_Mobile);
 
 				SkillHandlers.Taming.DisableMessage = false;
 				Owner.From.TargetLocked = false;
@@ -6577,14 +6627,14 @@ namespace Server.Mobiles
 		}
 
 		#region Teaching
-		public virtual bool CanTeach{ get{ return false; } }
+		public virtual bool CanTeach { get { return false; } }
 
-		public virtual bool CheckTeach( SkillName skill, Mobile from )
+		public virtual bool CheckTeach(SkillName skill, Mobile from)
 		{
-			if ( !CanTeach )
+			if (!CanTeach)
 				return false;
 
-			if( skill == SkillName.Stealth && from.Skills[SkillName.Hiding].Base < ((Core.SE) ? 50.0 : 80.0) )
+			if (skill == SkillName.Stealth && from.Skills[SkillName.Hiding].Base < ((Core.SE) ? 50.0 : 80.0))
 				return false;
 
 			return true;
@@ -6600,76 +6650,76 @@ namespace Server.Mobiles
 			NotEnoughFreePoints
 		}
 
-		public virtual TeachResult CheckTeachSkills( SkillName skill, Mobile m, int maxPointsToLearn, ref int pointsToLearn, bool doTeach )
+		public virtual TeachResult CheckTeachSkills(SkillName skill, Mobile m, int maxPointsToLearn, ref int pointsToLearn, bool doTeach)
 		{
-			if ( !CheckTeach( skill, m ) || !m.CheckAlive() )
+			if (!CheckTeach(skill, m) || !m.CheckAlive())
 				return TeachResult.Failure;
 
 			Skill ourSkill = Skills[skill];
 			Skill theirSkill = m.Skills[skill];
 
-			if ( ourSkill == null || theirSkill == null )
+			if (ourSkill == null || theirSkill == null)
 				return TeachResult.Failure;
 
 			int baseToSet = 500;
 
-			if ( baseToSet > theirSkill.CapFixedPoint )
+			if (baseToSet > theirSkill.CapFixedPoint)
 				baseToSet = theirSkill.CapFixedPoint;
 
 			pointsToLearn = baseToSet - theirSkill.BaseFixedPoint;
 
-			if ( maxPointsToLearn > 0 && pointsToLearn > maxPointsToLearn )
+			if (maxPointsToLearn > 0 && pointsToLearn > maxPointsToLearn)
 			{
 				pointsToLearn = maxPointsToLearn;
 				baseToSet = theirSkill.BaseFixedPoint + pointsToLearn;
 			}
 
-			if ( pointsToLearn < 0 )
+			if (pointsToLearn < 0)
 				return TeachResult.KnowsMoreThanMe;
 
-			if ( pointsToLearn == 0 )
+			if (pointsToLearn == 0)
 				return TeachResult.KnowsWhatIKnow;
 
-			if ( theirSkill.Lock != SkillLock.Up )
+			if (theirSkill.Lock != SkillLock.Up)
 				return TeachResult.SkillNotRaisable;
 
 			int freePoints = m.Skills.Cap - m.Skills.Total;
 			int freeablePoints = 0;
 
-			if ( freePoints < 0 )
+			if (freePoints < 0)
 				freePoints = 0;
 
-			for ( int i = 0; (freePoints + freeablePoints) < pointsToLearn && i < m.Skills.Length; ++i )
+			for (int i = 0; (freePoints + freeablePoints) < pointsToLearn && i < m.Skills.Length; ++i)
 			{
 				Skill sk = m.Skills[i];
 
-				if ( sk == theirSkill || sk.Lock != SkillLock.Down )
+				if (sk == theirSkill || sk.Lock != SkillLock.Down)
 					continue;
 
 				freeablePoints += sk.BaseFixedPoint;
 			}
 
-			if ( (freePoints + freeablePoints) == 0 )
+			if ((freePoints + freeablePoints) == 0)
 				return TeachResult.NotEnoughFreePoints;
 
-			if ( (freePoints + freeablePoints) < pointsToLearn )
+			if ((freePoints + freeablePoints) < pointsToLearn)
 			{
 				pointsToLearn = freePoints + freeablePoints;
 				baseToSet = theirSkill.BaseFixedPoint + pointsToLearn;
 			}
 
-			if ( doTeach )
+			if (doTeach)
 			{
 				int need = pointsToLearn - freePoints;
 
-				for ( int i = 0; need > 0 && i < m.Skills.Length; ++i )
+				for (int i = 0; need > 0 && i < m.Skills.Length; ++i)
 				{
 					Skill sk = m.Skills[i];
 
-					if ( sk == theirSkill || sk.Lock != SkillLock.Down )
+					if (sk == theirSkill || sk.Lock != SkillLock.Down)
 						continue;
 
-					if ( sk.BaseFixedPoint < need )
+					if (sk.BaseFixedPoint < need)
 					{
 						need -= sk.BaseFixedPoint;
 						sk.BaseFixedPoint = 0;
@@ -6682,7 +6732,7 @@ namespace Server.Mobiles
 				}
 
 				/* Sanity check */
-				if ( baseToSet > theirSkill.CapFixedPoint || (m.Skills.Total - theirSkill.BaseFixedPoint + baseToSet) > m.Skills.Cap )
+				if (baseToSet > theirSkill.CapFixedPoint || (m.Skills.Total - theirSkill.BaseFixedPoint + baseToSet) > m.Skills.Cap)
 					return TeachResult.NotEnoughFreePoints;
 
 				theirSkill.BaseFixedPoint = baseToSet;
@@ -6691,70 +6741,70 @@ namespace Server.Mobiles
 			return TeachResult.Success;
 		}
 
-		public virtual bool CheckTeachingMatch( Mobile m )
+		public virtual bool CheckTeachingMatch(Mobile m)
 		{
-			if ( m_Teaching == (SkillName)(-1) )
+			if (m_Teaching == (SkillName)(-1))
 				return false;
 
-			if ( m is PlayerMobile )
-				return ( ((PlayerMobile)m).Learning == m_Teaching );
+			if (m is PlayerMobile)
+				return (((PlayerMobile)m).Learning == m_Teaching);
 
 			return true;
 		}
 
 		private SkillName m_Teaching = (SkillName)(-1);
 
-		public virtual bool Teach( SkillName skill, Mobile m, int maxPointsToLearn, bool doTeach )
+		public virtual bool Teach(SkillName skill, Mobile m, int maxPointsToLearn, bool doTeach)
 		{
 			int pointsToLearn = 0;
-			TeachResult res = CheckTeachSkills( skill, m, maxPointsToLearn, ref pointsToLearn, doTeach );
+			TeachResult res = CheckTeachSkills(skill, m, maxPointsToLearn, ref pointsToLearn, doTeach);
 
-			switch ( res )
+			switch (res)
 			{
 				case TeachResult.KnowsMoreThanMe:
-				{
-					Say( 501508 ); // I cannot teach thee, for thou knowest more than I!
-					break;
-				}
+					{
+						Say(501508); // I cannot teach thee, for thou knowest more than I!
+						break;
+					}
 				case TeachResult.KnowsWhatIKnow:
-				{
-					Say( 501509 ); // I cannot teach thee, for thou knowest all I can teach!
-					break;
-				}
+					{
+						Say(501509); // I cannot teach thee, for thou knowest all I can teach!
+						break;
+					}
 				case TeachResult.NotEnoughFreePoints:
 				case TeachResult.SkillNotRaisable:
-				{
-					m.SendMessage( "Make sure this skill is marked to raise. If you are near the skill cap you may need to lose some points in another skill first.");
-					break;
-				}
+					{
+						m.SendMessage("Make sure this skill is marked to raise. If you are near the skill cap you may need to lose some points in another skill first.");
+						break;
+					}
 				case TeachResult.Success:
-				{
-					if ( doTeach )
 					{
-						Say( 501539 ); // Let me show thee something of how this is done.
-						m.SendLocalizedMessage( 501540 ); // Your skill level increases.
+						if (doTeach)
+						{
+							Say(501539); // Let me show thee something of how this is done.
+							m.SendLocalizedMessage(501540); // Your skill level increases.
 
-						m_Teaching = (SkillName)(-1);
+							m_Teaching = (SkillName)(-1);
 
-						if ( m is PlayerMobile )
-							((PlayerMobile)m).Learning = (SkillName)(-1);
+							if (m is PlayerMobile)
+								((PlayerMobile)m).Learning = (SkillName)(-1);
+						}
+						else
+						{
+							// I will teach thee all I know, if paid the amount in full.  The price is:
+							Say(1019077, AffixType.Append, String.Format(" {0}", pointsToLearn), "");
+							Say(1043108); // For less I shall teach thee less.
+
+							m_Teaching = skill;
+
+							if (m is PlayerMobile)
+								((PlayerMobile)m).Learning = skill;
+						}
+
+						Server.Gumps.SkillListingGump.RefreshSkillList(m);
+
+						return true;
 					}
-					else
-					{
-						// I will teach thee all I know, if paid the amount in full.  The price is:
-						Say( 1019077, AffixType.Append, String.Format( " {0}", pointsToLearn ), "" );
-						Say( 1043108 ); // For less I shall teach thee less.
-
-						m_Teaching = skill;
-
-						if ( m is PlayerMobile )
-							((PlayerMobile)m).Learning = skill;
-					}
-
-					Server.Gumps.SkillListingGump.RefreshSkillList( m );
-
-					return true;
-				}
 			}
 
 			return false;
@@ -6762,25 +6812,25 @@ namespace Server.Mobiles
 
 		#endregion
 
-		public override void AggressiveAction( Mobile aggressor, bool criminal )
+		public override void AggressiveAction(Mobile aggressor, bool criminal)
 		{
-			base.AggressiveAction( aggressor, criminal );
+			base.AggressiveAction(aggressor, criminal);
 
-			if ( this.ControlMaster != null )
-				if ( NotorietyHandlers.CheckAggressor( this.ControlMaster.Aggressors, aggressor ) )
-					aggressor.Aggressors.Add( AggressorInfo.Create( this, aggressor, true ) );
+			if (this.ControlMaster != null)
+				if (NotorietyHandlers.CheckAggressor(this.ControlMaster.Aggressors, aggressor))
+					aggressor.Aggressors.Add(AggressorInfo.Create(this, aggressor, true));
 
 			OrderType ct = m_ControlOrder;
 
-			if ( m_AI != null )
+			if (m_AI != null)
 			{
-				if( !Core.ML || ( ct != OrderType.Follow && ct != OrderType.Stop ) )
+				if (!Core.ML || (ct != OrderType.Follow && ct != OrderType.Stop))
 				{
-					m_AI.OnAggressiveAction( aggressor );
+					m_AI.OnAggressiveAction(aggressor);
 				}
 				else
 				{
-					DebugSay( "I'm being attacked but my master told me not to fight." );
+					DebugSay("I'm being attacked but my master told me not to fight.");
 					Warmode = false;
 					return;
 				}
@@ -6790,78 +6840,77 @@ namespace Server.Mobiles
 
 			ForceReacquire();
 
-			SlayerEntry undead_creatures = SlayerGroup.GetEntryByName( SlayerName.Silver );
-			if ( undead_creatures.Slays(this) && aggressor is PlayerMobile )
+			if (m_SilverSlayer.Slays(this) && aggressor is PlayerMobile)
 			{
-				Item item = aggressor.FindItemOnLayer( Layer.Helm );
-				if ( item is DeathlyMask )
+				Item item = aggressor.FindItemOnLayer(Layer.Helm);
+				if (item is DeathlyMask)
 				{
 					item.Delete();
 					aggressor.LocalOverheadMessage(Network.MessageType.Emote, 0x3B2, false, "The mask of death has vanished.");
-					aggressor.PlaySound( 0x1F0 );
+					aggressor.PlaySound(0x1F0);
 				}
 			}
 
-			if ( aggressor.ChangingCombatant && (m_bControlled || m_bSummoned) && (ct == OrderType.Come || ( !Core.ML && ct == OrderType.Stay ) || ct == OrderType.Stop || ct == OrderType.None || ct == OrderType.Follow) )
+			if (aggressor.ChangingCombatant && (m_bControlled || m_bSummoned) && (ct == OrderType.Come || (!Core.ML && ct == OrderType.Stay) || ct == OrderType.Stop || ct == OrderType.None || ct == OrderType.Follow))
 			{
 				ControlTarget = aggressor;
 				ControlOrder = OrderType.Attack;
 			}
-			else if ( Combatant == null && !m_bBardPacified )
+			else if (Combatant == null && !m_bBardPacified)
 			{
 				Warmode = true;
 				Combatant = aggressor;
 			}
 		}
 
-		public override bool OnMoveOver( Mobile m )
+		public override bool OnMoveOver(Mobile m)
 		{
-			if ( m is BaseCreature && !((BaseCreature)m).Controlled )
-				return ( !Alive || !m.Alive || IsDeadBondedPet || m.IsDeadBondedPet ) || ( Hidden && m.AccessLevel > AccessLevel.Player );
+			if (m is BaseCreature && !((BaseCreature)m).Controlled)
+				return (!Alive || !m.Alive || IsDeadBondedPet || m.IsDeadBondedPet) || (Hidden && m.AccessLevel > AccessLevel.Player);
 
-			return base.OnMoveOver( m );
+			return base.OnMoveOver(m);
 		}
 
-		public virtual void AddCustomContextEntries( Mobile from, List<ContextMenuEntry> list )
+		public virtual void AddCustomContextEntries(Mobile from, List<ContextMenuEntry> list)
 		{
 		}
 
 		public virtual bool CanDrop { get { return IsBonded; } }
 
-		public virtual bool CheckChattingAccess( Mobile from )
+		public virtual bool CheckChattingAccess(Mobile from)
 		{
 			PlayerMobile pm = (PlayerMobile)from;
 
-			if ( !from.Alive || from.Blessed )
+			if (!from.Alive || from.Blessed)
 				return false;
 
-			if ( !(this.CanSee( from )) || !(this.InLOS( from )) )
+			if (!(this.CanSee(from)) || !(this.InLOS(from)))
 				return false;
 
 			bool publicRegion = false;
 
-			if ( from.Region.IsPartOf( typeof( PublicRegion ) ) )
+			if (from.Region.IsPartOf(typeof(PublicRegion)))
 				publicRegion = true;
 
-			if ( from.Region.IsPartOf( typeof( StartRegion ) ) )
+			if (from.Region.IsPartOf(typeof(StartRegion)))
 				publicRegion = true;
 
-			if ( from.Region.IsPartOf( typeof( SafeRegion ) ) )
+			if (from.Region.IsPartOf(typeof(SafeRegion)))
 				publicRegion = true;
 
-			if ( from.Region.IsPartOf( typeof( ProtectedRegion ) ) )
+			if (from.Region.IsPartOf(typeof(ProtectedRegion)))
 				publicRegion = true;
 
-			if ( from.Region.IsPartOf( typeof( NecromancerRegion ) ) && GetPlayerInfo.EvilPlayer( from ) )
+			if (from.Region.IsPartOf(typeof(NecromancerRegion)) && GetPlayerInfo.EvilPlayer(from))
 				publicRegion = true;
 
-			if ( !publicRegion && ( from.Criminal || from.Kills > 0 ) )
+			if (!publicRegion && (from.Criminal || from.Kills > 0))
 				return false;
 
-			if ( !publicRegion && from is PlayerMobile && ((PlayerMobile)from).Fugitive == 1 )
+			if (!publicRegion && from is PlayerMobile && ((PlayerMobile)from).Fugitive == 1)
 				return false;
 
-			if ( IntelligentAction.GetMyEnemies( from, this, false ) )
+			if (IntelligentAction.GetMyEnemies(from, this, false))
 				return false;
 
 			return true;
@@ -6871,144 +6920,144 @@ namespace Server.Mobiles
 		{
 			private Mobile m_Mobile;
 			private BaseCreature m_Talker;
-			
-			public TalkGumpEntry( Mobile from, BaseCreature talker ) : base( 6146, 12 )
+
+			public TalkGumpEntry(Mobile from, BaseCreature talker) : base(6146, 12)
 			{
 				m_Mobile = from;
 				m_Talker = talker;
-				Enabled = m_Talker.CheckChattingAccess( m_Mobile );
+				Enabled = m_Talker.CheckChattingAccess(m_Mobile);
 			}
 
 			public override void OnClick()
 			{
-			    if( !( m_Mobile is PlayerMobile ) )
-				return;
-				
-				PlayerMobile mobile = (PlayerMobile) m_Mobile;
+				if (!(m_Mobile is PlayerMobile))
+					return;
+
+				PlayerMobile mobile = (PlayerMobile)m_Mobile;
 				{
-					if ( ! mobile.HasGump( typeof( SpeechGump ) ) )
+					if (!mobile.HasGump(typeof(SpeechGump)))
 					{
-						Server.Misc.IntelligentAction.SayHey( m_Talker );
-						mobile.SendGump(new SpeechGump( mobile, m_Talker.TalkGumpTitle, SpeechFunctions.SpeechText( m_Talker, m_Mobile, m_Talker.TalkGumpSubject ) ));
+						Server.Misc.IntelligentAction.SayHey(m_Talker);
+						mobile.SendGump(new SpeechGump(mobile, m_Talker.TalkGumpTitle, SpeechFunctions.SpeechText(m_Talker, m_Mobile, m_Talker.TalkGumpSubject)));
 					}
 				}
-            }
-        }
+			}
+		}
 
-		public override void GetContextMenuEntries( Mobile from, List<ContextMenuEntry> list )
+		public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
 		{
-			base.GetContextMenuEntries( from, list );
+			base.GetContextMenuEntries(from, list);
 
-			if ( TalkGumpTitle != null && TalkGumpSubject != null && CheckChattingAccess( from ) )
-				list.Add( new TalkGumpEntry( from, this ) ); 
+			if (TalkGumpTitle != null && TalkGumpSubject != null && CheckChattingAccess(from))
+				list.Add(new TalkGumpEntry(from, this));
 
-			if ( m_AI != null && Commandable )
-				m_AI.GetContextMenuEntries( from, list );
+			if (m_AI != null && Commandable)
+				m_AI.GetContextMenuEntries(from, list);
 
-			if ( m_bTamable && !m_bControlled && from.Alive )
-				list.Add( new TameEntry( from, this ) );
+			if (m_bTamable && !m_bControlled && from.Alive)
+				list.Add(new TameEntry(from, this));
 
-			AddCustomContextEntries( from, list );
+			AddCustomContextEntries(from, list);
 
-			if ( CanTeach && from.Alive && CheckChattingAccess( from ) )
+			if (CanTeach && from.Alive && CheckChattingAccess(from))
 			{
 				Skills ourSkills = this.Skills;
 				Skills theirSkills = from.Skills;
 
-				for ( int i = 0; i < ourSkills.Length && i < theirSkills.Length; ++i )
+				for (int i = 0; i < ourSkills.Length && i < theirSkills.Length; ++i)
 				{
 					Skill skill = ourSkills[i];
 					Skill theirSkill = theirSkills[i];
 
-					if ( skill != null && theirSkill != null && skill.Base >= 60.0 && CheckTeach( skill.SkillName, from ) )
+					if (skill != null && theirSkill != null && skill.Base >= 60.0 && CheckTeach(skill.SkillName, from))
 					{
 						double toTeach = skill.Base / 3.0;
 
-						if ( toTeach > 42.0 )
+						if (toTeach > 42.0)
 							toTeach = 42.0;
 
-						list.Add( new TeachEntry( (SkillName)i, this, from, ( toTeach > theirSkill.Base ) ) );
+						list.Add(new TeachEntry((SkillName)i, this, from, (toTeach > theirSkill.Base)));
 					}
 				}
 			}
 		}
 
-		public override bool HandlesOnSpeech( Mobile from )
+		public override bool HandlesOnSpeech(Mobile from)
 		{
 			InhumanSpeech speechType = this.SpeechType;
 
-			if ( speechType != null && (speechType.Flags & IHSFlags.OnSpeech) != 0 && from.InRange( this, 3 ) )
+			if (speechType != null && (speechType.Flags & IHSFlags.OnSpeech) != 0 && from.InRange(this, 3))
 				return true;
 
-			return ( m_AI != null && m_AI.HandlesOnSpeech( from ) && from.InRange( this, m_iRangePerception ) );
+			return (m_AI != null && m_AI.HandlesOnSpeech(from) && from.InRange(this, m_iRangePerception));
 		}
 
-		public override void OnSpeech( SpeechEventArgs e )
+		public override void OnSpeech(SpeechEventArgs e)
 		{
 			InhumanSpeech speechType = this.SpeechType;
 
-			if ( speechType != null && speechType.OnSpeech( this, e.Mobile, e.Speech ) )
+			if (speechType != null && speechType.OnSpeech(this, e.Mobile, e.Speech))
 				e.Handled = true;
-			else if ( !e.Handled && m_AI != null && e.Mobile.InRange( this, m_iRangePerception ) )
-				m_AI.OnSpeech( e );
+			else if (!e.Handled && m_AI != null && e.Mobile.InRange(this, m_iRangePerception))
+				m_AI.OnSpeech(e);
 		}
 
-		public override bool IsHarmfulCriminal( Mobile target )
+		public override bool IsHarmfulCriminal(Mobile target)
 		{
-			if ( (Controlled && target == m_ControlMaster) || (Summoned && target == m_SummonMaster) )
+			if ((Controlled && target == m_ControlMaster) || (Summoned && target == m_SummonMaster))
 				return false;
 
-			if ( target is BaseCreature && ((BaseCreature)target).InitialInnocent && !((BaseCreature)target).Controlled )
+			if (target is BaseCreature && ((BaseCreature)target).InitialInnocent && !((BaseCreature)target).Controlled)
 				return false;
 
-			if ( target is PlayerMobile && ((PlayerMobile)target).PermaFlags.Count > 0 )
+			if (target is PlayerMobile && ((PlayerMobile)target).PermaFlags.Count > 0)
 				return false;
 
-			return base.IsHarmfulCriminal( target );
+			return base.IsHarmfulCriminal(target);
 		}
 
-		public override void CriminalAction( bool message )
+		public override void CriminalAction(bool message)
 		{
-			base.CriminalAction( message );
+			base.CriminalAction(message);
 
-			if ( Controlled || Summoned )
+			if (Controlled || Summoned)
 			{
-				if ( m_ControlMaster != null && m_ControlMaster.Player )
-					m_ControlMaster.CriminalAction( false );
-				else if ( m_SummonMaster != null && m_SummonMaster.Player )
-					m_SummonMaster.CriminalAction( false );
+				if (m_ControlMaster != null && m_ControlMaster.Player)
+					m_ControlMaster.CriminalAction(false);
+				else if (m_SummonMaster != null && m_SummonMaster.Player)
+					m_SummonMaster.CriminalAction(false);
 			}
 		}
 
-		public override void DoHarmful( Mobile target, bool indirect )
+		public override void DoHarmful(Mobile target, bool indirect)
 		{
-			base.DoHarmful( target, indirect );
+			base.DoHarmful(target, indirect);
 
-			if ( target == this || target == m_ControlMaster || target == m_SummonMaster || (!Controlled && !Summoned) )
+			if (target == this || target == m_ControlMaster || target == m_SummonMaster || (!Controlled && !Summoned))
 				return;
 
 			List<AggressorInfo> list = this.Aggressors;
 
-			for ( int i = 0; i < list.Count; ++i )
+			for (int i = 0; i < list.Count; ++i)
 			{
 				AggressorInfo ai = list[i];
 
-				if ( ai.Attacker == target )
+				if (ai.Attacker == target)
 					return;
 			}
 
 			list = this.Aggressed;
 
-			for ( int i = 0; i < list.Count; ++i )
+			for (int i = 0; i < list.Count; ++i)
 			{
 				AggressorInfo ai = list[i];
 
-				if ( ai.Defender == target )
+				if (ai.Defender == target)
 				{
-					if ( m_ControlMaster != null && m_ControlMaster.Player && m_ControlMaster.CanBeHarmful( target, false ) )
-						m_ControlMaster.DoHarmful( target, true );
-					else if ( m_SummonMaster != null && m_SummonMaster.Player && m_SummonMaster.CanBeHarmful( target, false ) )
-						m_SummonMaster.DoHarmful( target, true );
+					if (m_ControlMaster != null && m_ControlMaster.Player && m_ControlMaster.CanBeHarmful(target, false))
+						m_ControlMaster.DoHarmful(target, true);
+					else if (m_SummonMaster != null && m_SummonMaster.Player && m_SummonMaster.CanBeHarmful(target, false))
+						m_SummonMaster.DoHarmful(target, true);
 
 					return;
 				}
@@ -7024,21 +7073,21 @@ namespace Server.Mobiles
 
 		public void ReleaseGuardLock()
 		{
-			EndAction( typeof( GuardedRegion ) );
+			EndAction(typeof(GuardedRegion));
 		}
 
 		private DateTime m_IdleReleaseTime;
 
 		public virtual bool CheckIdle()
 		{
-			if ( Combatant != null )
+			if (Combatant != null)
 				return false; // in combat.. not idling
 
-			if ( m_IdleReleaseTime > DateTime.MinValue )
+			if (m_IdleReleaseTime > DateTime.MinValue)
 			{
 				// idling...
 
-				if ( DateTime.Now >= m_IdleReleaseTime )
+				if (DateTime.Now >= m_IdleReleaseTime)
 				{
 					m_IdleReleaseTime = DateTime.MinValue;
 					return false; // idle is over
@@ -7047,68 +7096,68 @@ namespace Server.Mobiles
 				return true; // still idling
 			}
 
-			if ( 95 > Utility.Random( 100 ) )
+			if (95 > Utility.Random(100))
 				return false; // not idling, but don't want to enter idle state
 
-			m_IdleReleaseTime = DateTime.Now + TimeSpan.FromSeconds( Utility.RandomMinMax( 15, 25 ) );
+			m_IdleReleaseTime = DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(15, 25));
 
-			if ( Body.IsHuman && !Mounted )
+			if (Body.IsHuman && !Mounted)
 			{
-				switch ( Utility.Random( 2 ) )
+				switch (Utility.Random(2))
 				{
-					case 0: Animate( 5, 5, 1, true,  true, 1 ); break;
-					case 1: Animate( 6, 5, 1, true, false, 1 ); break;
+					case 0: Animate(5, 5, 1, true, true, 1); break;
+					case 1: Animate(6, 5, 1, true, false, 1); break;
 				}
 			}
-			else if ( Body.IsAnimal )
+			else if (Body.IsAnimal)
 			{
-				switch ( Utility.Random( 3 ) )
+				switch (Utility.Random(3))
 				{
-					case 0: Animate(  3, 3, 1, true, false, 1 ); break;
-					case 1: Animate(  9, 5, 1, true, false, 1 ); break;
-					case 2: Animate( 10, 5, 1, true, false, 1 ); break;
+					case 0: Animate(3, 3, 1, true, false, 1); break;
+					case 1: Animate(9, 5, 1, true, false, 1); break;
+					case 2: Animate(10, 5, 1, true, false, 1); break;
 				}
 			}
-			else if ( Body.IsMonster )
+			else if (Body.IsMonster)
 			{
-				switch ( Utility.Random( 2 ) )
+				switch (Utility.Random(2))
 				{
-					case 0: Animate( 17, 5, 1, true, false, 1 ); break;
-					case 1: Animate( 18, 5, 1, true, false, 1 ); break;
+					case 0: Animate(17, 5, 1, true, false, 1); break;
+					case 1: Animate(18, 5, 1, true, false, 1); break;
 				}
 			}
 
-			PlaySound( GetIdleSound() );
+			PlaySound(GetIdleSound());
 			return true; // entered idle state
 		}
 
-		protected override void OnLocationChange( Point3D oldLocation )
+		protected override void OnLocationChange(Point3D oldLocation)
 		{
 			Map map = this.Map;
 
-			if ( PlayerRangeSensitive && m_AI != null && map != null && map.GetSector( this.Location ).Active )
+			if (PlayerRangeSensitive && m_AI != null && map != null && map.GetSector(this.Location).Active)
 				m_AI.Activate();
 
-			base.OnLocationChange( oldLocation );
+			base.OnLocationChange(oldLocation);
 
-			if ( this.CoinPurse == 1234567890 )
-				TavernPatrons.RemoveSomeStuff( this );
+			if (this.CoinPurse == 1234567890)
+				TavernPatrons.RemoveSomeStuff(this);
 		}
 
-		public override void OnMovement( Mobile m, Point3D oldLocation )
+		public override void OnMovement(Mobile m, Point3D oldLocation)
 		{
-			base.OnMovement( m, oldLocation );
+			base.OnMovement(m, oldLocation);
 
-			if ( ReacquireOnMovement || m_Paragon )
+			if (ReacquireOnMovement || m_Paragon)
 				ForceReacquire();
 
 			InhumanSpeech speechType = this.SpeechType;
 
-			if ( speechType != null )
-				speechType.OnMovement( this, m, oldLocation );
+			if (speechType != null)
+				speechType.OnMovement(this, m, oldLocation);
 
 			/* Begin notice sound */
-			if ( (!m.Hidden || m.AccessLevel == AccessLevel.Player) && m.Player && m_FightMode != FightMode.Aggressor && m_FightMode != FightMode.None && Combatant == null && !Controlled && !Summoned )
+			if ((!m.Hidden || m.AccessLevel == AccessLevel.Player) && m.Player && m_FightMode != FightMode.Aggressor && m_FightMode != FightMode.None && Combatant == null && !Controlled && !Summoned)
 			{
 				// If this creature defends itself but doesn't actively attack (animal) or
 				// doesn't fight at all (vendor) then no notice sounds are played..
@@ -7118,41 +7167,41 @@ namespace Server.Mobiles
 
 				// Controlled or summoned creatures are ignored
 
-				if ( InRange( m.Location, 18 ) && !InRange( oldLocation, 18 ) && IsEnemy( m ) && CanSee( m ) && InLOS( m ) )
+				if (InRange(m.Location, 18) && !InRange(oldLocation, 18) && IsEnemy(m) && CanSee(m) && InLOS(m))
 				{
-					if ( Body.IsMonster )
-						Animate( 11, 5, 1, true, false, 1 );
+					if (Body.IsMonster)
+						Animate(11, 5, 1, true, false, 1);
 
-					PlaySound( GetAngerSound() );
+					PlaySound(GetAngerSound());
 				}
 			}
 			/* End notice sound */
 
-			if ( m_NoDupeGuards == m )
+			if (m_NoDupeGuards == m)
 				return;
 
-			if ( !Body.IsHuman || Kills >= 5 || AlwaysMurderer || AlwaysAttackable || m.Kills < 5 || !m.InRange( Location, 12 ) || !m.Alive )
+			if (!Body.IsHuman || Kills >= 5 || AlwaysMurderer || AlwaysAttackable || m.Kills < 5 || !m.InRange(Location, 12) || !m.Alive)
 				return;
 		}
 
-		public void AddSpellAttack( Type type )
+		public void AddSpellAttack(Type type)
 		{
-			m_arSpellAttack.Add ( type );
+			m_arSpellAttack.Add(type);
 		}
 
-		public void AddSpellDefense( Type type )
+		public void AddSpellDefense(Type type)
 		{
-			m_arSpellDefense.Add ( type );
+			m_arSpellDefense.Add(type);
 		}
 
 		public Spell GetAttackSpellRandom()
 		{
-			if ( m_arSpellAttack.Count > 0 )
+			if (m_arSpellAttack.Count > 0)
 			{
 				Type type = m_arSpellAttack[Utility.Random(m_arSpellAttack.Count)];
 
-				object[] args = {this, null};
-				return Activator.CreateInstance( type, args ) as Spell;
+				object[] args = { this, null };
+				return Activator.CreateInstance(type, args) as Spell;
 			}
 			else
 			{
@@ -7162,12 +7211,12 @@ namespace Server.Mobiles
 
 		public Spell GetDefenseSpellRandom()
 		{
-			if ( m_arSpellDefense.Count > 0 )
+			if (m_arSpellDefense.Count > 0)
 			{
 				Type type = m_arSpellDefense[Utility.Random(m_arSpellDefense.Count)];
 
-				object[] args = {this, null};
-				return Activator.CreateInstance( type, args ) as Spell;
+				object[] args = { this, null };
+				return Activator.CreateInstance(type, args) as Spell;
 			}
 			else
 			{
@@ -7175,25 +7224,25 @@ namespace Server.Mobiles
 			}
 		}
 
-		public Spell GetSpellSpecific( Type type )
+		public Spell GetSpellSpecific(Type type)
 		{
 			int i;
 
-			for( i=0; i< m_arSpellAttack.Count; i++ )
+			for (i = 0; i < m_arSpellAttack.Count; i++)
 			{
-				if( m_arSpellAttack[i] == type )
+				if (m_arSpellAttack[i] == type)
 				{
 					object[] args = { this, null };
-					return Activator.CreateInstance( type, args ) as Spell;
+					return Activator.CreateInstance(type, args) as Spell;
 				}
 			}
 
-			for ( i=0; i< m_arSpellDefense.Count; i++ )
+			for (i = 0; i < m_arSpellDefense.Count; i++)
 			{
-				if ( m_arSpellDefense[i] == type )
+				if (m_arSpellDefense[i] == type)
 				{
-					object[] args = {this, null};
-					return Activator.CreateInstance( type, args ) as Spell;
+					object[] args = { this, null };
+					return Activator.CreateInstance(type, args) as Spell;
 				}
 			}
 
@@ -7202,107 +7251,107 @@ namespace Server.Mobiles
 
 		#region Set[...]
 
-		public void SetDamage( int val )
+		public void SetDamage(int val)
 		{
 			m_DamageMin = val;
 			m_DamageMax = val;
 		}
 
-		public void SetDamage( int min, int max )
+		public void SetDamage(int min, int max)
 		{
 			m_DamageMin = min;
 			m_DamageMax = max;
 		}
 
-		public void SetHits( int val )
+		public void SetHits(int val)
 		{
-			if ( val < 1000 && !Core.AOS )
+			if (val < 1000 && !Core.AOS)
 				val = (val * 100) / 60;
 
 			m_HitsMax = val;
 			Hits = HitsMax;
 		}
 
-		public void SetHits( int min, int max )
+		public void SetHits(int min, int max)
 		{
-			if ( min < 1000 && !Core.AOS )
+			if (min < 1000 && !Core.AOS)
 			{
 				min = (min * 100) / 60;
 				max = (max * 100) / 60;
 			}
 
-			m_HitsMax = Utility.RandomMinMax( min, max );
+			m_HitsMax = Utility.RandomMinMax(min, max);
 			Hits = HitsMax;
 		}
 
-		public void SetStam( int val )
+		public void SetStam(int val)
 		{
 			m_StamMax = val;
 			Stam = StamMax;
 		}
 
-		public void SetStam( int min, int max )
+		public void SetStam(int min, int max)
 		{
-			m_StamMax = Utility.RandomMinMax( min, max );
+			m_StamMax = Utility.RandomMinMax(min, max);
 			Stam = StamMax;
 		}
 
-		public void SetMana( int val )
+		public void SetMana(int val)
 		{
 			m_ManaMax = val;
 			Mana = ManaMax;
 		}
 
-		public void SetMana( int min, int max )
+		public void SetMana(int min, int max)
 		{
-			m_ManaMax = Utility.RandomMinMax( min, max );
+			m_ManaMax = Utility.RandomMinMax(min, max);
 			Mana = ManaMax;
 		}
 
-		public void SetStr( int val )
+		public void SetStr(int val)
 		{
 			RawStr = val;
 			Hits = HitsMax;
 		}
 
-		public void SetStr( int min, int max )
+		public void SetStr(int min, int max)
 		{
-			RawStr = Utility.RandomMinMax( min, max );
+			RawStr = Utility.RandomMinMax(min, max);
 			Hits = HitsMax;
 		}
 
-		public void SetDex( int val )
+		public void SetDex(int val)
 		{
 			RawDex = val;
 			Stam = StamMax;
 		}
 
-		public void SetDex( int min, int max )
+		public void SetDex(int min, int max)
 		{
-			RawDex = Utility.RandomMinMax( min, max );
+			RawDex = Utility.RandomMinMax(min, max);
 			Stam = StamMax;
 		}
 
-		public void SetInt( int val )
+		public void SetInt(int val)
 		{
 			RawInt = val;
 			Mana = ManaMax;
 		}
 
-		public void SetInt( int min, int max )
+		public void SetInt(int min, int max)
 		{
-			RawInt = Utility.RandomMinMax( min, max );
+			RawInt = Utility.RandomMinMax(min, max);
 			Mana = ManaMax;
 		}
 
-		public void SetDamageType( ResistanceType type, int min, int max )
+		public void SetDamageType(ResistanceType type, int min, int max)
 		{
-			SetDamageType( type, Utility.RandomMinMax( min, max ) );
+			SetDamageType(type, Utility.RandomMinMax(min, max));
 		}
 
-		public void SetDamageType( ResistanceType type, int val )
+		public void SetDamageType(ResistanceType type, int val)
 		{
-			switch ( type )
+			switch (type)
 			{
 				case ResistanceType.Physical: m_PhysicalDamage = val; break;
 				case ResistanceType.Fire: m_FireDamage = val; break;
@@ -7312,14 +7361,14 @@ namespace Server.Mobiles
 			}
 		}
 
-		public void SetResistance( ResistanceType type, int min, int max )
+		public void SetResistance(ResistanceType type, int min, int max)
 		{
-			SetResistance( type, Utility.RandomMinMax( min, max ) );
+			SetResistance(type, Utility.RandomMinMax(min, max));
 		}
 
-		public void SetResistance( ResistanceType type, int val )
+		public void SetResistance(ResistanceType type, int val)
 		{
-			switch ( type )
+			switch (type)
 			{
 				case ResistanceType.Physical: m_PhysicalResistance = val; break;
 				case ResistanceType.Fire: m_FireResistance = val; break;
@@ -7331,67 +7380,67 @@ namespace Server.Mobiles
 			UpdateResistances();
 		}
 
-		public void SetSkill( SkillName name, double val )
+		public void SetSkill(SkillName name, double val)
 		{
 			Skills[name].BaseFixedPoint = (int)(val * 10);
 
-			if ( Skills[name].Base > Skills[name].Cap )
+			if (Skills[name].Base > Skills[name].Cap)
 			{
-				if ( Core.SE )
-					this.SkillsCap += ( Skills[name].BaseFixedPoint - Skills[name].CapFixedPoint );
+				if (Core.SE)
+					this.SkillsCap += (Skills[name].BaseFixedPoint - Skills[name].CapFixedPoint);
 
 				Skills[name].Cap = Skills[name].Base;
 			}
 		}
 
-		public void SetSkill( SkillName name, double min, double max )
+		public void SetSkill(SkillName name, double min, double max)
 		{
 			int minFixed = (int)(min * 10);
 			int maxFixed = (int)(max * 10);
 
-			Skills[name].BaseFixedPoint = Utility.RandomMinMax( minFixed, maxFixed );
+			Skills[name].BaseFixedPoint = Utility.RandomMinMax(minFixed, maxFixed);
 
-			if ( Skills[name].Base > Skills[name].Cap )
+			if (Skills[name].Base > Skills[name].Cap)
 			{
-				if ( Core.SE )
-					this.SkillsCap += ( Skills[name].BaseFixedPoint - Skills[name].CapFixedPoint );
+				if (Core.SE)
+					this.SkillsCap += (Skills[name].BaseFixedPoint - Skills[name].CapFixedPoint);
 
 				Skills[name].Cap = Skills[name].Base;
 			}
 		}
 
-		public void SetFameLevel( int level )
+		public void SetFameLevel(int level)
 		{
-			switch ( level )
+			switch (level)
 			{
-				case 1: Fame = Utility.RandomMinMax(     0,  1249 ); break;
-				case 2: Fame = Utility.RandomMinMax(  1250,  2499 ); break;
-				case 3: Fame = Utility.RandomMinMax(  2500,  4999 ); break;
-				case 4: Fame = Utility.RandomMinMax(  5000,  9999 ); break;
-				case 5: Fame = Utility.RandomMinMax( 10000, 10000 ); break;
+				case 1: Fame = Utility.RandomMinMax(0, 1249); break;
+				case 2: Fame = Utility.RandomMinMax(1250, 2499); break;
+				case 3: Fame = Utility.RandomMinMax(2500, 4999); break;
+				case 4: Fame = Utility.RandomMinMax(5000, 9999); break;
+				case 5: Fame = Utility.RandomMinMax(10000, 10000); break;
 			}
 		}
 
-		public void SetKarmaLevel( int level )
+		public void SetKarmaLevel(int level)
 		{
-			switch ( level )
+			switch (level)
 			{
-				case 0: Karma = -Utility.RandomMinMax(     0,   624 ); break;
-				case 1: Karma = -Utility.RandomMinMax(   625,  1249 ); break;
-				case 2: Karma = -Utility.RandomMinMax(  1250,  2499 ); break;
-				case 3: Karma = -Utility.RandomMinMax(  2500,  4999 ); break;
-				case 4: Karma = -Utility.RandomMinMax(  5000,  9999 ); break;
-				case 5: Karma = -Utility.RandomMinMax( 10000, 10000 ); break;
+				case 0: Karma = -Utility.RandomMinMax(0, 624); break;
+				case 1: Karma = -Utility.RandomMinMax(625, 1249); break;
+				case 2: Karma = -Utility.RandomMinMax(1250, 2499); break;
+				case 3: Karma = -Utility.RandomMinMax(2500, 4999); break;
+				case 4: Karma = -Utility.RandomMinMax(5000, 9999); break;
+				case 5: Karma = -Utility.RandomMinMax(10000, 10000); break;
 			}
 		}
 
 		#endregion
 
-		public static void Cap( ref int val, int min, int max )
+		public static void Cap(ref int val, int min, int max)
 		{
-			if ( val < min )
+			if (val < min)
 				val = min;
-			else if ( val > max )
+			else if (val > max)
 				val = max;
 		}
 
@@ -7399,23 +7448,23 @@ namespace Server.Mobiles
 
 		public virtual void DropBackpack()
 		{
-			if ( Backpack != null )
+			if (Backpack != null)
 			{
-				if( Backpack.Items.Count > 0 )
+				if (Backpack.Items.Count > 0)
 				{
-					Backpack b = new CreatureBackpack( Name );
+					Backpack b = new CreatureBackpack(Name);
 
-					List<Item> list = new List<Item>( Backpack.Items );
-					foreach ( Item item in list )
+					List<Item> list = new List<Item>(Backpack.Items);
+					foreach (Item item in list)
 					{
-						b.DropItem( item );
+						b.DropItem(item);
 					}
 
-					BaseHouse house = BaseHouse.FindHouseAt( this );
-					if ( house  != null )
-						b.MoveToWorld( house.BanLocation, house.Map );
+					BaseHouse house = BaseHouse.FindHouseAt(this);
+					if (house != null)
+						b.MoveToWorld(house.BanLocation, house.Map);
 					else
-						b.MoveToWorld( Location, Map );
+						b.MoveToWorld(Location, Map);
 				}
 			}
 		}
@@ -7423,27 +7472,27 @@ namespace Server.Mobiles
 		protected bool m_Spawning;
 		protected int m_KillersLuck;
 
-		public virtual void GenerateLoot( bool spawning )
+		public virtual void GenerateLoot(bool spawning)
 		{
 			m_Spawning = spawning;
 
-			if ( !spawning )
-				m_KillersLuck = LootPack.GetLuckChanceForKiller( this );
+			if (!spawning)
+				m_KillersLuck = LootPack.GetLuckChanceForKiller(this);
 
 			GenerateLoot();
 
-			if ( m_Paragon )
+			if (m_Paragon)
 			{
-				if ( Fame < 1250 )
-					AddLoot( LootPack.Meager );
-				else if ( Fame < 2500 )
-					AddLoot( LootPack.Average );
-				else if ( Fame < 5000 )
-					AddLoot( LootPack.Rich );
-				else if ( Fame < 10000 )
-					AddLoot( LootPack.FilthyRich );
+				if (Fame < 1250)
+					AddLoot(LootPack.Meager);
+				else if (Fame < 2500)
+					AddLoot(LootPack.Average);
+				else if (Fame < 5000)
+					AddLoot(LootPack.Rich);
+				else if (Fame < 10000)
+					AddLoot(LootPack.FilthyRich);
 				else
-					AddLoot( LootPack.UltraRich );
+					AddLoot(LootPack.UltraRich);
 			}
 
 			m_Spawning = false;
@@ -7454,62 +7503,62 @@ namespace Server.Mobiles
 		{
 		}
 
-		public virtual void AddLoot( LootPack pack, int amount )
+		public virtual void AddLoot(LootPack pack, int amount)
 		{
-			for ( int i = 0; i < amount; ++i )
-				AddLoot( pack );
+			for (int i = 0; i < amount; ++i)
+				AddLoot(pack);
 		}
 
-		public virtual void AddLoot( LootPack pack )
+		public virtual void AddLoot(LootPack pack)
 		{
-			if ( Summoned )
+			if (Summoned)
 				return;
 
 			Container backpack = Backpack;
 
-			if ( backpack == null )
+			if (backpack == null)
 			{
 				backpack = new Backpack();
 
 				backpack.Movable = false;
 
-				AddItem( backpack );
+				AddItem(backpack);
 			}
 
-			pack.Generate( this, backpack, m_Spawning, m_KillersLuck, LootPackChange.MonsterLevel( IntelligentAction.GetCreatureLevel( this ) ) );
+			pack.Generate(this, backpack, m_Spawning, m_KillersLuck, LootPackChange.MonsterLevel(IntelligentAction.GetCreatureLevel(this)));
 		}
 
-		public void PackGold( int amount )
+		public void PackGold(int amount)
 		{
-			if ( amount > 0 )
-				PackItem( new Gold( amount ) );
+			if (amount > 0)
+				PackItem(new Gold(amount));
 		}
 
-		public void PackGold( int min, int max )
+		public void PackGold(int min, int max)
 		{
-			PackGold( Utility.RandomMinMax( min, max ) );
+			PackGold(Utility.RandomMinMax(min, max));
 		}
 
-		public void PackReg( int min, int max )
+		public void PackReg(int min, int max)
 		{
-			PackReg( Utility.RandomMinMax( min, max ) );
+			PackReg(Utility.RandomMinMax(min, max));
 		}
 
-		public void PackReg( int amount )
+		public void PackReg(int amount)
 		{
-			if ( amount <= 0 )
+			if (amount <= 0)
 				return;
 
 			Item reg = Loot.RandomPossibleReagent();
 			reg.Amount = amount;
-			PackItem( reg );
+			PackItem(reg);
 		}
 
-		public void PackItem( Item item )
+		public void PackItem(Item item)
 		{
-			if ( Summoned || item == null )
+			if (Summoned || item == null)
 			{
-				if ( item != null )
+				if (item != null)
 					item.Delete();
 
 				return;
@@ -7517,147 +7566,147 @@ namespace Server.Mobiles
 
 			Container pack = Backpack;
 
-			if ( pack == null )
+			if (pack == null)
 			{
 				pack = new Backpack();
 
 				pack.Movable = false;
 
-				AddItem( pack );
+				AddItem(pack);
 			}
 
-			if ( !item.Stackable || !pack.TryDropItem( this, item, false ) ) // try stack
-				pack.DropItem( item ); // failed, drop it anyway
+			if (!item.Stackable || !pack.TryDropItem(this, item, false)) // try stack
+				pack.DropItem(item); // failed, drop it anyway
 		}
 
 		#endregion
 
-		public override void OnDoubleClick( Mobile from )
+		public override void OnDoubleClick(Mobile from)
 		{
-			if ( from.AccessLevel >= AccessLevel.GameMaster && !Body.IsHuman && RaceID < 1 )
+			if (from.AccessLevel >= AccessLevel.GameMaster && !Body.IsHuman && RaceID < 1)
 			{
 				Container pack = this.Backpack;
 
-				if ( pack != null )
-					pack.DisplayTo( from );
+				if (pack != null)
+					pack.DisplayTo(from);
 			}
 
-			if ( this.DeathAdderCharmable && from.CanBeHarmful( this, false ) )
+			if (this.DeathAdderCharmable && from.CanBeHarmful(this, false))
 			{
 				DeathAdder da = Spells.Necromancy.SummonFamiliarSpell.Table[from] as DeathAdder;
 
-				if ( da != null && !da.Deleted )
+				if (da != null && !da.Deleted)
 				{
-					from.SendAsciiMessage( "You charm the snake. Select a target to attack." );
-					from.Target = new DeathAdderCharmTarget( this );
+					from.SendAsciiMessage("You charm the snake. Select a target to attack.");
+					from.Target = new DeathAdderCharmTarget(this);
 				}
 			}
 
-			if ( isVortex( this ) && from == SummonMaster )
+			if (isVortex(this) && from == SummonMaster)
 			{
-				Effects.SendLocationParticles( EffectItem.Create( Location, Map, EffectItem.DefaultDuration ), 0x3728, 8, 20, 0, 0, 5042, 0 );
-				Effects.PlaySound( this, Map, 0x201 );
+				Effects.SendLocationParticles(EffectItem.Create(Location, Map, EffectItem.DefaultDuration), 0x3728, 8, 20, 0, 0, 5042, 0);
+				Effects.PlaySound(this, Map, 0x201);
 				Delete();
 			}
 
-			base.OnDoubleClick( from );
+			base.OnDoubleClick(from);
 		}
 
 		private DateTime m_NextPickup;
 		private static Dictionary<Mobile, Timer> m_Suppressed = new Dictionary<Mobile, Timer>();
-		public DateTime NextPickup{ get{ return m_NextPickup; } }
+		public DateTime NextPickup { get { return m_NextPickup; } }
 
-		public void Peace( Mobile target )
+		public void Peace(Mobile target)
 		{
-			if ( target == null || Deleted || !Alive || m_NextPickup > DateTime.Now )
+			if (target == null || Deleted || !Alive || m_NextPickup > DateTime.Now)
 				return;
 
 			PlayerMobile p = target as PlayerMobile;
 
-			if ( p != null && p.PeacedUntil < DateTime.Now && !p.Hidden && CanBeHarmful( p ) && Utility.RandomBool() )
+			if (p != null && p.PeacedUntil < DateTime.Now && !p.Hidden && CanBeHarmful(p) && Utility.RandomBool())
 			{
-				PlaySound( SpeechHue );
-				p.FixedParticles( 0x376A, 1, 32, 0x15BD, EffectLayer.Waist );
+				PlaySound(SpeechHue);
+				p.FixedParticles(0x376A, 1, 32, 0x15BD, EffectLayer.Waist);
 
 				int bard = (int)(this.Skills.Musicianship.Value);
 				int resist = (int)(target.Skills.MagicResist.Value);
-				if ( Utility.RandomMinMax( bard-20, bard ) < Utility.RandomMinMax( resist-20, resist ) )
+				if (Utility.RandomMinMax(bard - 20, bard) < Utility.RandomMinMax(resist - 20, resist))
 				{
-					target.SendMessage( "You magically resist the affects of the song." );
+					target.SendMessage("You magically resist the affects of the song.");
 				}
 				else
 				{
 					double skillMax = (double)bard / 100;
 					int min = (int)(10 * skillMax);
 					int max = (int)(25 * skillMax);
-					TimeSpan duration = TimeSpan.FromSeconds( Utility.RandomMinMax( min, max ) );
+					TimeSpan duration = TimeSpan.FromSeconds(Utility.RandomMinMax(min, max));
 					p.PeacedUntil = DateTime.Now + duration;
-					p.SendLocalizedMessage( 500616 ); // You hear lovely music, and forget to continue battling!
+					p.SendLocalizedMessage(500616); // You hear lovely music, and forget to continue battling!
 					p.Combatant = null;
 					target.Warmode = false;
-					UndressItem( target, Layer.OneHanded );
-					UndressItem( target, Layer.TwoHanded );
-					BuffInfo.RemoveBuff( p, BuffIcon.PeaceMaking );
-					BuffInfo.AddBuff( p, new BuffInfo( BuffIcon.PeaceMaking, 1063664, duration, p ) );
+					UndressItem(target, Layer.OneHanded);
+					UndressItem(target, Layer.TwoHanded);
+					BuffInfo.RemoveBuff(p, BuffIcon.PeaceMaking);
+					BuffInfo.AddBuff(p, new BuffInfo(BuffIcon.PeaceMaking, 1063664, duration, p));
 				}
 			}
 
-			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds( Utility.RandomMinMax( 50, 80 ) );
+			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(50, 80));
 		}
 
-		public void Suppress( Mobile target )
+		public void Suppress(Mobile target)
 		{
-			if ( target == null || m_Suppressed.ContainsKey( target ) || Deleted || !Alive || m_NextPickup > DateTime.Now )
+			if (target == null || m_Suppressed.ContainsKey(target) || Deleted || !Alive || m_NextPickup > DateTime.Now)
 				return;
 
-			int setTime = Utility.RandomMinMax( 20, 80 );
-			TimeSpan delay = TimeSpan.FromSeconds( setTime );
+			int setTime = Utility.RandomMinMax(20, 80);
+			TimeSpan delay = TimeSpan.FromSeconds(setTime);
 
-			if ( !target.Hidden && CanBeHarmful( target ) && Utility.RandomBool() )
+			if (!target.Hidden && CanBeHarmful(target) && Utility.RandomBool())
 			{
-				PlaySound( SpeechHue );
-				target.FixedParticles( 0x376A, 1, 32, 0x15BD, EffectLayer.Waist );
+				PlaySound(SpeechHue);
+				target.FixedParticles(0x376A, 1, 32, 0x15BD, EffectLayer.Waist);
 
 				int bard = (int)(this.Skills.Musicianship.Value);
 				int resist = (int)(target.Skills.MagicResist.Value);
-				if ( Utility.RandomMinMax( bard-20, bard ) < Utility.RandomMinMax( resist-20, resist ) )
+				if (Utility.RandomMinMax(bard - 20, bard) < Utility.RandomMinMax(resist - 20, resist))
 				{
-					target.SendMessage( "You magically resist the affects of the song." );
+					target.SendMessage("You magically resist the affects of the song.");
 				}
 				else
 				{
 					target.SendMessage("You hear jarring music, suppressing your abilities.");
 
-					for ( int i = 0; i < target.Skills.Length; i++ )
+					for (int i = 0; i < target.Skills.Length; i++)
 					{
-						Skill s = target.Skills[ i ];
+						Skill s = target.Skills[i];
 
-						if ( s.Base > 0 ){ target.AddSkillMod( new TimedSkillMod( s.SkillName, true, s.Base * -0.28, delay ) ); }
+						if (s.Base > 0) { target.AddSkillMod(new TimedSkillMod(s.SkillName, true, s.Base * -0.28, delay)); }
 					}
 
-					int count = (int) Math.Round( delay.TotalSeconds / 1.25 );
-					Timer timer = new AnimateTimer( target, count );
-					m_Suppressed.Add( target, timer );
+					int count = (int)Math.Round(delay.TotalSeconds / 1.25);
+					Timer timer = new AnimateTimer(target, count);
+					m_Suppressed.Add(target, timer);
 					timer.Start();
 
-					BuffInfo.RemoveBuff( target, BuffIcon.Discordance );
-					BuffInfo.AddBuff( target, new BuffInfo( BuffIcon.Discordance, 1064194, TimeSpan.FromSeconds( setTime ), target ) );
+					BuffInfo.RemoveBuff(target, BuffIcon.Discordance);
+					BuffInfo.AddBuff(target, new BuffInfo(BuffIcon.Discordance, 1064194, TimeSpan.FromSeconds(setTime), target));
 				}
 			}
 
-			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds( Utility.RandomMinMax( 50, 80 ) );
+			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(50, 80));
 		}
 
-		public static void SuppressRemove( Mobile target )
+		public static void SuppressRemove(Mobile target)
 		{
-			if ( target != null && m_Suppressed.ContainsKey( target ) )
+			if (target != null && m_Suppressed.ContainsKey(target))
 			{
-				Timer timer = m_Suppressed[ target ];
+				Timer timer = m_Suppressed[target];
 
-				if ( timer != null || timer.Running )
+				if (timer != null || timer.Running)
 					timer.Stop();
 
-				m_Suppressed.Remove( target );
+				m_Suppressed.Remove(target);
 			}
 		}
 
@@ -7666,7 +7715,7 @@ namespace Server.Mobiles
 			private Mobile m_Owner;
 			private int m_Count;
 
-			public AnimateTimer( Mobile owner, int count ) : base( TimeSpan.Zero, TimeSpan.FromSeconds( 1.25 ) )
+			public AnimateTimer(Mobile owner, int count) : base(TimeSpan.Zero, TimeSpan.FromSeconds(1.25))
 			{
 				m_Owner = owner;
 				m_Count = count;
@@ -7674,203 +7723,203 @@ namespace Server.Mobiles
 
 			protected override void OnTick()
 			{
-				if ( m_Owner.Deleted || !m_Owner.Alive || m_Count-- < 0 )
+				if (m_Owner.Deleted || !m_Owner.Alive || m_Count-- < 0)
 				{
-					SuppressRemove( m_Owner );
+					SuppressRemove(m_Owner);
 				}
 				else
-					m_Owner.FixedParticles( 0x376A, 1, 32, 0x15BD, EffectLayer.Waist );
+					m_Owner.FixedParticles(0x376A, 1, 32, 0x15BD, EffectLayer.Waist);
 			}
 		}
 
-		public void Undress( Mobile target )
+		public void Undress(Mobile target)
 		{
-			if ( target == null || Deleted || !Alive || m_NextPickup > DateTime.Now )
+			if (target == null || Deleted || !Alive || m_NextPickup > DateTime.Now)
 				return;
 
-			if ( target.Player && !target.Hidden && CanBeHarmful( target ) && Utility.RandomBool() )
+			if (target.Player && !target.Hidden && CanBeHarmful(target) && Utility.RandomBool())
 			{
-				PlaySound( SpeechHue );
-				target.FixedParticles( 0x376A, 1, 32, 0x15BD, EffectLayer.Waist );
+				PlaySound(SpeechHue);
+				target.FixedParticles(0x376A, 1, 32, 0x15BD, EffectLayer.Waist);
 
 				int bard = (int)(this.Skills.Musicianship.Value);
 				int resist = (int)(target.Skills.MagicResist.Value);
-				if ( Utility.RandomMinMax( bard-20, bard ) < Utility.RandomMinMax( resist-20, resist ) )
+				if (Utility.RandomMinMax(bard - 20, bard) < Utility.RandomMinMax(resist - 20, resist))
 				{
-					target.SendMessage( "You magically resist the affects of the song." );
+					target.SendMessage("You magically resist the affects of the song.");
 				}
 				else
 				{
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.OuterTorso ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.InnerTorso ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.MiddleTorso ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Pants ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Shirt ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Ring ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Helm ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Arms ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.OuterLegs ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Neck ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Gloves ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Trinket ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Shoes ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Cloak ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.InnerLegs ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Earrings ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Waist ); }
-					if ( Utility.RandomBool() ){ UndressItem( target, Layer.Bracelet ); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.OuterTorso); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.InnerTorso); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.MiddleTorso); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Pants); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Shirt); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Ring); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Helm); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Arms); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.OuterLegs); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Neck); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Gloves); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Trinket); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Shoes); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Cloak); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.InnerLegs); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Earrings); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Waist); }
+					if (Utility.RandomBool()) { UndressItem(target, Layer.Bracelet); }
 
 					target.SendMessage("The music is hypnotic, making you remove your worn items.");
 				}
 			}
 
-			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds( Utility.RandomMinMax( 50, 80 ) );
+			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(50, 80));
 		}
 
-		public void UndressItem( Mobile m, Layer layer )
+		public void UndressItem(Mobile m, Layer layer)
 		{
-			if ( m is PlayerMobile )
+			if (m is PlayerMobile)
 			{
-				Item item = m.FindItemOnLayer( layer );
+				Item item = m.FindItemOnLayer(layer);
 
-				if ( item != null && item.Movable )
-					m.PlaceInBackpack( item );
+				if (item != null && item.Movable)
+					m.PlaceInBackpack(item);
 			}
 		}
 
-		public void Provoke( Mobile target )
+		public void Provoke(Mobile target)
 		{
-			if ( target == null || Deleted || !Alive || m_NextPickup > DateTime.Now )
+			if (target == null || Deleted || !Alive || m_NextPickup > DateTime.Now)
 				return;
 
-			foreach ( Mobile m in GetMobilesInRange( RangePerception ) )
+			foreach (Mobile m in GetMobilesInRange(RangePerception))
 			{
-				if ( m is BaseCreature )
+				if (m is BaseCreature)
 				{
-					BaseCreature c = (BaseCreature) m;
+					BaseCreature c = (BaseCreature)m;
 
-					if ( c == this || c == target || c.Unprovokable || c.IsParagon || c.BardProvoked || c.AccessLevel != AccessLevel.Player || !c.CanBeHarmful( target ) )
+					if (c == this || c == target || c.Unprovokable || c.IsParagon || c.BardProvoked || c.AccessLevel != AccessLevel.Player || !c.CanBeHarmful(target))
 						continue;
 
-					c.Provoke( this, target, true );
+					c.Provoke(this, target, true);
 
-					if ( target.Player )
-						target.SendLocalizedMessage( 1072062 ); // You hear angry music, and start to fight.
+					if (target.Player)
+						target.SendLocalizedMessage(1072062); // You hear angry music, and start to fight.
 
-					PlaySound( SpeechHue );
+					PlaySound(SpeechHue);
 					break;
 				}
 			}
 
-			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds( Utility.RandomMinMax( 50, 80 ) );
+			m_NextPickup = DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(50, 80));
 		}
 
 		private class DeathAdderCharmTarget : Target
 		{
 			private BaseCreature m_Charmed;
 
-			public DeathAdderCharmTarget( BaseCreature charmed ) : base( -1, false, TargetFlags.Harmful )
+			public DeathAdderCharmTarget(BaseCreature charmed) : base(-1, false, TargetFlags.Harmful)
 			{
 				m_Charmed = charmed;
 			}
 
-			protected override void OnTarget( Mobile from, object targeted )
+			protected override void OnTarget(Mobile from, object targeted)
 			{
-				if ( !m_Charmed.DeathAdderCharmable || m_Charmed.Combatant != null || !from.CanBeHarmful( m_Charmed, false ) )
+				if (!m_Charmed.DeathAdderCharmable || m_Charmed.Combatant != null || !from.CanBeHarmful(m_Charmed, false))
 					return;
 
 				DeathAdder da = Spells.Necromancy.SummonFamiliarSpell.Table[from] as DeathAdder;
-				if ( da == null || da.Deleted )
+				if (da == null || da.Deleted)
 					return;
 
 				Mobile targ = targeted as Mobile;
-				if ( targ == null || !from.CanBeHarmful( targ, false ) )
+				if (targ == null || !from.CanBeHarmful(targ, false))
 					return;
 
 				from.RevealingAction();
-				from.DoHarmful( targ, true );
+				from.DoHarmful(targ, true);
 
 				m_Charmed.Combatant = targ;
 
-				if ( m_Charmed.AIObject != null )
+				if (m_Charmed.AIObject != null)
 					m_Charmed.AIObject.Action = ActionType.Combat;
 			}
 		}
 
-		public override void AddNameProperties( ObjectPropertyList list )
+		public override void AddNameProperties(ObjectPropertyList list)
 		{
-			base.AddNameProperties( list );
+			base.AddNameProperties(list);
 
-			if ( DisplayWeight && Controlled )
+			if (DisplayWeight && Controlled)
 			{
-				if ( Backpack != null )
-					list.Add( 1072241, "{0}\t{1}\t{2}\t{3}", Backpack.TotalItems, Backpack.MaxItems, Backpack.TotalWeight, Backpack.MaxWeight ); // Contents: ~1_COUNT~/~2_MAXCOUNT items, ~3_WEIGHT~/~4_MAXWEIGHT~ stones
+				if (Backpack != null)
+					list.Add(1072241, "{0}\t{1}\t{2}\t{3}", Backpack.TotalItems, Backpack.MaxItems, Backpack.TotalWeight, Backpack.MaxWeight); // Contents: ~1_COUNT~/~2_MAXCOUNT items, ~3_WEIGHT~/~4_MAXWEIGHT~ stones
 				else
-					list.Add( TotalWeight == 1 ? 1072788 : 1072789, TotalWeight.ToString() ); // Weight: ~1_WEIGHT~ stones
+					list.Add(TotalWeight == 1 ? 1072788 : 1072789, TotalWeight.ToString()); // Weight: ~1_WEIGHT~ stones
 			}
 
-			if ( m_ControlOrder == OrderType.Guard )
-				list.Add( 1080078 ); // guarding
+			if (m_ControlOrder == OrderType.Guard)
+				list.Add(1080078); // guarding
 
-			if ( this is Clown || this is Clone ){} // NO WORDS
-			else if ( this is HenchmanFamiliar )
-				list.Add( "(familiar)" );
-			else if ( this is PackBeast )
-				list.Add( "(Pack Animal)" );
-			else if ( this is GolemPorter || this is GolemFighter || this is Golem )
-				list.Add( "(automaton)" );
-			else if ( this is FrankenPorter || this is FrankenFighter )
-				list.Add( "(reanimation)" );
-			else if ( Summoned && !IsAnimatedDead && !IsNecroFamiliar )
-				list.Add( 1049646 ); // (summoned)
-			else if ( Controlled && Commandable && !(this is FrankenFighter) && !(this is AerialServant) && !(this is FrankenPorter) && !(this is GolemFighter) && !(this is GolemPorter) && !(this is PackBeast) && !(this is HenchmanMonster) && !(this is HenchmanFighter) && !(this is HenchmanWizard) && !(this is HenchmanArcher) && !(this is HenchmanFamiliar) )
+			if (this is Clown || this is Clone) { } // NO WORDS
+			else if (this is HenchmanFamiliar)
+				list.Add("(familiar)");
+			else if (this is PackBeast)
+				list.Add("(Pack Animal)");
+			else if (this is GolemPorter || this is GolemFighter || this is Golem)
+				list.Add("(automaton)");
+			else if (this is FrankenPorter || this is FrankenFighter)
+				list.Add("(reanimation)");
+			else if (Summoned && !IsAnimatedDead && !IsNecroFamiliar)
+				list.Add(1049646); // (summoned)
+			else if (Controlled && Commandable && !(this is FrankenFighter) && !(this is AerialServant) && !(this is FrankenPorter) && !(this is GolemFighter) && !(this is GolemPorter) && !(this is PackBeast) && !(this is HenchmanMonster) && !(this is HenchmanFighter) && !(this is HenchmanWizard) && !(this is HenchmanArcher) && !(this is HenchmanFamiliar))
 			{
-				if ( IsBonded )	//Intentional difference (showing ONLY bonded when bonded instead of bonded & tame)
-					list.Add( 1049608 ); // (bonded)
+				if (IsBonded)   //Intentional difference (showing ONLY bonded when bonded instead of bonded & tame)
+					list.Add(1049608); // (bonded)
 				else
-					list.Add( 502006 ); // (tame)
+					list.Add(502006); // (tame)
 
-                list.Add(1060662, String.Format("Loyalty Rating\t{0}%", Loyalty.ToString())); // ADD THIS
+				list.Add(1060662, String.Format("Loyalty Rating\t{0}%", Loyalty.ToString())); // ADD THIS
 			}
 		}
 
-		public override void OnSingleClick( Mobile from )
+		public override void OnSingleClick(Mobile from)
 		{
-			if ( Controlled && Commandable )
+			if (Controlled && Commandable)
 			{
 				int number;
 
-				if ( Summoned )
+				if (Summoned)
 					number = 1049646; // (summoned)
-				else if ( IsBonded )
+				else if (IsBonded)
 					number = 1049608; // (bonded)
 				else
 					number = 502006; // (tame)
 
-				PrivateOverheadMessage( MessageType.Regular, 0x3B2, number, from.NetState );
+				PrivateOverheadMessage(MessageType.Regular, 0x3B2, number, from.NetState);
 			}
 
-			base.OnSingleClick( from );
+			base.OnSingleClick(from);
 		}
 
-		public virtual double TreasureMapChance{ get{ return TreasureMap.LootChance; } }
-		public virtual int TreasureMapLevel{ get{ return -1; } }
+		public virtual double TreasureMapChance { get { return TreasureMap.LootChance; } }
+		public virtual int TreasureMapLevel { get { return -1; } }
 
 		public virtual bool IgnoreYoungProtection { get { return false; } }
 
 		public bool SeaEnemy()
 		{
-			if ( this.WhisperHue == 999 || 
-				 this is PirateCrewMage || 
-				 this is PirateCrewBow || 
-				 this is PirateCrew || 
-				 this is PirateCaptain || 
-				 this is ElfPirateCrewMage || 
-				 this is ElfPirateCrewBow || 
-				 this is ElfPirateCrew || 
-				 this is ElfPirateCaptain || 
-				 this is BaseSailor || 
-				 this is BasePirate )
+			if (this.WhisperHue == 999 ||
+				 this is PirateCrewMage ||
+				 this is PirateCrewBow ||
+				 this is PirateCrew ||
+				 this is PirateCaptain ||
+				 this is ElfPirateCrewMage ||
+				 this is ElfPirateCrewBow ||
+				 this is ElfPirateCrew ||
+				 this is ElfPirateCaptain ||
+				 this is BaseSailor ||
+				 this is BasePirate)
 				return true;
 
 			return false;
@@ -7878,160 +7927,153 @@ namespace Server.Mobiles
 
 		public override bool OnBeforeDeath()
 		{
-			Region reg = Region.Find( this.Location, this.Map );
+			Region reg = Region.Find(this.Location, this.Map);
 
-			SlayerEntry undead = SlayerGroup.GetEntryByName( SlayerName.Silver );
-			SlayerEntry exorcism = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
-
-			if ( Body == 224 )
+			if (Body == 224)
 				Body = 13;
-			else if ( Body == 975 || Body == 841 )
+			else if (Body == 975 || Body == 841)
 				Body = 15;
 
-			Mobile murderer = this.LastKiller;
+			Mobile slayer = this.LastKiller;
 
-			if (murderer is BaseCreature)
+			if (slayer is BaseCreature)
 			{
-				BaseCreature bc_killer = (BaseCreature)murderer;
-
+				BaseCreature bc_killer = (BaseCreature)slayer;
 				if (bc_killer.Summoned)
 				{
 					if (bc_killer.SummonMaster != null)
-						murderer = bc_killer.SummonMaster;
+						slayer = bc_killer.SummonMaster;
 				}
 				else if (bc_killer.Controlled)
 				{
-					if(bc_killer.ControlMaster != null)
-						murderer=bc_killer.ControlMaster;
+					if (bc_killer.ControlMaster != null)
+						slayer = bc_killer.ControlMaster;
 				}
 				else if (bc_killer.BardProvoked)
 				{
-					if(bc_killer.BardMaster != null)
-						murderer=bc_killer.BardMaster;
+					if (bc_killer.BardMaster != null)
+						slayer = bc_killer.BardMaster;
 				}
 
-				LastKiller = murderer;
+				LastKiller = slayer;
 			}
 
-			if ( AI == AIType.AI_Citizen )
+			if (AI == AIType.AI_Citizen)
 			{
-				if ( murderer is PlayerMobile )
+				if (slayer is PlayerMobile)
 				{
-					murderer.Criminal = true;
-					murderer.Kills = murderer.Kills + 1;
-					Server.Items.DisguiseTimers.RemoveDisguise( murderer );
+					slayer.Criminal = true;
+					slayer.Kills = slayer.Kills + 1;
+					Server.Items.DisguiseTimers.RemoveDisguise(slayer);
 				}
 
 				string bSay = "Help! Guards!";
-				this.PublicOverheadMessage( MessageType.Regular, 0, false, string.Format ( bSay ) ); 
+				this.PublicOverheadMessage(MessageType.Regular, 0, false, string.Format(bSay));
 			}
 
-			Mobile slayer = this.FindMostRecentDamager(true);
-			int Heat = Server.Difficult.GetDifficulty( this.Location, this.Map );
+			int Heat = Server.Difficult.GetDifficulty(this.Location, this.Map);
 
-			if ( IsTempEnemy )
+			if (IsTempEnemy)
 			{
-				PlaySound( 0x208 );
-				Effects.SendLocationEffect( Location, Map, 0x3709, 30, 10 );
+				PlaySound(0x208);
+				Effects.SendLocationEffect(Location, Map, 0x3709, 30, 10);
 				this.Delete();
 			}
-			else if ( !this.IsBonded && ( slayer is BasePerson || ( slayer is BaseCreature && !((BaseCreature)slayer).Controlled && ((BaseCreature)slayer).FightMode == FightMode.Evil ) ) )
+			else if (!this.IsBonded && (slayer is BasePerson || (slayer is BaseCreature && !((BaseCreature)slayer).Controlled && ((BaseCreature)slayer).FightMode == FightMode.Evil)))
 			{
 				this.Delete();
 			}
-			else if ( !this.IsBonded && this is BaseCreature && this.FightMode == FightMode.Evil )
+			else if (!this.IsBonded && this is BaseCreature && this.FightMode == FightMode.Evil)
 			{
-				if ( slayer is PlayerMobile ){}
-				else if ( slayer is BaseCreature && ((BaseCreature)slayer).ControlMaster != null && ((BaseCreature)slayer).Controlled ){}
+				if (slayer is PlayerMobile) { }
+				else if (slayer is BaseCreature && ((BaseCreature)slayer).ControlMaster != null && ((BaseCreature)slayer).Controlled) { }
 				else { this.Delete(); }
 			}
-			else if ( Heat >= 0 && IsParagon == false )
+			else if (Heat >= 0 && IsParagon == false)
 			{
-				BeefUpLoot( this, Heat );
+				BeefUpLoot(this, Heat);
 			}
 
-			if ( slayer is PlayerMobile )
+			if (slayer is PlayerMobile)
 			{
 				///////////////////////////////////////////////////////////////////////////////////////
 
-				Server.Misc.IntelligentAction.SaySomethingOnDeath( this, this.LastKiller );
+				Server.Misc.IntelligentAction.SaySomethingOnDeath(this, this.LastKiller);
 
-				Server.Misc.HoardPile.MakeHoard( this ); // SEE IF A HOARD DROPS NEARBY
+				Server.Misc.HoardPile.MakeHoard(this); // SEE IF A HOARD DROPS NEARBY
 
-				Server.Misc.SummonQuests.WellTheyDied( this, this );
+				Server.Misc.SummonQuests.WellTheyDied(this, this);
 
 				///////////////////////////////////////////////////////////////////////////////////////
 
-				if ( SeaEnemy() )
-					Server.Engines.Harvest.Fishing.SailorSkill( slayer, (int)( IntelligentAction.GetCreatureLevel( this ) / 10 ) );
+				if (SeaEnemy())
+					Server.Engines.Harvest.Fishing.SailorSkill(slayer, (int)(IntelligentAction.GetCreatureLevel(this) / 10));
 
-				if ( reg.IsPartOf( typeof( NecromancerRegion ) ) && GetPlayerInfo.EvilPlayer( slayer ) && slayer.Skills[SkillName.Necromancy].Base >= 25 )
+				if (reg.IsPartOf(typeof(NecromancerRegion)) && GetPlayerInfo.EvilPlayer(slayer) && slayer.Skills[SkillName.Necromancy].Base >= 25)
 				{
-					if ( undead.Slays(this) || exorcism.Slays(this) )
+					if (m_SilverSlayer.Slays(this) || m_ExorcismSlayer.Slays(this))
 					{
-						switch ( Utility.Random( 7 ) )
+						switch (Utility.Random(7))
 						{
-							case 0: PackItem( new BatWing( Utility.RandomMinMax( 1, 10 ) ) ); break;
-							case 1: PackItem( new NoxCrystal( Utility.RandomMinMax( 1, 10 ) ) ); break;
-							case 2: PackItem( new GraveDust( Utility.RandomMinMax( 1, 10 ) ) ); break;
-							case 3: PackItem( new PigIron( Utility.RandomMinMax( 1, 10 ) ) ); break;
-							case 4: PackItem( new DaemonBlood( Utility.RandomMinMax( 1, 10 ) ) ); break;
+							case 0: PackItem(new BatWing(Utility.RandomMinMax(1, 10))); break;
+							case 1: PackItem(new NoxCrystal(Utility.RandomMinMax(1, 10))); break;
+							case 2: PackItem(new GraveDust(Utility.RandomMinMax(1, 10))); break;
+							case 3: PackItem(new PigIron(Utility.RandomMinMax(1, 10))); break;
+							case 4: PackItem(new DaemonBlood(Utility.RandomMinMax(1, 10))); break;
 						}
 					}
-					else if ( this is EvilMage )
+					else if (this is EvilMage)
 					{
-						PackItem( new BatWing( Utility.RandomMinMax( 1, 10 ) ) );
-						PackItem( new NoxCrystal( Utility.RandomMinMax( 1, 10 ) ) );
-						PackItem( new GraveDust( Utility.RandomMinMax( 1, 10 ) ) );
-						PackItem( new PigIron( Utility.RandomMinMax( 1, 10 ) ) );
-						PackItem( new DaemonBlood( Utility.RandomMinMax( 1, 10 ) ) );
+						PackItem(new BatWing(Utility.RandomMinMax(1, 10)));
+						PackItem(new NoxCrystal(Utility.RandomMinMax(1, 10)));
+						PackItem(new GraveDust(Utility.RandomMinMax(1, 10)));
+						PackItem(new PigIron(Utility.RandomMinMax(1, 10)));
+						PackItem(new DaemonBlood(Utility.RandomMinMax(1, 10)));
 					}
 				}
 
-				Server.Misc.IntelligentAction.DropReagent( slayer, this );
+				Server.Misc.IntelligentAction.DropReagent(slayer, this);
 
-				if ( slayer.Skills[SkillName.Forensics].Value >= Utility.RandomMinMax( 30, 150 ) )
+				if (slayer.Skills[SkillName.Forensics].Value >= Utility.RandomMinMax(30, 150))
 				{
-					if ( 	this is MummyGiant || this is FleshGolem || this is ReanimatedDragon || this is AncientFleshGolem || this is SkinGolem || 
-							this is Ghoul || this is AquaticGhoul || this is DiseasedMummy || this is Mummy || this is MummyLord || this is RottingCorpse || 
-							this is WalkingCorpse || this is ZombieGiant || this is FrozenCorpse || this is ZombieGargoyle || this is SeaZombie || 
-							this is ZombieMage || this is Zombie )
+					if (this is MummyGiant || this is FleshGolem || this is ReanimatedDragon || this is AncientFleshGolem || this is SkinGolem ||
+							this is Ghoul || this is AquaticGhoul || this is DiseasedMummy || this is Mummy || this is MummyLord || this is RottingCorpse ||
+							this is WalkingCorpse || this is ZombieGiant || this is FrozenCorpse || this is ZombieGargoyle || this is SeaZombie ||
+							this is ZombieMage || this is Zombie)
 					{
-						PackItem( new EmbalmingFluid() );
+						PackItem(new EmbalmingFluid());
 					}
 				}
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
 
-			SlayerEntry spreaddeath = SlayerGroup.GetEntryByName( SlayerName.Repond );
-
-			Mobile deathknight = this.LastKiller;										// DEATH KNIGHT HOLDING SOUL LANTERNS
-			if ( spreaddeath.Slays(this) && deathknight != null && this.TotalGold > 0 )	// TURNS THE MONEY TO SOUL COUNT
+			Mobile deathknight = this.LastKiller;                                       // DEATH KNIGHT HOLDING SOUL LANTERNS
+			if (m_RepondHunter.Slays(this) && deathknight != null && this.TotalGold > 0)   // TURNS THE MONEY TO SOUL COUNT
 			{
-				if ( deathknight is BaseCreature )
+				if (deathknight is BaseCreature)
 					deathknight = ((BaseCreature)deathknight).GetMaster();
 
-				if ( deathknight is PlayerMobile )
+				if (deathknight is PlayerMobile)
 				{
-					Item lantern = deathknight.FindItemOnLayer( Layer.TwoHanded );
+					Item lantern = deathknight.FindItemOnLayer(Layer.TwoHanded);
 
-					if ( lantern is SoulLantern )
+					if (lantern is SoulLantern)
 					{
 						SoulLantern souls = (SoulLantern)lantern;
-						souls.TrappedSouls = souls.TrappedSouls + (this.TotalGold*2);
-						if ( souls.TrappedSouls > 100000 ){ souls.TrappedSouls = 100000; }
+						souls.TrappedSouls = souls.TrappedSouls + (this.TotalGold * 2);
+						if (souls.TrappedSouls > 100000) { souls.TrappedSouls = 100000; }
 						souls.InvalidateProperties();
 
-						Item deathpack = this.FindItemOnLayer( Layer.Backpack );
-						if ( deathpack != null )
+						Item deathpack = this.FindItemOnLayer(Layer.Backpack);
+						if (deathpack != null)
 						{
-							Item dtcoins = this.Backpack.FindItemByType( typeof( Gold ) );
-							if ( dtcoins != null )
+							Item dtcoins = this.Backpack.FindItemByType(typeof(Gold));
+							if (dtcoins != null)
 								dtcoins.Delete();
-							deathknight.SendMessage( "A soul has been claimed." );
-							Effects.SendLocationParticles( EffectItem.Create( deathknight.Location, deathknight.Map, EffectItem.DefaultDuration ), 0x376A, 9, 32, 5008 );
-							Effects.PlaySound( deathknight.Location, deathknight.Map, 0x1ED );
+							deathknight.SendMessage("A soul has been claimed.");
+							Effects.SendLocationParticles(EffectItem.Create(deathknight.Location, deathknight.Map, EffectItem.DefaultDuration), 0x376A, 9, 32, 5008);
+							Effects.PlaySound(deathknight.Location, deathknight.Map, 0x1ED);
 						}
 					}
 				}
@@ -8039,71 +8081,67 @@ namespace Server.Mobiles
 
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			SlayerEntry wizard = SlayerGroup.GetEntryByName( SlayerName.WizardSlayer);
 			Mobile mage = this.LastKiller;
-			if((wizard.Slays(this)) && mage != null)
+			if ((m_WizardHunter.Slays(this)) && mage != null)
 			{
-				if ( mage is BaseCreature )
+				if (mage is BaseCreature)
 					mage = ((BaseCreature)mage).GetMaster();
 
-				if ( mage is PlayerMobile )
+				if (mage is PlayerMobile)
 				{
 					// add psychology check for awarding marks, checks for guild membership
 					double psychology = mage.Skills[SkillName.Psychology].Value;
-					
-					if(((PlayerMobile)mage).NpcGuild == NpcGuild.MagesGuild && psychology > Utility.RandomMinMax(50, 150 ) 
+
+					if (((PlayerMobile)mage).NpcGuild == NpcGuild.MagesGuild && psychology > Utility.RandomMinMax(50, 150)
 					 && Utility.RandomDouble() < 0.65)
 					{
-						int markAmount = Utility.RandomMinMax(3,11);
-						mage.AddToBackpack( new MarksOfTheWeave( markAmount ) );
-						mage.SendMessage( "You aqquired" + " " + markAmount + " " + "Marks of the weave!" );
+						int markAmount = Utility.RandomMinMax(3, 11);
+						mage.AddToBackpack(new MarksOfTheWeave(markAmount));
+						mage.SendMessage("You aqquired" + " " + markAmount + " " + "Marks of the weave!");
 					}
 				}
 			}
 			///////////////////////////////////////////////////////////////////////////////////////
 
-			SlayerEntry holyundead = SlayerGroup.GetEntryByName( SlayerName.Silver );
-			SlayerEntry holydemons = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
-
-			Mobile cleric = this.LastKiller;																		// HOLY MANY HOLDING HOLY SYMBOL
-			if ( ( holyundead.Slays(this) || holydemons.Slays(this) ) && cleric != null && this.TotalGold > 0 )	// TURNS THE MONEY TO BANISH COUNT
+			Mobile cleric = this.LastKiller;                                                                        // HOLY priest HOLDING HOLY SYMBOL
+			if ((m_SilverSlayer.Slays(this) || m_ExorcismSlayer.Slays(this)) && cleric != null && this.TotalGold > 0)   // TURNS THE MONEY TO BANISH COUNT
 			{
-				if ( cleric is BaseCreature )
+				if (cleric is BaseCreature)
 					cleric = ((BaseCreature)cleric).GetMaster();
 
-				if ( cleric is PlayerMobile )
+				if (cleric is PlayerMobile)
 				{
 					// add spiritualism check for awarding marks, doesn't require the holy symbol to be equipped, checks for guild membership
 					double spiritualism = cleric.Skills[SkillName.Spiritualism].Value;
-					
-					if(((PlayerMobile)cleric).NpcGuild == NpcGuild.HealersGuild && spiritualism > Utility.RandomMinMax(50, 150 ) 
+
+					if (((PlayerMobile)cleric).NpcGuild == NpcGuild.HealersGuild && spiritualism > Utility.RandomMinMax(50, 150)
 					 && Utility.RandomDouble() < 0.65)
 					{
-						int markAmount = Utility.RandomMinMax(3,11);
-						cleric.AddToBackpack( new MarksOfDevotion( markAmount ) );
-						cleric.SendMessage( "You aqquired" + " " + markAmount + " " + "Marks of Devotion!" );
+						int markAmount = Utility.RandomMinMax(3, 11);
+						cleric.AddToBackpack(new MarksOfDevotion(markAmount));
+						cleric.SendMessage("You aqquired" + " " + markAmount + " " + "Marks of Devotion!");
 					}
 
-					Item symbol = cleric.FindItemOnLayer( Layer.Trinket );
+					Item symbol = cleric.FindItemOnLayer(Layer.Trinket);
 
-					if ( symbol is HolySymbol )
+					if (symbol is HolySymbol)
 					{
 						HolySymbol banish = (HolySymbol)symbol;
 						// doubles the base gold calculation for more priest points
-						banish.BanishedEvil = (banish.BanishedEvil + (this.TotalGold)*2);
-						if ( banish.BanishedEvil > 100000 ){ banish.BanishedEvil = 100000; }
+						banish.BanishedEvil = (banish.BanishedEvil + (this.TotalGold) * 2);
+						if (banish.BanishedEvil > 100000) { banish.BanishedEvil = 100000; }
 						banish.InvalidateProperties();
 
-						Item deathpack = this.FindItemOnLayer( Layer.Backpack );
-						if ( deathpack != null )
+						Item deathpack = this.FindItemOnLayer(Layer.Backpack);
+						if (deathpack != null)
 						{
-							Item dtcoins = this.Backpack.FindItemByType( typeof( Gold ) );
-							if ( dtcoins != null )
+							Item dtcoins = this.Backpack.FindItemByType(typeof(Gold));
+							if (dtcoins != null)
 							{
 								dtcoins.Delete();
-								cleric.SendMessage( "Evil has been banished." );
-								cleric.FixedParticles( 0x373A, 10, 15, 5018, EffectLayer.Waist );
-								cleric.PlaySound( 0x1EA );
+								cleric.SendMessage("Evil has been banished.");
+								cleric.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
+								cleric.PlaySound(0x1EA);
 							}
 						}
 					}
@@ -8112,710 +8150,703 @@ namespace Server.Mobiles
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// Crusader Holy Fervor
-			
-			SlayerEntry holyFervorDemons = SlayerGroup.GetEntryByName( SlayerName.Exorcism );
 
-			if ( holyFervorDemons.Slays( this ) && slayer is PlayerMobile )
+			if (m_ExorcismSlayer.Slays(this) && slayer is PlayerMobile)
 			{
-			    PlayerMobile fervorPm = (PlayerMobile)slayer;
+				PlayerMobile fervorPm = (PlayerMobile)slayer;
 
-			    if ( fervorPm.ActiveAscension == AscensionType.Crusader )
-			    {
-			        AscensionProgress fervorProg = fervorPm.AscensionProfile.Get( AscensionType.Crusader );
-			        int fervorLevel = fervorProg.Level;
+				if (fervorPm.ActiveAscension == AscensionType.Crusader)
+				{
+					AscensionProgress fervorProg = fervorPm.AscensionProfile.Get(AscensionType.Crusader);
+					int fervorLevel = fervorProg.Level;
 
-			        if ( fervorLevel >= 8 && Utility.Random( 1000 ) < (fervorLevel * 15) ) // 1.5% per level
-			        {
-			            int fervorRadius = 2 + (fervorLevel / 5);
-			            int fervorDamage = Utility.RandomMinMax( 20, 32 ) + (fervorLevel / 2) + (fervorPm.Str / 15);
+					if (fervorLevel >= 8 && Utility.Random(1000) < (fervorLevel * 15)) // 1.5% per level
+					{
+						int fervorRadius = 2 + (fervorLevel / 5);
+						int fervorDamage = Utility.RandomMinMax(20, 32) + (fervorLevel / 2) + (fervorPm.Str / 15);
 
-			            SlamVisuals.SlamVisual( fervorPm, fervorRadius, 0x36B0, 0x498 );
+						SlamVisuals.SlamVisual(fervorPm, fervorRadius, 0x36B0, 0x498);
 
-			            ArrayList fervorTargets = new ArrayList();
+						ArrayList fervorTargets = new ArrayList();
 
-                		IPooledEnumerable fervorEable = fervorPm.Map.GetMobilesInRange( fervorPm.Location, fervorRadius );
+						IPooledEnumerable fervorEable = fervorPm.Map.GetMobilesInRange(fervorPm.Location, fervorRadius);
 
-                		try
-                		{
-                		    foreach ( Mobile fm in fervorEable )
-                		    {
-                		        if ( fm == null || fm.Deleted || !fm.Alive || fm == fervorPm )
-                		            continue;
+						try
+						{
+							foreach (Mobile fm in fervorEable)
+							{
+								if (fm == null || fm.Deleted || !fm.Alive || fm == fervorPm)
+									continue;
 
-                		        if ( fm.Karma >= 0 )
-                		            continue;
+								if (fm.Karma >= 0)
+									continue;
 
-                		        if ( !fervorPm.CanBeHarmful( fm, false ) )
-                		            continue;
+								if (!fervorPm.CanBeHarmful(fm, false))
+									continue;
 
-                		        fervorTargets.Add( fm );
-                		    }
-                		}
-                		finally
-                		{
-                		    fervorEable.Free();
-                		}
+								fervorTargets.Add(fm);
+							}
+						}
+						finally
+						{
+							fervorEable.Free();
+						}
 
-                		for ( int i = 0; i < fervorTargets.Count; i++ )
-                		{
-                		    Mobile fm = (Mobile)fervorTargets[i];
+						for (int i = 0; i < fervorTargets.Count; i++)
+						{
+							Mobile fm = (Mobile)fervorTargets[i];
 
-                		    if ( fm.Deleted || !fm.Alive )
-                		        continue;
+							if (fm.Deleted || !fm.Alive)
+								continue;
 
-                		    fervorPm.DoHarmful( fm );
-                		    AOS.Damage( fm, fervorPm, fervorDamage, 100, 0, 0, 0, 0 );
-                		}
-						if ( fervorLevel >= 17 )
-			                fervorPm.SetAbilityCooldown( "Smite", TimeSpan.Zero );
-			        }
-			    }
+							fervorPm.DoHarmful(fm);
+							AOS.Damage(fm, fervorPm, fervorDamage, 100, 0, 0, 0, 0);
+						}
+						if (fervorLevel >= 17)
+							fervorPm.SetAbilityCooldown("Smite", TimeSpan.Zero);
+					}
+				}
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			// Crusader divine judgement 
 
-			if ( slayer is PlayerMobile && this.Karma <= -5000 )
+			if (slayer is PlayerMobile && this.Karma <= -5000)
 			{
-			    PlayerMobile djPm = (PlayerMobile)slayer;
+				PlayerMobile djPm = (PlayerMobile)slayer;
 
-			    if ( djPm.ActiveAscension == AscensionType.Crusader )
-			    {
-			        AscensionProgress djProg = djPm.AscensionProfile.Get( AscensionType.Crusader );
+				if (djPm.ActiveAscension == AscensionType.Crusader)
+				{
+					AscensionProgress djProg = djPm.AscensionProfile.Get(AscensionType.Crusader);
 
-			        if ( djProg.Level >= 20 && Utility.Random( 1000 ) < 25 )
-			        {
-			            Map djMap = djPm.Map;
+					if (djProg.Level >= 20 && Utility.Random(1000) < 25)
+					{
+						Map djMap = djPm.Map;
 
-			            if ( djMap != null && djMap != Map.Internal )
-			            {
-			                Point3D spawnLoc = djPm.Location;
+						if (djMap != null && djMap != Map.Internal)
+						{
+							Point3D spawnLoc = djPm.Location;
 
-			                for ( int attempt = 0; attempt < 10; attempt++ )
-			                {
-			                    int x = djPm.X + Utility.RandomMinMax( -3, 3 );
-			                    int y = djPm.Y + Utility.RandomMinMax( -3, 3 );
-			                    int z = djMap.GetAverageZ( x, y );
+							for (int attempt = 0; attempt < 10; attempt++)
+							{
+								int x = djPm.X + Utility.RandomMinMax(-3, 3);
+								int y = djPm.Y + Utility.RandomMinMax(-3, 3);
+								int z = djMap.GetAverageZ(x, y);
 
-			                    if ( djMap.CanFit( x, y, z, 16, false, false ) )
-			                    {
-			                        spawnLoc = new Point3D( x, y, z );
-			                        break;
-			                    }
-			                }
+								if (djMap.CanFit(x, y, z, 16, false, false))
+								{
+									spawnLoc = new Point3D(x, y, z);
+									break;
+								}
+							}
 
-			                CrusaderLuminar luminar = new CrusaderLuminar();
+							CrusaderLuminar luminar = new CrusaderLuminar();
 
-			                luminar.Summoned     = true;
-			                luminar.SummonMaster = djPm;
-			                luminar.IsTempEnemy  = true;
-			                luminar.ControlSlots = 0;
-			                luminar.Controlled   = false;
-			                luminar.FightMode    = FightMode.Closest;
-			                luminar.RangeHome    = 12;
-			                luminar.Home         = djPm.Location;
+							luminar.Summoned = true;
+							luminar.SummonMaster = djPm;
+							luminar.IsTempEnemy = true;
+							luminar.ControlSlots = 0;
+							luminar.Controlled = false;
+							luminar.FightMode = FightMode.Closest;
+							luminar.RangeHome = 12;
+							luminar.Home = djPm.Location;
 
-			                luminar.MoveToWorld( spawnLoc, djMap );
-			                Effects.SendLocationParticles(
-			                    EffectItem.Create( spawnLoc, djMap, EffectItem.DefaultDuration ),
-			                    0x3728, 10, 10, 0x498, 0, 2023, 0
-			                );
-			                luminar.PlaySound( luminar.GetAngerSound() );
-			                new LuminarExpiryTimer( luminar ).Start();
-			            }
-			        }
-			    }
+							luminar.MoveToWorld(spawnLoc, djMap);
+							Effects.SendLocationParticles(
+								EffectItem.Create(spawnLoc, djMap, EffectItem.DefaultDuration),
+								0x3728, 10, 10, 0x498, 0, 2023, 0
+							);
+							luminar.PlaySound(luminar.GetAngerSound());
+							new LuminarExpiryTimer(luminar).Start();
+						}
+					}
+				}
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			// Assassin Terminal
 
-			if ( slayer is PlayerMobile && this.Poisoned )
+			if (slayer is PlayerMobile && this.Poisoned)
 			{
-			    PlayerMobile termPm = (PlayerMobile)slayer;
+				PlayerMobile termPm = (PlayerMobile)slayer;
 
-			    if ( termPm.ActiveAscension == AscensionType.Assassin )
-			    {
-			        AscensionProgress termProg = termPm.AscensionProfile.Get( AscensionType.Assassin );
-			        int termLevel = termProg.Level;
+				if (termPm.ActiveAscension == AscensionType.Assassin)
+				{
+					AscensionProgress termProg = termPm.AscensionProfile.Get(AscensionType.Assassin);
+					int termLevel = termProg.Level;
 
-			        if ( termLevel >= 20 && Utility.Random( 10000 ) < (termLevel * 25) )
-			        {
-			            termPm.SendMessage( 0x233, "*Terminal*" );
+					if (termLevel >= 20 && Utility.Random(10000) < (termLevel * 25))
+					{
+						termPm.SendMessage(0x233, "*Terminal*");
 
-			            Map termMap = termPm.Map;
+						Map termMap = termPm.Map;
 
-			            ArrayList termTargets = new ArrayList();
+						ArrayList termTargets = new ArrayList();
 
-                		IPooledEnumerable termEable = termMap.GetMobilesInRange( this.Location, 2 );
+						IPooledEnumerable termEable = termMap.GetMobilesInRange(this.Location, 2);
 
-                		try
-                		{
-                		    foreach ( Mobile m in termEable )
-                		    {
-                		        if ( m == null || m.Deleted || !m.Alive || m == termPm )
-                		            continue;
+						try
+						{
+							foreach (Mobile m in termEable)
+							{
+								if (m == null || m.Deleted || !m.Alive || m == termPm)
+									continue;
 
-                		        if ( !termPm.CanBeHarmful( m, false ) )
-                		            continue;
+								if (!termPm.CanBeHarmful(m, false))
+									continue;
 
-                		        termTargets.Add( m );
-                		    }
-                		}
-                		finally
-                		{
-                		    termEable.Free();
-                		}
+								termTargets.Add(m);
+							}
+						}
+						finally
+						{
+							termEable.Free();
+						}
 
-                		for ( int i = 0; i < termTargets.Count; i++ )
-                		{
-                		    Mobile m = (Mobile)termTargets[i];
+						for (int i = 0; i < termTargets.Count; i++)
+						{
+							Mobile m = (Mobile)termTargets[i];
 
-                		    if ( m.Deleted || !m.Alive )
-                		        continue;
+							if (m.Deleted || !m.Alive)
+								continue;
 
-                		    termPm.DoHarmful( m );
-                		    m.ApplyPoison( termPm, Poison.Lethal );
-                		    Effects.SendTargetParticles( m, 0x3729, 9, 40, 0x233, 0, 0, EffectLayer.Waist, 0 );
-                		}
-			        }
-			    }
+							termPm.DoHarmful(m);
+							m.ApplyPoison(termPm, Poison.Lethal);
+							Effects.SendTargetParticles(m, 0x3729, 9, 40, 0x233, 0, 0, EffectLayer.Waist, 0);
+						}
+					}
+				}
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			// DARK SUCCOR Level 15 + 20 (Blackguard active, kill triggers)
 
-			if ( slayer is PlayerMobile )
+			if (slayer is PlayerMobile)
 			{
-			    PlayerMobile blackguardPm = (PlayerMobile)slayer;
-				AscensionProgress succorProg = blackguardPm.AscensionProfile.Get( AscensionType.Blackguard );
-			        int blackguardLevel = succorProg.Level;
-			    if ( blackguardPm.ActiveAscension == AscensionType.Blackguard
-				    && blackguardLevel >= 8)
+				PlayerMobile blackguardPm = (PlayerMobile)slayer;
+				AscensionProgress succorProg = blackguardPm.AscensionProfile.Get(AscensionType.Blackguard);
+				int blackguardLevel = succorProg.Level;
+				if (blackguardPm.ActiveAscension == AscensionType.Blackguard
+					&& blackguardLevel >= 8)
 				{
-				    if ( this.Karma > 0 )
-				    {
-				        double chance = 0.0025 * blackguardLevel;
+					if (this.Karma > 0)
+					{
+						double chance = 0.0025 * blackguardLevel;
 
-				        if ( Utility.RandomDouble() < chance )
-				        {
-				            TimeSpan fleeDuration;
+						if (Utility.RandomDouble() < chance)
+						{
+							TimeSpan fleeDuration;
 
-				            if ( blackguardLevel >= 17 )
-				                fleeDuration = TimeSpan.FromSeconds( 6.0 );
-				            else
-				                fleeDuration = TimeSpan.FromSeconds( 3.0 );
+							if (blackguardLevel >= 17)
+								fleeDuration = TimeSpan.FromSeconds(6.0);
+							else
+								fleeDuration = TimeSpan.FromSeconds(3.0);
 
-				            bool triggered = false;
+							bool triggered = false;
 
-				            IPooledEnumerable eable = null;
+							IPooledEnumerable eable = null;
 
-				            try
-				            {
-				                eable = blackguardPm.GetMobilesInRange( 2 );
+							try
+							{
+								eable = blackguardPm.GetMobilesInRange(2);
 
-				                foreach ( Mobile m in eable )
-				                {
-				                    if ( m == null )
-				                        continue;
+								foreach (Mobile m in eable)
+								{
+									if (m == null)
+										continue;
 
-				                    if ( m.Deleted || !m.Alive )
-				                        continue;
+									if (m.Deleted || !m.Alive)
+										continue;
 
-				                    if ( m == blackguardPm )
-				                        continue;
+									if (m == blackguardPm)
+										continue;
 
-				                    if ( !(m is BaseCreature) )
-				                        continue;
+									if (!(m is BaseCreature))
+										continue;
 
-				                    BaseCreature bc = (BaseCreature)m;
+									BaseCreature bc = (BaseCreature)m;
 
-				                    if ( bc.Fame >= 12500 )
-				                        continue;
+									if (bc.Fame >= 12500)
+										continue;
 
-				                    if ( bc.Controlled || bc.Summoned )
-				                        continue;
+									if (bc.Controlled || bc.Summoned)
+										continue;
 
-				                    bc.BeginFlee( fleeDuration );
-				                    triggered = true;
-				                }
-				            }
-				            catch
-				            {}
-				            finally
-				            {
-				                if ( eable != null )
-				                    eable.Free();
-				            }
+									bc.BeginFlee(fleeDuration);
+									triggered = true;
+								}
+							}
+							catch
+							{ }
+							finally
+							{
+								if (eable != null)
+									eable.Free();
+							}
 
-				            if ( triggered )
-				            {
-				                blackguardPm.SendMessage( 0x47E, "Your morbidity panics your foes!" );
-				                blackguardPm.FixedParticles( 0x376A, 9, 32, 5005, 0x455, 0, EffectLayer.Waist );
-				            }
-				        }
-				    }
+							if (triggered)
+							{
+								blackguardPm.SendMessage(0x47E, "Your morbidity panics your foes!");
+								blackguardPm.FixedParticles(0x376A, 9, 32, 5005, 0x455, 0, EffectLayer.Waist);
+							}
+						}
+					}
 				}
-				if ( blackguardPm.ActiveAscension == AscensionType.Blackguard
-			        && blackguardPm.HasAscensionEffect( "DarkSuccor" ) )
-			    {
-			        if ( blackguardLevel >= 15 && blackguardPm.Mana < (blackguardPm.ManaMax / 2) )
-			        {
-			            int manaRestore = 2 + (blackguardLevel / 2);
-			            blackguardPm.Mana = Math.Min( blackguardPm.ManaMax, blackguardPm.Mana + manaRestore );
-			            blackguardPm.SendMessage( 0x47E, "The fallen foe empowers your magic!" );
-			            blackguardPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
-			        }
+				if (blackguardPm.ActiveAscension == AscensionType.Blackguard
+					&& blackguardPm.HasAscensionEffect("DarkSuccor"))
+				{
+					if (blackguardLevel >= 15 && blackguardPm.Mana < (blackguardPm.ManaMax / 2))
+					{
+						int manaRestore = 2 + (blackguardLevel / 2);
+						blackguardPm.Mana = Math.Min(blackguardPm.ManaMax, blackguardPm.Mana + manaRestore);
+						blackguardPm.SendMessage(0x47E, "The fallen foe empowers your magic!");
+						blackguardPm.FixedParticles(0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist);
+					}
 
-			        if ( blackguardLevel >= 20 && blackguardPm.Hits < (blackguardPm.HitsMax / 2) )
-			        {
-			            int hpRestore = 6 + (blackguardLevel / 2);
-			            blackguardPm.Hits = Math.Min( blackguardPm.HitsMax, blackguardPm.Hits + hpRestore );
-			            blackguardPm.SendMessage( 0x47E, "The fallen foe feeds your vileness!" );
-			            blackguardPm.FixedParticles( 0x376A, 9, 32, 5005, 0x47E, 0, EffectLayer.Waist );
-			        }
-			    }
+					if (blackguardLevel >= 20 && blackguardPm.Hits < (blackguardPm.HitsMax / 2))
+					{
+						int hpRestore = 6 + (blackguardLevel / 2);
+						blackguardPm.Hits = Math.Min(blackguardPm.HitsMax, blackguardPm.Hits + hpRestore);
+						blackguardPm.SendMessage(0x47E, "The fallen foe feeds your vileness!");
+						blackguardPm.FixedParticles(0x376A, 9, 32, 5005, 0x47E, 0, EffectLayer.Waist);
+					}
+				}
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			// SOUL REAPER (Blackguard, level 20)
 
-			if ( slayer is PlayerMobile && this.Fame > 10000 )
+			if (slayer is PlayerMobile && this.Fame > 10000)
 			{
-			    PlayerMobile reaperPm = (PlayerMobile)slayer;
+				PlayerMobile reaperPm = (PlayerMobile)slayer;
 
-			    if ( reaperPm.ActiveAscension == AscensionType.Blackguard )
-			    {
-			        AscensionProgress reaperProg = reaperPm.AscensionProfile.Get( AscensionType.Blackguard );
-			        int reaperLevel = reaperProg.Level;
+				if (reaperPm.ActiveAscension == AscensionType.Blackguard)
+				{
+					AscensionProgress reaperProg = reaperPm.AscensionProfile.Get(AscensionType.Blackguard);
+					int reaperLevel = reaperProg.Level;
 
-			        // 0.25% per level
-			        if ( reaperLevel >= 20 && Utility.Random( 10000 ) < (reaperLevel * 25) )
-			        {
-			            Map reaperMap = reaperPm.Map;
+					// 0.25% per level
+					if (reaperLevel >= 20 && Utility.Random(10000) < (reaperLevel * 25))
+					{
+						Map reaperMap = reaperPm.Map;
 
-			            if ( reaperMap != null && reaperMap != Map.Internal )
-			            {
-			            
-			                ArrayList reaperTargets = new ArrayList();
+						if (reaperMap != null && reaperMap != Map.Internal)
+						{
 
-			               IPooledEnumerable reaperEable = reaperMap.GetMobilesInRange( this.Location, 2 );
-			
-			               try
-			               {
-			                   foreach ( Mobile m in reaperEable )
-			                   {
-			                       if ( m == null || m.Deleted || !m.Alive || m == reaperPm )
-			                           continue;
-			
-			                       if ( !reaperPm.CanBeHarmful( m, false ) )
-			                           continue;
-			
-			                       reaperTargets.Add( m );
-			                   }
-			               }
-			               finally
-			               {
-			                   reaperEable.Free();
-			               }
-			
-			               int totalHealing = 0;
-			               int drainPerTarget = reaperLevel + (reaperPm.Str / 25);
-			
-			               for ( int i = 0; i < reaperTargets.Count; i++ )
-			               {
-			                   Mobile m = (Mobile)reaperTargets[i];
-			
-			                   if ( m.Deleted || !m.Alive )
-			                       continue;
-			
-			                   int actualDrain = Math.Min( m.Hits, drainPerTarget );
-			                   m.Hits -= actualDrain;
-			                   totalHealing += drainPerTarget;
-			               }
-			
-			               if ( totalHealing > 0 )
-			               {
-			                   reaperPm.Hits = Math.Min( reaperPm.HitsMax, reaperPm.Hits + drainPerTarget );
-			                   reaperPm.SendMessage( 0x47E, "You reap the soul of your foe!" );
-			                   reaperPm.FixedParticles( 0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist );
-			                   reaperPm.PlaySound( 0x1FB );
-			               }
-			            }
-			        }
-			    }
+							ArrayList reaperTargets = new ArrayList();
+
+							IPooledEnumerable reaperEable = reaperMap.GetMobilesInRange(this.Location, 2);
+
+							try
+							{
+								foreach (Mobile m in reaperEable)
+								{
+									if (m == null || m.Deleted || !m.Alive || m == reaperPm)
+										continue;
+
+									if (!reaperPm.CanBeHarmful(m, false))
+										continue;
+
+									reaperTargets.Add(m);
+								}
+							}
+							finally
+							{
+								reaperEable.Free();
+							}
+
+							int totalHealing = 0;
+							int drainPerTarget = reaperLevel + (reaperPm.Str / 25);
+
+							for (int i = 0; i < reaperTargets.Count; i++)
+							{
+								Mobile m = (Mobile)reaperTargets[i];
+
+								if (m.Deleted || !m.Alive)
+									continue;
+
+								int actualDrain = Math.Min(m.Hits, drainPerTarget);
+								m.Hits -= actualDrain;
+								totalHealing += drainPerTarget;
+							}
+
+							if (totalHealing > 0)
+							{
+								reaperPm.Hits = Math.Min(reaperPm.HitsMax, reaperPm.Hits + drainPerTarget);
+								reaperPm.SendMessage(0x47E, "You reap the soul of your foe!");
+								reaperPm.FixedParticles(0x374A, 10, 15, 5021, 0x47E, 0, EffectLayer.Waist);
+								reaperPm.PlaySound(0x1FB);
+							}
+						}
+					}
+				}
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-            // WAR CHANT LEVEL 15
-            if ( slayer != null && !slayer.Deleted && slayer.Alive )
-            {
-                PlayerMobile chantSource = null;
-                // Slayer may be the skald themselves or a buffed ally —  find the skald who owns the active WarChant effect
-                if ( slayer is PlayerMobile )
-                {
-                    PlayerMobile slayerPm = (PlayerMobile)slayer;
+			// WAR CHANT LEVEL 15
+			if (slayer != null && !slayer.Deleted && slayer.Alive)
+			{
+				PlayerMobile chantSource = null;
+				// Slayer may be the skald themselves or a buffed ally —  find the skald who owns the active WarChant effect
+				if (slayer is PlayerMobile)
+				{
+					PlayerMobile slayerPm = (PlayerMobile)slayer;
 
-                    if ( slayerPm.ActiveAscension == AscensionType.Skald
-                        && slayerPm.HasAscensionEffect( "WarChant" ) )
-                    {
-                        AscensionEffectState chantState = slayerPm.GetAscensionEffect( "WarChant" );
+					if (slayerPm.ActiveAscension == AscensionType.Skald
+						&& slayerPm.HasAscensionEffect("WarChant"))
+					{
+						AscensionEffectState chantState = slayerPm.GetAscensionEffect("WarChant");
 
-                        if ( chantState.Level >= 15 )
-                            chantSource = slayerPm;
-                    }
-                }
+						if (chantState.Level >= 15)
+							chantSource = slayerPm;
+					}
+				}
 
-                if ( chantSource != null )
-                {
-                    slayer.Hits = Math.Min( slayer.HitsMax, slayer.Hits + 5 );
-                    slayer.Stam = Math.Min( slayer.StamMax, slayer.Stam + 3 );
-                }
-            }
+				if (chantSource != null)
+				{
+					slayer.Hits = Math.Min(slayer.HitsMax, slayer.Hits + 5);
+					slayer.Stam = Math.Min(slayer.StamMax, slayer.Stam + 3);
+				}
+			}
 
-            ///////////////////////////////////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////////////////////////////////
 			// SAGA OF STEEL (Skald capstone, level 20)
 
-			if ( slayer is PlayerMobile )
+			if (slayer is PlayerMobile)
 			{
-			    PlayerMobile sagaPm = (PlayerMobile)slayer;
+				PlayerMobile sagaPm = (PlayerMobile)slayer;
 
-			    if ( sagaPm.ActiveAscension == AscensionType.Skald )
-			    {
-			        AscensionProgress sagaProg = sagaPm.AscensionProfile.Get( AscensionType.Skald );
-			        int sagaLevel = sagaProg.Level;
+				if (sagaPm.ActiveAscension == AscensionType.Skald)
+				{
+					AscensionProgress sagaProg = sagaPm.AscensionProfile.Get(AscensionType.Skald);
+					int sagaLevel = sagaProg.Level;
 
-			        if ( sagaLevel >= 20 && Utility.Random( 10000 ) < (sagaLevel * 25) )
-			        {
-			            Mobile requiemTarget = GetNearestHostile( sagaPm );
+					if (sagaLevel >= 20 && Utility.Random(10000) < (sagaLevel * 25))
+					{
+						Mobile requiemTarget = GetNearestHostile(sagaPm);
 
-			            if ( requiemTarget != null )
-			            {
-			                sagaPm.SendMessage( 0x445, "Your victory sings a requiem for the fallen!" );
+						if (requiemTarget != null)
+						{
+							sagaPm.SendMessage(0x445, "Your victory sings a requiem for the fallen!");
 							sagaPm.PublicOverheadMessage(MessageType.Regular, 0x445, false, "*Dirge of the Fallen*");
-			                DoFoeRequiemDirect( sagaPm, requiemTarget );
-			            }
-			        }
-			    }
+							DoFoeRequiemDirect(sagaPm, requiemTarget);
+						}
+					}
+				}
 			}
 			///////////////////////////////////////////////////////////////
-            // ABSOLUTE TYRANNY (Reaver , level 18)
+			// ABSOLUTE TYRANNY (Reaver , level 18)
 
-            if (slayer is PlayerMobile)
-            {
-                PlayerMobile tyrannyPm = (PlayerMobile)slayer;
+			if (slayer is PlayerMobile)
+			{
+				PlayerMobile tyrannyPm = (PlayerMobile)slayer;
 
-                if (tyrannyPm.ActiveAscension == AscensionType.Reaver
-                    && tyrannyPm.HasAscensionEffect("AbsoluteTyranny"))
-                {
-                    BaseWeapon tyrannyWeapon = tyrannyPm.Weapon as BaseWeapon;
+				if (tyrannyPm.ActiveAscension == AscensionType.Reaver
+					&& tyrannyPm.HasAscensionEffect("AbsoluteTyranny"))
+				{
+					BaseWeapon tyrannyWeapon = tyrannyPm.Weapon as BaseWeapon;
 
-                    if (tyrannyWeapon != null && tyrannyWeapon.Type == WeaponType.Axe)
-                    {
-                        AscensionEffectState tyrannyState = tyrannyPm.GetAscensionEffect("AbsoluteTyranny");
-                        int tyrannyLevel = tyrannyState.Level;
+					if (tyrannyWeapon != null && tyrannyWeapon.Type == WeaponType.Axe)
+					{
+						AscensionEffectState tyrannyState = tyrannyPm.GetAscensionEffect("AbsoluteTyranny");
+						int tyrannyLevel = tyrannyState.Level;
 
-                        int hitsRestore = tyrannyPm.HitsMax / 10;
-                        int stamRestore = tyrannyPm.StamMax / 10;
+						int hitsRestore = tyrannyPm.HitsMax / 10;
+						int stamRestore = tyrannyPm.StamMax / 10;
 
-                        tyrannyPm.Hits += hitsRestore;
-                        tyrannyPm.Stam += stamRestore;
+						tyrannyPm.Hits += hitsRestore;
+						tyrannyPm.Stam += stamRestore;
 
-                        if (tyrannyPm.Hits > tyrannyPm.HitsMax) tyrannyPm.Hits = tyrannyPm.HitsMax;
-                        if (tyrannyPm.Stam > tyrannyPm.StamMax) tyrannyPm.Stam = tyrannyPm.StamMax;
+						if (tyrannyPm.Hits > tyrannyPm.HitsMax) tyrannyPm.Hits = tyrannyPm.HitsMax;
+						if (tyrannyPm.Stam > tyrannyPm.StamMax) tyrannyPm.Stam = tyrannyPm.StamMax;
 
-                        tyrannyPm.FixedParticles(0x23B2, 10, 15, 0, 0x675, 0, EffectLayer.Waist);
+						tyrannyPm.FixedParticles(0x23B2, 10, 15, 0, 0x675, 0, EffectLayer.Waist);
 
-                        if (tyrannyLevel >= 20 && Utility.Random(10000) < (tyrannyLevel * 100))
-                            DoTyrannyCorpseExplosion(tyrannyPm, this.Location, this.Map);
-                    }
-                }
-            }
+						if (tyrannyLevel >= 20 && Utility.Random(10000) < (tyrannyLevel * 100))
+							DoTyrannyCorpseExplosion(tyrannyPm, this.Location, this.Map);
+					}
+				}
+			}
 			///////////////////////////////////////////////////////////////
-            // DEEP CUTS (Reaver, level 20)
+			// DEEP CUTS (Reaver, level 20)
 
-            if (slayer is PlayerMobile)
-            {
-                PlayerMobile deepCutsPm = (PlayerMobile)slayer;
+			if (slayer is PlayerMobile)
+			{
+				PlayerMobile deepCutsPm = (PlayerMobile)slayer;
 
-                if (deepCutsPm.ActiveAscension == AscensionType.Reaver)
-                {
-                    BaseWeapon deepCutsWeapon = deepCutsPm.Weapon as BaseWeapon;
+				if (deepCutsPm.ActiveAscension == AscensionType.Reaver)
+				{
+					BaseWeapon deepCutsWeapon = deepCutsPm.Weapon as BaseWeapon;
 
-                    if (deepCutsWeapon != null && deepCutsWeapon.Type == WeaponType.Axe)
-                    {
-                        AscensionProgress deepCutsProg  = deepCutsPm.AscensionProfile.Get(AscensionType.Reaver);
-                        int               deepCutsLevel = deepCutsProg.Level;
+					if (deepCutsWeapon != null && deepCutsWeapon.Type == WeaponType.Axe)
+					{
+						AscensionProgress deepCutsProg = deepCutsPm.AscensionProfile.Get(AscensionType.Reaver);
+						int deepCutsLevel = deepCutsProg.Level;
 
-                        if (deepCutsLevel >= 20 && Utility.Random(10000) < (deepCutsLevel * 25))
-                        {
-                            deepCutsPm.SendMessage(0x675, "You cut your foes deeply!");
+						if (deepCutsLevel >= 20 && Utility.Random(10000) < (deepCutsLevel * 25))
+						{
+							deepCutsPm.SendMessage(0x675, "You cut your foes deeply!");
 
-                            Map     deepCutsMap = this.Map;
-                            Point3D deepCutsLoc = this.Location;
+							Map deepCutsMap = this.Map;
+							Point3D deepCutsLoc = this.Location;
 
-                            if (deepCutsMap != null && deepCutsMap != Map.Internal)
-                            {
-                                ArrayList deepCutsTargets = new ArrayList();
+							if (deepCutsMap != null && deepCutsMap != Map.Internal)
+							{
+								ArrayList deepCutsTargets = new ArrayList();
 
-                                IPooledEnumerable deepCutsEable = deepCutsMap.GetMobilesInRange(deepCutsLoc, 1);
+								IPooledEnumerable deepCutsEable = deepCutsMap.GetMobilesInRange(deepCutsLoc, 1);
 
-                                try
-                                {
-                                    foreach (Mobile m in deepCutsEable)
-                                    {
-                                        if (m == null || m.Deleted || !m.Alive || m == deepCutsPm)
-                                            continue;
+								try
+								{
+									foreach (Mobile m in deepCutsEable)
+									{
+										if (m == null || m.Deleted || !m.Alive || m == deepCutsPm)
+											continue;
 
-                                        if (!deepCutsPm.CanBeHarmful(m, false))
-                                            continue;
+										if (!deepCutsPm.CanBeHarmful(m, false))
+											continue;
 
-                                        deepCutsTargets.Add(m);
-                                    }
-                                }
-                                finally
-                                {
-                                    deepCutsEable.Free();
-                                }
+										deepCutsTargets.Add(m);
+									}
+								}
+								finally
+								{
+									deepCutsEable.Free();
+								}
 
-                                for (int i = 0; i < deepCutsTargets.Count; i++)
-                                {
-                                    Mobile m = (Mobile)deepCutsTargets[i];
+								for (int i = 0; i < deepCutsTargets.Count; i++)
+								{
+									Mobile m = (Mobile)deepCutsTargets[i];
 
-                                    if (m.Deleted || !m.Alive)
-                                        continue;
+									if (m.Deleted || !m.Alive)
+										continue;
 
-                                    if (ReaverDeepCutsBleed.IsDeepCutsBleeding(m))
-                                        continue;
+									if (ReaverDeepCutsBleed.IsDeepCutsBleeding(m))
+										continue;
 
-                                    deepCutsPm.DoHarmful(m);
+									deepCutsPm.DoHarmful(m);
 
-                                    int bleedDuration = Utility.RandomMinMax(12, 21);
-                                    new ReaverDeepCutsBleed(m, deepCutsPm, deepCutsLevel, bleedDuration).Start();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            ///////////////////////////////////////////////////////////////
-            // KENSAI: Battle Meditation level 20
-            if (slayer is PlayerMobile)
-            {
-                PlayerMobile kensaiPm = (PlayerMobile)slayer;
-                if (kensaiPm.ActiveAscension == AscensionType.Kensai
-                    && kensaiPm.HasAscensionEffect("BattleMeditation"))
-                {
-                    AscensionEffectState meditKillState = kensaiPm.GetAscensionEffect("BattleMeditation");
-                    if (meditKillState.Level >= 20 && kensaiPm.IsAbilityOnCooldown("Tempest"))
-						    new TempestCooldownReduceTimer(kensaiPm).Start();
-                }
-            }
-
-            ///////////////////////////////////////////////////////////////
-            // KENSAI: Singular Focus (level 8+) and Final Cut (level 20)
-            if (slayer is PlayerMobile)
-            {
-                PlayerMobile kensaiFocusPm = (PlayerMobile)slayer;
-
-                if (kensaiFocusPm.ActiveAscension == AscensionType.Kensai)
-                {
-                    AscensionProgress kensaiFocusProg  = kensaiFocusPm.AscensionProfile.Get(AscensionType.Kensai);
-                    int               kensaiFocusLevel = kensaiFocusProg.Level;
-
-                    BaseWeapon focusWeapon = kensaiFocusPm.Weapon as BaseWeapon;
-                    bool       focusHasSword = (focusWeapon != null && KensaiHelpers.IsSword(focusWeapon));
-
-                    bool wasFullHealth = KensaiFullHealthTracker.WasFullHealth(kensaiFocusPm, this);
-                    KensaiFullHealthTracker.Clear(kensaiFocusPm, this);
-
-                    if (focusHasSword && wasFullHealth)
-                    {
-                        if (kensaiFocusLevel >= 8)
-                        {
-                            kensaiFocusPm.PublicOverheadMessage(MessageType.Regular, 0x448, false, "*Singular Focus*");
-                            kensaiFocusPm.FixedParticles(0x376A, 9, 32, 5030, 0x448, 0, EffectLayer.Waist);
-
-                            kensaiFocusPm.AddAscensionEffect("SingularFocus", TimeSpan.FromSeconds(30), kensaiFocusLevel);
-                        }
-
-                        if (kensaiFocusLevel >= 20 && Utility.Random(10000) < (kensaiFocusLevel * 25))
-                        {
-                            KensaiTempestAbility.DoTempest(kensaiFocusPm, kensaiFocusLevel, true);
-                        }
-                    }
-                }
-            }
-
-            ///////////////////////////////////////////////////////////////
-            // DIVINE POWER level 20 (Hierophant)
-            if (slayer is PlayerMobile && this.Karma < 0)
-            {
-                PlayerMobile dPowerPm = (PlayerMobile)slayer;
-
-                if (dPowerPm.ActiveAscension == AscensionType.Hierophant
-                    && dPowerPm.HasAscensionEffect("DivinePower"))
-                {
-                    AscensionEffectState dPowerState = dPowerPm.GetAscensionEffect("DivinePower");
-
-                    if (dPowerState.Level >= 20 && Utility.Random(100) < 20)
-                    {
-                        dPowerPm.SetAbilityCooldown("DivineWrath", TimeSpan.Zero);
-                        dPowerPm.SendMessage(0x439, "Divine Wrath can be used again.");
-                    }
-                }
-            }
+									int bleedDuration = Utility.RandomMinMax(12, 21);
+									new ReaverDeepCutsBleed(m, deepCutsPm, deepCutsLevel, bleedDuration).Start();
+								}
+							}
+						}
+					}
+				}
+			}
+			///////////////////////////////////////////////////////////////
+			// KENSAI: Battle Meditation level 20
+			if (slayer is PlayerMobile)
+			{
+				PlayerMobile kensaiPm = (PlayerMobile)slayer;
+				if (kensaiPm.ActiveAscension == AscensionType.Kensai
+					&& kensaiPm.HasAscensionEffect("BattleMeditation"))
+				{
+					AscensionEffectState meditKillState = kensaiPm.GetAscensionEffect("BattleMeditation");
+					if (meditKillState.Level >= 20 && kensaiPm.IsAbilityOnCooldown("Tempest"))
+						new TempestCooldownReduceTimer(kensaiPm).Start();
+				}
+			}
 
 			///////////////////////////////////////////////////////////////
-            // ARCANE FEEDBACK (Arcane Archer, level 14)
-            if (slayer is PlayerMobile)
-            {
-                PlayerMobile aaFeedbackPm = (PlayerMobile)slayer;
+			// KENSAI: Singular Focus (level 8+) and Final Cut (level 20)
+			if (slayer is PlayerMobile)
+			{
+				PlayerMobile kensaiFocusPm = (PlayerMobile)slayer;
 
-                if (aaFeedbackPm.ActiveAscension == AscensionType.ArcaneArcher)
-                {
-                    AscensionProgress aaFeedbackProg  = aaFeedbackPm.AscensionProfile.Get(AscensionType.ArcaneArcher);
-                    int               aaFeedbackLevel = aaFeedbackProg.Level;
+				if (kensaiFocusPm.ActiveAscension == AscensionType.Kensai)
+				{
+					AscensionProgress kensaiFocusProg = kensaiFocusPm.AscensionProfile.Get(AscensionType.Kensai);
+					int kensaiFocusLevel = kensaiFocusProg.Level;
 
-                    BaseWeapon aaFeedbackWeapon = aaFeedbackPm.Weapon as BaseWeapon;
-                    bool       aaIsRanged       = (aaFeedbackWeapon != null && aaFeedbackWeapon is BaseRanged);
-					int		   restore  		= (int)(aaFeedbackPm.Skills[SkillName.Inscribe].Value / 25.0);
+					BaseWeapon focusWeapon = kensaiFocusPm.Weapon as BaseWeapon;
+					bool focusHasSword = (focusWeapon != null && KensaiHelpers.IsSword(focusWeapon));
 
-                    if (aaFeedbackLevel >= 14 && aaIsRanged && restore > 0)
-                    {
-                        aaFeedbackPm.Mana = Math.Min(aaFeedbackPm.ManaMax, aaFeedbackPm.Mana + restore);
-						if(aaFeedbackLevel >= 19)
+					bool wasFullHealth = KensaiFullHealthTracker.WasFullHealth(kensaiFocusPm, this);
+					KensaiFullHealthTracker.Clear(kensaiFocusPm, this);
+
+					if (focusHasSword && wasFullHealth)
+					{
+						if (kensaiFocusLevel >= 8)
+						{
+							kensaiFocusPm.PublicOverheadMessage(MessageType.Regular, 0x448, false, "*Singular Focus*");
+							kensaiFocusPm.FixedParticles(0x376A, 9, 32, 5030, 0x448, 0, EffectLayer.Waist);
+
+							kensaiFocusPm.AddAscensionEffect("SingularFocus", TimeSpan.FromSeconds(30), kensaiFocusLevel);
+						}
+
+						if (kensaiFocusLevel >= 20 && Utility.Random(10000) < (kensaiFocusLevel * 25))
+						{
+							KensaiTempestAbility.DoTempest(kensaiFocusPm, kensaiFocusLevel, true);
+						}
+					}
+				}
+			}
+
+			///////////////////////////////////////////////////////////////
+			// DIVINE POWER level 20 (Hierophant)
+			if (slayer is PlayerMobile && this.Karma < 0)
+			{
+				PlayerMobile dPowerPm = (PlayerMobile)slayer;
+
+				if (dPowerPm.ActiveAscension == AscensionType.Hierophant
+					&& dPowerPm.HasAscensionEffect("DivinePower"))
+				{
+					AscensionEffectState dPowerState = dPowerPm.GetAscensionEffect("DivinePower");
+
+					if (dPowerState.Level >= 20 && Utility.Random(100) < 20)
+					{
+						dPowerPm.SetAbilityCooldown("DivineWrath", TimeSpan.Zero);
+						dPowerPm.SendMessage(0x439, "Divine Wrath can be used again.");
+					}
+				}
+			}
+
+			///////////////////////////////////////////////////////////////
+			// ARCANE FEEDBACK (Arcane Archer, level 14)
+			if (slayer is PlayerMobile)
+			{
+				PlayerMobile aaFeedbackPm = (PlayerMobile)slayer;
+
+				if (aaFeedbackPm.ActiveAscension == AscensionType.ArcaneArcher)
+				{
+					AscensionProgress aaFeedbackProg = aaFeedbackPm.AscensionProfile.Get(AscensionType.ArcaneArcher);
+					int aaFeedbackLevel = aaFeedbackProg.Level;
+
+					BaseWeapon aaFeedbackWeapon = aaFeedbackPm.Weapon as BaseWeapon;
+					bool aaIsRanged = (aaFeedbackWeapon != null && aaFeedbackWeapon is BaseRanged);
+					int restore = (int)(aaFeedbackPm.Skills[SkillName.Inscribe].Value / 25.0);
+
+					if (aaFeedbackLevel >= 14 && aaIsRanged && restore > 0)
+					{
+						aaFeedbackPm.Mana = Math.Min(aaFeedbackPm.ManaMax, aaFeedbackPm.Mana + restore);
+						if (aaFeedbackLevel >= 19)
 						{
 							if (Utility.RandomBool())
 							{
-	                            aaFeedbackPm.Hits = Math.Min(aaFeedbackPm.HitsMax, aaFeedbackPm.Hits + restore);								
+								aaFeedbackPm.Hits = Math.Min(aaFeedbackPm.HitsMax, aaFeedbackPm.Hits + restore);
 							}
 							else
 							{
-	                            aaFeedbackPm.Stam = Math.Min(aaFeedbackPm.StamMax, aaFeedbackPm.Stam + restore);
+								aaFeedbackPm.Stam = Math.Min(aaFeedbackPm.StamMax, aaFeedbackPm.Stam + restore);
 							}
 						}
 						aaFeedbackPm.FixedParticles(0x376A, 9, 32, 5030, 0x48F, 0, EffectLayer.Waist);
-                    }
-                }
-            }
+					}
+				}
+			}
 
-            ///////////////////////////////////////////////////////////////
-            // ARCANE MOMENTUM (Arcane Archer, level 20)
-            if (slayer is PlayerMobile)
-            {
-                PlayerMobile aaMomPm = (PlayerMobile)slayer;
+			///////////////////////////////////////////////////////////////
+			// ARCANE MOMENTUM (Arcane Archer, level 20)
+			if (slayer is PlayerMobile)
+			{
+				PlayerMobile aaMomPm = (PlayerMobile)slayer;
 
-                if (aaMomPm.ActiveAscension == AscensionType.ArcaneArcher)
-                {
-                    AscensionProgress aaMomProg  = aaMomPm.AscensionProfile.Get(AscensionType.ArcaneArcher);
-                    int               aaMomLevel = aaMomProg.Level;
+				if (aaMomPm.ActiveAscension == AscensionType.ArcaneArcher)
+				{
+					AscensionProgress aaMomProg = aaMomPm.AscensionProfile.Get(AscensionType.ArcaneArcher);
+					int aaMomLevel = aaMomProg.Level;
 
-                    if (aaMomLevel >= 20)
-                    {
-                        BaseWeapon aaMomWeapon = aaMomPm.Weapon as BaseWeapon;
-                        bool       aaMomRanged = (aaMomWeapon != null && aaMomWeapon is BaseRanged);
+					if (aaMomLevel >= 20)
+					{
+						BaseWeapon aaMomWeapon = aaMomPm.Weapon as BaseWeapon;
+						bool aaMomRanged = (aaMomWeapon != null && aaMomWeapon is BaseRanged);
 
-                        if (aaMomRanged && !aaMomPm.HasAscensionEffect("ArcaneMomentumAbsorb"))
-                        {
-                            int absorb = (int)(aaMomPm.Skills[SkillName.Inscribe].Value / 8.0);
-                            aaMomPm.MagicDamageAbsorb += absorb;
-                            aaMomPm.AddAscensionEffect("ArcaneMomentumAbsorb", TimeSpan.FromSeconds(30), aaMomLevel);
-                            new ArcaneMomentumAbsorbExpiryTimer(aaMomPm, absorb).Start();
-                            aaMomPm.FixedParticles(0x376A, 9, 32, 5030, 0x48F, 0, EffectLayer.Waist);
-                        }
-                    }
-                }
-            }
+						if (aaMomRanged && !aaMomPm.HasAscensionEffect("ArcaneMomentumAbsorb"))
+						{
+							int absorb = (int)(aaMomPm.Skills[SkillName.Inscribe].Value / 8.0);
+							aaMomPm.MagicDamageAbsorb += absorb;
+							aaMomPm.AddAscensionEffect("ArcaneMomentumAbsorb", TimeSpan.FromSeconds(30), aaMomLevel);
+							new ArcaneMomentumAbsorbExpiryTimer(aaMomPm, absorb).Start();
+							aaMomPm.FixedParticles(0x376A, 9, 32, 5030, 0x48F, 0, EffectLayer.Waist);
+						}
+					}
+				}
+			}
 
-			if ( !Summoned && !NoKillAwards && !m_HasGeneratedLoot )
+			if (!Summoned && !NoKillAwards && !m_HasGeneratedLoot)
 			{
 				m_HasGeneratedLoot = true;
-				GenerateLoot( false );
+				GenerateLoot(false);
 			}
 
 			///////////////////////////////////////////////////////////////
 			/// 		ethereal scrolls and ascendance scrolls
-            ///////////////////////////////////////////////////////////////
-			if ( Fame >= 4000 )
+			///////////////////////////////////////////////////////////////
+			if (Fame >= 4000)
 			{
-			    double roll = Utility.RandomDouble();
+				double roll = Utility.RandomDouble();
 
-			    if ( roll < 0.009 )
-			        PackItem( new EtherealPowerScroll() );
+				if (roll < 0.009)
+					PackItem(new EtherealPowerScroll());
 
-			    if ( Fame >= 5500 && Utility.RandomDouble() < 0.0032 )
-			    {
-			        Item scroll = AscensionScrollFactory.CreateRandom();
+				if (Fame >= 5500 && Utility.RandomDouble() < 0.0032)
+				{
+					Item scroll = AscensionScrollFactory.CreateRandom();
 
-			        if ( scroll != null )
-			            PackItem( scroll );
-			    }
+					if (scroll != null)
+						PackItem(scroll);
+				}
 			}
 			///////////////////////////////////////////////////////////////
 			/// 		vampire blood
-            ///////////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////////////
 
 
-			SlayerEntry vampAnimal = SlayerGroup.GetEntryByName( SlayerName.AnimalHunter );
-			SlayerEntry vampAvian = SlayerGroup.GetEntryByName( SlayerName.AvianHunter );
-			SlayerEntry vampRepond = SlayerGroup.GetEntryByName( SlayerName.Repond );
-			SlayerEntry vampGiant = SlayerGroup.GetEntryByName( SlayerName.GiantKiller );
-
-			if ( vampAnimal.Slays(this) || vampAvian.Slays(this) || vampRepond.Slays(this) || vampGiant.Slays(this) )
+			if (m_AnimalHunter.Slays(this) || m_AvianHunter.Slays(this) || m_RepondHunter.Slays(this) || m_GiantHunter.Slays(this))
 			{
 				Mobile vampire = this.LastKiller;
 
-				if ( vampire is BaseCreature )
+				if (vampire is BaseCreature)
 					vampire = ((BaseCreature)vampire).GetMaster();
 
-				if ( vampire is PlayerMobile && Server.Items.BaseRace.BloodDrinker( vampire.RaceID ) && Utility.RandomBool() )
+				if (vampire is PlayerMobile && Server.Items.BaseRace.BloodDrinker(vampire.RaceID) && Utility.RandomBool())
 				{
-					PackItem( new BloodyDrink() );
+					PackItem(new BloodyDrink());
 				}
-				else if ( vampire is PlayerMobile && Server.Items.BaseRace.BrainEater( vampire.RaceID ) && Utility.RandomBool() )
+				else if (vampire is PlayerMobile && Server.Items.BaseRace.BrainEater(vampire.RaceID) && Utility.RandomBool())
 				{
-					PackItem( new FreshBrain() );
+					PackItem(new FreshBrain());
 				}
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
 
 			// GOLDEN FEATHERS FOR THE RANGERS OUTPOST ALTAR
-			if ( this is Harpy || this is StoneHarpy || this is SnowHarpy || this is Phoenix || this is HarpyElder || this is HarpyHen )
+			if (this is Harpy || this is StoneHarpy || this is SnowHarpy || this is Phoenix || this is HarpyElder || this is HarpyHen)
 			{
 				Mobile FeatherGetter = this.LastKiller;
 
-				if ( FeatherGetter is BaseCreature )
+				if (FeatherGetter is BaseCreature)
 					FeatherGetter = ((BaseCreature)FeatherGetter).GetMaster();
 
-				if ( FeatherGetter is PlayerMobile )
+				if (FeatherGetter is PlayerMobile)
 				{
-					Item RangerBook = FeatherGetter.Backpack.FindItemByType( typeof( GoldenRangers ) );
-					if ( RangerBook != null && ( FeatherGetter.Skills[SkillName.Camping].Base >= 90 || FeatherGetter.Skills[SkillName.Tracking].Base >= 90 ) )
+					Item RangerBook = FeatherGetter.Backpack.FindItemByType(typeof(GoldenRangers));
+					if (RangerBook != null && (FeatherGetter.Skills[SkillName.Camping].Base >= 90 || FeatherGetter.Skills[SkillName.Tracking].Base >= 90))
 					{
 						int FeatherChance = 5;
-						if ( this is Phoenix ){ FeatherChance = 25; }
+						if (this is Phoenix) { FeatherChance = 25; }
 
-						if ( FeatherChance >= Utility.RandomMinMax( 1, 100 ) )
+						if (FeatherChance >= Utility.RandomMinMax(1, 100))
 						{
 							ArrayList targets = new ArrayList();
-							foreach ( Item item in World.Items.Values )
-							if ( item is GoldenFeathers )
-							{
-								GoldenFeathers goldfeather = (GoldenFeathers)item;
-								if ( goldfeather.owner == FeatherGetter )
+							foreach (Item item in World.Items.Values)
+								if (item is GoldenFeathers)
 								{
-									targets.Add( item );
+									GoldenFeathers goldfeather = (GoldenFeathers)item;
+									if (goldfeather.owner == FeatherGetter)
+									{
+										targets.Add(item);
+									}
 								}
-							}
-							for ( int i = 0; i < targets.Count; ++i )
+							for (int i = 0; i < targets.Count; ++i)
 							{
-								Item item = ( Item )targets[ i ];
+								Item item = (Item)targets[i];
 								item.Delete();
 							}
-							FeatherGetter.AddToBackpack( new GoldenFeathers( FeatherGetter ) );
-							FeatherGetter.SendSound( 0x3D );
+							FeatherGetter.AddToBackpack(new GoldenFeathers(FeatherGetter));
+							FeatherGetter.SendSound(0x3D);
 							FeatherGetter.PrivateOverheadMessage(MessageType.Regular, 1150, false, "The goddess has given you golden feathers.", FeatherGetter.NetState);
 						}
 					}
@@ -8824,309 +8855,309 @@ namespace Server.Mobiles
 
 			int treasureLevel = TreasureMapLevel;
 
-			if ( treasureLevel == 1 && this.Map == Map.Sosaria )
+			if (treasureLevel == 1 && this.Map == Map.Sosaria)
 			{
 				Mobile killer = this.LastKiller;
 
-				if ( killer is BaseCreature )
+				if (killer is BaseCreature)
 					killer = ((BaseCreature)killer).GetMaster();
 
-				if ( killer is PlayerMobile && ((PlayerMobile)killer).Young )
+				if (killer is PlayerMobile && ((PlayerMobile)killer).Young)
 					treasureLevel = 0;
 			}
 
-			if ( !Summoned && !NoKillAwards && !IsBonded && treasureLevel >= 0 )
+			if (!Summoned && !NoKillAwards && !IsBonded && treasureLevel >= 0)
 			{
-				if ( m_Paragon && Paragon.ChestChance > Utility.RandomDouble() )
-					PackItem( new ParagonChest( this.Name, this.Title, treasureLevel, this ) );
-				else if ( TreasureMap.LootChance >= Utility.RandomDouble() )
+				if (m_Paragon && Paragon.ChestChance > Utility.RandomDouble())
+					PackItem(new ParagonChest(this.Name, this.Title, treasureLevel, this));
+				else if (TreasureMap.LootChance >= Utility.RandomDouble())
 				{
-					PackItem( new TreasureMap( treasureLevel, this.Map, this.Location, this.X, this.Y ) );
+					PackItem(new TreasureMap(treasureLevel, this.Map, this.Location, this.X, this.Y));
 				}
 			}
 
-			if ( IsAnimatedDead )
-				Effects.SendLocationEffect( Location, Map, 0x3728, 13, 1, 0x461, 4 );
+			if (IsAnimatedDead)
+				Effects.SendLocationEffect(Location, Map, 0x3728, 13, 1, 0x461, 4);
 
 			InhumanSpeech speechType = this.SpeechType;
 
-			if ( speechType != null )
-				speechType.OnDeath( this );
+			if (speechType != null)
+				speechType.OnDeath(this);
 
 			return base.OnBeforeDeath();
 		}
 
 		private sealed class ArcaneMomentumAbsorbExpiryTimer : Timer
-        {
-            private readonly PlayerMobile m_Player;
-            private readonly int          m_Absorb;
+		{
+			private readonly PlayerMobile m_Player;
+			private readonly int m_Absorb;
 
-            public ArcaneMomentumAbsorbExpiryTimer(PlayerMobile pm, int absorb)
-                : base(TimeSpan.FromSeconds(30))
-            {
-                m_Player = pm;
-                m_Absorb = absorb;
-                Priority = TimerPriority.OneSecond;
-            }
+			public ArcaneMomentumAbsorbExpiryTimer(PlayerMobile pm, int absorb)
+				: base(TimeSpan.FromSeconds(30))
+			{
+				m_Player = pm;
+				m_Absorb = absorb;
+				Priority = TimerPriority.OneSecond;
+			}
 
-            protected override void OnTick()
-            {
-                if (m_Player == null || m_Player.Deleted)
-                    return;
+			protected override void OnTick()
+			{
+				if (m_Player == null || m_Player.Deleted)
+					return;
 
-                m_Player.MagicDamageAbsorb -= m_Absorb;
-                if (m_Player.MagicDamageAbsorb < 0)
-                    m_Player.MagicDamageAbsorb = 0;
-            }
-        }
+				m_Player.MagicDamageAbsorb -= m_Absorb;
+				if (m_Player.MagicDamageAbsorb < 0)
+					m_Player.MagicDamageAbsorb = 0;
+			}
+		}
 
 		private static bool m_TyrannyExplosionActive = false;
 
-        private static void DoTyrannyCorpseExplosion(PlayerMobile pm, Point3D loc, Map map)
-        {
-            if (m_TyrannyExplosionActive)
-                return;
-
-            if (map == null || map == Map.Internal)
-                return;
-
-            m_TyrannyExplosionActive = true;
-
-            try
-            {
-                Effects.SendLocationParticles(
-                    EffectItem.Create(loc, map, EffectItem.DefaultDuration),
-                    0x23B2, 10, 30, 0x675, 0, 0, 0
-                );
-                Effects.PlaySound(loc, map, 0x307);
-
-                int strBonus    = pm.Str / 15;
-                int tacBonus    = (int)(pm.Skills[SkillName.Tactics].Value / 12);
-                int blastDamage = Utility.RandomMinMax(30, 56) + strBonus + tacBonus;
-
-                ArrayList targets = new ArrayList();
-
-                IPooledEnumerable eable = map.GetMobilesInRange(loc, 2);
-
-                try
-                {
-                    foreach (Mobile m in eable)
-                    {
-                        if (m == null || m.Deleted || !m.Alive || m == pm)
-                            continue;
-
-                        if (!pm.CanBeHarmful(m, false))
-                            continue;
-
-                        targets.Add(m);
-                    }
-                }
-                finally
-                {
-                    eable.Free();
-                }
-
-                for (int i = 0; i < targets.Count; i++)
-                {
-                    Mobile m = (Mobile)targets[i];
-
-                    if (m.Deleted || !m.Alive)
-                        continue;
-
-                    pm.DoHarmful(m);
-                    AOS.Damage(m, pm, blastDamage, 100, 0, 0, 0, 0);
-                }
-            }
-            finally
-            {
-                m_TyrannyExplosionActive = false;
-            }
-        }
-
-		private static Mobile GetNearestHostile( PlayerMobile pm )
+		private static void DoTyrannyCorpseExplosion(PlayerMobile pm, Point3D loc, Map map)
 		{
-		    Map map = pm.Map;
+			if (m_TyrannyExplosionActive)
+				return;
 
-		    if ( map == null || map == Map.Internal )
-		        return null;
+			if (map == null || map == Map.Internal)
+				return;
 
-		    Mobile nearest  = null;
-		    double nearestDist = double.MaxValue;
+			m_TyrannyExplosionActive = true;
 
-		    IPooledEnumerable eable = map.GetMobilesInRange( pm.Location, 12 );
+			try
+			{
+				Effects.SendLocationParticles(
+					EffectItem.Create(loc, map, EffectItem.DefaultDuration),
+					0x23B2, 10, 30, 0x675, 0, 0, 0
+				);
+				Effects.PlaySound(loc, map, 0x307);
 
-		    try
-		    {
-		        foreach ( Mobile m in eable )
-		        {
-		            if ( m == null || m.Deleted || !m.Alive || m == pm )
-		                continue;
+				int strBonus = pm.Str / 15;
+				int tacBonus = (int)(pm.Skills[SkillName.Tactics].Value / 12);
+				int blastDamage = Utility.RandomMinMax(30, 56) + strBonus + tacBonus;
 
-		            if ( !pm.CanBeHarmful( m, false ) )
-		                continue;
+				ArrayList targets = new ArrayList();
 
-		            double dist = pm.GetDistanceToSqrt( m );
+				IPooledEnumerable eable = map.GetMobilesInRange(loc, 2);
 
-		            if ( dist < nearestDist )
-		            {
-		                nearestDist = dist;
-		                nearest     = m;
-		            }
-		        }
-		    }
-		    finally
-		    {
-		        eable.Free();
-		    }
+				try
+				{
+					foreach (Mobile m in eable)
+					{
+						if (m == null || m.Deleted || !m.Alive || m == pm)
+							continue;
 
-		    return nearest;
+						if (!pm.CanBeHarmful(m, false))
+							continue;
+
+						targets.Add(m);
+					}
+				}
+				finally
+				{
+					eable.Free();
+				}
+
+				for (int i = 0; i < targets.Count; i++)
+				{
+					Mobile m = (Mobile)targets[i];
+
+					if (m.Deleted || !m.Alive)
+						continue;
+
+					pm.DoHarmful(m);
+					AOS.Damage(m, pm, blastDamage, 100, 0, 0, 0, 0);
+				}
+			}
+			finally
+			{
+				m_TyrannyExplosionActive = false;
+			}
+		}
+
+		private static Mobile GetNearestHostile(PlayerMobile pm)
+		{
+			Map map = pm.Map;
+
+			if (map == null || map == Map.Internal)
+				return null;
+
+			Mobile nearest = null;
+			double nearestDist = double.MaxValue;
+
+			IPooledEnumerable eable = map.GetMobilesInRange(pm.Location, 12);
+
+			try
+			{
+				foreach (Mobile m in eable)
+				{
+					if (m == null || m.Deleted || !m.Alive || m == pm)
+						continue;
+
+					if (!pm.CanBeHarmful(m, false))
+						continue;
+
+					double dist = pm.GetDistanceToSqrt(m);
+
+					if (dist < nearestDist)
+					{
+						nearestDist = dist;
+						nearest = m;
+					}
+				}
+			}
+			finally
+			{
+				eable.Free();
+			}
+
+			return nearest;
 		}
 
 		private static bool m_FoeRequiemActive = false;
 
 		// Directly applies Foe Requiem damage without going through the spell cast sequence 
 
-		private static void DoFoeRequiemDirect( PlayerMobile pm, Mobile target )
+		private static void DoFoeRequiemDirect(PlayerMobile pm, Mobile target)
 		{
-		    if ( m_FoeRequiemActive )
-		        return;
+			if (m_FoeRequiemActive)
+				return;
 
-		    if ( target == null || target.Deleted || !target.Alive )
-		        return;
+			if (target == null || target.Deleted || !target.Alive)
+				return;
 
-		    if ( !pm.CanBeHarmful( target, false ) )
-		        return;
+			if (!pm.CanBeHarmful(target, false))
+				return;
 
-		    m_FoeRequiemActive = true;
+			m_FoeRequiemActive = true;
 
-		    try
-		    {
-		        bool isSlayer = false;
+			try
+			{
+				bool isSlayer = false;
 
-		        Spellbook book     = Spellbook.Find( pm, -1, SpellbookType.Song );
-		        SongBook  songBook = book as SongBook;
+				Spellbook book = Spellbook.Find(pm, -1, SpellbookType.Song);
+				SongBook songBook = book as SongBook;
 
-		        if ( songBook != null && target is BaseCreature )
-		        {
-		            SlayerEntry atkSlayer  = SlayerGroup.GetEntryByName( songBook.Instrument.Slayer );
-		            SlayerEntry atkSlayer2 = SlayerGroup.GetEntryByName( songBook.Instrument.Slayer2 );
+				if (songBook != null && target is BaseCreature)
+				{
+					SlayerEntry atkSlayer = SlayerGroup.GetEntryByName(songBook.Instrument.Slayer);
+					SlayerEntry atkSlayer2 = SlayerGroup.GetEntryByName(songBook.Instrument.Slayer2);
 
-		            if ( (atkSlayer  != null && atkSlayer.Slays( target ))  ||
-		                 (atkSlayer2 != null && atkSlayer2.Slays( target )) )
-		                isSlayer = true;
-		        }
+					if ((atkSlayer != null && atkSlayer.Slays(target)) ||
+						 (atkSlayer2 != null && atkSlayer2.Slays(target)))
+						isSlayer = true;
+				}
 
-		        double damage = (double)(Song.MusicSkill( pm ) / 9);
+				double damage = (double)(Song.MusicSkill(pm) / 9);
 
-		        if ( isSlayer )
-		            damage *= 2;
+				if (isSlayer)
+					damage *= 2;
 
-		        pm.DoHarmful( target );
+				pm.DoHarmful(target);
 
-		        target.FixedParticles( 0x374A, 10, 15, 5028, EffectLayer.Head );
-		        pm.MovingParticles( target, 0x379F, 7, 0, false, true, 3043, 4043, 0x211 );
-		        target.PlaySound( 0x1EA );
+				target.FixedParticles(0x374A, 10, 15, 5028, EffectLayer.Head);
+				pm.MovingParticles(target, 0x379F, 7, 0, false, true, 3043, 4043, 0x211);
+				target.PlaySound(0x1EA);
 
-		        AOS.Damage( target, pm, (int)damage, 20, 20, 20, 20, 20 );
-		    }
-		    finally
-		    {
-		        m_FoeRequiemActive = false;
-		    }
+				AOS.Damage(target, pm, (int)damage, 20, 20, 20, 20, 20);
+			}
+			finally
+			{
+				m_FoeRequiemActive = false;
+			}
 		}
 
 		private sealed class TempestCooldownReduceTimer : Timer
-        {
-            private readonly PlayerMobile m_Player;
-            private static readonly TimeSpan FullCooldown = TimeSpan.FromMinutes(1);
-            private static readonly TimeSpan Reduction    = TimeSpan.FromSeconds(5);
+		{
+			private readonly PlayerMobile m_Player;
+			private static readonly TimeSpan FullCooldown = TimeSpan.FromMinutes(1);
+			private static readonly TimeSpan Reduction = TimeSpan.FromSeconds(5);
 
-            // Tracks how much we have already reduced so far this cooldown cycle
-            private static readonly System.Collections.Hashtable m_Reductions
-                = new System.Collections.Hashtable();
+			// Tracks how much we have already reduced so far this cooldown cycle
+			private static readonly System.Collections.Hashtable m_Reductions
+				= new System.Collections.Hashtable();
 
-            public TempestCooldownReduceTimer(PlayerMobile pm)
-                : base(TimeSpan.Zero)
-            {
-                m_Player = pm;
-                Priority = TimerPriority.OneSecond;
-            }
+			public TempestCooldownReduceTimer(PlayerMobile pm)
+				: base(TimeSpan.Zero)
+			{
+				m_Player = pm;
+				Priority = TimerPriority.OneSecond;
+			}
 
-            protected override void OnTick()
-            {
-                if (m_Player == null || m_Player.Deleted)
-                    return;
+			protected override void OnTick()
+			{
+				if (m_Player == null || m_Player.Deleted)
+					return;
 
-                if (!m_Player.IsAbilityOnCooldown("Tempest"))
-                {
-                    m_Reductions.Remove(m_Player);
-                    return;
-                }
+				if (!m_Player.IsAbilityOnCooldown("Tempest"))
+				{
+					m_Reductions.Remove(m_Player);
+					return;
+				}
 
-                double totalReduced = 0.0;
+				double totalReduced = 0.0;
 
-                if (m_Reductions.ContainsKey(m_Player))
-                    totalReduced = (double)m_Reductions[m_Player];
+				if (m_Reductions.ContainsKey(m_Player))
+					totalReduced = (double)m_Reductions[m_Player];
 
-                totalReduced += Reduction.TotalSeconds;
+				totalReduced += Reduction.TotalSeconds;
 
-                if (totalReduced >= FullCooldown.TotalSeconds)
-                {
-                    m_Player.SetAbilityCooldown("Tempest", TimeSpan.Zero);
-                    m_Reductions.Remove(m_Player);
-                    return;
-                }
+				if (totalReduced >= FullCooldown.TotalSeconds)
+				{
+					m_Player.SetAbilityCooldown("Tempest", TimeSpan.Zero);
+					m_Reductions.Remove(m_Player);
+					return;
+				}
 
-                m_Reductions[m_Player] = totalReduced;
+				m_Reductions[m_Player] = totalReduced;
 
-                TimeSpan remaining = TimeSpan.FromSeconds(FullCooldown.TotalSeconds - totalReduced);
-                m_Player.SetAbilityCooldown("Tempest", remaining);
-            }
-        }
+				TimeSpan remaining = TimeSpan.FromSeconds(FullCooldown.TotalSeconds - totalReduced);
+				m_Player.SetAbilityCooldown("Tempest", remaining);
+			}
+		}
 
 		// Divine judgement summon controller
 		private sealed class LuminarExpiryTimer : Timer
 		{
-		    private readonly CrusaderLuminar m_Luminar;
+			private readonly CrusaderLuminar m_Luminar;
 
-		    public LuminarExpiryTimer( CrusaderLuminar luminar )
-		        : base( TimeSpan.FromSeconds( 60 ) )
-		    {
-		        m_Luminar = luminar;
-		        Priority  = TimerPriority.OneSecond;
-		    }
+			public LuminarExpiryTimer(CrusaderLuminar luminar)
+				: base(TimeSpan.FromSeconds(60))
+			{
+				m_Luminar = luminar;
+				Priority = TimerPriority.OneSecond;
+			}
 
-		    protected override void OnTick()
-		    {
-		        if ( m_Luminar == null || m_Luminar.Deleted )
-		            return;
+			protected override void OnTick()
+			{
+				if (m_Luminar == null || m_Luminar.Deleted)
+					return;
 
-		        Effects.SendLocationParticles(
-		            EffectItem.Create( m_Luminar.Location, m_Luminar.Map, EffectItem.DefaultDuration ),
-		            0x3728, 10, 10, 0x498, 0, 2023, 0
-		        );
-		        m_Luminar.PlaySound( 0x1FE );
-		        m_Luminar.Delete();
-		    }
+				Effects.SendLocationParticles(
+					EffectItem.Create(m_Luminar.Location, m_Luminar.Map, EffectItem.DefaultDuration),
+					0x3728, 10, 10, 0x498, 0, 2023, 0
+				);
+				m_Luminar.PlaySound(0x1FE);
+				m_Luminar.Delete();
+			}
 		}
 
 		private bool m_NoKillAwards;
 
 		public bool NoKillAwards
 		{
-			get{ return m_NoKillAwards; }
-			set{ m_NoKillAwards = value; }
+			get { return m_NoKillAwards; }
+			set { m_NoKillAwards = value; }
 		}
 
-		public int ComputeBonusDamage( List<DamageEntry> list, Mobile m )
+		public int ComputeBonusDamage(List<DamageEntry> list, Mobile m)
 		{
 			int bonus = 0;
 
-			for ( int i = list.Count - 1; i >= 0; --i )
+			for (int i = list.Count - 1; i >= 0; --i)
 			{
 				DamageEntry de = list[i];
 
-				if ( de.Damager == m || !(de.Damager is BaseCreature) )
+				if (de.Damager == m || !(de.Damager is BaseCreature))
 					continue;
 
 				BaseCreature bc = (BaseCreature)de.Damager;
@@ -9134,7 +9165,7 @@ namespace Server.Mobiles
 
 				master = bc.GetMaster();
 
-				if ( master == m )
+				if (master == m)
 					bonus += de.DamageGiven;
 			}
 
@@ -9143,9 +9174,9 @@ namespace Server.Mobiles
 
 		public Mobile GetMaster()
 		{
-			if ( Controlled && ControlMaster != null )
+			if (Controlled && ControlMaster != null)
 				return ControlMaster;
-			else if ( Summoned && SummonMaster != null )
+			else if (Summoned && SummonMaster != null)
 				return SummonMaster;
 
 			return null;
@@ -9156,27 +9187,27 @@ namespace Server.Mobiles
 			public Mobile m_Mobile;
 			public int m_Damage;
 
-			public FKEntry( Mobile m, int damage )
+			public FKEntry(Mobile m, int damage)
 			{
 				m_Mobile = m;
 				m_Damage = damage;
 			}
 		}
 
-		public static List<DamageStore> GetLootingRights( List<DamageEntry> damageEntries, int hitsMax )
+		public static List<DamageStore> GetLootingRights(List<DamageEntry> damageEntries, int hitsMax)
 		{
 			List<DamageStore> rights = new List<DamageStore>();
 
-			for ( int i = damageEntries.Count - 1; i >= 0; --i )
+			for (int i = damageEntries.Count - 1; i >= 0; --i)
 			{
-				if ( i >= damageEntries.Count )
+				if (i >= damageEntries.Count)
 					continue;
 
 				DamageEntry de = damageEntries[i];
 
-				if ( de.HasExpired )
+				if (de.HasExpired)
 				{
-					damageEntries.RemoveAt( i );
+					damageEntries.RemoveAt(i);
 					continue;
 				}
 
@@ -9184,31 +9215,31 @@ namespace Server.Mobiles
 
 				List<DamageEntry> respList = de.Responsible;
 
-				if ( respList != null )
+				if (respList != null)
 				{
-					for ( int j = 0; j < respList.Count; ++j )
+					for (int j = 0; j < respList.Count; ++j)
 					{
 						DamageEntry subEntry = respList[j];
 						Mobile master = subEntry.Damager;
 
-						if ( master == null || master.Deleted || !master.Player )
+						if (master == null || master.Deleted || !master.Player)
 							continue;
 
 						bool needNewSubEntry = true;
 
-						for ( int k = 0; needNewSubEntry && k < rights.Count; ++k )
+						for (int k = 0; needNewSubEntry && k < rights.Count; ++k)
 						{
 							DamageStore ds = rights[k];
 
-							if ( ds.m_Mobile == master )
+							if (ds.m_Mobile == master)
 							{
 								ds.m_Damage += subEntry.DamageGiven;
 								needNewSubEntry = false;
 							}
 						}
 
-						if ( needNewSubEntry )
-							rights.Add( new DamageStore( master, subEntry.DamageGiven ) );
+						if (needNewSubEntry)
+							rights.Add(new DamageStore(master, subEntry.DamageGiven));
 
 						damage -= subEntry.DamageGiven;
 					}
@@ -9216,289 +9247,289 @@ namespace Server.Mobiles
 
 				Mobile m = de.Damager;
 
-				if ( m == null || m.Deleted || !m.Player )
+				if (m == null || m.Deleted || !m.Player)
 					continue;
 
-				if ( damage <= 0 )
+				if (damage <= 0)
 					continue;
 
 				bool needNewEntry = true;
 
-				for ( int j = 0; needNewEntry && j < rights.Count; ++j )
+				for (int j = 0; needNewEntry && j < rights.Count; ++j)
 				{
 					DamageStore ds = rights[j];
 
-					if ( ds.m_Mobile == m )
+					if (ds.m_Mobile == m)
 					{
 						ds.m_Damage += damage;
 						needNewEntry = false;
 					}
 				}
 
-				if ( needNewEntry )
-					rights.Add( new DamageStore( m, damage ) );
+				if (needNewEntry)
+					rights.Add(new DamageStore(m, damage));
 			}
 
-			if ( rights.Count > 0 )
+			if (rights.Count > 0)
 			{
-				rights[0].m_Damage = (int)(rights[0].m_Damage * 1.25);	//This would be the first valid person attacking it.  Gets a 25% bonus.  Per 1/19/07 Five on Friday
+				rights[0].m_Damage = (int)(rights[0].m_Damage * 1.25);  //This would be the first valid person attacking it.  Gets a 25% bonus.  Per 1/19/07 Five on Friday
 
-				if ( rights.Count > 1 )
+				if (rights.Count > 1)
 					rights.Sort(); //Sort by damage
 
 				int topDamage = rights[0].m_Damage;
 				int minDamage;
 
-				if ( hitsMax >= 3000 )
+				if (hitsMax >= 3000)
 					minDamage = topDamage / 16;
-				else if ( hitsMax >= 1000 )
+				else if (hitsMax >= 1000)
 					minDamage = topDamage / 8;
-				else if ( hitsMax >= 200 )
+				else if (hitsMax >= 200)
 					minDamage = topDamage / 4;
 				else
 					minDamage = topDamage / 2;
 
-				for ( int i = 0; i < rights.Count; ++i )
+				for (int i = 0; i < rights.Count; ++i)
 				{
 					DamageStore ds = rights[i];
 
-					ds.m_HasRight = ( ds.m_Damage >= minDamage );
+					ds.m_HasRight = (ds.m_Damage >= minDamage);
 				}
 			}
 
 			return rights;
 		}
 
-		public virtual void OnKilledBy( Mobile mob )
+		public virtual void OnKilledBy(Mobile mob)
 		{
-			if ( m_Paragon && Paragon.CheckArtifactChance( mob, this ) )
-				Paragon.GiveArtifactTo( mob );
+			if (m_Paragon && Paragon.CheckArtifactChance(mob, this))
+				Paragon.GiveArtifactTo(mob);
 		}
 
 		public override void OnDeath(Container c)
 		{
-		    PremiumSpawner.ActivateSpawner(this);
+			PremiumSpawner.ActivateSpawner(this);
 
-		    Mobile killer = this.LastKiller;
+			Mobile killer = this.LastKiller;
 
-		    QuestTake.DropChest(this);
+			QuestTake.DropChest(this);
 
-		    if (killer is BaseCreature)
-		    {
-		        BaseCreature bc_killer = (BaseCreature)killer;
+			if (killer is BaseCreature)
+			{
+				BaseCreature bc_killer = (BaseCreature)killer;
 
-		        if (bc_killer.Summoned && bc_killer.SummonMaster != null)
-		            killer = bc_killer.SummonMaster;
-		        else if (bc_killer.Controlled && bc_killer.ControlMaster != null)
-		            killer = bc_killer.ControlMaster;
-		        else if (bc_killer.BardProvoked && bc_killer.BardMaster != null)
-		            killer = bc_killer.BardMaster;
-		    }
+				if (bc_killer.Summoned && bc_killer.SummonMaster != null)
+					killer = bc_killer.SummonMaster;
+				else if (bc_killer.Controlled && bc_killer.ControlMaster != null)
+					killer = bc_killer.ControlMaster;
+				else if (bc_killer.BardProvoked && bc_killer.BardMaster != null)
+					killer = bc_killer.BardMaster;
+			}
 
-		    if ((killer is PlayerMobile) && (killer.AccessLevel < AccessLevel.GameMaster))
-		    {
-		        LoggingFunctions.LogBattles(killer, this);
-		    }
+			if ((killer is PlayerMobile) && (killer.AccessLevel < AccessLevel.GameMaster))
+			{
+				LoggingFunctions.LogBattles(killer, this);
+			}
 
-		    if (killer is PlayerMobile)
-		    {
-		        AssassinFunctions.CheckTarget(killer, this);
-		        StandardQuestFunctions.CheckTarget(killer, this, null);
-		        FishingQuestFunctions.CheckTarget(killer, this, null);
+			if (killer is PlayerMobile)
+			{
+				AssassinFunctions.CheckTarget(killer, this);
+				StandardQuestFunctions.CheckTarget(killer, this, null);
+				FishingQuestFunctions.CheckTarget(killer, this, null);
 
-		        if (killer.Backpack.FindItemByType(typeof(MuseumBook)) != null && this.Fame >= 18000)
-		            MuseumBook.FoundItem(killer, 1);
+				if (killer.Backpack.FindItemByType(typeof(MuseumBook)) != null && this.Fame >= 18000)
+					MuseumBook.FoundItem(killer, 1);
 
-		        if (killer.Backpack.FindItemByType(typeof(QuestTome)) != null && this.Fame >= 18000)
-		            QuestTome.FoundItem(killer, 1, null);
-		    }
+				if (killer.Backpack.FindItemByType(typeof(QuestTome)) != null && this.Fame >= 18000)
+					QuestTome.FoundItem(killer, 1, null);
+			}
 
-		    Server.Misc.DropRelic.DropSpecialItem(this, killer, c);
+			Server.Misc.DropRelic.DropSpecialItem(this, killer, c);
 
-	        if (killer is PlayerMobile && this.Fame >= 15000)
-	        {
-	            PlayerMobile scrollKiller = (PlayerMobile)killer;	
+			if (killer is PlayerMobile && this.Fame >= 15000)
+			{
+				PlayerMobile scrollKiller = (PlayerMobile)killer;
 
-	            // 0.25% chance for a random scroll
-	            if (Utility.Random(10000) < 25)
-	            {
-	                c.DropItem(AscensionScrollFactory.CreateRandom());
-	            }	
+				// 0.25% chance for a random scroll
+				if (Utility.Random(10000) < 25)
+				{
+					c.DropItem(AscensionScrollFactory.CreateRandom());
+				}
 
-	            // 0.50% chance for a scroll matching the killer's active ascension
-	            if (scrollKiller.ActiveAscension != AscensionType.None
-	                && Utility.Random(10000) < 50)
-	            {
-	                c.DropItem(new AscensionScroll(scrollKiller.ActiveAscension));
-	            }
-	        }
+				// 0.50% chance for a scroll matching the killer's active ascension
+				if (scrollKiller.ActiveAscension != AscensionType.None
+					&& Utility.Random(10000) < 50)
+				{
+					c.DropItem(new AscensionScroll(scrollKiller.ActiveAscension));
+				}
+			}
 
-		    if (killer != null)
-		        Server.Custom.DefenderOfTheRealm.MarkLootHelper.CheckForMarks(this, c, killer);
+			if (killer != null)
+				Server.Custom.DefenderOfTheRealm.MarkLootHelper.CheckForMarks(this, c, killer);
 
-		    if (IsBonded)
-		    {
-		        int sound = this.GetDeathSound();
+			if (IsBonded)
+			{
+				int sound = this.GetDeathSound();
 
-		        if (sound >= 0)
-		            Effects.PlaySound(this, this.Map, sound);
+				if (sound >= 0)
+					Effects.PlaySound(this, this.Map, sound);
 
-		        Warmode = false;
-		        Poison = null;
-		        Combatant = null;
+				Warmode = false;
+				Poison = null;
+				Combatant = null;
 
-		        Hits = 0;
-		        Stam = 0;
-		        Mana = 0;
+				Hits = 0;
+				Stam = 0;
+				Mana = 0;
 
-		        IsDeadPet = true;
-		        ControlTarget = ControlMaster;
-		        ControlOrder = OrderType.Follow;
+				IsDeadPet = true;
+				ControlTarget = ControlMaster;
+				ControlOrder = OrderType.Follow;
 
-		        ProcessDeltaQueue();
-		        SendIncomingPacket();
-		        SendIncomingPacket();
+				ProcessDeltaQueue();
+				SendIncomingPacket();
+				SendIncomingPacket();
 
-		        foreach (AggressorInfo info in Aggressors)
-		            if (info.Attacker.Combatant == this)
-		                info.Attacker.Combatant = null;
+				foreach (AggressorInfo info in Aggressors)
+					if (info.Attacker.Combatant == this)
+						info.Attacker.Combatant = null;
 
-		        foreach (AggressorInfo info in Aggressed)
-		            if (info.Defender.Combatant == this)
-		                info.Defender.Combatant = null;
+				foreach (AggressorInfo info in Aggressed)
+					if (info.Defender.Combatant == this)
+						info.Defender.Combatant = null;
 
-		        Mobile owner = this.ControlMaster;
+				Mobile owner = this.ControlMaster;
 
-		        if (owner == null || owner.Deleted || owner.Map != this.Map ||
-		            !owner.InRange(this, 12) || !this.CanSee(owner) || !this.InLOS(owner))
-		        {
-		            if (this.OwnerAbandonTime == DateTime.MinValue)
-		                this.OwnerAbandonTime = DateTime.Now;
-		        }
-		        else
-		        {
-		            this.OwnerAbandonTime = DateTime.MinValue;
-		        }
+				if (owner == null || owner.Deleted || owner.Map != this.Map ||
+					!owner.InRange(this, 12) || !this.CanSee(owner) || !this.InLOS(owner))
+				{
+					if (this.OwnerAbandonTime == DateTime.MinValue)
+						this.OwnerAbandonTime = DateTime.Now;
+				}
+				else
+				{
+					this.OwnerAbandonTime = DateTime.MinValue;
+				}
 
-		        CheckStatTimers();
-		    }
-		    else
-		    {
-		        if (!Summoned && !m_NoKillAwards)
-		        {
-		            int totalFame = Fame / 100;
-		            int totalKarma = -Karma / 100;
+				CheckStatTimers();
+			}
+			else
+			{
+				if (!Summoned && !m_NoKillAwards)
+				{
+					int totalFame = Fame / 100;
+					int totalKarma = -Karma / 100;
 
-		            List<DamageStore> list = GetLootingRights(this.DamageEntries, this.HitsMax);
-		            List<Mobile> titles = new List<Mobile>();
-		            List<int> fame = new List<int>();
-		            List<int> karma = new List<int>();
+					List<DamageStore> list = GetLootingRights(this.DamageEntries, this.HitsMax);
+					List<Mobile> titles = new List<Mobile>();
+					List<int> fame = new List<int>();
+					List<int> karma = new List<int>();
 
-		            int baseAscensionXP = 0;
+					int baseAscensionXP = 0;
 
-		            if (Fame > 125)
-		            {
-		                int min = Fame / 125;
-		                int max = Fame / 95;
+					if (Fame > 125)
+					{
+						int min = Fame / 125;
+						int max = Fame / 95;
 
-		                if (max > 0)
-		                    baseAscensionXP = Utility.RandomMinMax(min, max);
-		            }
+						if (max > 0)
+							baseAscensionXP = Utility.RandomMinMax(min, max);
+					}
 
-		            for (int i = 0; i < list.Count; ++i)
-		            {
-		                DamageStore ds = list[i];
+					for (int i = 0; i < list.Count; ++i)
+					{
+						DamageStore ds = list[i];
 
-		                if (!ds.m_HasRight)
-		                    continue;
+						if (!ds.m_HasRight)
+							continue;
 
-		                Mobile mob = ds.m_Mobile;
+						Mobile mob = ds.m_Mobile;
 
-		                PlayerMobile xpPlayer = null;
+						PlayerMobile xpPlayer = null;
 
 						if (mob is PlayerMobile)
 						{
-						    xpPlayer = (PlayerMobile)mob;
+							xpPlayer = (PlayerMobile)mob;
 						}
 						else if (mob is BaseCreature)
 						{
-						    BaseCreature bc = (BaseCreature)mob;
+							BaseCreature bc = (BaseCreature)mob;
 
-						    if (bc.Summoned && bc.SummonMaster is PlayerMobile)
-						    {
-						        xpPlayer = (PlayerMobile)bc.SummonMaster;
-						    }
-						    else if (bc.Controlled && bc.ControlMaster is PlayerMobile)
-						    {
-						        xpPlayer = (PlayerMobile)bc.ControlMaster;
-						    }
+							if (bc.Summoned && bc.SummonMaster is PlayerMobile)
+							{
+								xpPlayer = (PlayerMobile)bc.SummonMaster;
+							}
+							else if (bc.Controlled && bc.ControlMaster is PlayerMobile)
+							{
+								xpPlayer = (PlayerMobile)bc.ControlMaster;
+							}
 						}
-		                if (xpPlayer != null && baseAscensionXP > 0)
-		                {
-		                   	double damagePercent = (double)ds.m_Damage / this.HitsMax;
+						if (xpPlayer != null && baseAscensionXP > 0)
+						{
+							double damagePercent = (double)ds.m_Damage / this.HitsMax;
 							if (damagePercent > 1.0)
-							    damagePercent = 1.0;
+								damagePercent = 1.0;
 
-		                    int scaledXP = (int)(baseAscensionXP * damagePercent);
+							int scaledXP = (int)(baseAscensionXP * damagePercent);
 
-		                    if (scaledXP > 0)
-		                        Server.Custom.Ascensions.AscensionExperienceSystem.AwardExperienceDirect(xpPlayer, this, scaledXP);
-		                }
+							if (scaledXP > 0)
+								Server.Custom.Ascensions.AscensionExperienceSystem.AwardExperienceDirect(xpPlayer, this, scaledXP);
+						}
 
-		                Party party = Engines.PartySystem.Party.Get(ds.m_Mobile);
+						Party party = Engines.PartySystem.Party.Get(ds.m_Mobile);
 
-		                if (party != null)
-		                {
-		                    int dividedFame = totalFame / party.Members.Count;
-		                    int dividedKarma = totalKarma / party.Members.Count;
+						if (party != null)
+						{
+							int dividedFame = totalFame / party.Members.Count;
+							int dividedKarma = totalKarma / party.Members.Count;
 
-		                    for (int j = 0; j < party.Members.Count; ++j)
-		                    {
-		                        PartyMemberInfo info = party.Members[j] as PartyMemberInfo;
+							for (int j = 0; j < party.Members.Count; ++j)
+							{
+								PartyMemberInfo info = party.Members[j] as PartyMemberInfo;
 
-		                        if (info != null && info.Mobile != null)
-		                        {
-		                            int index = titles.IndexOf(info.Mobile);
+								if (info != null && info.Mobile != null)
+								{
+									int index = titles.IndexOf(info.Mobile);
 
-		                            if (index == -1)
-		                            {
-		                                titles.Add(info.Mobile);
-		                                fame.Add(dividedFame);
-		                                karma.Add(dividedKarma);
-		                            }
-		                            else
-		                            {
-		                                fame[index] += dividedFame;
-		                                karma[index] += dividedKarma;
-		                            }
-		                        }
-		                    }
-		                }
-		                else
-		                {
-		                    titles.Add(ds.m_Mobile);
-		                    fame.Add(totalFame);
-		                    karma.Add(totalKarma);
-		                }
+									if (index == -1)
+									{
+										titles.Add(info.Mobile);
+										fame.Add(dividedFame);
+										karma.Add(dividedKarma);
+									}
+									else
+									{
+										fame[index] += dividedFame;
+										karma[index] += dividedKarma;
+									}
+								}
+							}
+						}
+						else
+						{
+							titles.Add(ds.m_Mobile);
+							fame.Add(totalFame);
+							karma.Add(totalKarma);
+						}
 
-		                OnKilledBy(ds.m_Mobile);
-		            }
+						OnKilledBy(ds.m_Mobile);
+					}
 
-		            for (int i = 0; i < titles.Count; ++i)
-		            {
-		                Titles.AwardFame(titles[i], fame[i], true);
-		                Titles.AwardKarma(titles[i], karma[i], true);
-		            }
-		        }
+					for (int i = 0; i < titles.Count; ++i)
+					{
+						Titles.AwardFame(titles[i], fame[i], true);
+						Titles.AwardKarma(titles[i], karma[i], true);
+					}
+				}
 
-		        base.OnDeath(c);
+				base.OnDeath(c);
 
-		        if (DeleteCorpseOnDeath ||
-		            ((this.Name == "a follower" || this.Name == "a sailor" || this.Name == "a pirate") && this.EmoteHue > 0))
-		        {
-		            c.Delete();
-		        }
-		    }
+				if (DeleteCorpseOnDeath ||
+					((this.Name == "a follower" || this.Name == "a sailor" || this.Name == "a pirate") && this.EmoteHue > 0))
+				{
+					c.Delete();
+				}
+			}
 		}
 
 
@@ -9512,10 +9543,10 @@ namespace Server.Mobiles
 
 		private DateTime m_NextReacquireTime;
 
-		public DateTime NextReacquireTime{ get{ return m_NextReacquireTime; } set{ m_NextReacquireTime = value; } }
+		public DateTime NextReacquireTime { get { return m_NextReacquireTime; } set { m_NextReacquireTime = value; } }
 
-		public virtual TimeSpan ReacquireDelay{ get{ return TimeSpan.FromSeconds( 10.0 ); } }
-		public virtual bool ReacquireOnMovement{ get{ return false; } }
+		public virtual TimeSpan ReacquireDelay { get { return TimeSpan.FromSeconds(10.0); } }
+		public virtual bool ReacquireOnMovement { get { return false; } }
 
 		public void ForceReacquire()
 		{
@@ -9524,14 +9555,14 @@ namespace Server.Mobiles
 
 		public override void OnDelete()
 		{
-			Server.Mobiles.PremiumSpawner.ActivateSpawner( this );
+			Server.Mobiles.PremiumSpawner.ActivateSpawner(this);
 
 			Mobile m = m_ControlMaster;
 
-			SetControlMaster( null );
+			SetControlMaster(null);
 			SummonMaster = null;
 
-			if ( this is HenchmanFamiliar )
+			if (this is HenchmanFamiliar)
 			{
 				ArrayList bagitems = new ArrayList(this.Backpack.Items);
 				foreach (Item item in bagitems)
@@ -9542,7 +9573,7 @@ namespace Server.Mobiles
 					}
 				}
 			}
-			else if ( this is PackBeast )
+			else if (this is PackBeast)
 			{
 				ArrayList bagitems = new ArrayList(this.Backpack.Items);
 				foreach (Item item in bagitems)
@@ -9553,7 +9584,7 @@ namespace Server.Mobiles
 					}
 				}
 			}
-			else if ( this is GolemPorter )
+			else if (this is GolemPorter)
 			{
 				ArrayList bagitems = new ArrayList(this.Backpack.Items);
 				foreach (Item item in bagitems)
@@ -9564,11 +9595,11 @@ namespace Server.Mobiles
 					}
 				}
 			}
-			else if ( this is FrankenFighter || this is FrankenPorter )
+			else if (this is FrankenFighter || this is FrankenPorter)
 			{
-				Server.Items.FrankenPorterItem.Stash( this );
+				Server.Items.FrankenPorterItem.Stash(this);
 			}
-			else if ( this is AerialServant )
+			else if (this is AerialServant)
 			{
 				ArrayList bagitems = new ArrayList(this.Backpack.Items);
 				foreach (Item item in bagitems)
@@ -9580,7 +9611,7 @@ namespace Server.Mobiles
 				}
 			}
 
-			if ( this.Mounted )
+			if (this.Mounted)
 			{
 				Mobiles.IMount mt = this.Mount;
 				Mobile animal = (Mobile)mt;
@@ -9589,42 +9620,42 @@ namespace Server.Mobiles
 
 			base.OnDelete();
 
-			if ( m != null )
+			if (m != null)
 				m.InvalidateProperties();
 		}
 
-		public override bool CanBeHarmful( Mobile target, bool message, bool ignoreOurBlessedness )
+		public override bool CanBeHarmful(Mobile target, bool message, bool ignoreOurBlessedness)
 		{
-			if ( (target is BaseVendor && ((BaseVendor)target).IsInvulnerable) || target is PlayerVendor || target is PlayerBarkeeper )
+			if ((target is BaseVendor && ((BaseVendor)target).IsInvulnerable) || target is PlayerVendor || target is PlayerBarkeeper)
 			{
-				if ( message )
+				if (message)
 				{
-					if ( target.Title == null )
-						SendMessage( "{0} the vendor cannot be harmed.", target.Name );
+					if (target.Title == null)
+						SendMessage("{0} the vendor cannot be harmed.", target.Name);
 					else
-						SendMessage( "{0} {1} cannot be harmed.", target.Name, target.Title );
+						SendMessage("{0} {1} cannot be harmed.", target.Name, target.Title);
 				}
-				
+
 
 				return false;
 			}
 
-			return base.CanBeHarmful( target, message, ignoreOurBlessedness );
+			return base.CanBeHarmful(target, message, ignoreOurBlessedness);
 		}
 
-		public override bool CanBeRenamedBy( Mobile from )
+		public override bool CanBeRenamedBy(Mobile from)
 		{
-			bool ret = base.CanBeRenamedBy( from );
+			bool ret = base.CanBeRenamedBy(from);
 
-			if ( Controlled && from == ControlMaster && !from.Region.IsPartOf( typeof( Jail ) ) )
+			if (Controlled && from == ControlMaster && !from.Region.IsPartOf(typeof(Jail)))
 				ret = true;
 
 			return ret;
 		}
 
-		public bool SetControlMaster( Mobile m )
+		public bool SetControlMaster(Mobile m)
 		{
-			if ( m == null )
+			if (m == null)
 			{
 				ControlMaster = null;
 				Controlled = false;
@@ -9633,22 +9664,22 @@ namespace Server.Mobiles
 				Guild = null;
 				WhisperHue = 0;
 
-				Delta( MobileDelta.Noto );
+				Delta(MobileDelta.Noto);
 			}
 			else
 			{
-				PremiumSpawner.ActivateSpawner( this );
+				PremiumSpawner.ActivateSpawner(this);
 
 				ISpawner se = this.Spawner;
-				if ( se != null && se.UnlinkOnTaming )
+				if (se != null && se.UnlinkOnTaming)
 				{
-					this.Spawner.Remove( this );
+					this.Spawner.Remove(this);
 					this.Spawner = null;
 				}
 
-				if ( m.Followers + ControlSlots > m.FollowersMax )
+				if (m.Followers + ControlSlots > m.FollowersMax)
 				{
-					m.SendLocalizedMessage( 1049607 ); // You have too many followers to control that creature.
+					m.SendLocalizedMessage(1049607); // You have too many followers to control that creature.
 					return false;
 				}
 
@@ -9660,13 +9691,13 @@ namespace Server.Mobiles
 				ControlOrder = OrderType.Come;
 				Guild = null;
 
-				if ( m_DeleteTimer != null )
+				if (m_DeleteTimer != null)
 				{
 					m_DeleteTimer.Stop();
 					m_DeleteTimer = null;
 				}
 
-				Delta( MobileDelta.Noto );
+				Delta(MobileDelta.Noto);
 			}
 
 			InvalidateProperties();
@@ -9674,19 +9705,19 @@ namespace Server.Mobiles
 			return true;
 		}
 
-		public override void OnRegionChange( Region Old, Region New )
+		public override void OnRegionChange(Region Old, Region New)
 		{
-			base.OnRegionChange( Old, New );
+			base.OnRegionChange(Old, New);
 
-			PremiumSpawner.ActivateSpawner( this );
+			PremiumSpawner.ActivateSpawner(this);
 
-			if ( this.Controlled )
+			if (this.Controlled)
 			{
 				SpawnEntry se = this.Spawner as SpawnEntry;
 
-				if ( se != null && !se.UnlinkOnTaming && ( New == null || !New.AcceptsSpawnsFrom( se.Region ) ) )
+				if (se != null && !se.UnlinkOnTaming && (New == null || !New.AcceptsSpawnsFrom(se.Region)))
 				{
-					this.Spawner.Remove( this );
+					this.Spawner.Remove(this);
 					this.Spawner = null;
 				}
 			}
@@ -9696,36 +9727,36 @@ namespace Server.Mobiles
 
 		public static bool Summoning
 		{
-			get{ return m_Summoning; }
-			set{ m_Summoning = value; }
+			get { return m_Summoning; }
+			set { m_Summoning = value; }
 		}
 
-		public static bool Summon( BaseCreature creature, Mobile caster, Point3D p, int sound, TimeSpan duration )
+		public static bool Summon(BaseCreature creature, Mobile caster, Point3D p, int sound, TimeSpan duration)
 		{
-			return Summon( creature, true, caster, p, sound, duration );
+			return Summon(creature, true, caster, p, sound, duration);
 		}
 
-		public static bool isVortex( Mobile m )
+		public static bool isVortex(Mobile m)
 		{
 			if (
-				m is ElementalFiendWater || 
-				m is ElementalFiendFire || 
-				m is ElementalFiendEarth || 
-				m is ElementalFiendAir || 
-				m is ElementalSpiritAir || 
-				m is ElementalSpiritFire || 
-				m is ElementalSpiritWater || 
-				m is ElementalSpiritEarth || 
-				m is BladeSpirits || 
-				m is DevilPact || 
-				m is SummonSnakes || 
-				m is ElementalFiendWater || 
-				m is GasCloud || 
-				m is DeathVortex || 
-				m is SummonedTreefellow || 
-				m is EnergyVortex || 
-				m is SummonSkeleton || 
-				m is Swarm || 
+				m is ElementalFiendWater ||
+				m is ElementalFiendFire ||
+				m is ElementalFiendEarth ||
+				m is ElementalFiendAir ||
+				m is ElementalSpiritAir ||
+				m is ElementalSpiritFire ||
+				m is ElementalSpiritWater ||
+				m is ElementalSpiritEarth ||
+				m is BladeSpirits ||
+				m is DevilPact ||
+				m is SummonSnakes ||
+				m is ElementalFiendWater ||
+				m is GasCloud ||
+				m is DeathVortex ||
+				m is SummonedTreefellow ||
+				m is EnergyVortex ||
+				m is SummonSkeleton ||
+				m is Swarm ||
 				m is SummonDragon ||
 				m is SummonPhoenix ||
 				m is SummonDireBear
@@ -9735,111 +9766,111 @@ namespace Server.Mobiles
 			return false;
 		}
 
-		public static bool Summon( BaseCreature creature, bool controlled, Mobile caster, Point3D p, int sound, TimeSpan duration )
+		public static bool Summon(BaseCreature creature, bool controlled, Mobile caster, Point3D p, int sound, TimeSpan duration)
 		{
 			SlayerName slayer1 = SlayerName.None;
 			SlayerName slayer2 = SlayerName.None;
 
-			if ( caster != null && caster is PlayerMobile )
+			if (caster != null && caster is PlayerMobile)
 			{
-				Spellbook book = Spellbook.FindEquippedSpellbook( caster );
+				Spellbook book = Spellbook.FindEquippedSpellbook(caster);
 
-				if( book != null )
+				if (book != null)
 				{
 					slayer1 = book.Slayer;
 					slayer2 = book.Slayer2;
 				}
 			}
 
-			if ( caster.Followers + creature.ControlSlots > caster.FollowersMax )
+			if (caster.Followers + creature.ControlSlots > caster.FollowersMax)
 			{
-				caster.SendLocalizedMessage( 1049645 ); // You have too many followers to summon that creature.
+				caster.SendLocalizedMessage(1049645); // You have too many followers to summon that creature.
 				creature.Delete();
 				return false;
 			}
 
 			m_Summoning = true;
 
-			if ( controlled )
-				creature.SetControlMaster( caster );
+			if (controlled)
+				creature.SetControlMaster(caster);
 
 			creature.RangeHome = 10;
 			creature.Summoned = true;
 
 			creature.SummonMaster = caster;
 
-			if (	creature is SummonedAirElemental || 
-					creature is SummonedAirElementalGreater || 
-					creature is SummonedDaemon || 
-					creature is SummonedDaemonGreater || 
-					creature is SummonedEarthElemental || 
-					creature is SummonedEarthElementalGreater || 
-					creature is SummonedFireElemental || 
-					creature is SummonedFireElementalGreater || 
-					creature is SummonedWaterElemental || 
-					creature is SummonedWaterElementalGreater || 
-					creature is ElementalCalledFire || 
-					creature is ElementalCalledWater || 
-					creature is ElementalCalledEarth || 
-					creature is ElementalCalledAir || 
-					creature is ElementalSummonIce || 
-					creature is ElementalSummonMagma || 
-					creature is ElementalSummonLightning || 
-					creature is ElementalSummonEnt || 
-					creature is ElementalLordWater || 
-					creature is ElementalLordAir || 
-					creature is ElementalLordEarth || 
-					creature is ElementalLordFire || 
-					creature is AncientFleshGolem || 
-					creature is FleshGolem || 
-					creature is BloodElemental || 
-					creature is ElectricalElemental || 
-					creature is GemElemental || 
-					creature is IceElemental || 
-					creature is MudElemental || 
-					creature is PoisonElemental || 
-					creature is WeedElemental || 
-					creature is ToxicElemental || 
-					creature is SummonedTreefellow || 
-					creature is BoneKnight || 
-					creature is Devil || 
-					creature is BlackBear || 
-					creature is BrownBear || 
-					creature is WolfDire || 
-					creature is Panther || 
-					creature is TigerRiding || 
-					creature is TimberWolf || 
-					creature is Scorpion || 
-					creature is GiantSpider || 
-					creature is HugeLizard || 
-					creature is GiantToad || 
-					creature is Slime )
+			if (creature is SummonedAirElemental ||
+					creature is SummonedAirElementalGreater ||
+					creature is SummonedDaemon ||
+					creature is SummonedDaemonGreater ||
+					creature is SummonedEarthElemental ||
+					creature is SummonedEarthElementalGreater ||
+					creature is SummonedFireElemental ||
+					creature is SummonedFireElementalGreater ||
+					creature is SummonedWaterElemental ||
+					creature is SummonedWaterElementalGreater ||
+					creature is ElementalCalledFire ||
+					creature is ElementalCalledWater ||
+					creature is ElementalCalledEarth ||
+					creature is ElementalCalledAir ||
+					creature is ElementalSummonIce ||
+					creature is ElementalSummonMagma ||
+					creature is ElementalSummonLightning ||
+					creature is ElementalSummonEnt ||
+					creature is ElementalLordWater ||
+					creature is ElementalLordAir ||
+					creature is ElementalLordEarth ||
+					creature is ElementalLordFire ||
+					creature is AncientFleshGolem ||
+					creature is FleshGolem ||
+					creature is BloodElemental ||
+					creature is ElectricalElemental ||
+					creature is GemElemental ||
+					creature is IceElemental ||
+					creature is MudElemental ||
+					creature is PoisonElemental ||
+					creature is WeedElemental ||
+					creature is ToxicElemental ||
+					creature is SummonedTreefellow ||
+					creature is BoneKnight ||
+					creature is Devil ||
+					creature is BlackBear ||
+					creature is BrownBear ||
+					creature is WolfDire ||
+					creature is Panther ||
+					creature is TigerRiding ||
+					creature is TimberWolf ||
+					creature is Scorpion ||
+					creature is GiantSpider ||
+					creature is HugeLizard ||
+					creature is GiantToad ||
+					creature is Slime)
 			{
 				creature.ControlOrder = OrderType.Guard;
 			}
 
 			Container pack = creature.Backpack;
 
-			if ( pack != null )
+			if (pack != null)
 			{
-				for ( int i = pack.Items.Count - 1; i >= 0; --i )
+				for (int i = pack.Items.Count - 1; i >= 0; --i)
 				{
-					if ( i >= pack.Items.Count )
+					if (i >= pack.Items.Count)
 						continue;
 
 					pack.Items[i].Delete();
 				}
 			}
 
-			new UnsummonTimer( caster, creature, duration ).Start();
+			new UnsummonTimer(caster, creature, duration).Start();
 			creature.m_SummonEnd = DateTime.Now + duration;
 
 			creature.Slayer = slayer1;
 			creature.Slayer2 = slayer2;
 
-			creature.MoveToWorld( p, caster.Map );
+			creature.MoveToWorld(p, caster.Map);
 
-			Effects.PlaySound( p, creature.Map, sound );
+			Effects.PlaySound(p, creature.Map, sound);
 
 			m_Summoning = false;
 
@@ -9859,7 +9890,7 @@ namespace Server.Mobiles
 		private DateTime m_NextRummageTime;
 
 		public virtual bool CanBreath { get { return HasBreath && !Summoned; } }
-		public virtual bool IsDispellable { get { return ( Summoned || DispelDifficulty > 0 ) && !IsAnimatedDead; } }
+		public virtual bool IsDispellable { get { return (Summoned || DispelDifficulty > 0) && !IsAnimatedDead; } }
 
 		#region Healing
 		public virtual bool CanHeal { get { return false; } }
@@ -9882,223 +9913,223 @@ namespace Server.Mobiles
 		private DateTime m_NextHealOwnerTime = DateTime.Now;
 		private Timer m_HealTimer = null;
 
-		public bool IsHealing { get { return ( m_HealTimer != null ); } }
+		public bool IsHealing { get { return (m_HealTimer != null); } }
 
-		public virtual void HealStart( Mobile patient )
+		public virtual void HealStart(Mobile patient)
 		{
-			bool onSelf = ( patient == this );
+			bool onSelf = (patient == this);
 
 			//DoBeneficial( patient );
 
 			RevealingAction();
 
-			if ( !onSelf )
+			if (!onSelf)
 			{
 				patient.RevealingAction();
-				patient.SendLocalizedMessage( 1008078, false, Name ); //  : Attempting to heal you.
+				patient.SendLocalizedMessage(1008078, false, Name); //  : Attempting to heal you.
 			}
 
-			double seconds = ( onSelf ? HealDelay : HealOwnerDelay ) + ( patient.Alive ? 0.0 : 5.0 );
+			double seconds = (onSelf ? HealDelay : HealOwnerDelay) + (patient.Alive ? 0.0 : 5.0);
 
-			m_HealTimer = Timer.DelayCall( TimeSpan.FromSeconds( seconds ), new TimerStateCallback( Heal_Callback ), patient );
+			m_HealTimer = Timer.DelayCall(TimeSpan.FromSeconds(seconds), new TimerStateCallback(Heal_Callback), patient);
 		}
 
-		private void Heal_Callback( object state )
+		private void Heal_Callback(object state)
 		{
-			if ( state is Mobile )
-				Heal( (Mobile)state );
+			if (state is Mobile)
+				Heal((Mobile)state);
 		}
 
-		public virtual void Heal( Mobile patient )
+		public virtual void Heal(Mobile patient)
 		{
-			if ( !Alive || this.Map == Map.Internal || !CanBeBeneficial( patient, true, true ) || patient.Map != this.Map || !InRange( patient, HealEndRange ) )
+			if (!Alive || this.Map == Map.Internal || !CanBeBeneficial(patient, true, true) || patient.Map != this.Map || !InRange(patient, HealEndRange))
 			{
 				StopHeal();
 				return;
 			}
 
-			bool onSelf = ( patient == this );
+			bool onSelf = (patient == this);
 
-			if ( !patient.Alive )
+			if (!patient.Alive)
 			{
 			}
-			else if ( patient.Poisoned )
+			else if (patient.Poisoned)
 			{
 				int poisonLevel = patient.Poison.Level;
 
 				double healing = Skills.Healing.Value;
 				double anatomy = Skills.Anatomy.Value;
-				double chance = ( healing - 30.0 ) / 50.0 - poisonLevel * 0.1;
+				double chance = (healing - 30.0) / 50.0 - poisonLevel * 0.1;
 
-				if ( ( healing >= 60.0 && anatomy >= 60.0 ) && chance > Utility.RandomDouble() )
+				if ((healing >= 60.0 && anatomy >= 60.0) && chance > Utility.RandomDouble())
 				{
-					if ( patient.CurePoison( this ) )
+					if (patient.CurePoison(this))
 					{
-						patient.SendLocalizedMessage( 1010059 ); // You have been cured of all poisons.
+						patient.SendLocalizedMessage(1010059); // You have been cured of all poisons.
 
-						CheckSkill( SkillName.Healing, 0.0, 60.0 + poisonLevel * 10.0 ); // TODO: Verify formula
-						CheckSkill( SkillName.Anatomy, 0.0, 100.0 );
+						CheckSkill(SkillName.Healing, 0.0, 60.0 + poisonLevel * 10.0); // TODO: Verify formula
+						CheckSkill(SkillName.Anatomy, 0.0, 100.0);
 					}
 				}
 			}
-			else if ( BleedAttack.IsBleeding( patient ) )
+			else if (BleedAttack.IsBleeding(patient))
 			{
-				patient.SendLocalizedMessage( 1060167 ); // The bleeding wounds have healed, you are no longer bleeding!
-				BleedAttack.EndBleed( patient, false );
+				patient.SendLocalizedMessage(1060167); // The bleeding wounds have healed, you are no longer bleeding!
+				BleedAttack.EndBleed(patient, false);
 			}
 			else
 			{
 				double healing = Skills.Healing.Value;
 				double anatomy = Skills.Anatomy.Value;
-				double chance = ( healing + 10.0 ) / 100.0;
+				double chance = (healing + 10.0) / 100.0;
 
-				if ( chance > Utility.RandomDouble() )
+				if (chance > Utility.RandomDouble())
 				{
 					double min, max;
 
-					min = ( anatomy / 10.0 ) + ( healing / 6.0 ) + 4.0;
-					max = ( anatomy / 8.0 ) + ( healing / 3.0 ) + 4.0;
+					min = (anatomy / 10.0) + (healing / 6.0) + 4.0;
+					max = (anatomy / 8.0) + (healing / 3.0) + 4.0;
 
-					if ( onSelf )
+					if (onSelf)
 						max += 10;
 
-					double toHeal = min + ( Utility.RandomDouble() * ( max - min ) );
+					double toHeal = min + (Utility.RandomDouble() * (max - min));
 
 					toHeal *= HealScalar;
 
-					patient.Heal( (int)toHeal );
+					patient.Heal((int)toHeal);
 
-					CheckSkill( SkillName.Healing, 0.0, 90.0 );
-					CheckSkill( SkillName.Anatomy, 0.0, 100.0 );
+					CheckSkill(SkillName.Healing, 0.0, 90.0);
+					CheckSkill(SkillName.Anatomy, 0.0, 100.0);
 				}
 			}
 
-			HealEffect( patient );
+			HealEffect(patient);
 
 			StopHeal();
 
-			if ( ( onSelf && HealFully && Hits >= HealTrigger * HitsMax && Hits < HitsMax ) || ( !onSelf && HealOwnerFully && patient.Hits >= HealOwnerTrigger * patient.HitsMax && patient.Hits < patient.HitsMax ) )
-				HealStart( patient );
+			if ((onSelf && HealFully && Hits >= HealTrigger * HitsMax && Hits < HitsMax) || (!onSelf && HealOwnerFully && patient.Hits >= HealOwnerTrigger * patient.HitsMax && patient.Hits < patient.HitsMax))
+				HealStart(patient);
 		}
 
 		public virtual void StopHeal()
 		{
-			if ( m_HealTimer != null )
+			if (m_HealTimer != null)
 				m_HealTimer.Stop();
 
 			m_HealTimer = null;
 		}
 
-		public virtual void HealEffect( Mobile patient )
+		public virtual void HealEffect(Mobile patient)
 		{
-			patient.PlaySound( HealSound );
+			patient.PlaySound(HealSound);
 		}
 
 		#endregion
 
 		public void NameColor()
 		{
-			if ( this is HenchmanMonster || this is HenchmanFighter || this is HenchmanWizard || this is HenchmanArcher )
+			if (this is HenchmanMonster || this is HenchmanFighter || this is HenchmanWizard || this is HenchmanArcher)
 			{
 				NameHue = 1154;
 			}
-			else if ( this.Map == Map.IslesDread && ( this is WhiteTigerRiding || this is Hyena || this is Jaguar || this is Cougar || this is PolarBear || this is WhiteWolf || this is SnowLeopard || this is Mammoth || this is Boar || this is PandaRiding || this is Bull || this is Gorilla || this is Panther || this is GreyWolf ) )
+			else if (this.Map == Map.IslesDread && (this is WhiteTigerRiding || this is Hyena || this is Jaguar || this is Cougar || this is PolarBear || this is WhiteWolf || this is SnowLeopard || this is Mammoth || this is Boar || this is PandaRiding || this is Bull || this is Gorilla || this is Panther || this is GreyWolf))
 			{
 				NameHue = -1;
 			}
-			else if ( this.Map == Map.Lodor && this.Z > 10 && this.X >= 1975 && this.Y >= 2201 && this.X <= 2032 && this.Y <= 2247 ) // ZOO
+			else if (this.Map == Map.Lodor && this.Z > 10 && this.X >= 1975 && this.Y >= 2201 && this.X <= 2032 && this.Y <= 2247) // ZOO
 			{
 				NameHue = -1;
 			}
-			else if ( m_FightMode == FightMode.Closest && !( this is BasePerson || this is BaseVendor || (this.GetType()).IsAssignableFrom(typeof(PlayerVendor)) || this is PlayerBarkeeper ) )
+			else if (m_FightMode == FightMode.Closest && !(this is BasePerson || this is BaseVendor || (this.GetType()).IsAssignableFrom(typeof(PlayerVendor)) || this is PlayerBarkeeper))
 			{
 				NameHue = 0x22;
 			}
-			else if ( m_FightMode == FightMode.Evil )
+			else if (m_FightMode == FightMode.Evil)
 			{
 				NameHue = 0x92E;
 			}
 
-			if ( GetMaster() is PlayerMobile && NameHue > 0 && !( this is HenchmanMonster || this is HenchmanFighter || this is HenchmanWizard || this is HenchmanArcher ) ){ NameHue = -1; }
+			if (GetMaster() is PlayerMobile && NameHue > 0 && !(this is HenchmanMonster || this is HenchmanFighter || this is HenchmanWizard || this is HenchmanArcher)) { NameHue = -1; }
 		}
 
 		public virtual void OnThink()
 		{
-			if ( EmoteHue > 10000 )
+			if (EmoteHue > 10000)
 			{
 				bool keepMe = false;
-				foreach ( Item i in GetItemsInRange( 20 ) )
+				foreach (Item i in GetItemsInRange(20))
 				{
-					if ( i is BaseBoat && i.Serial == EmoteHue )
+					if (i is BaseBoat && i.Serial == EmoteHue)
 						keepMe = true;
 				}
 
-				if ( !keepMe )
+				if (!keepMe)
 					this.Delete();
 			}
 
-			if ( ( Summoned || Controlled ) && SpawnerID > 0 )
+			if ((Summoned || Controlled) && SpawnerID > 0)
 				SpawnerID = 0;
 
 			NameColor();
 
-			if ( m_HitsBeforeMod > 0 && IsPet(this) )
+			if (m_HitsBeforeMod > 0 && IsPet(this))
 			{
-				SetHits( m_HitsBeforeMod );
+				SetHits(m_HitsBeforeMod);
 				Hits = HitsMax;
 				m_HitsBeforeMod = 0;
 			}
 
 			Mobile tamer = GetMaster(); // FOR INVULNERABLE POTIONS AND SEANCE SPELLS
-			if ( tamer is PlayerMobile )
+			if (tamer is PlayerMobile)
 			{
-				if ( tamer.Blessed )
+				if (tamer.Blessed)
 				{
 					Blessed = true;
 				}
-				else if ( !AlwaysInvulnerable( this ) && Blessed )
+				else if (!AlwaysInvulnerable(this) && Blessed)
 				{
 					Blessed = false;
 				}
 			}
-			if ( !Controlled && !AlwaysInvulnerable( this ) && Blessed )
+			if (!Controlled && !AlwaysInvulnerable(this) && Blessed)
 			{
 				Blessed = false;
 			}
 
-			if ( this is HenchmanMonster || this is HenchmanFighter || this is HenchmanWizard || this is HenchmanArcher || MyServerSettings.FastFriends( this ) )
+			if (this is HenchmanMonster || this is HenchmanFighter || this is HenchmanWizard || this is HenchmanArcher || MyServerSettings.FastFriends(this))
 			{
 				Mobile leader = GetMaster();
-				if ( leader != null )
+				if (leader != null)
 				{
-					if ( MySettings.S_NoMountsInCertainRegions && Server.Mobiles.AnimalTrainer.IsNoMountRegion( leader, Region.Find( leader.Location, leader.Map ) ) )
+					if (MySettings.S_NoMountsInCertainRegions && Server.Mobiles.AnimalTrainer.IsNoMountRegion(leader, Region.Find(leader.Location, leader.Map)))
 					{
-						Server.Misc.HenchmanFunctions.DismountHenchman( leader );
+						Server.Misc.HenchmanFunctions.DismountHenchman(leader);
 					}
-					else if ( Region.Find( this.Location, this.Map ) is HouseRegion && MySettings.S_NoMountsInHouses )
+					else if (Region.Find(this.Location, this.Map) is HouseRegion && MySettings.S_NoMountsInHouses)
 					{
-						Server.Misc.HenchmanFunctions.DismountHenchman( leader );
+						Server.Misc.HenchmanFunctions.DismountHenchman(leader);
 					}
-					else if ( Server.Mobiles.AnimalTrainer.IsBeingFast( leader ) && this.ActiveSpeed >= 0.2 )
+					else if (Server.Mobiles.AnimalTrainer.IsBeingFast(leader) && this.ActiveSpeed >= 0.2)
 					{
-						Server.Misc.HenchmanFunctions.MountHenchman( leader );
+						Server.Misc.HenchmanFunctions.MountHenchman(leader);
 					}
-					else if ( !Server.Mobiles.AnimalTrainer.IsBeingFast( leader ) && this.ActiveSpeed <= 0.1 )
+					else if (!Server.Mobiles.AnimalTrainer.IsBeingFast(leader) && this.ActiveSpeed <= 0.1)
 					{
-						Server.Misc.HenchmanFunctions.DismountHenchman( leader );
+						Server.Misc.HenchmanFunctions.DismountHenchman(leader);
 					}
 				}
 				else
 				{
-					Server.Misc.HenchmanFunctions.ForceSlow( this );
+					Server.Misc.HenchmanFunctions.ForceSlow(this);
 				}
 			}
 
-			if ( EnableRummaging && CanRummageCorpses && !Summoned && !Controlled && DateTime.Now >= m_NextRummageTime )
+			if (EnableRummaging && CanRummageCorpses && !Summoned && !Controlled && DateTime.Now >= m_NextRummageTime)
 			{
 				double min, max;
 
-				if ( ChanceToRummage > Utility.RandomDouble() && Rummage() )
+				if (ChanceToRummage > Utility.RandomDouble() && Rummage())
 				{
 					min = MinutesToNextRummageMin;
 					max = MinutesToNextRummageMax;
@@ -10110,81 +10141,81 @@ namespace Server.Mobiles
 				}
 
 				double delay = min + (Utility.RandomDouble() * (max - min));
-				m_NextRummageTime = DateTime.Now + TimeSpan.FromMinutes( delay );
+				m_NextRummageTime = DateTime.Now + TimeSpan.FromMinutes(delay);
 			}
 
-			if ( CanBreath && DateTime.Now >= m_NextBreathTime ) // tested: controlled dragons do breath fire, what about summoned skeletal dragons?
+			if (CanBreath && DateTime.Now >= m_NextBreathTime) // tested: controlled dragons do breath fire, what about summoned skeletal dragons?
 			{
 				Mobile target = this.Combatant;
-				
-				if( target != null && target.Alive && !target.IsDeadBondedPet && CanBeHarmful( target ) && target.Map == this.Map && !IsDeadBondedPet && target.InRange( this, BreathRange ) && InLOS( target ) && !BardPacified )
+
+				if (target != null && target.Alive && !target.IsDeadBondedPet && CanBeHarmful(target) && target.Map == this.Map && !IsDeadBondedPet && target.InRange(this, BreathRange) && InLOS(target) && !BardPacified)
 				{
-					if( ( DateTime.Now - m_NextBreathTime ) < TimeSpan.FromSeconds( 30 ) ) 
+					if ((DateTime.Now - m_NextBreathTime) < TimeSpan.FromSeconds(30))
 					{
-						BreathStart( target );
+						BreathStart(target);
 					}
 
-					m_NextBreathTime = DateTime.Now + TimeSpan.FromSeconds( BreathMinDelay + ( Utility.RandomDouble() * BreathMaxDelay ) );
+					m_NextBreathTime = DateTime.Now + TimeSpan.FromSeconds(BreathMinDelay + (Utility.RandomDouble() * BreathMaxDelay));
 				}
 			}
 
-			if ( ( CanHeal || CanHealOwner ) && Alive && !IsHealing && !BardPacified )
+			if ((CanHeal || CanHealOwner) && Alive && !IsHealing && !BardPacified)
 			{
 				Mobile owner = this.ControlMaster;
 
-				if ( owner != null && CanHealOwner && DateTime.Now >= m_NextHealOwnerTime && CanBeBeneficial( owner, true, true ) && owner.Map == this.Map && InRange( owner, HealStartRange ) && InLOS( owner ) && owner.Hits < HealOwnerTrigger * owner.HitsMax )
+				if (owner != null && CanHealOwner && DateTime.Now >= m_NextHealOwnerTime && CanBeBeneficial(owner, true, true) && owner.Map == this.Map && InRange(owner, HealStartRange) && InLOS(owner) && owner.Hits < HealOwnerTrigger * owner.HitsMax)
 				{
-					HealStart( owner );
+					HealStart(owner);
 
-					m_NextHealOwnerTime = DateTime.Now + TimeSpan.FromSeconds( HealOwnerInterval );
+					m_NextHealOwnerTime = DateTime.Now + TimeSpan.FromSeconds(HealOwnerInterval);
 				}
-				else if ( CanHeal && DateTime.Now >= m_NextHealTime && CanBeBeneficial( this ) && ( Hits < HealTrigger * HitsMax || Poisoned ) )
+				else if (CanHeal && DateTime.Now >= m_NextHealTime && CanBeBeneficial(this) && (Hits < HealTrigger * HitsMax || Poisoned))
 				{
-					HealStart( this );
+					HealStart(this);
 
-					m_NextHealTime = DateTime.Now + TimeSpan.FromSeconds( HealInterval );
+					m_NextHealTime = DateTime.Now + TimeSpan.FromSeconds(HealInterval);
 				}
 			}
 
-			if ( ( this is TownGuards || ( this is BaseVendor && this.WhisperHue != 999 && !((this.GetType()).IsAssignableFrom(typeof(PlayerVendor))) && !(this is PlayerBarkeeper) ) ) // GUARDS/MERCHANTS SHOULD MOVE BACK TO THEIR POST
-				&& 
-				( Math.Abs( this.X-this.Home.X ) > 8 || Math.Abs( this.Y-this.Home.Y ) > 8 || Math.Abs( this.Z-this.Home.Z ) > 8 )
-				&& 
+			if ((this is TownGuards || (this is BaseVendor && this.WhisperHue != 999 && !((this.GetType()).IsAssignableFrom(typeof(PlayerVendor))) && !(this is PlayerBarkeeper))) // GUARDS/MERCHANTS SHOULD MOVE BACK TO THEIR POST
+				&&
+				(Math.Abs(this.X - this.Home.X) > 8 || Math.Abs(this.Y - this.Home.Y) > 8 || Math.Abs(this.Z - this.Home.Z) > 8)
+				&&
 				Combatant == null
-                &&
-                this.Title != "the wandering healer")
+				&&
+				this.Title != "the wandering healer")
 			{
 				this.Location = this.Home;
 			}
-			else if ( WhisperHue == 999 && CanSwim && !(CanOnlyMoveOnSea()) && !CantWalk && Combatant == null && !Hidden && !Server.Mobiles.BasePirate.IsSailor( this ) ) // DIVE UNDER WATER AND WAIT FOR VICTIM
+			else if (WhisperHue == 999 && CanSwim && !(CanOnlyMoveOnSea()) && !CantWalk && Combatant == null && !Hidden && !Server.Mobiles.BasePirate.IsSailor(this)) // DIVE UNDER WATER AND WAIT FOR VICTIM
 			{
 				bool dive = true;
 
-				foreach ( NetState state in NetState.Instances )
+				foreach (NetState state in NetState.Instances)
 				{
 					Mobile m = state.Mobile;
 
-					if ( m is PlayerMobile && m.InRange( this.Location, 20 ) && m.Alive && m.Map == this.Map )
+					if (m is PlayerMobile && m.InRange(this.Location, 20) && m.Alive && m.Map == this.Map)
 					{
-						if ( m.AccessLevel == AccessLevel.Player ){ dive = false; }
+						if (m.AccessLevel == AccessLevel.Player) { dive = false; }
 					}
 				}
 
-				if ( dive )
+				if (dive)
 				{
-					Point3D loc = Server.Misc.Worlds.GetBoatWater( this.X, this.Y, this.Z, this.Map, 8 );
+					Point3D loc = Server.Misc.Worlds.GetBoatWater(this.X, this.Y, this.Z, this.Map, 8);
 
-					if ( loc.X == 0 && loc.Y == 0 && loc.Z == 0 )
+					if (loc.X == 0 && loc.Y == 0 && loc.Z == 0)
 					{
 						this.Location = this.Home;
-						Effects.SendLocationParticles( EffectItem.Create( this.Location, this.Map, EffectItem.DefaultDuration ), 0x3728, 10, 10, 2023 );
-						this.PlaySound( 0x1FE );
+						Effects.SendLocationParticles(EffectItem.Create(this.Location, this.Map, EffectItem.DefaultDuration), 0x3728, 10, 10, 2023);
+						this.PlaySound(0x1FE);
 					}
 					else
 					{
 						this.Location = loc;
-						this.PlaySound( 0x026 );
-						Effects.SendLocationEffect( this.Location, this.Map, 0x23B2, 16 );
+						this.PlaySound(0x026);
+						Effects.SendLocationEffect(this.Location, this.Map, 0x23B2, 16);
 					}
 
 					this.Warmode = false;
@@ -10193,26 +10224,26 @@ namespace Server.Mobiles
 					this.Hidden = true;
 				}
 			}
-			else if ( MyServerSettings.LineOfSight( this, false ) && !Controlled && Combatant == null && WhisperHue != 999 && WhisperHue != 666 ) // MOVE FROM PLAYER SIGHT WHEN NOT SEEN
+			else if (MyServerSettings.LineOfSight(this, false) && !Controlled && Combatant == null && WhisperHue != 999 && WhisperHue != 666) // MOVE FROM PLAYER SIGHT WHEN NOT SEEN
 			{
 				bool seeing = true;
 
-				foreach ( NetState state in NetState.Instances )
+				foreach (NetState state in NetState.Instances)
 				{
 					Mobile m = state.Mobile;
 
-					if ( ( m is PlayerMobile || (m is BaseCreature && ((BaseCreature)m).Controlled) ) && !IsCitizen() && !Server.Misc.IntelligentAction.IsHiding( this ) && InLOS( m ) && m.Alive && m.Map == this.Map )
+					if ((m is PlayerMobile || (m is BaseCreature && ((BaseCreature)m).Controlled)) && !IsCitizen() && !Server.Misc.IntelligentAction.IsHiding(this) && InLOS(m) && m.Alive && m.Map == this.Map)
 					{
 						//if ( m.AccessLevel == AccessLevel.Player ){ seeing = false; }
 						seeing = false;
 					}
-					else if ( ( m is PlayerMobile || (m is BaseCreature && ((BaseCreature)m).Controlled) ) && Hits > 30 && !IsCitizen() && Server.Misc.IntelligentAction.IsHiding( this ) && InLOS( m ) && m.Alive && m.Map == this.Map )
+					else if ((m is PlayerMobile || (m is BaseCreature && ((BaseCreature)m).Controlled)) && Hits > 30 && !IsCitizen() && Server.Misc.IntelligentAction.IsHiding(this) && InLOS(m) && m.Alive && m.Map == this.Map)
 					{
 						seeing = false;
 					}
 				}
 
-				if ( seeing )
+				if (seeing)
 				{
 					Warmode = false;
 					CantWalk = true;
@@ -10224,49 +10255,49 @@ namespace Server.Mobiles
 					Hidden = false;
 				}
 			}
-			else if ( WhisperHue == 666 && !IsTempEnemy ) // ENTER A DEMON GATE
+			else if (WhisperHue == 666 && !IsTempEnemy) // ENTER A DEMON GATE
 			{
-				if ( !CantWalk && Combatant == null && !Hidden )
+				if (!CantWalk && Combatant == null && !Hidden)
 				{
 					bool escape = true;
 
-					foreach ( NetState state in NetState.Instances )
+					foreach (NetState state in NetState.Instances)
 					{
 						Mobile m = state.Mobile;
 
-						if ( m is PlayerMobile && m.InRange( this.Location, 20 ) && m.Alive && m.Map == this.Map )
+						if (m is PlayerMobile && m.InRange(this.Location, 20) && m.Alive && m.Map == this.Map)
 						{
-							if ( m.AccessLevel == AccessLevel.Player ){ escape = false; }
+							if (m.AccessLevel == AccessLevel.Player) { escape = false; }
 						}
 					}
 
-					if ( escape )
+					if (escape)
 					{
-						Server.Items.DemonGate.MakeDemonGate( this );
+						Server.Items.DemonGate.MakeDemonGate(this);
 						this.Location = this.Home;
 						this.Warmode = false;
 						this.CantWalk = true;
 						this.Hidden = true;
 					}
 				}
-				else if ( Hidden && CantWalk )
+				else if (Hidden && CantWalk)
 				{
 					bool appear = false;
 
-					foreach ( NetState state in NetState.Instances )
+					foreach (NetState state in NetState.Instances)
 					{
 						Mobile m = state.Mobile;
 
-						if ( m is PlayerMobile && m.InRange( this.Location, 8 ) && m.Alive && m.Map == this.Map )
+						if (m is PlayerMobile && m.InRange(this.Location, 8) && m.Alive && m.Map == this.Map)
 						{
-							if ( m.AccessLevel == AccessLevel.Player ){ appear = true; }
+							if (m.AccessLevel == AccessLevel.Player) { appear = true; }
 						}
 					}
 
-					if ( appear )
+					if (appear)
 					{
 						this.Home = this.Location;
-						Server.Items.DemonGate.MakeDemonGate( this );
+						Server.Items.DemonGate.MakeDemonGate(this);
 						this.CantWalk = m_NoWalker;
 						this.Hidden = false;
 					}
@@ -10278,21 +10309,21 @@ namespace Server.Mobiles
 		{
 			Corpse toRummage = null;
 
-			foreach ( Item item in this.GetItemsInRange( 2 ) )
+			foreach (Item item in this.GetItemsInRange(2))
 			{
-				if ( item is Corpse && item.Items.Count > 0 )
+				if (item is Corpse && item.Items.Count > 0)
 				{
 					toRummage = (Corpse)item;
 					break;
 				}
 			}
 
-			if ( toRummage == null )
+			if (toRummage == null)
 				return false;
 
 			Container pack = this.Backpack;
 
-			if ( pack == null )
+			if (pack == null)
 				return false;
 
 			List<Item> items = toRummage.Items;
@@ -10300,16 +10331,16 @@ namespace Server.Mobiles
 			bool rejected;
 			LRReason reason;
 
-			for ( int i = 0; i < items.Count; ++i )
+			for (int i = 0; i < items.Count; ++i)
 			{
-				Item item = items[Utility.Random( items.Count )];
+				Item item = items[Utility.Random(items.Count)];
 
-				Lift( item, item.Amount, out rejected, out reason );
+				Lift(item, item.Amount, out rejected, out reason);
 
-				if ( !rejected && Drop( this, new Point3D( -1, -1, 0 ) ) )
+				if (!rejected && Drop(this, new Point3D(-1, -1, 0)))
 				{
 					// *rummages through a corpse and takes an item*
-					PublicOverheadMessage( MessageType.Emote, 0x3B2, 1008086 );
+					PublicOverheadMessage(MessageType.Emote, 0x3B2, 1008086);
 					//TODO: Instancing of Rummaged stuff.
 					return true;
 				}
@@ -10318,44 +10349,44 @@ namespace Server.Mobiles
 			return false;
 		}
 
-		public void Pacify( Mobile master, DateTime endtime )
+		public void Pacify(Mobile master, DateTime endtime)
 		{
 			BardPacified = true;
 			BardEndTime = endtime;
 		}
 
-		public override Mobile GetDamageMaster( Mobile damagee )
+		public override Mobile GetDamageMaster(Mobile damagee)
 		{
-			if ( m_bBardProvoked && damagee == m_bBardTarget )
+			if (m_bBardProvoked && damagee == m_bBardTarget)
 				return m_bBardMaster;
-			else if ( m_bControlled && m_ControlMaster != null )
+			else if (m_bControlled && m_ControlMaster != null)
 				return m_ControlMaster;
-			else if ( m_bSummoned && m_SummonMaster != null )
+			else if (m_bSummoned && m_SummonMaster != null)
 				return m_SummonMaster;
 
-			return base.GetDamageMaster( damagee );
+			return base.GetDamageMaster(damagee);
 		}
 
-		public void Provoke( Mobile master, Mobile target, bool bSuccess )
+		public void Provoke(Mobile master, Mobile target, bool bSuccess)
 		{
 			BardProvoked = true;
 
-			this.PublicOverheadMessage( MessageType.Emote, EmoteHue, false, "*looks furious*" );
+			this.PublicOverheadMessage(MessageType.Emote, EmoteHue, false, "*looks furious*");
 
-			if ( bSuccess )
+			if (bSuccess)
 			{
-				PlaySound( GetIdleSound() );
+				PlaySound(GetIdleSound());
 
 				BardMaster = master;
 				BardTarget = target;
 				Combatant = target;
-				BardEndTime = DateTime.Now + TimeSpan.FromSeconds( 30.0 );
+				BardEndTime = DateTime.Now + TimeSpan.FromSeconds(30.0);
 
-				if ( target is BaseCreature )
+				if (target is BaseCreature)
 				{
 					BaseCreature t = (BaseCreature)target;
 
-					if ( t.Unprovokable || (t.IsParagon && BaseInstrument.GetBaseDifficulty( t ) >= 160.0) )
+					if (t.Unprovokable || (t.IsParagon && BaseInstrument.GetBaseDifficulty(t) >= 160.0))
 						return;
 
 					t.BardProvoked = true;
@@ -10363,87 +10394,87 @@ namespace Server.Mobiles
 					t.BardMaster = master;
 					t.BardTarget = this;
 					t.Combatant = this;
-					t.BardEndTime = DateTime.Now + TimeSpan.FromSeconds( 30.0 );
+					t.BardEndTime = DateTime.Now + TimeSpan.FromSeconds(30.0);
 				}
 			}
 			else
 			{
-				PlaySound( GetAngerSound() );
+				PlaySound(GetAngerSound());
 
 				BardMaster = master;
 				BardTarget = target;
 			}
 		}
 
-		public bool FindMyName( string str, bool bWithAll )
+		public bool FindMyName(string str, bool bWithAll)
 		{
 			int i, j;
 
 			string name = this.Name;
 
-			if( name == null || str.Length < name.Length )
+			if (name == null || str.Length < name.Length)
 				return false;
 
 			string[] wordsString = str.Split(' ');
 			string[] wordsName = name.Split(' ');
 
-			for ( j=0 ; j < wordsName.Length; j++ )
+			for (j = 0; j < wordsName.Length; j++)
 			{
 				string wordName = wordsName[j];
 
 				bool bFound = false;
-				for ( i=0 ; i < wordsString.Length; i++ )
+				for (i = 0; i < wordsString.Length; i++)
 				{
 					string word = wordsString[i];
 
-					if ( Insensitive.Equals( word, wordName ) )
+					if (Insensitive.Equals(word, wordName))
 						bFound = true;
 
-					if ( bWithAll && Insensitive.Equals( word, "all" ) )
+					if (bWithAll && Insensitive.Equals(word, "all"))
 						return true;
 				}
 
-				if ( !bFound )
+				if (!bFound)
 					return false;
 			}
 
 			return true;
 		}
 
-		public static void TeleportPets( Mobile master, Point3D loc, Map map )
+		public static void TeleportPets(Mobile master, Point3D loc, Map map)
 		{
-			TeleportPets( master, loc, map, false );
+			TeleportPets(master, loc, map, false);
 		}
 
-		public static void TeleportPets( Mobile master, Point3D loc, Map map, bool onlyBonded )
+		public static void TeleportPets(Mobile master, Point3D loc, Map map, bool onlyBonded)
 		{
 			List<Mobile> move = new List<Mobile>();
 
-			foreach ( Mobile m in master.GetMobilesInRange( 10 ) )
+			foreach (Mobile m in master.GetMobilesInRange(10))
 			{
-				if ( m is BaseCreature )
+				if (m is BaseCreature)
 				{
 					BaseCreature pet = (BaseCreature)m;
 
-					if ( pet.Controlled && pet.ControlMaster == master )
+					if (pet.Controlled && pet.ControlMaster == master)
 					{
-						if ( !onlyBonded || pet.IsBonded )
+						if (!onlyBonded || pet.IsBonded)
 						{
-							if ( pet.ControlOrder == OrderType.Guard || pet.ControlOrder == OrderType.Follow || pet.ControlOrder == OrderType.Come )
-								move.Add( pet );
+							if (pet.ControlOrder == OrderType.Guard || pet.ControlOrder == OrderType.Follow || pet.ControlOrder == OrderType.Come)
+								move.Add(pet);
 						}
-						else if ( pet is HenchmanFamiliar || pet is AerialServant || pet is PackBeast || pet is GolemPorter || pet is GolemFighter || pet is FrankenPorter || pet is FrankenFighter ){ move.Add( pet ); }
+						else if (pet is HenchmanFamiliar || pet is AerialServant || pet is PackBeast || pet is GolemPorter || pet is GolemFighter || pet is FrankenPorter || pet is FrankenFighter) { move.Add(pet); }
 					}
 				}
 			}
 
-			foreach ( Mobile m in move )
-				m.MoveToWorld( loc, map );
+			foreach (Mobile m in move)
+				m.MoveToWorld(loc, map);
 		}
 
 		public virtual void ResurrectPet()
 		{
-			if ( !IsDeadPet )
+			if (!IsDeadPet)
 				return;
 
 			OnBeforeResurrect();
@@ -10460,7 +10491,7 @@ namespace Server.Mobiles
 
 			IsDeadPet = false;
 
-			Effects.SendPacket( Location, Map, new BondedStatus( 0, this.Serial, 0 ) );
+			Effects.SendPacket(Location, Map, new BondedStatus(0, this.Serial, 0));
 
 			this.SendIncomingPacket();
 			this.SendIncomingPacket();
@@ -10469,9 +10500,9 @@ namespace Server.Mobiles
 
 			Mobile owner = this.ControlMaster;
 
-			if ( owner == null || owner.Deleted || owner.Map != this.Map || !owner.InRange( this, 12 ) || !this.CanSee( owner ) || !this.InLOS( owner ) )
+			if (owner == null || owner.Deleted || owner.Map != this.Map || !owner.InRange(this, 12) || !this.CanSee(owner) || !this.InLOS(owner))
 			{
-				if ( this.OwnerAbandonTime == DateTime.MinValue )
+				if (this.OwnerAbandonTime == DateTime.MinValue)
 					this.OwnerAbandonTime = DateTime.Now;
 			}
 			else
@@ -10484,17 +10515,17 @@ namespace Server.Mobiles
 
 		public override bool CanBeDamaged()
 		{
-			if ( IsDeadPet )
+			if (IsDeadPet)
 				return false;
 
 			return base.CanBeDamaged();
 		}
 
-		public virtual bool PlayerRangeSensitive{ get{ return (this.CurrentWayPoint == null); } }	//If they are following a waypoint, they'll continue to follow it even if players aren't around
+		public virtual bool PlayerRangeSensitive { get { return (this.CurrentWayPoint == null); } } //If they are following a waypoint, they'll continue to follow it even if players aren't around
 
 		public override void OnSectorDeactivate()
 		{
-			if ( PlayerRangeSensitive && m_AI != null )
+			if (PlayerRangeSensitive && m_AI != null)
 				m_AI.Deactivate();
 
 			base.OnSectorDeactivate();
@@ -10502,7 +10533,7 @@ namespace Server.Mobiles
 
 		public override void OnSectorActivate()
 		{
-			if ( PlayerRangeSensitive && m_AI != null )
+			if (PlayerRangeSensitive && m_AI != null)
 				m_AI.Activate();
 
 			base.OnSectorActivate();
@@ -10513,25 +10544,25 @@ namespace Server.Mobiles
 		// used for deleting untamed creatures [in houses]
 		private int m_RemoveStep;
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public bool RemoveIfUntamed{ get{ return m_RemoveIfUntamed; } set{ m_RemoveIfUntamed = value; } }
+		[CommandProperty(AccessLevel.GameMaster)]
+		public bool RemoveIfUntamed { get { return m_RemoveIfUntamed; } set { m_RemoveIfUntamed = value; } }
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int RemoveStep { get { return m_RemoveStep; } set { m_RemoveStep = value; } }
 	}
 
 	public class LoyaltyTimer : Timer
 	{
-		private static TimeSpan InternalDelay = TimeSpan.FromMinutes( 5.0 );
+		private static TimeSpan InternalDelay = TimeSpan.FromMinutes(5.0);
 
 		public static void Initialize()
 		{
 			new LoyaltyTimer().Start();
 		}
 
-		public LoyaltyTimer() : base( InternalDelay, InternalDelay )
+		public LoyaltyTimer() : base(InternalDelay, InternalDelay)
 		{
-			m_NextHourlyCheck = DateTime.Now + TimeSpan.FromHours( 1.0 );
+			m_NextHourlyCheck = DateTime.Now + TimeSpan.FromHours(1.0);
 			Priority = TimerPriority.FiveSeconds;
 		}
 
@@ -10539,8 +10570,8 @@ namespace Server.Mobiles
 
 		protected override void OnTick()
 		{
-			if ( DateTime.Now >= m_NextHourlyCheck )
-				m_NextHourlyCheck = DateTime.Now + TimeSpan.FromHours( 1.0 );
+			if (DateTime.Now >= m_NextHourlyCheck)
+				m_NextHourlyCheck = DateTime.Now + TimeSpan.FromHours(1.0);
 			else
 				return;
 
@@ -10549,61 +10580,61 @@ namespace Server.Mobiles
 			// added array for wild creatures in house regions to be removed
 			List<BaseCreature> toRemove = new List<BaseCreature>();
 
-			foreach ( Mobile m in World.Mobiles.Values )
+			foreach (Mobile m in World.Mobiles.Values)
 			{
-				if ( m is BaseMount && ((BaseMount)m).Rider != null )
+				if (m is BaseMount && ((BaseMount)m).Rider != null)
 				{
 					((BaseCreature)m).OwnerAbandonTime = DateTime.MinValue;
 					continue;
 				}
 
-				if ( m is BaseCreature )
+				if (m is BaseCreature)
 				{
 					BaseCreature c = (BaseCreature)m;
 					Mobile master = c.ControlMaster;
-					if ( master != null && master.Map == Map.Internal ) continue;
+					if (master != null && master.Map == Map.Internal) continue;
 
-					if ( c.IsDeadPet )
+					if (c.IsDeadPet)
 					{
 						Mobile owner = c.ControlMaster;
 
-						if ( owner == null || owner.Deleted || owner.Map != c.Map || !owner.InRange( c, 12 ) || !c.CanSee( owner ) || !c.InLOS( owner ) )
+						if (owner == null || owner.Deleted || owner.Map != c.Map || !owner.InRange(c, 12) || !c.CanSee(owner) || !c.InLOS(owner))
 						{
-							if ( c.OwnerAbandonTime == DateTime.MinValue )
+							if (c.OwnerAbandonTime == DateTime.MinValue)
 								c.OwnerAbandonTime = DateTime.Now;
-							else if ( (c.OwnerAbandonTime + c.BondingAbandonDelay) <= DateTime.Now )
-								toRemove.Add( c );
+							else if ((c.OwnerAbandonTime + c.BondingAbandonDelay) <= DateTime.Now)
+								toRemove.Add(c);
 						}
 						else
 						{
 							c.OwnerAbandonTime = DateTime.MinValue;
 						}
 					}
-					else if ( c.Controlled && c.Commandable )
+					else if (c.Controlled && c.Commandable)
 					{
 						c.OwnerAbandonTime = DateTime.MinValue;
 
-						if ( c.Map != Map.Internal )
+						if (c.Map != Map.Internal)
 						{
 							c.Loyalty -= (BaseCreature.MaxLoyalty / 10);
 
-							if( c.Loyalty < (BaseCreature.MaxLoyalty / 10) )
+							if (c.Loyalty < (BaseCreature.MaxLoyalty / 10))
 							{
-								c.Say( 1043270, c.Name ); // * ~1_NAME~ looks around desperately *
-								c.PlaySound( c.GetIdleSound() );
+								c.Say(1043270, c.Name); // * ~1_NAME~ looks around desperately *
+								c.PlaySound(c.GetIdleSound());
 							}
 
-							if ( c.Loyalty <= 0 )
-								toRelease.Add( c );
+							if (c.Loyalty <= 0)
+								toRelease.Add(c);
 						}
 					}
 
-					if ( !c.Controlled && c.LastOwner != null && !c.IsStabled && c.CanBeDamaged() && c.Map != Map.Internal && !(c.Region is HouseRegion) )
+					if (!c.Controlled && c.LastOwner != null && !c.IsStabled && c.CanBeDamaged() && c.Map != Map.Internal && !(c.Region is HouseRegion))
 					{
 						c.RemoveStep++;
 
-						if ( c.RemoveStep >= 1 )
-							toRemove.Add( c );
+						if (c.RemoveStep >= 1)
+							toRemove.Add(c);
 					}
 					else
 					{
@@ -10612,9 +10643,9 @@ namespace Server.Mobiles
 				}
 			}
 
-			foreach ( BaseCreature c in toRelease )
+			foreach (BaseCreature c in toRelease)
 			{
-				c.Say( 1043255, c.Name ); // ~1_NAME~ appears to have decided that is better off without a master!
+				c.Say(1043255, c.Name); // ~1_NAME~ appears to have decided that is better off without a master!
 				c.Loyalty = BaseCreature.MaxLoyalty; // Wonderfully Happy
 				c.IsBonded = false;
 				c.BondingBegin = DateTime.MinValue;
@@ -10626,7 +10657,7 @@ namespace Server.Mobiles
 			}
 
 			// added code to handle removing of wild creatures in house regions
-			foreach ( BaseCreature c in toRemove )
+			foreach (BaseCreature c in toRemove)
 			{
 				c.Delete();
 			}

@@ -15,6 +15,7 @@ using Server.Custom;
 using Server.Custom.DailyBosses.System;
 using Server.Custom.BossSystems;
 using Server.Custom.Ascensions;
+using Server.CustomSpells;
 
 namespace Server.Mobiles
 {
