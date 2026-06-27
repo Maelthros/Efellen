@@ -155,7 +155,7 @@ namespace Server.Items
                         }
                     }
 
-                    if (pet.Alive)
+                    if (!pet.IsDeadPet)
                     {
                         int healed = 0;
 
@@ -167,6 +167,17 @@ namespace Server.Items
                                 pet.CurePoison(from);
                                 didSomething = true;
                             }
+                        }
+                        else if ( BleedAttack.IsBleeding( m ) )
+                        {
+                            BleedAttack.EndBleed( m, false );
+                            didSomething = true;
+                        }
+
+                        if ( MortalStrike.IsWounded( m ))
+                        {
+                            from.SendMessage("You cannot heal {0} in his current state.", pet.Name != null ? pet.Name : "your pet");
+                            continue;
                         }
 
                         if (!pet.Poisoned && pet.Hits < pet.HitsMax)
