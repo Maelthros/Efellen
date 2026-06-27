@@ -10234,7 +10234,7 @@ namespace Server.Mobiles
 				}
 			}
 
-			if( !m_Mobile.Controlled && !m_Mobile.Summoned && !m_Mobile.IsParagon && !(m_Mobile is HenchmanArcher) && !(m_Mobile is HenchmanMonster) && !(m_Mobile is HenchmanWizard) && !(m_Mobile is HenchmanFighter) )
+			if( !m_Mobile.Controlled && !m_Mobile.Summoned && !m_Mobile.IsParagon && !m_Mobile.IsBoss && !(m_Mobile is HenchmanArcher) && !(m_Mobile is HenchmanMonster) && !(m_Mobile is HenchmanWizard) && !(m_Mobile is HenchmanFighter) )
 			{
 				if( m_Mobile.Hits < m_Mobile.HitsMax * 20 / 100 )
 				{
@@ -10800,7 +10800,7 @@ namespace Server.Mobiles
 					m_Mobile.DebugSay( "I should be closer to {0}", combatant.Name );
 			}
 
-			if ( !m_Mobile.Controlled && !m_Mobile.Summoned && !m_Mobile.IsParagon && !(m_Mobile is FrankenFighter) && !(m_Mobile is GolemFighter) && !(m_Mobile is HenchmanMonster) && !(m_Mobile is HenchmanArcher) && !(m_Mobile is HenchmanWizard) && !(m_Mobile is HenchmanFighter) )
+			if ( !m_Mobile.Controlled && !m_Mobile.Summoned && !m_Mobile.IsParagon && !m_Mobile.IsBoss && !(m_Mobile is FrankenFighter) && !(m_Mobile is GolemFighter) && !(m_Mobile is HenchmanMonster) && !(m_Mobile is HenchmanArcher) && !(m_Mobile is HenchmanWizard) && !(m_Mobile is HenchmanFighter) )
 			{
 				if ( m_Mobile.Hits < m_Mobile.HitsMax * 20/100 )
 				{
@@ -11053,7 +11053,7 @@ namespace Server.Mobiles
 				m_Mobile.DebugSay( "I should be closer to {0}", combatant.Name );
 			}
 
-			if ( m_Mobile.Hits < m_Mobile.HitsMax * 20/100 && !m_Mobile.IsParagon )
+			if ( m_Mobile.Hits < m_Mobile.HitsMax * 20/100 && !m_Mobile.IsParagon && !m_Mobile.IsBoss)
 			{
 				// We are low on health, should we flee?
 
