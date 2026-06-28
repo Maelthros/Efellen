@@ -131,11 +131,11 @@ namespace Server.Items
 
 			if (500 < reward)  // impossible finds
 			{
-				if(Utility.RandomDouble() < 0.05)
+				if(Utility.RandomDouble() < 0.15)
 				{
 					return new ParagonPetDeed();
 				} 
-				else if (Utility.RandomDouble() < 0.15)
+				else if (Utility.RandomDouble() < 0.20)
 				{
 					return Construct( m_MegaRareMorph ) as Item;
 				}
@@ -143,11 +143,11 @@ namespace Server.Items
 
 			if (470 < reward)  // impossible finds
 			{
-				if(Utility.RandomDouble() < 0.01)
+				if(Utility.RandomDouble() < 0.05)
 				{
 					return new ParagonPetDeed();
 				} 
-				else if (Utility.RandomDouble() < 0.05)
+				else if (Utility.RandomDouble() < 0.10)
 				{
 					return new PetEasingDeed();
 				}
