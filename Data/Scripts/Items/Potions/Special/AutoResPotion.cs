@@ -16,15 +16,6 @@ namespace Server.Items
 		public override Catalogs DefaultCatalog{ get{ return Catalogs.Potion; } }
 
 		private static Dictionary<Mobile, AutoResPotion> m_ResList;
-		
-        private int m_Charges;
-
-        [CommandProperty( AccessLevel.GameMaster )]
-        public int Charges
-        {
-            get { return m_Charges; }
-            set { m_Charges = value; InvalidateProperties(); }
-        }
 
         private Timer m_Timer;
         private static TimeSpan m_Delay = TimeSpan.FromSeconds( 10.0 ); /*TimeSpan.Zero*/
@@ -36,15 +27,10 @@ namespace Server.Items
         {
             EventSink.PlayerDeath += new PlayerDeathEventHandler(EventSink_Death);
         }
-		
-        [Constructable]
-        public AutoResPotion() : this( 1 )
-        { }
 
         [Constructable]
-        public AutoResPotion(int charges) : base(0x0E0F) 
+        public AutoResPotion() : base(0x0E0F) 
         {
-            m_Charges = charges;
             Name = "Potion Of Rebirth";
             LootType = LootType.Blessed;
 			Weight = 1.0;
@@ -114,28 +100,22 @@ namespace Server.Items
 			AutoResPotion arp = (AutoResPotion)states[1];
             if (owner != null && !owner.Deleted && arp != null && !arp.Deleted)
             {
-                if (owner.Alive || arp.m_Charges < 1)
+                if (owner.Alive)
                     return;
 
                 owner.SendMessage("You died under the watch of the spirits, they have offered you another chance at life.");
                 owner.Resurrect();
 				Server.Misc.Death.Penalty( owner, false );
 
-                arp.m_Charges--;
-
-                arp.InvalidateProperties();
-
-                if (arp.m_Charges < 1)
-                    arp.Delete();
+                arp.Amount--;
             }
         }
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write( (int) 0 ); // version
+            writer.Write( (int) 1 ); // version
             writer.Write( (TimeSpan) m_Delay );
-            writer.Write( (int) m_Charges );            
         }
 
         public override void Deserialize(GenericReader reader)
@@ -144,12 +124,18 @@ namespace Server.Items
             int version = reader.ReadInt();
             switch (version)
             {
-                case 0: 
+                case 0:
                 {
 					m_Delay = reader.ReadTimeSpan();
-					m_Charges = reader.ReadInt();
+					reader.ReadInt();
                 }
 				break;
+
+                case 1:
+                {
+                    m_Delay = reader.ReadTimeSpan();
+                }
+                break;
             }
 			Hue = 0x494;
 			Built = true;
