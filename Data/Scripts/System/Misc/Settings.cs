@@ -56,7 +56,7 @@ namespace Server
 			// THIS IS NOT ADVISED, BUT YOU CAN INCREASE THE CHANCE OF A STAT GAIN TO OCCUR
 			// STATS ONLY GAIN WHEN SKILLS ARE USED, SO A SKILL GAIN POTENTIAL MUST PRECEDE A STAT GAIN
 
-			if ( MySettings.S_StatGain > 50 ){ MySettings.S_StatGain = 50.0; } else if ( MySettings.S_StatGain < 10 ){ MySettings.S_StatGain = 10.0; }
+			if ( MySettings.S_StatGain > 50 ){ MySettings.S_StatGain = 50.0; } else if ( MySettings.S_StatGain < 0.01 ){ MySettings.S_StatGain = 0.01; }
 
 			return MySettings.S_StatGain; // LOWER THIS VALUE FOR MORE STAT GAIN - 33.3 IS DEFAULT - 0.01 IS VERY OFTEN
 		}
@@ -66,14 +66,14 @@ namespace Server
 			// THIS IS NOT ADVISED, BUT YOU CAN CHANGE THE TIME BETWEEN STAT GAINS
 			// HOW MANY MINUTES BETWEEN STAT GAINS
 
-			if ( MySettings.S_StatGainDelay > 60 ){ MySettings.S_StatGainDelay = 60.0; } else if ( MySettings.S_StatGainDelay < 5 ){ MySettings.S_StatGainDelay = 5.0; }
+			if ( MySettings.S_StatGainDelay > 60 ){ MySettings.S_StatGainDelay = 60.0; } else if ( MySettings.S_StatGainDelay < 0 ){ MySettings.S_StatGainDelay = 0.0; }
 
 			return TimeSpan.FromMinutes( MySettings.S_StatGainDelay ); // 15.0 IS DEFAULT
 		}
 
 		public static int StatGainDelayNum()
 		{
-			if ( MySettings.S_StatGainDelay > 60 ){ MySettings.S_StatGainDelay = 60; } else if ( MySettings.S_StatGainDelay < 5 ){ MySettings.S_StatGainDelay = 5; }
+			if ( MySettings.S_StatGainDelay > 60 ){ MySettings.S_StatGainDelay = 60; } else if ( MySettings.S_StatGainDelay < 0 ){ MySettings.S_StatGainDelay = 0; }
 
 			return Convert.ToInt32( MySettings.S_StatGainDelay );
 		}
