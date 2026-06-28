@@ -720,6 +720,10 @@ namespace Server.Mobiles
 			{
 				if (m_Paragon == value)
 					return;
+				else if (this.Controlled && value)
+					Paragon.ConvertPet(this);
+				else if (this.Controlled && !value)
+					Paragon.UnConvertPet(this);
 				else if (value)
 					Paragon.Convert(this);
 				else

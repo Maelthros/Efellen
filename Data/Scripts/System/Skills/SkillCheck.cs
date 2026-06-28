@@ -567,7 +567,18 @@ namespace Server.Misc
 			TimeSpan delay = IsControlledCreature(from) ? PetStatGainDelay : StatGainDelay;
 			DateTime lastGain = GetLastStatGainTime(from, stat);
 
-			return (lastGain + delay) < DateTime.Now;
+			if(IsParagon(from))
+			{
+				switch (stat)
+				{
+					case Stat.Str: return from.RawStr < Paragon.StrMax && (lastGain + delay) < DateTime.Now;
+					case Stat.Dex: return from.RawDex < Paragon.DexMax && (lastGain + delay) < DateTime.Now;
+					case Stat.Int: return from.RawInt < Paragon.IntMax && (lastGain + delay) < DateTime.Now;
+					default: return false;
+				}
+			}
+			else
+				return (lastGain + delay) < DateTime.Now;
 		}
 
 		private static DateTime GetLastStatGainTime(Mobile from, Stat stat)
@@ -731,6 +742,15 @@ namespace Server.Misc
 
 			BaseCreature creature = (BaseCreature)from;
 			return creature.Controlled;
+		}
+
+		private static bool IsParagon(Mobile from)
+		{
+			if (!(from is BaseCreature))
+				return false;
+
+			BaseCreature creature = (BaseCreature)from;
+			return creature.IsParagon;
 		}
 
 		#endregion

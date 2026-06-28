@@ -32,17 +32,10 @@ namespace Server.Items
             }
             else
             {
-               bool bonded = false;
-               if (t.IsBonded)
-                  bonded = true;
-
                t.IsParagon = true;
                from.SendMessage("Your pet is now a paragon!");
 
-               m_Deed.Delete(); // Delete the deed 
-               t.Tamable = true;
-               if (bonded)
-                  t.IsBonded = true; // issue where bonded pets got unbonded 
+               m_Deed.Delete();
             }
 
          }

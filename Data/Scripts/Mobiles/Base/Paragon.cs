@@ -27,6 +27,65 @@ namespace Server.Mobiles
 		public static double KarmaBuff  = 1.40;
 		public static int    DamageBuff = 5;
 
+		public static int HitsMax       = 1500;
+		public static int StrMax        = 1000;
+		public static int IntMax        = 1000;
+		public static int DexMax        = 1000;
+
+		public static void ConvertPet( BaseCreature bc )
+		{
+			if ( bc.IsParagon )
+				return;
+
+			if ( bc.HitsMaxSeed >= 0 )
+				bc.HitsMaxSeed = HitsMax;
+
+			bc.StatCap = StrMax + IntMax + DexMax;
+			bc.SkillsCap = 10000;
+
+			for( int i = 0; i < bc.Skills.Length; i++ )
+			{
+				Skill skill = (Skill)bc.Skills[i];
+
+				if ( skill.Cap > 0.0 )
+					skill.Cap = 1250;
+			}
+
+			bc.SetResistance( ResistanceType.Physical, 70 );
+			bc.SetResistance( ResistanceType.Fire, 	   50 );
+			bc.SetResistance( ResistanceType.Cold, 	   50 );
+			bc.SetResistance( ResistanceType.Poison,   50 );
+			bc.SetResistance( ResistanceType.Energy,   50 );
+
+			bc.VirtualArmor = 50;
+
+			bc.ControlSlots = 3;
+
+			bc.PassiveSpeed = 0.4;
+			bc.ActiveSpeed  = 0.2;
+
+			bc.DamageMin += DamageBuff;
+			bc.DamageMax += DamageBuff;
+		}
+
+		public static void UnConvertPet( BaseCreature bc )
+		{
+			if ( !bc.IsParagon )
+				return;
+
+			if ( bc.HitsMaxSeed >= 0 )
+				bc.HitsMaxSeed = 500;
+
+			bc.StatCap = 225;
+
+			bc.RawStr = 100;
+			bc.RawDex = 100;
+			bc.RawInt = 25;
+
+			bc.DamageMin -= DamageBuff;
+			bc.DamageMax -= DamageBuff;
+		}
+
 		public static void Convert( BaseCreature bc )
 		{
 			if ( bc.IsParagon )
@@ -74,6 +133,8 @@ namespace Server.Mobiles
 				if( Math.Abs( bc.Karma ) > 32000 )
 					bc.Karma = 32000 * Math.Sign( bc.Karma );
 			}
+
+			bc.Tamable = false;
 		}
 
 		public static void UnConvert( BaseCreature bc )
