@@ -509,7 +509,7 @@ namespace Server.Custom.Ascensions
                 "Battle Meditation, level 1<br>" +
                 "command: [KensaiBattleMeditation<br>" +
                 "The Kensai enters a powerful battle trance. For the next 20 + 1/level seconds, the Kensai causes +(10 + level/2) % damage with swords and has +(5 + level/2)% increased swing speed.<br>" + 
-                "This costs 20 stamina to activate and has a 2 min]utes cooldown.<br>" +
+                "This costs 20 stamina to activate and has a 2 minutes cooldown.<br>" +
                 "- Level 10: While under the effects of battle meditation, the Kensai has +(10+level/2) defense chance increase;<br>" +
                 "- Level 15: When the Kensai hits an enemy while under the effects of battle meditation, there's an 1%/level chance that the cooldown on Culling Strike is set to zero.<br>" +
                 "- Level 20: When the Kensai kills an enemy while under the effects of battle meditation, the cooldown on tempest is reduced by 5 seconds.<br><br>" +
