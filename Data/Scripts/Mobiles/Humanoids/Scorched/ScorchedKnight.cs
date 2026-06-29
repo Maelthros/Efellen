@@ -20,9 +20,9 @@ namespace Server.Mobiles
 			SetDex( 76, 95 );
 			SetInt( 36, 60 );
 
-			SetHits( 118, 150 );
+			SetHits( 108, 140 );
 
-			SetDamage( 8, 18 );
+			SetDamage( 8, 14 );
 
 			SetDamageType( ResistanceType.Physical, 40 );
 			SetDamageType( ResistanceType.Fire, 60 );
