@@ -98,17 +98,21 @@ namespace Server.Items
             object[] states = (object[])state;
             PlayerMobile owner = (PlayerMobile)states[0];
 			AutoResPotion arp = (AutoResPotion)states[1];
-            if (owner != null && !owner.Deleted && arp != null && !arp.Deleted)
-            {
-                if (owner.Alive)
-                    return;
 
-                owner.SendMessage("You died under the watch of the spirits, they have offered you another chance at life.");
-                owner.Resurrect();
-				Server.Misc.Death.Penalty( owner, false );
+            if (owner == null || owner.Deleted || arp == null || arp.Deleted || arp.Amount < 1)
+                return;
 
+            if (owner.Alive)
+                return;
+
+            owner.SendMessage("You died under the watch of the spirits, they have offered you another chance at life.");
+            owner.Resurrect();
+            Server.Misc.Death.Penalty( owner, false );
+
+            if (arp.Amount > 1)
                 arp.Amount--;
-            }
+            else
+                arp.Delete();
         }
 
         public override void Serialize(GenericWriter writer)
