@@ -27,10 +27,12 @@ namespace Server.Mobiles
 		public static double KarmaBuff  = 1.40;
 		public static int    DamageBuff = 5;
 
-		public static int HitsMax       = 1500;
-		public static int StrMax        = 1000;
-		public static int IntMax        = 1000;
-		public static int DexMax        = 1000;
+		public static int PetHits       = 1500;
+		public static int PetStrMax     = 1000;
+		public static int PetIntMax     = 1000;
+		public static int PetDexMax     = 1000;
+		public static int PetDamageMin  = 40;
+		public static int PetDamageMax  = 50;
 
 		public static void ConvertPet( BaseCreature bc )
 		{
@@ -38,9 +40,9 @@ namespace Server.Mobiles
 				return;
 
 			if ( bc.HitsMaxSeed >= 0 )
-				bc.HitsMaxSeed = HitsMax;
+				bc.HitsMaxSeed = PetHits;
 
-			bc.StatCap = StrMax + IntMax + DexMax;
+			bc.StatCap = PetStrMax + PetIntMax + PetDexMax;
 			bc.SkillsCap = 10000;
 
 			for( int i = 0; i < bc.Skills.Length; i++ )
@@ -59,13 +61,14 @@ namespace Server.Mobiles
 
 			bc.VirtualArmor = 50;
 
+			bc.MinTameSkill = 120.0;
 			bc.ControlSlots = 3;
 
 			bc.PassiveSpeed = 0.4;
 			bc.ActiveSpeed  = 0.2;
 
-			bc.DamageMin += DamageBuff;
-			bc.DamageMax += DamageBuff;
+			bc.DamageMin = PetDamageMin;
+			bc.DamageMax = PetDamageMax;
 		}
 
 		public static void UnConvertPet( BaseCreature bc )
@@ -82,8 +85,8 @@ namespace Server.Mobiles
 			bc.RawDex = 100;
 			bc.RawInt = 25;
 
-			bc.DamageMin -= DamageBuff;
-			bc.DamageMax -= DamageBuff;
+			bc.DamageMin = 10;
+			bc.DamageMax = 15;
 		}
 
 		public static void Convert( BaseCreature bc )

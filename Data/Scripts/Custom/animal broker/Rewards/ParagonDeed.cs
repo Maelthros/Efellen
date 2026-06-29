@@ -20,6 +20,7 @@ namespace Server.Items
       {
          if (target != null && target is BaseCreature)
          {
+            BaseCreature f = (BaseCreature)from;
             BaseCreature t = (BaseCreature)target;
 
             if (t.IsParagon == true)
@@ -29,6 +30,10 @@ namespace Server.Items
             else if (t.ControlMaster != from)
             {
                from.SendMessage("That is not your pet!");
+            }
+            else if (f.Followers + f.ControlSlots > f.FollowersMax)
+            {
+               from.SendMessage("You have too many followers!");
             }
             else
             {

@@ -571,9 +571,9 @@ namespace Server.Misc
 			{
 				switch (stat)
 				{
-					case Stat.Str: return from.RawStr < Paragon.StrMax && (lastGain + delay) < DateTime.Now;
-					case Stat.Dex: return from.RawDex < Paragon.DexMax && (lastGain + delay) < DateTime.Now;
-					case Stat.Int: return from.RawInt < Paragon.IntMax && (lastGain + delay) < DateTime.Now;
+					case Stat.Str: return from.RawStr < Paragon.PetStrMax && (lastGain + delay) < DateTime.Now;
+					case Stat.Dex: return from.RawDex < Paragon.PetDexMax && (lastGain + delay) < DateTime.Now;
+					case Stat.Int: return from.RawInt < Paragon.PetIntMax && (lastGain + delay) < DateTime.Now;
 					default: return false;
 				}
 			}
