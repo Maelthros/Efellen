@@ -21,19 +21,25 @@ namespace Server.Items
 			MinDamage = MinDamage + 2;
 			MaxDamage = MaxDamage + 2;
 			ArtifactLevel = 2;
-			Server.Misc.Arty.ArtySetup( this, "Powerful criticals" );
+			Server.Misc.Arty.ArtySetup( this, "Mastery comes from endless practice" );
 		}
 
 		public override void OnHit(Mobile attacker, Mobile defender, double damageBonus)
 		{
-			base.OnHit(attacker, defender, damageBonus);
-			if (attacker == null || defender == null || attacker.Map == null || defender.Map == null || defender.Deleted || attacker.Deleted)
+		    base.OnHit(attacker, defender, damageBonus);
+
+		    if (attacker == null || defender == null || attacker.Map == null ||
+		        defender.Map == null || defender.Deleted || attacker.Deleted)
 		        return;
+
 		    if (Utility.RandomDouble() < 0.15)
 		    {
 		        damageBonus += 0.35;
+
 		        attacker.SendMessage("Your strike pierces through your enemy!");
 		        attacker.PlaySound(0x20F);
+
+		        attacker.CheckSkill(SkillName.Bushido, 0.0, 125.0);
 		    }
 		}
 
