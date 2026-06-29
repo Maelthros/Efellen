@@ -304,8 +304,8 @@ namespace Server
 			if ( m != null && m is PlayerMobile )
 				fee = fee + ( ((PlayerMobile)m).CharacterGuilds * fee );
 
-			if ( fee < 2000 )
-				fee = 2000;
+			if ( fee < 2000 ) fee = 2000;
+			if ( fee > 2000 ) fee = 10000;
 
 			return fee;
 		}
