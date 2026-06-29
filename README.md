@@ -60,5 +60,21 @@ For more detailed information, lore, systems, and gameplay guides, see the [Play
 
 ## Support the Project
 
-Enjoying Efellen? Consider supporting development on [Patreon](https://www.patreon.com/cw/EstelMatiazi/). The game will always be free and completely open source, so this is by no means required to enjoy the shard. 
+Enjoying Efellen? Consider supporting development on [Patreon](https://www.patreon.com/cw/EstelMatiazi/). The game will always be free and completely open source, so this is by no means required to enjoy the shard.
 
+## Contributing
+
+PRs are always welcome! 
+
+In order to help, be sure to follow these guidelines:
+- Your code needs to be based on our development branch. 
+- Your pull request needs to have a clear title (and issue number when appliable)
+- Your code needs to touch only files relevant to the pull request.
+- One feature/change per pull request.  
+- Your PR must not be in conflict with the current development branch. 
+- If your PR adds or changes gumps ingame, show us the gumps.
+- If its a balance change, show us the reasoning. 
+
+The development branch is merged into main when a new stable release is deployed. Until then, all changes are kept in a separate staging area. New releases have no set date, when the game has seen enough additions to justify them, a new one will be pushed.  
+
+If you need to deploy a hotfix for a bug in production, this can be done directly on main, but its always good to double check with me (Estel) in case there's any ambiguity.
